@@ -1,0 +1,9 @@
+{
+  "_note": "Chart display text (titles, axes, annotations). gen_charts.py reads this (no hardcoded strings). Subject to the anonymization gate. Annotations must separate fact from interpretation: numeric/timing observations = fact (allowed), causal inference (especially causation inferred from a name like MDASH) = not allowed.",
+  "months": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
+  "count": "Count",
+  "c1": {"title": "Total CVE count trend", "all": "Full CVRF", "core": "Core Microsoft products", "peak": "June peak"},
+  "c2": {"title": "Critical and heavy tier (T2+T3) trend", "crit": "Critical (full)", "heavy": "Heavy tier T2+T3 (full)", "peak_detail": "June peak\n(Critical {crit} / heavy {heavy})"},
+  "c3": {"title": "Credit \"Kugelblitz\" — zero for six months, {n} in July"},
+  "c4": {"title": "Internal (\"with Microsoft\") credit count trend", "note": "Surge in July\n({prev}→{now})"}
+}

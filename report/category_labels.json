@@ -1,0 +1,43 @@
+{
+  "_note": "製品カテゴリの言語中立な内部キー(英数字)と日英表示ラベルの単一ソース。cvrf_parse.product_cat() は 'labels' のキー(内部キー)を返し、日英レポートは必ずこのマップ経由で表示する(虫食い置換を防ぐ)。'legacy_aliases' は凍結 state/enrichment に残る旧表示名(例 'その他','Edge/Chromium')を内部キーへ正規化する(凍結データは書き換えず参照時に変換)。日本語版の表記は現状維持、英語版のみ英語表示。",
+  "labels": {
+    "edge_chromium":   { "ja": "Edge/Chromium",           "en": "Edge/Chromium" },
+    "office":          { "ja": "Office/Word/Excel/PPT",   "en": "Office/Word/Excel/PPT" },
+    "sharepoint":      { "ja": "SharePoint",              "en": "SharePoint" },
+    "exchange":        { "ja": "Exchange",                "en": "Exchange" },
+    "sql_dynamics":    { "ja": "SQL/Dynamics",            "en": "SQL/Dynamics" },
+    "boot_crypto":     { "ja": "Boot/Crypto (T3)",        "en": "Boot/Crypto (T3)" },
+    "auth_identity":   { "ja": "Auth/Identity",           "en": "Auth/Identity" },
+    "networking":      { "ja": "Networking",              "en": "Networking" },
+    "rdp_remote":      { "ja": "RDP/Remote",              "en": "RDP/Remote" },
+    "hyperv_virtual":  { "ja": "Hyper-V/Virtual",         "en": "Hyper-V/Virtual" },
+    "kernel_driver":   { "ja": "Kernel/Driver",           "en": "Kernel/Driver" },
+    "graphics_media":  { "ja": "Graphics/Media",          "en": "Graphics/Media" },
+    "azure_cloud":     { "ja": "Azure/Cloud",             "en": "Azure/Cloud" },
+    "dotnet_dev":      { "ja": ".NET/Dev",                "en": ".NET/Dev" },
+    "mariner_linux":   { "ja": "Mariner/Linux",           "en": "Mariner/Linux" },
+    "win_services":    { "ja": "Win Services/Components",  "en": "Win Services/Components" },
+    "microsoft_other": { "ja": "Microsoft (other)",       "en": "Microsoft (other)" },
+    "other":           { "ja": "その他",                   "en": "Other" }
+  },
+  "legacy_aliases": {
+    "Edge/Chromium": "edge_chromium",
+    "Office/Word/Excel/PPT": "office",
+    "SharePoint": "sharepoint",
+    "Exchange": "exchange",
+    "SQL/Dynamics": "sql_dynamics",
+    "Boot/Crypto (T3)": "boot_crypto",
+    "Auth/Identity": "auth_identity",
+    "Networking": "networking",
+    "RDP/Remote": "rdp_remote",
+    "Hyper-V/Virtual": "hyperv_virtual",
+    "Kernel/Driver": "kernel_driver",
+    "Graphics/Media": "graphics_media",
+    "Azure/Cloud": "azure_cloud",
+    ".NET/Dev": "dotnet_dev",
+    "Mariner/Linux": "mariner_linux",
+    "Win Services/Components": "win_services",
+    "Microsoft (other)": "microsoft_other",
+    "その他": "other"
+  }
+}

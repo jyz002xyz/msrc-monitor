@@ -1,0 +1,231 @@
+#!/usr/bin/env python3
+"""
+test_diff.py — diff.py の閾値判定・新規クレジット検出を固定する
+
+合成 state JSON をテスト内で生成して使う (実 API は叩かない)。
+既存 test_regression.py と同じく pytest 無しでも動くランナー付き。
+
+実行:
+    cd ~/msrc_monitor
+    python tests/test_diff.py
+"""
+import os
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+import diff
+
+
+# --- 合成 state ヘルパ -------------------------------------------------------
+def mk_state(month, cve_total=1000, t2=10, t3=2, critical=50,
+             credit_counts=None, zero_days=None):
+    return {
+        "month": month,
+        "fetched_at": f"{month}-fake",
+        "cve_total": cve_total,
+        "credited": 0,
+        "uncredited": 0,
+        "tier_count": {"T0/T1": cve_total - t2 - t3, "T2": t2, "T3": t3},
+        "severity_count": {"Critical": critical, "Important": 1, "Unrated": 1},
+        "credit_counts": credit_counts or {},
+        "zero_days": zero_days or [],
+    }
+
+
+TH = dict(diff.DEFAULT_THRESHOLDS)
+
+
+def diff_of(now, prev):
+    return diff.compute_diff(now, prev, now["month"], prev["month"], TH)
+
+
+# ===========================================================================
+# 総CVE ±50% 超で flag が立つ／立たない境界
+# ===========================================================================
+def test_cve_total_flag_over_threshold():
+    now = mk_state("2026-Jul", cve_total=1600)   # +60% > 50%
+    prev = mk_state("2026-Jun", cve_total=1000)
+    r = diff_of(now, prev)
+    assert r["changes"]["cve_total"]["flag"] is True
+    assert abs(r["changes"]["cve_total"]["pct"] - 0.6) < 1e-9
+
+
+def test_cve_total_no_flag_under_threshold():
+    now = mk_state("2026-Jul", cve_total=1400)   # +40% < 50%
+    prev = mk_state("2026-Jun", cve_total=1000)
+    r = diff_of(now, prev)
+    assert r["changes"]["cve_total"]["flag"] is False
+
+
+def test_cve_total_boundary_exactly_50pct_no_flag():
+    # ちょうど 50% は「超」ではないので flag は立たない
+    now = mk_state("2026-Jul", cve_total=1500)   # +50% ちょうど
+    prev = mk_state("2026-Jun", cve_total=1000)
+    r = diff_of(now, prev)
+    assert r["changes"]["cve_total"]["flag"] is False
+
+
+def test_cve_total_drop_flags():
+    # 減少方向でも絶対値 50% 超なら flag
+    now = mk_state("2026-Jul", cve_total=400)    # -60%
+    prev = mk_state("2026-Jun", cve_total=1000)
+    r = diff_of(now, prev)
+    assert r["changes"]["cve_total"]["flag"] is True
+
+
+# ===========================================================================
+# 重い層 T2+T3 が 1.5倍 の境界
+# ===========================================================================
+def test_heavy_flag_over_ratio():
+    now = mk_state("2026-Jul", t2=20, t3=5)      # 25
+    prev = mk_state("2026-Jun", t2=10, t3=2)     # 12 -> 25/12=2.08 > 1.5
+    r = diff_of(now, prev)
+    assert r["changes"]["heavy"]["flag"] is True
+
+
+def test_heavy_no_flag_under_ratio():
+    now = mk_state("2026-Jul", t2=12, t3=2)      # 14
+    prev = mk_state("2026-Jun", t2=10, t3=2)     # 12 -> 1.17 < 1.5
+    r = diff_of(now, prev)
+    assert r["changes"]["heavy"]["flag"] is False
+
+
+def test_heavy_boundary_exactly_1_5x_no_flag():
+    now = mk_state("2026-Jul", t2=15, t3=3)      # 18
+    prev = mk_state("2026-Jun", t2=10, t3=2)     # 12 -> 1.5 ちょうど
+    r = diff_of(now, prev)
+    assert r["changes"]["heavy"]["ratio"] == 1.5
+    assert r["changes"]["heavy"]["flag"] is False
+
+
+def test_heavy_zero_prev_jump_flags():
+    # 前月 0 -> 今月 N は比率で表せないが重要なので flag
+    now = mk_state("2026-Jul", t2=3, t3=1)       # 4
+    prev = mk_state("2026-Jun", t2=0, t3=0)      # 0
+    r = diff_of(now, prev)
+    assert r["changes"]["heavy"]["ratio"] is None
+    assert r["changes"]["heavy"]["flag"] is True
+
+
+# ===========================================================================
+# 新規クレジット: 前月に無く今月にあるものだけが new_credits に入る
+#                 20件超だけに flag。前月にもあったものは new に入らない。
+# ===========================================================================
+def test_new_credit_detection_and_flag():
+    prev = mk_state("2026-Jun", credit_counts={"Alice": 5, "Bob": 100})
+    now = mk_state("2026-Jul", credit_counts={
+        "Alice": 8,                          # 前月にも居た -> new でない
+        "Kugelblitz with Microsoft": 39,     # 新規・20超 -> flag
+        "Newbie": 3,                         # 新規・20以下 -> flag なし
+    })
+    r = diff_of(now, prev)
+    names = {c["name"]: c for c in r["new_credits"]}
+    assert "Alice" not in names, "前月に存在した名前が new に混入"
+    assert "Bob" not in names
+    assert names["Kugelblitz with Microsoft"]["flag"] is True
+    assert names["Kugelblitz with Microsoft"]["count"] == 39
+    assert names["Newbie"]["flag"] is False
+    # 全件挙がる (機械が勝手に捨てない)
+    assert len(r["new_credits"]) == 2
+
+
+def test_new_credit_boundary_exactly_20_no_flag():
+    prev = mk_state("2026-Jun", credit_counts={})
+    now = mk_state("2026-Jul", credit_counts={"X": 20})   # ちょうど20は「超」でない
+    r = diff_of(now, prev)
+    assert r["new_credits"][0]["flag"] is False
+
+
+def test_new_credits_sorted_desc():
+    prev = mk_state("2026-Jun", credit_counts={})
+    now = mk_state("2026-Jul", credit_counts={"A": 3, "B": 30, "C": 10})
+    r = diff_of(now, prev)
+    counts = [c["count"] for c in r["new_credits"]]
+    assert counts == sorted(counts, reverse=True)
+
+
+# ===========================================================================
+# ゼロデイ uncredited のカウント
+# ===========================================================================
+def test_zero_day_uncredited_count():
+    zds = [
+        {"cve": "A", "credited": True},
+        {"cve": "B", "credited": False},
+        {"cve": "C", "credited": False},
+    ]
+    now = mk_state("2026-Jul", zero_days=zds)
+    prev = mk_state("2026-Jun")
+    r = diff_of(now, prev)
+    assert r["changes"]["zero_days_total"] == 3
+    assert r["changes"]["zero_days_uncredited"]["count"] == 2
+    assert r["changes"]["zero_days_uncredited"]["flag"] is True
+
+
+def test_zero_day_all_credited_no_flag():
+    zds = [{"cve": "A", "credited": True}]
+    now = mk_state("2026-Jul", zero_days=zds)
+    prev = mk_state("2026-Jun")
+    r = diff_of(now, prev)
+    assert r["changes"]["zero_days_uncredited"]["count"] == 0
+    assert r["changes"]["zero_days_uncredited"]["flag"] is False
+
+
+# ===========================================================================
+# 前月ファイル欠落時: 例外を投げず「比較対象なし」を返す
+# ===========================================================================
+def test_missing_prev_no_exception():
+    now = mk_state("2026-Jul")
+    r = diff.compute_diff(now, None, "2026-Jul", "2026-Jun", TH)
+    assert r["prev_available"] is False
+    assert r["any_flag"] is False
+    assert r["changes"] is None
+    assert r["new_credits"] == []
+    assert "比較対象なし" in r["note"]
+
+
+# ===========================================================================
+# any_flag は個別 flag の OR
+# ===========================================================================
+def test_any_flag_aggregation():
+    # 何も超えない -> any_flag False
+    now = mk_state("2026-Jul", cve_total=1050, t2=10, t3=2)
+    prev = mk_state("2026-Jun", cve_total=1000, t2=10, t3=2)
+    r = diff_of(now, prev)
+    assert r["any_flag"] is False
+
+    # ゼロデイ無しクレジット1件で any_flag True
+    now2 = mk_state("2026-Jul", cve_total=1050,
+                    zero_days=[{"cve": "X", "credited": False}])
+    r2 = diff_of(now2, prev)
+    assert r2["any_flag"] is True
+
+
+# ===========================================================================
+# prev_month_tag のヘルパ (年跨ぎ含む)
+# ===========================================================================
+def test_prev_month_tag():
+    assert diff.prev_month_tag("2026-Jul") == "2026-Jun"
+    assert diff.prev_month_tag("2026-Jan") == "2025-Dec"
+
+
+# --- pytest 無し環境でも動くランナー ----------------------------------------
+if __name__ == "__main__":
+    import traceback
+    tests = [v for k, v in sorted(globals().items())
+             if k.startswith("test_") and callable(v)]
+    passed = failed = 0
+    for t in tests:
+        try:
+            t()
+            print(f"  PASS  {t.__name__}")
+            passed += 1
+        except AssertionError as e:
+            print(f"  FAIL  {t.__name__}: {e}")
+            failed += 1
+        except Exception:
+            print(f"  ERROR {t.__name__}")
+            traceback.print_exc()
+            failed += 1
+    print(f"\n{passed} passed, {failed} failed")
+    sys.exit(1 if failed else 0)

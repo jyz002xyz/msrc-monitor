@@ -1,0 +1,7 @@
+{
+  "_comment": "diff.py の閾値。ここを編集すると上書きされる。削除するとコード内デフォルトが使われる。全て実数ベース (比率トレンドは判定に使わない)。",
+  "cve_total_pct": 0.50,
+  "heavy_ratio": 1.5,
+  "new_credit_min_cve": 20,
+  "zero_day_uncredited": 1
+}

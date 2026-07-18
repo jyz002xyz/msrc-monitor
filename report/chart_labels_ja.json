@@ -1,0 +1,9 @@
+{
+  "_note": "チャートの表示テキスト (タイトル・軸・注記)。gen_charts.py はここを読む (直書きしない)。匿名化ゲートの対象。注記は『事実 or 解釈』を意識する: 数字・時期の観察=事実(可)、因果の推測(特にMDASH等の名前からの因果)=不可。",
+  "months": ["1月", "2月", "3月", "4月", "5月", "6月", "7月"],
+  "count": "件数",
+  "c1": {"title": "総CVE件数の推移", "all": "CVRF全体", "core": "MS本体相当", "peak": "6月がピーク"},
+  "c2": {"title": "Critical・重い層(T2+T3)の推移", "crit": "Critical (全体)", "heavy": "重い層 T2+T3 (全体)", "peak_detail": "6月ピーク\n(Critical {crit} / 重い層 {heavy})"},
+  "c3": {"title": "クレジット \"Kugelblitz\" の出現 — 6ヶ月ゼロから7月に{n}件"},
+  "c4": {"title": "社内(with Microsoft系)クレジット件数の推移", "note": "7月に急増\n({prev}→{now})"}
+}

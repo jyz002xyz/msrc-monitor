@@ -1,0 +1,17 @@
+[Unit]
+Description=MSRC Patch Tuesday monitor (monthly)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+# deploy 時に実ユーザへ置換する (USER プレースホルダ)。
+User=USER
+WorkingDirectory=/home/USER/msrc_monitor
+# Pushover / healthchecks の秘匿値。git 管理外。deploy 時に Pi 上で手動作成。
+#   例: PUSHOVER_TOKEN=... / PUSHOVER_USER=... / HEALTHCHECK_URL=...
+EnvironmentFile=/home/USER/msrc_monitor/env.sh
+ExecStart=/home/USER/msrc_monitor/run_monthly.sh
+
+[Install]
+WantedBy=multi-user.target
