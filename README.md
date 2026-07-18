@@ -1,5 +1,7 @@
 # msrc_monitor
 
+*Read this in other languages: [日本語](README.ja.md)*
+
 A monitoring tool that fetches Microsoft's monthly Patch Tuesday primary data
 (MSRC CVRF), summarizes it into facts, and notifies only on **changes** — then
 helps generate a bilingual (Japanese / English) report from the frozen facts.
