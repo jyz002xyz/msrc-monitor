@@ -86,6 +86,17 @@ tests/               # regression + unit tests (run on synthetic data)
 systemd/             # optional service + timer for scheduled runs
 ```
 
+## Disclaimer
+
+This is a personal side project, driven by the author's own curiosity. Feedback
+of any kind — whether you agree, disagree, or have suggestions for improvement —
+is genuinely welcome, but please understand there is no commitment to respond to
+it or to act on it.
+
+The content may contain mistakes, and no guarantee is made as to its accuracy or
+completeness (see also the [LICENSE](LICENSE)). If you make use of anything here,
+please judge its correctness and suitability for yourself, at your own risk.
+
 ## License
 
 MIT — see [LICENSE](LICENSE).
