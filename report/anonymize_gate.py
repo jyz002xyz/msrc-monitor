@@ -107,11 +107,17 @@ def scan_commits_and_tracked(terms: list[str]) -> list[str]:
     (a personal name landing in a PR body / commit message / md source). If a bare
     given name shows up in a commit message or a tracked file, stop the push.
     """
+    import shutil
     import subprocess
     problems = []
+    # Resolve an absolute git path (avoids relying on PATH lookup). If git is not
+    # available, the checks cannot run -- same net result as the previous failure path.
+    git = shutil.which("git")
+    if not git:
+        return problems
     try:
         msgs = subprocess.check_output(
-            ["git", "log", "origin/main..HEAD", "--format=%H %s%n%b%n===="],
+            [git, "log", "origin/main..HEAD", "--format=%H %s%n%b%n===="],
             text=True, stderr=subprocess.DEVNULL)
     except Exception:
         msgs = ""
@@ -122,7 +128,7 @@ def scan_commits_and_tracked(terms: list[str]) -> list[str]:
     # tracked files (git grep). deny_terms.txt itself is gitignored, so it shouldn't appear.
     for t in terms:
         try:
-            r = subprocess.run(["git", "grep", "-il", t], capture_output=True, text=True)
+            r = subprocess.run([git, "grep", "-il", t], capture_output=True, text=True)
             files = [f for f in r.stdout.strip().splitlines()
                      if f and "deny_terms.txt" not in f]
             if files:

@@ -24,6 +24,7 @@ import argparse
 import datetime as dt
 import json
 import os
+import re
 import sys
 import time
 from pathlib import Path
@@ -35,6 +36,17 @@ import cvrf_parse as cp
 CVRF_URL = "https://api.msrc.microsoft.com/cvrf/v3.0/cvrf/{month}"
 MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
           "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+
+# Month tags look like "2026-Jul". Validate the format before it goes into a URL
+# or a file path (defense in depth against path traversal / URL injection).
+MONTH_TAG_RE = re.compile(r"^\d{4}-[A-Z][a-z]{2}$")
+
+
+def valid_month_tag(month: str) -> str:
+    """Return the month tag if it matches YYYY-Mon, else raise ValueError."""
+    if not isinstance(month, str) or not MONTH_TAG_RE.match(month):
+        raise ValueError(f"invalid month tag (expected e.g. 2026-Jul): {month!r}")
+    return month
 
 
 def home() -> Path:
@@ -73,7 +85,7 @@ def expand_range(start: str, end: str) -> list[str]:
 
 def fetch(month: str, timeout: int = 90, retries: int = 3) -> dict:
     """Fetch CVRF as JSON. Retries with exponential backoff."""
-    url = CVRF_URL.format(month=month)
+    url = CVRF_URL.format(month=valid_month_tag(month))
     last = None
     for attempt in range(retries):
         try:
@@ -133,6 +145,7 @@ def detect_revision(frozen: dict, fresh: dict, detected_at: str) -> dict | None:
 
 
 def collect_month(month: str, no_clobber: bool = False) -> dict | None:
+    valid_month_tag(month)   # reject malformed tags before building a file path
     path = state_dir() / f"{month}.json"
     if no_clobber and path.exists():
         print(f"  skip (exists): {month}")

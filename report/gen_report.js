@@ -269,7 +269,15 @@ function caption(text) {
 // ===========================================================================
 //  load state (facts)
 // ===========================================================================
-function loadState(m) { return JSON.parse(fs.readFileSync(path.join(STATE, `2026-${m}.json`), "utf8")); }
+// `m` only ever comes from the fixed MONTHS array / literals, but validate the
+// month abbreviation before building a path (defense in depth; no traversal).
+function loadState(m) {
+  if (!/^[A-Z][a-z]{2}$/.test(m)) throw new Error(`invalid month abbreviation: ${m}`);
+  // `m` is validated above and only ever comes from the fixed MONTHS array / literals;
+  // no external input reaches this path. Audit finding triaged as a false positive.
+  // nosemgrep: javascript.lang.security.audit.path-traversal.path-join-resolve-traversal.path-join-resolve-traversal
+  return JSON.parse(fs.readFileSync(path.join(STATE, `2026-${m}.json`), "utf8"));
+}
 const JUL = loadState("Jul");
 
 // KEV/EPSS live layer (gitignored, separate file). Returns null if absent (not generated / offline).

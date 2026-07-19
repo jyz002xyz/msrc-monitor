@@ -27,11 +27,18 @@ sys.path.insert(0, os.path.join(ROOT, "report"))
 import anonymize_gate as g
 
 
+def _tmpfile(suffix: str) -> Path:
+    """Create a temp file securely (mkstemp avoids mktemp's TOCTOU) and return its path."""
+    fd, name = tempfile.mkstemp(suffix=suffix)
+    os.close(fd)
+    return Path(name)
+
+
 # ===========================================================================
 # deny_terms: detect personal identifiers inside text/md files
 # ===========================================================================
 def test_personal_name_detected_in_md():
-    p = Path(tempfile.mktemp(suffix=".md"))
+    p = _tmpfile(".md")
     p.write_text("<!-- APPROVED (Testperson, 2026-07-17) -->\n人間（Testperson）が確認。",
                  encoding="utf-8")
     try:
@@ -44,7 +51,7 @@ def test_personal_name_detected_in_md():
 
 def test_bare_given_name_requires_bare_term():
     # 'testpersonx' (username-like) cannot catch a bare 'Testperson' (reproduces the blind spot)
-    p = Path(tempfile.mktemp(suffix=".md"))
+    p = _tmpfile(".md")
     p.write_text("approved by Testperson", encoding="utf-8")
     try:
         assert g.check_file(p, ["testpersonx"]) == [], "username term false-matched a given name"
@@ -54,7 +61,7 @@ def test_bare_given_name_requires_bare_term():
 
 
 def test_clean_text_no_hit():
-    p = Path(tempfile.mktemp(suffix=".md"))
+    p = _tmpfile(".md")
     p.write_text("reviewed and approved by the repository owner on 2026-07-17",
                  encoding="utf-8")
     try:
@@ -67,7 +74,7 @@ def test_clean_text_no_hit():
 # Chart annotations: detect a causal-implying MDASH; _note (ops memo) is exempt
 # ===========================================================================
 def test_chart_labels_catch_mdash():
-    p = Path(tempfile.mktemp(suffix=".json"))
+    p = _tmpfile(".json")
     p.write_text(json.dumps({"c4": {"note": "Surge (coincides with MDASH rollout)"}}))
     try:
         probs = g.check_chart_labels(p)
@@ -78,7 +85,7 @@ def test_chart_labels_catch_mdash():
 
 def test_chart_labels_note_field_ignored():
     # _note is a policy-explanation memo, so it is exempt even if it contains MDASH
-    p = Path(tempfile.mktemp(suffix=".json"))
+    p = _tmpfile(".json")
     p.write_text(json.dumps({"_note": "do not put MDASH causal claims here",
                              "c1": {"title": "Total CVE trend"}}))
     try:
@@ -88,7 +95,7 @@ def test_chart_labels_note_field_ignored():
 
 
 def test_chart_labels_clean():
-    p = Path(tempfile.mktemp(suffix=".json"))
+    p = _tmpfile(".json")
     p.write_text(json.dumps({"c4": {"note": "Surge in July ({prev}->{now})"}}))
     try:
         assert g.check_chart_labels(p) == []
