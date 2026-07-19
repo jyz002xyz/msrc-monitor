@@ -10,14 +10,52 @@
 # Install:  ln -sf ../../report/hooks/pre-push .git/hooks/pre-push
 #   (or: cp report/hooks/pre-push .git/hooks/pre-push && chmod +x .git/hooks/pre-push)
 #
-set -euo pipefail
-cd "$(git rev-parse --show-toplevel)"
-# shellcheck disable=SC1091
-source .venv312/bin/activate 2>/dev/null || true
+# Robustness: this hook must NEVER fail silently. Earlier it ran under
+# `set -euo pipefail` and invoked bare `python`, so on a third-party clone with
+# no .venv312 (and possibly no `python`) it could die or behave opaquely with no
+# explanation. Now it selects an interpreter explicitly, always prints what it
+# did, and — if no Python exists at all — warns and lets the push through rather
+# than blocking with a misleading message.
+#
+# `set -e` is intentionally NOT used: we handle every failure branch explicitly.
+set -uo pipefail
 
-if ! python report/anonymize_gate.py --check-scrub; then
-  echo "" >&2
-  echo "[pre-push] BLOCKED: a personally-identifying term remains in a commit message / tracked file." >&2
-  echo "[pre-push] Remove it before pushing (use --no-verify only if absolutely necessary)." >&2
-  exit 1
+# Move to the repo root (needed to find report/anonymize_gate.py). If this fails
+# we are not in a git work tree; say so and don't block.
+if ! root="$(git rev-parse --show-toplevel 2>/dev/null)"; then
+  echo "[pre-push] WARNING: not inside a git work tree — deny_terms scrub SKIPPED." >&2
+  exit 0
 fi
+cd "$root" || { echo "[pre-push] WARNING: cannot cd to repo root — scrub SKIPPED." >&2; exit 0; }
+
+# Pick a Python interpreter: prefer the project venv, then python3, then python.
+PY=""
+if [ -x ".venv312/bin/python" ]; then
+  PY=".venv312/bin/python"
+elif command -v python3 >/dev/null 2>&1; then
+  PY="python3"
+elif command -v python >/dev/null 2>&1; then
+  PY="python"
+fi
+
+if [ -z "$PY" ]; then
+  echo "[pre-push] WARNING: no Python interpreter found (no .venv312, no python3/python)." >&2
+  echo "[pre-push] deny_terms scrub SKIPPED — push allowed. Install Python to enable the privacy check." >&2
+  exit 0
+fi
+
+echo "[pre-push] running deny_terms scrub with: $PY" >&2
+# Capture the gate's exit code directly (set -e is off, so a non-zero result does
+# not abort the script). Do NOT read $? after an `if ... fi` — that reports the
+# `if` statement's status (0 on a false condition with no else), which would let
+# a real hit through with exit 0.
+"$PY" report/anonymize_gate.py --check-scrub
+rc=$?
+if [ "$rc" -eq 0 ]; then
+  exit 0
+fi
+
+echo "" >&2
+echo "[pre-push] BLOCKED: a personally-identifying term remains in a commit message / tracked file." >&2
+echo "[pre-push] Remove it before pushing (use --no-verify only if absolutely necessary)." >&2
+exit "$rc"
