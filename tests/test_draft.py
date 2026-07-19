@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
 """
-test_draft.py — draft.py が事実のみを出し、解釈・帰属を出さないことを固定する
+test_draft.py — lock in that draft.py emits facts only, with no interpretation or attribution
 
-帰属禁止をテストで保証する: draft.py が emit する本文に評価語・帰属語が
-出現しないことを assert する。
+Enforce the no-attribution rule via tests: assert that no evaluative or
+attribution words appear in the body draft.py emits. (The draft body is
+intentionally Japanese, so the words checked here are Japanese.)
 
-合成 state を使い、file IO を避けて render() を直接叩く。
-既存テスト同様、pytest 無しでも動くランナー付き。
+Uses synthetic state and calls render() directly, avoiding file IO.
+Like the other tests, it ships with a runner that works without pytest.
 
-実行:
+Run:
     cd ~/msrc_monitor
     python tests/test_draft.py
 """
@@ -23,7 +24,7 @@ from test_diff import mk_state
 
 
 def build(now, prev):
-    """合成 state から (下書き全文, 本文=固定ヘッダ除去後) を返す。"""
+    """Return (full draft, body=after removing the fixed header) from synthetic state."""
     rep = diff.compute_diff(now, prev, now["month"], prev["month"],
                             diff.DEFAULT_THRESHOLDS)
     full = draft.render(now["month"], rep, now)
@@ -33,25 +34,26 @@ def build(now, prev):
 
 
 # ===========================================================================
-# 固定ヘッダが含まれる
+# the fixed header is present
 # ===========================================================================
 def test_fixed_header_present():
     now = mk_state("2026-Jul")
     prev = mk_state("2026-Jun")
     full, _ = build(now, prev)
     assert "これは機械生成の事実記録です" in full
-    assert "Kugelblitz=MDASH" in full          # 教訓の明示
+    assert "Kugelblitz=MDASH" in full          # the lesson is spelled out
     assert "取得日" in full
 
 
 # ===========================================================================
-# 本文 (ヘッダ除く) に評価語・帰属語が出現しない
-#   ※ ヘッダは警告として意図的にこれらの語を含むので除外して判定する
+# the body (excluding the header) contains no evaluative or attribution words
+#   note: the header intentionally contains these words as a warning, so it is
+#   excluded before checking
 # ===========================================================================
 def test_no_evaluative_or_attribution_words_in_body():
-    # クレジット名は forbidden な部分文字列を含まない合成値にする
-    # (実データの "AIフィジカル..." 等は事実として通すが、ここでは
-    #  draft.py 自身が語を足していないことを検証したいので clean にする)
+    # use synthetic credit names that contain no forbidden substrings
+    # (real-data names would pass through as facts, but here we want to verify
+    #  draft.py itself does not add any such words, so we keep them clean)
     now = mk_state("2026-Jul", cve_total=1600, t2=20, t3=5,
                    credit_counts={"Kugelblitz with Microsoft": 39, "Newbie": 3},
                    zero_days=[{"cve": "CVE-2026-1", "severity": "Critical",
@@ -61,15 +63,16 @@ def test_no_evaluative_or_attribution_words_in_body():
                     credit_counts={"Alice": 5})
     _, body = build(now, prev)
 
+    # forbidden words are Japanese because the draft body is Japanese output
     forbidden = ["危険", "MDASH", "考えられる", "と思われる", "推測",
                  "帰属", "AI が", "AIが", "だろう", "懸念", "深刻な"]
     for w in forbidden:
-        assert w not in body, f"本文に評価語/帰属語 '{w}' が混入: draft.py が語を足している"
+        assert w not in body, f"evaluative/attribution word '{w}' in the body: draft.py is adding words"
 
 
 def test_no_bare_AI_word_when_data_clean():
-    # データ側に AI を含む名が無ければ、本文にも AI は出ない
-    # (draft.py が勝手に 'AI' を書かないことの確認)
+    # if no name on the data side contains 'AI', 'AI' must not appear in the body
+    # (verifies draft.py does not write 'AI' on its own)
     now = mk_state("2026-Jul", credit_counts={"Kugelblitz with Microsoft": 39})
     prev = mk_state("2026-Jun", credit_counts={})
     _, body = build(now, prev)
@@ -77,7 +80,7 @@ def test_no_bare_AI_word_when_data_clean():
 
 
 # ===========================================================================
-# flag が立った項目が太字になっている
+# flagged items are shown in bold
 # ===========================================================================
 def test_flagged_items_bold():
     now = mk_state("2026-Jul", cve_total=1600, t2=20, t3=5,   # cve +60%, heavy 2x
@@ -86,15 +89,15 @@ def test_flagged_items_bold():
     prev = mk_state("2026-Jun", cve_total=1000, t2=10, t3=2,
                     credit_counts={})
     _, body = build(now, prev)
-    # 閾値超過は太字 + 「閾値超過」表記。評価語は付けない。
+    # threshold-exceeded items are bold + carry the "閾値超過" marker. No evaluative words.
     assert "**" in body
     assert "閾値超過" in body
-    # 新規クレジット (39件, 20超) が太字で出る
+    # the new credit (39, over 20) is shown in bold
     assert "**Kugelblitz with Microsoft（閾値超過）**" in body
 
 
 def test_unflagged_not_bold():
-    # 何も閾値を超えない場合、「閾値超過」表記が本文に出ない
+    # when nothing exceeds a threshold, the "閾値超過" marker does not appear in the body
     now = mk_state("2026-Jul", cve_total=1050, t2=10, t3=2,
                    credit_counts={"Newbie": 3}, zero_days=[])
     prev = mk_state("2026-Jun", cve_total=1000, t2=10, t3=2,
@@ -104,7 +107,8 @@ def test_unflagged_not_bold():
 
 
 # ===========================================================================
-# 前月ファイル欠落時も下書きは生成される (比較対象なしと明示)
+# the draft is still generated when the previous-month file is missing
+# (explicitly marked as "no comparison target")
 # ===========================================================================
 def test_draft_when_no_prev():
     now = mk_state("2026-Jul")
@@ -112,10 +116,10 @@ def test_draft_when_no_prev():
                             diff.DEFAULT_THRESHOLDS)
     full = draft.render("2026-Jul", rep, now)
     assert "比較対象なし" in full
-    assert "これは機械生成の事実記録です" in full   # ヘッダは必ず付く
+    assert "これは機械生成の事実記録です" in full   # the header is always present
 
 
-# --- pytest 無し環境でも動くランナー ----------------------------------------
+# --- runner that also works without pytest ----------------------------------
 if __name__ == "__main__":
     import traceback
     tests = [v for k, v in sorted(globals().items())

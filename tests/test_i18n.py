@@ -1,21 +1,23 @@
 #!/usr/bin/env python3
 """
-test_i18n.py — 英語版レポートに日本語を出さない仕組みを固定する (恒久ガード)。
+test_i18n.py — permanent guard ensuring the English report never emits Japanese.
 
-恒久方針 (案1):
-    製品カテゴリは言語中立の内部キー(英数字)で持ち、日英の表示は
-    report/category_labels.json のマップ経由でのみ描画する。
-    → 英語版に日本語(その他 等)が混入しない。将来カテゴリが増えても、
-      マップ未登録なら「テスト失敗」で検出できる (虫食い再発を防ぐ)。
+Design (permanent policy):
+    Product categories are held as language-neutral internal keys (alphanumeric),
+    and the JA/EN display text is rendered only through the map in
+    report/category_labels.json.
+    -> No Japanese (e.g. "other") leaks into the English report. If a new
+      category is added later without a map entry, the test fails and flags it
+      (prevents regressions from creeping back in).
 
-検査 (生成物のビルドではなく、英語版描画に使う文字列群を静的に検査する):
-    1. カテゴリ内部キーが英数字のみ (言語非依存)。
-    2. product_cat が出しうる全キーが labels に登録済み (未登録キー検出)。
-    3. 凍結 state の product_count キー(旧表示名)が legacy_aliases 経由で解決する。
-    4. 英語版に流れる文字列(カテゴリen・chart_labels_en・gen_report.js の en ブロック)
-       に日本語が無い。
+Checks (static inspection of the strings used for English rendering, not a full build):
+    1. Category internal keys are alphanumeric only (language-independent).
+    2. Every key product_cat can emit is registered in labels (unregistered-key check).
+    3. product_count keys from frozen state (legacy display names) resolve via legacy_aliases.
+    4. The strings that flow into the English report (category en, chart_labels_en,
+       and the en block of gen_report.js) contain no Japanese.
 
-実行:
+Run:
     python tests/test_i18n.py
 """
 import json
@@ -28,7 +30,7 @@ sys.path.insert(0, ROOT)
 
 import cvrf_parse as cp
 
-# ひらがな/カタカナ/半角カナ/CJK統合漢字
+# Hiragana / Katakana / half-width Katakana / CJK unified ideographs
 JP = re.compile(r"[぀-ヿ㐀-䶿一-鿿ｦ-ﾟ]")
 KEY_RE = re.compile(r"^[a-z0-9_]+$")
 
@@ -39,40 +41,42 @@ def _catmap():
 
 
 def _all_product_cat_keys():
-    """product_cat が返しうる全内部キー (PRODUCT_CATS + フォールバック)。"""
+    """All internal keys product_cat can return (PRODUCT_CATS + fallback)."""
     return {name for name, _ in cp.PRODUCT_CATS} | {cp.PRODUCT_CAT_FALLBACK}
 
 
 # ---------------------------------------------------------------------------
-# 1. 内部キーは言語中立 (英数字のみ)
+# 1. Internal keys are language-neutral (alphanumeric only)
 # ---------------------------------------------------------------------------
 def test_category_keys_are_language_neutral():
     for k in _all_product_cat_keys():
-        assert KEY_RE.match(k), f"product_cat の内部キーに英数字以外: {k!r}"
+        assert KEY_RE.match(k), f"non-alphanumeric char in product_cat internal key: {k!r}"
     for k in _catmap()["labels"]:
-        assert KEY_RE.match(k), f"labels キーに英数字以外: {k!r}"
+        assert KEY_RE.match(k), f"non-alphanumeric char in labels key: {k!r}"
 
 
 # ---------------------------------------------------------------------------
-# 2. マップ完全性: 未登録キーを検出する
+# 2. Map completeness: detect unregistered keys
 # ---------------------------------------------------------------------------
 def test_every_category_key_is_registered():
     cm = _catmap()
     labels = cm["labels"]
     missing = sorted(k for k in _all_product_cat_keys() if k not in labels)
-    assert not missing, f"labels 未登録の内部キー (英語版が壊れる): {missing}"
-    # legacy_aliases の指す先も全て labels に存在
+    assert not missing, f"internal keys not registered in labels (breaks English report): {missing}"
+    # Every target of legacy_aliases must also exist in labels
     bad = sorted(v for v in cm["legacy_aliases"].values() if v not in labels)
-    assert not bad, f"legacy_aliases が未登録キーを指す: {bad}"
-    # 各ラベルは ja/en を持つ
+    assert not bad, f"legacy_aliases points to an unregistered key: {bad}"
+    # Each label must have both ja and en
     for k, e in labels.items():
-        assert "ja" in e and "en" in e, f"{k} に ja/en 欠落"
+        assert "ja" in e and "en" in e, f"{k} is missing ja/en"
 
 
 # ---------------------------------------------------------------------------
-# 3. product_count のキー(内部キー、および凍結 state に残りうる旧表示名)が
-#    labels/legacy_aliases で全て解決できる (凍結データは書き換えず参照時に正規化)。
-#    実 state は同梱しないため、合成 fixture 由来 + 旧表示名(legacy)の両方で検証する。
+# 3. product_count keys (internal keys, plus legacy display names that may
+#    linger in frozen state) all resolve via labels/legacy_aliases (frozen data
+#    is normalized at read time, not rewritten).
+#    Real state is not bundled, so verify with both synthetic-fixture keys and
+#    legacy display names.
 # ---------------------------------------------------------------------------
 def test_product_count_keys_resolve():
     cm = _catmap()
@@ -81,45 +85,45 @@ def test_product_count_keys_resolve():
     def resolve(k):
         return legacy.get(k, k) in labels
 
-    # (a) 合成 fixture を summarize した product_count の内部キー
+    # (a) Internal keys of product_count from summarizing the synthetic fixture
     fixture = os.path.join(ROOT, "tests", "fixtures", "2026-Jul-cvrf-reduced.json")
     with open(fixture, encoding="utf-8") as f:
         s = cp.summarize(json.load(f), "2026-Jul", "synthetic")
     for k in s["product_count"]:
-        assert resolve(k), f"合成 product_count キー {k!r} が解決できない"
+        assert resolve(k), f"synthetic product_count key {k!r} does not resolve"
 
-    # (b) 旧表示名(凍結 state 由来を模す)も legacy_aliases 経由で解決する
+    # (b) Legacy display names (mimicking frozen state) also resolve via legacy_aliases
     for legacy_name in legacy:
-        assert resolve(legacy_name), f"旧表示名 {legacy_name!r} が解決できない"
+        assert resolve(legacy_name), f"legacy display name {legacy_name!r} does not resolve"
 
 
 # ---------------------------------------------------------------------------
-# 4. 英語版に流れる文字列に日本語が無い
+# 4. Strings that flow into the English report contain no Japanese
 # ---------------------------------------------------------------------------
 def test_english_category_labels_have_no_japanese():
     for k, e in _catmap()["labels"].items():
-        assert not JP.search(e["en"]), f"英語カテゴリラベルに日本語: {k} -> {e['en']!r}"
+        assert not JP.search(e["en"]), f"Japanese in English category label: {k} -> {e['en']!r}"
 
 
 def test_english_chart_labels_have_no_japanese():
     with open(os.path.join(ROOT, "report", "chart_labels_en.json"), encoding="utf-8") as f:
         text = f.read()
     hits = JP.findall(text)
-    assert not hits, f"chart_labels_en.json に日本語: {sorted(set(hits))}"
+    assert not hits, f"Japanese in chart_labels_en.json: {sorted(set(hits))}"
 
 
 def test_gen_report_en_block_has_no_japanese():
-    """gen_report.js の en: ラベルブロック(英語版描画文字列)に日本語が無いこと。"""
+    """The en: label block of gen_report.js (English render strings) has no Japanese."""
     with open(os.path.join(ROOT, "report", "gen_report.js"), encoding="utf-8") as f:
         js = f.read()
     m = re.search(r"\n  en: \{(.*)\n  \},\n\};", js, re.S)
-    assert m, "gen_report.js の en: ブロックが特定できない (構造変更?)"
+    assert m, "cannot locate the en: block in gen_report.js (structure changed?)"
     hits = JP.findall(m.group(1))
-    assert not hits, f"gen_report.js の en ブロックに日本語: {sorted(set(hits))}"
+    assert not hits, f"Japanese in the en block of gen_report.js: {sorted(set(hits))}"
 
 
 # ---------------------------------------------------------------------------
-# ランナー (他テストと同じ素朴な形式)
+# Runner (same minimal form as the other tests)
 # ---------------------------------------------------------------------------
 if __name__ == "__main__":
     fns = [v for k, v in sorted(globals().items()) if k.startswith("test_") and callable(v)]

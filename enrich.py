@@ -1,27 +1,27 @@
 #!/usr/bin/env python3
 """
-enrich.py — KEV/EPSS 生成層 (凍結 state とは別のライブ層)
+enrich.py — KEV/EPSS generation layer (a live layer, separate from frozen state)
 
-★役割分担 (Phase 2 の核心) ★
-    - CISA KEV = 通知トリガー (離散イベント。載る/載らないで揺れない)。
-      → 前回実行の kev_listed との差分 (新規収載) を edge-triggered 通知する。
-    - FIRST EPSS = レポート内の分析材料 (毎日更新・値が揺れる時系列)。
-      → 通知トリガーには絶対に使わない (原則②: 取得ラグで壊れる値を通知に使わない)。
-      → レポートに「取得時点 (epss_asof) 付き」で提示する。最新+1世代前のみ保持。
+Division of roles (the heart of Phase 2):
+    - CISA KEV = notification trigger (a discrete event; doesn't wobble on listed/not-listed).
+      -> Edge-triggers a notification on the diff from the previous run's kev_listed (new additions).
+    - FIRST EPSS = analysis material inside the report (updated daily; a time series that wobbles).
+      -> Never used as a notification trigger (principle #2: don't trigger on values that break with fetch lag).
+      -> Presented in the report "with a fetch timestamp (epss_asof)". Keep only the latest + one prior generation.
 
-★凍結原則の厳守★
-    月次の凍結 state (state/2026-*.json) は一切書き換えない。KEV/EPSS は
-    state/enrichment.json (gitignore・ライブ) に持つ。対象CVEは生CVRFから毎回導出し、
-    凍結 state に依存しない。
+Strict adherence to the freeze principle:
+    Never rewrite the monthly frozen state (state/2026-*.json). KEV/EPSS live in
+    state/enrichment.json (gitignored, live). Target CVEs are re-derived from the raw
+    CVRF every time and do not depend on frozen state.
 
-★帰属・因果の禁止★
-    KEV/EPSS の数値から発見主体や「AI発見」等を断定しない。数値と時点の事実のみ。
+No attribution or causation:
+    Never assert a finder or "AI-discovered" etc. from KEV/EPSS numbers. Only the facts of the numbers and their timestamps.
 
-使い方:
-    python enrich.py 2026-Jul            # 対象CVEを KEV/EPSS 照合し enrichment.json 更新
-    python enrich.py 2026-Jul --fixture  # 生CVRFに fixture を使う (凍結月・オフライン用)
+Usage:
+    python enrich.py 2026-Jul            # match target CVEs against KEV/EPSS and update enrichment.json
+    python enrich.py 2026-Jul --fixture  # use a fixture for the raw CVRF (frozen months / offline)
 
-到達不能 (AIサンドボックス等) では取得をスキップし asof=null で残す (落ちない)。
+When unreachable (AI sandbox etc.) it skips fetching and leaves asof=null (does not crash).
 """
 from __future__ import annotations
 
@@ -39,7 +39,7 @@ import cvrf_parse as cp
 CISA_KEV_URL = ("https://www.cisa.gov/sites/default/files/feeds/"
                 "known_exploited_vulnerabilities.json")
 EPSS_URL = "https://api.first.org/data/v1/epss"
-EPSS_BATCH = 100  # 1リクエストの CVE 数上限 (負荷・URL長対策)
+EPSS_BATCH = 100  # max CVEs per request (guards load and URL length)
 
 FIXTURE = Path(__file__).resolve().parent / "tests" / "fixtures" / "2026-Jul-cvrf-reduced.json"
 
@@ -59,23 +59,23 @@ def enrichment_path() -> Path:
     return state_dir() / "enrichment.json"
 
 
-# --- 取得 (到達不能なら None を返す。落とさない) -----------------------------
+# --- Fetch (returns None if unreachable. Does not crash) ----------------------
 def fetch_kev(timeout: int = 30) -> set[str] | None:
-    """CISA KEV カタログ全体の CVE-ID 集合。到達不能なら None。"""
+    """Set of CVE-IDs in the entire CISA KEV catalog. None if unreachable."""
     try:
         r = requests.get(CISA_KEV_URL, timeout=timeout)
         r.raise_for_status()
         data = r.json()
         return {v.get("cveID") for v in data.get("vulnerabilities", []) if v.get("cveID")}
     except Exception as e:
-        print(f"[enrich] KEV 取得スキップ (到達不能): {e}", file=sys.stderr)
+        print(f"[enrich] skipping KEV fetch (unreachable): {e}", file=sys.stderr)
         return None
 
 
 def fetch_epss(cve_ids: list[str], timeout: int = 30) -> dict | None:
-    """対象CVEの EPSS を取得。{cve: {epss, percentile}} と date。到達不能なら None。
+    """Fetch EPSS for the target CVEs. {cve: {epss, percentile}} plus date. None if unreachable.
 
-    戻り: (scores: dict, date: str) / 失敗時 None
+    Returns: (scores: dict, date: str) / None on failure
     """
     if not cve_ids:
         return {"scores": {}, "date": None}
@@ -98,7 +98,7 @@ def fetch_epss(cve_ids: list[str], timeout: int = 30) -> dict | None:
                 date = row.get("date") or date
         return {"scores": scores, "date": date}
     except Exception as e:
-        print(f"[enrich] EPSS 取得スキップ (到達不能): {e}", file=sys.stderr)
+        print(f"[enrich] skipping EPSS fetch (unreachable): {e}", file=sys.stderr)
         return None
 
 
@@ -118,14 +118,14 @@ def _now_iso() -> str:
 
 def build_enrichment(month: str, targets: list[dict], kev_all: set[str] | None,
                      epss: dict | None, prev: dict, now_iso: str) -> dict:
-    """対象CVE・KEV・EPSS から enrichment dict を組み立てる。
+    """Assemble the enrichment dict from target CVEs, KEV, and EPSS.
 
-    KEV 差分 (kev_new) = 今回 kev_listed - 前回 kev_listed (edge-trigger 用)。
-    EPSS は最新 (epss) と 1世代前 (epss_prev) のみ。Δは通知に使わない。
+    KEV diff (kev_new) = this run's kev_listed - previous run's kev_listed (for edge-triggering).
+    EPSS keeps only the latest (epss) and one prior generation (epss_prev). The delta is not used for notifications.
     """
     target_ids = [t["cve"] for t in targets]
 
-    # --- KEV 照合 (対象CVEのうち KEV 収載済み) ---
+    # --- KEV match (target CVEs already listed in KEV) ---
     if kev_all is None:
         kev_listed = None
         kev_asof = None
@@ -135,12 +135,12 @@ def build_enrichment(month: str, targets: list[dict], kev_all: set[str] | None,
     prev_kev = set(prev.get("kev_listed") or [])
     kev_new = sorted(set(kev_listed or []) - prev_kev) if kev_listed is not None else []
 
-    # --- EPSS (最新 + 1世代前) ---
+    # --- EPSS (latest + one prior generation) ---
     if epss is None:
         epss_scores, epss_asof = None, None
     else:
         epss_scores, epss_asof = epss["scores"], epss["date"]
-    # 1世代前 = 前回の epss (それ以前は残さない=単独指標化を防ぐ)
+    # one prior generation = the previous run's epss (nothing older is kept = avoid a standalone metric)
     epss_prev = prev.get("epss")
     epss_prev_asof = prev.get("epss_asof")
 
@@ -149,43 +149,43 @@ def build_enrichment(month: str, targets: list[dict], kev_all: set[str] | None,
         "generated_at": now_iso,
         "target_count": len(targets),
         "target_cves": targets,
-        # --- KEV: 通知トリガー (離散) ---
+        # --- KEV: notification trigger (discrete) ---
         "kev_asof": kev_asof,
         "kev_listed": kev_listed,
         "kev_new": kev_new,
-        # --- EPSS: レポート参考 (時点付き・通知に使わない) ---
+        # --- EPSS: report reference (timestamped; not used for notifications) ---
         "epss_asof": epss_asof,
         "epss": epss_scores,
         "epss_prev": epss_prev,
         "epss_prev_asof": epss_prev_asof,
-        "_note": ("KEV=通知トリガー(離散イベント)。EPSS=レポート参考(取得時点付き・"
-                  "日々変動・通知やトレンド線に単独使用しない)。凍結 state は不変。"
-                  "KEV/EPSS の数値から発見主体・因果を断定しない。"),
+        "_note": ("KEV=notification trigger (discrete event). EPSS=report reference "
+                  "(timestamped; varies daily; never used alone for notifications or trend lines). "
+                  "Frozen state is immutable. Do not assert a finder or causation from KEV/EPSS numbers."),
     }
 
 
 def get_raw_doc(month: str, use_fixture: bool, fetch_fn=None) -> dict | None:
-    """対象CVE導出用の生CVRF。fixture 指定時は fixture、それ以外は取得。"""
+    """Raw CVRF for deriving target CVEs. Uses the fixture when specified, otherwise fetches."""
     if use_fixture:
         return json.loads(FIXTURE.read_text())
     try:
         import collect
         return (fetch_fn or collect.fetch)(month)
     except Exception as e:
-        print(f"[enrich] CVRF 取得スキップ (到達不能): {e}", file=sys.stderr)
+        print(f"[enrich] skipping CVRF fetch (unreachable): {e}", file=sys.stderr)
         return None
 
 
 def enrich(month: str, use_fixture: bool = False, raw_doc: dict | None = None,
            kev_all=None, epss=None, fetch_kev_fn=fetch_kev,
            fetch_epss_fn=fetch_epss) -> dict | None:
-    """月の対象CVEを KEV/EPSS 照合し enrichment.json を更新する。
+    """Match the month's target CVEs against KEV/EPSS and update enrichment.json.
 
-    テスト用に raw_doc / kev_all / epss を注入可能。未注入なら実取得 (到達不能でスキップ)。
+    raw_doc / kev_all / epss can be injected for testing. If not injected, they are fetched live (skipped when unreachable).
     """
     doc = raw_doc if raw_doc is not None else get_raw_doc(month, use_fixture)
     if doc is None:
-        print("[enrich] 生CVRF が得られないため中止 (enrichment 未更新)")
+        print("[enrich] aborting: raw CVRF unavailable (enrichment not updated)")
         return None
     targets = cp.target_cves_from_doc(doc)
     target_ids = [t["cve"] for t in targets]
@@ -199,7 +199,7 @@ def enrich(month: str, use_fixture: bool = False, raw_doc: dict | None = None,
     now_iso = _now_iso()
     enr = build_enrichment(month, targets, kev_all, epss, prev, now_iso)
 
-    # 原子的書き込み
+    # atomic write
     p = enrichment_path()
     tmp = p.with_suffix(".json.tmp")
     tmp.write_text(json.dumps(enr, ensure_ascii=False, indent=2))
@@ -208,16 +208,16 @@ def enrich(month: str, use_fixture: bool = False, raw_doc: dict | None = None,
     kev_n = len(enr["kev_new"])
     kl = "n/a" if enr["kev_listed"] is None else str(len(enr["kev_listed"]))
     ep = "n/a" if enr["epss"] is None else str(len(enr["epss"]))
-    print(f"[enrich] {month}: target {enr['target_count']} / KEV 収載 {kl} "
-          f"(新規 {kev_n}) / EPSS {ep} (asof {enr['epss_asof']})")
+    print(f"[enrich] {month}: target {enr['target_count']} / KEV listed {kl} "
+          f"(new {kev_n}) / EPSS {ep} (asof {enr['epss_asof']})")
     return enr
 
 
 def main() -> int:
-    ap = argparse.ArgumentParser(description="KEV/EPSS enrichment (KEV=通知・EPSS=参考)")
-    ap.add_argument("month", help="対象月 例: 2026-Jul")
+    ap = argparse.ArgumentParser(description="KEV/EPSS enrichment (KEV=notification, EPSS=reference)")
+    ap.add_argument("month", help="target month e.g. 2026-Jul")
     ap.add_argument("--fixture", action="store_true",
-                    help="生CVRF に fixture を使う (凍結月・オフライン用)")
+                    help="use a fixture for the raw CVRF (frozen months / offline)")
     args = ap.parse_args()
     enr = enrich(args.month, use_fixture=args.fixture)
     return 0 if enr is not None else 1

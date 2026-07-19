@@ -1,13 +1,14 @@
 #!/usr/bin/env bash
 #
-# pre-push hook — push 前に deny_terms のスクラブ確認を行う。
+# pre-push hook — runs a deny_terms scrub check before pushing.
 #
-# ゲートが docx しか見ていなかったため、PR本文/コミットメッセージ/md source に
-# 個人名 (素の given name 等) が漏れた。その再発防止。commit message と追跡ファイルを
-# deny_terms (gitignore の report/deny_terms.txt) で照合し、ヒットで push を止める。
+# The gate used to look only at the docx, so a personal name (a bare given name, etc.) leaked
+# into a PR body / commit message / md source. This prevents that from happening again. It checks
+# commit messages and tracked files against deny_terms (report/deny_terms.txt, gitignored) and
+# blocks the push on a hit.
 #
-# インストール:  ln -sf ../../report/hooks/pre-push .git/hooks/pre-push
-#   (または cp report/hooks/pre-push .git/hooks/pre-push && chmod +x .git/hooks/pre-push)
+# Install:  ln -sf ../../report/hooks/pre-push .git/hooks/pre-push
+#   (or: cp report/hooks/pre-push .git/hooks/pre-push && chmod +x .git/hooks/pre-push)
 #
 set -euo pipefail
 cd "$(git rev-parse --show-toplevel)"
@@ -16,7 +17,7 @@ source .venv312/bin/activate 2>/dev/null || true
 
 if ! python report/anonymize_gate.py --check-scrub; then
   echo "" >&2
-  echo "[pre-push] BLOCKED: 個人特定語がコミットメッセージ/追跡ファイルに残っています。" >&2
-  echo "[pre-push] 除去してから push してください (どうしても必要なら --no-verify)。" >&2
+  echo "[pre-push] BLOCKED: a personally-identifying term remains in a commit message / tracked file." >&2
+  echo "[pre-push] Remove it before pushing (use --no-verify only if absolutely necessary)." >&2
   exit 1
 fi

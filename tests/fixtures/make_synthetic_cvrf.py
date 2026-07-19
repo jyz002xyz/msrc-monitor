@@ -1,26 +1,28 @@
 #!/usr/bin/env python3
 """
-make_synthetic_cvrf.py — テスト用の合成 CVRF フィクスチャを生成する。
+make_synthetic_cvrf.py — generate a synthetic CVRF fixture for tests.
 
-★このリポジトリには実際の MSRC 一次データを同梱しない★
-    実 CVRF には脆弱性報告者(第三者研究者)の氏名・SNSハンドル・メール等の
-    個人情報が含まれるため、プライバシー配慮から同梱しない。テストは本スクリプトが
-    生成する「合成データ(すべてダミー)」で動作する。
+*** This repository does not bundle any real MSRC primary data ***
+    Real CVRF data contains personal information about vulnerability reporters
+    (third-party researchers) -- names, social handles, emails -- so it is not
+    bundled, out of privacy considerations. Tests run on the synthetic data
+    (all dummy) that this script generates.
 
-生成物: tests/fixtures/2026-Jul-cvrf-reduced.json (構造は実 CVRF v3.0 と同形)
-実行:   python tests/fixtures/make_synthetic_cvrf.py
+Output: tests/fixtures/2026-Jul-cvrf-reduced.json (same structure as real CVRF v3.0)
+Run:    python tests/fixtures/make_synthetic_cvrf.py
 
-含める個人情報は一切なし。研究者名は Researcher A/B..、メールは example.com
-(RFC 2606 予約ドメイン=実在しない)、ハンドルは @researcher_x のダミーのみ。
+No personal information is included. Researcher names are Researcher A/B..,
+emails use example.com (RFC 2606 reserved domain = does not exist), and handles
+are dummy values like @researcher_x.
 """
 import json
 import os
 
-THREAT_IMPACT = 3      # cvrf_parse.THREAT_IMPACT と同値 (Type=3: Impact/Severity)
+THREAT_IMPACT = 3      # same as cvrf_parse.THREAT_IMPACT (Type=3: Impact/Severity)
 THREAT_SEVERITY = 3
 THREAT_EXPLOIT = 1     # Type=1: Exploitability/Status
 
-# --- ダミー発見者クレジット (実在の個人・組織を一切含まない) ---
+# --- Dummy finder credits (contain no real individuals or organizations) ---
 EXTERNAL = [
     "Researcher Alpha (@researcher_alpha) with Example Security Labs",
     "Researcher Bravo with Example Research",
@@ -31,8 +33,8 @@ EXTERNAL = [
 ]
 MS_INTERNAL = ["Example Test Team with Microsoft", "Sample Analyst with Microsoft"]
 ANON = "Anonymous"
-HASH = "0123456789abcdef0123456789abcdef"   # cvrf_parse: 16桁以上hex = 匿名ハッシュ識別子
-KUGEL = "Kugelblitz with Microsoft"          # プロジェクト内の教訓用の非人名クレジット
+HASH = "0123456789abcdef0123456789abcdef"   # cvrf_parse: hex of 16+ chars = anonymous hash identifier
+KUGEL = "Kugelblitz with Microsoft"          # non-personal-name credit for an in-project lesson
 
 
 def ack(*names):
@@ -65,13 +67,13 @@ def build():
         n[0] += 1
         vulns.append(vuln(f"CVE-2026-{40000 + n[0]}", title, sev, credit, exploit, disclosed))
 
-    # Edge/Chromium — 最大カテゴリ(裾野)。多くは低深刻度・様々な発見者。
+    # Edge/Chromium — largest category (the long tail). Mostly low severity, varied finders.
     for i in range(20):
         sev = "Moderate" if i % 3 else "Low"
         if i < 6:
             credit = [EXTERNAL[i % len(EXTERNAL)]]
         elif i < 9:
-            credit = [KUGEL]              # Kugelblitz は面(Edge)のみ・Critical でない
+            credit = [KUGEL]              # Kugelblitz appears only in Edge and is never Critical
         elif i < 12:
             credit = [ANON]
         elif i < 14:
@@ -82,12 +84,12 @@ def build():
             credit = None                 # uncredited
         add(f"Microsoft Edge (Chromium-based) Spoofing Vulnerability {i}", sev, credit)
 
-    # Office 系
+    # Office family
     for i in range(5):
         add(f"Microsoft Office Remote Code Execution Vulnerability {i}",
             "Important", [EXTERNAL[i % len(EXTERNAL)]])
 
-    # SharePoint (T2)。1件は悪用確認ゼロデイ。
+    # SharePoint (T2). One is an exploited zero-day.
     add("Microsoft SharePoint Server Elevation of Privilege Vulnerability A", "Critical",
         [EXTERNAL[0]], exploit="Exploited:Yes")
     add("Microsoft SharePoint Server Remote Code Execution Vulnerability B", "Important",
@@ -109,11 +111,11 @@ def build():
     add("Windows Graphics Component Elevation of Privilege Vulnerability", "Important", [EXTERNAL[2]])
     add("Windows Media Remote Code Execution Vulnerability", "Critical", [EXTERNAL[2]])
 
-    # Boot/Crypto (T3)。1件は公開済み(disclosed)ゼロデイ。
+    # Boot/Crypto (T3). One is a publicly disclosed zero-day.
     add("Windows BitLocker Security Feature Bypass Vulnerability", "Important",
         [ANON], disclosed=True)
 
-    # Auth/Identity。1件は悪用確認ゼロデイ(社内発見)。
+    # Auth/Identity. One is an exploited zero-day (internally found).
     add("Active Directory Federation Services Elevation of Privilege Vulnerability", "Important",
         [MS_INTERNAL[0]], exploit="Exploited:Yes")
     add("Windows Kerberos Elevation of Privilege Vulnerability", "Important", [EXTERNAL[3]])
@@ -133,7 +135,7 @@ def build():
     # SQL/Dynamics
     add("Microsoft SQL Server Remote Code Execution Vulnerability", "Important", [EXTERNAL[0]])
 
-    # その他 (other) — カテゴリ未該当。<12% に収まる少数。
+    # other — no matching category. A small number kept under 12%.
     add("Wireless Wide Area Network Service Elevation of Privilege Vulnerability", "Important", [ANON])
     add("Windows Widget Board Information Disclosure Vulnerability", "Low", None)
 

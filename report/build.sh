@@ -1,12 +1,14 @@
 #!/usr/bin/env bash
 #
-# build.sh — ドラフト4形式 (日Word/英Word/日PDF/英PDF) を生成する。
+# build.sh — generates the draft in 4 formats (JA Word / EN Word / JA PDF / EN PDF).
 #
-# 事実は凍結 state から、解釈は interpretation/{ja,en}.md から。
-# テンプレート固定注記 (日付分離ヘッダ/MSRC改訂/§14中立性/§13免責) は生成側。
-# 匿名化ゲート (deny_terms) を通す。ヒットで生成失敗。
+# Facts come from the frozen state; interpretation from interpretation/{ja,en}.md.
+# Fixed template annotations (separated-date header / MSRC revision / §14 neutrality / §13 disclaimer)
+# are added at generation time.
+# Everything passes through the anonymization gate (deny_terms). A hit fails the build.
 #
-# ★このスクリプトは publish しない。★ 公開は report/publish.sh (人間承認) が別途行う。
+# *** This script does NOT publish. *** Publishing is handled separately by
+# report/publish.sh (human approval).
 #
 set -euo pipefail
 cd "$(dirname "$0")/.."   # repo root
@@ -22,7 +24,7 @@ echo "[build] 2/5 docx (ja/en) from state + interpretation"
 node report/gen_report.js --lang ja
 node report/gen_report.js --lang en
 
-echo "[build] 3/5 anonymization gate on docx + chart labels + interpretation源 (deny_terms + 因果示唆)"
+echo "[build] 3/5 anonymization gate on docx + chart labels + interpretation sources (deny_terms + causal-implication check)"
 python report/anonymize_gate.py drafts/report_ja.docx drafts/report_en.docx \
     report/chart_labels_ja.json report/chart_labels_en.json \
     interpretation/ja.md interpretation/en.md
@@ -32,10 +34,10 @@ if [ -x "$SOFFICE" ]; then
   "$SOFFICE" --headless --convert-to pdf --outdir drafts drafts/report_ja.docx >/dev/null
   "$SOFFICE" --headless --convert-to pdf --outdir drafts drafts/report_en.docx >/dev/null
 else
-  echo "[build] 警告: soffice が見つからない ($SOFFICE)。PDF をスキップ。" >&2
+  echo "[build] Warning: soffice not found ($SOFFICE). Skipping PDF." >&2
 fi
 
 echo "[build] 5/5 done. draft 4 formats:"
 ls -la drafts/report_*.docx drafts/report_*.pdf 2>/dev/null || true
-echo "[build] NOTE: これはドラフト。publish はしていない。"
-echo "[build]       公開は report/publish.sh (人間承認 + PENDING マーカー除去が必須)。"
+echo "[build] NOTE: this is a draft. It has NOT been published."
+echo "[build]       Publishing goes through report/publish.sh (requires human approval + removal of the PENDING marker)."

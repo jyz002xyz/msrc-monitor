@@ -1,17 +1,19 @@
 #!/usr/bin/env python3
 """
-test_snapshot_freeze.py — 月次スナップショット凍結ポリシー(の仕組み)を固定する。
+test_snapshot_freeze.py — lock in the mechanism of the monthly snapshot freeze policy.
 
-会計の締めと同じ発想。一度取得・レビューした過去月は確定値として凍結し、
-後の MSRC 改訂で上書きしない。改訂は別途 .revisions に記録する(数値は不変)。
+Same idea as closing the books in accounting: once a past month has been fetched and
+reviewed, it is frozen as a final value and never overwritten by a later MSRC revision.
+Revisions are recorded separately in .revisions (the numbers stay unchanged).
 
-★合成データで動作する★
-    実 MSRC 一次データ (研究者の個人情報を含む) は同梱しないため、確定した
-    過去月データそのものは検証しない。代わりに凍結・改訂検知の「仕組み」を、
-    合成データ/インメモリ値で検証する (これが再利用可能なロジック)。
+*Runs on synthetic data*
+    Real MSRC primary data (which contains researchers' personal information) is not
+    bundled, so the finalized past-month data itself is not verified. Instead, the freeze /
+    revision-detection mechanism is verified with synthetic data / in-memory values
+    (this is the reusable logic).
 
-実行:
-    python tests/fixtures/make_synthetic_cvrf.py   # 合成 fixture を生成
+Run:
+    python tests/fixtures/make_synthetic_cvrf.py   # generate the synthetic fixture
     python tests/test_snapshot_freeze.py
 """
 import json
@@ -29,22 +31,23 @@ FIXTURE = os.path.join(os.path.dirname(__file__), "fixtures",
 
 
 # ===========================================================================
-# summarize は凍結可能な構造 (集計フィールド一式) を生成する
+# summarize produces a freezable structure (a full set of aggregate fields)
 # ===========================================================================
 def test_summary_has_freezable_structure():
     doc = json.load(open(FIXTURE, encoding="utf-8"))
     s = cp.summarize(doc, "2026-Jul", "synthetic")
     for k in ("cve_total", "core_total", "severity_count", "tier_count",
               "product_count", "finder_bucket", "zero_days"):
-        assert k in s, f"集計フィールド {k} が無い"
+        assert k in s, f"aggregate field {k} is missing"
     assert isinstance(s["product_count"], dict) and s["product_count"]
     assert isinstance(s["finder_bucket"], dict) and s["finder_bucket"]
-    # 保存則: 母集団の分割が総数に一致
+    # conservation: the population partition equals the total
     assert s["core_total"] + s["excluded_total"] == s["cve_total"]
 
 
 # ===========================================================================
-# 改訂検知: 凍結値と異なる再取得値で差分が記録され、凍結 dict は不変
+# Revision detection: a re-fetch that differs from the frozen value records a diff,
+# and the frozen dict stays unchanged
 # ===========================================================================
 def test_revision_detection_records_without_overwrite():
     frozen = {
@@ -53,7 +56,7 @@ def test_revision_detection_records_without_overwrite():
         "kugelblitz": 0, "ms_internal": 34,
         "severity_count": {"Critical": 89}, "tier_count": {"T2": 42, "T3": 3},
     }
-    # MSRC が事後改訂した想定 (cve 減少・core 減少・critical 変化)
+    # assume MSRC revised it after the fact (cve down, core down, critical changed)
     fresh = {
         "cve_total": 1205, "core_total": 648, "credited": 215,
         "kugelblitz": 0, "ms_internal": 34,
@@ -66,7 +69,7 @@ def test_revision_detection_records_without_overwrite():
     assert rev["diff"]["cve_total"]["delta"] == -76
     assert rev["diff"]["core_total"]["delta"] == -76
     assert rev["diff"]["critical"]["delta"] == -4
-    # frozen dict は改変されない
+    # the frozen dict is not mutated
     assert frozen["cve_total"] == 1281
 
 
@@ -81,7 +84,7 @@ def test_revision_detection_no_change_returns_none():
 
 
 # ===========================================================================
-# collect_month は凍結月を上書きせず改訂を記録する (一時 home でモック)
+# collect_month records the revision without overwriting a frozen month (mocked in a temp home)
 # ===========================================================================
 def test_collect_month_preserves_frozen():
     home = tempfile.mkdtemp(prefix="msrc_freeze_test_")
@@ -97,7 +100,7 @@ def test_collect_month_preserves_frozen():
         }
         (sd / "2026-Jun.json").write_text(json.dumps(frozen, ensure_ascii=False))
 
-        # fetch をモックして「改訂後」データを返させる (空 = cve_total 0)
+        # mock fetch to return "revised" data (empty = cve_total 0)
         orig_fetch = collect.fetch
         collect.fetch = lambda m, **kw: {"Vulnerability": []}
         try:
@@ -105,20 +108,20 @@ def test_collect_month_preserves_frozen():
         finally:
             collect.fetch = orig_fetch
 
-        # 凍結値は保持されている
+        # the frozen values are preserved
         after = json.loads((sd / "2026-Jun.json").read_text())
-        assert after["cve_total"] == 1281, "凍結月が上書きされた"
+        assert after["cve_total"] == 1281, "the frozen month was overwritten"
         assert after["frozen"] is True
-        # 改訂が記録された
+        # the revision was recorded
         rp = sd / ".revisions" / "2026-Jun.json"
-        assert rp.exists(), "改訂記録が作られていない"
+        assert rp.exists(), "no revision record was created"
         rev = json.loads(rp.read_text())
         assert rev["diff"]["cve_total"]["revised"] == 0
     finally:
         os.environ.pop("MSRC_MONITOR_HOME", None)
 
 
-# --- pytest 無し環境でも動くランナー ----------------------------------------
+# --- runner that also works without pytest ----------------------------------
 if __name__ == "__main__":
     import traceback
     tests = [v for k, v in sorted(globals().items())

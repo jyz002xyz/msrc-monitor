@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """
-test_notify.py — notify.py の edge-triggered 通知を固定する
+test_notify.py — lock in notify.py's edge-triggered notification behavior
 
-requests.post をモックし、実 API を叩かない。
-一時 state ディレクトリ (MSRC_MONITOR_HOME) に合成 state を書いて評価する。
+Mocks requests.post so the real API is never called. Writes synthetic state
+into a temp state directory (MSRC_MONITOR_HOME) and evaluates against it.
 
-実行:
+Run:
     cd ~/msrc_monitor
     python tests/test_notify.py
 """
@@ -31,10 +31,10 @@ def _write_states(home, now, prev=None):
 
 
 def run_notify(now, prev, force=False, creds=True, clear_home=None):
-    """一時 home に state を書き、notify.notify を実行。post モックを返す。
+    """Write state into a temp home and run notify.notify. Returns the post mock.
 
-    diff/notify は import 済みだが home() は毎回 env を読むので、
-    MSRC_MONITOR_HOME を差し替えるだけで一時ディレクトリを向く。
+    diff/notify are already imported, but home() reads env each time, so pointing
+    MSRC_MONITOR_HOME at a temp directory is enough to redirect it there.
     """
     home = clear_home or tempfile.mkdtemp(prefix="msrc_notify_test_")
     _write_states(home, now, prev)
@@ -44,11 +44,11 @@ def run_notify(now, prev, force=False, creds=True, clear_home=None):
         env["PUSHOVER_TOKEN"] = "fake-token-do-not-log"
         env["PUSHOVER_USER"] = "fake-user-do-not-log"
     else:
-        # 認証情報を確実に消す
+        # make sure the credentials are cleared
         for k in ("PUSHOVER_TOKEN", "PUSHOVER_USER"):
             os.environ.pop(k, None)
 
-    # import はテスト先頭で1回だけ (キャッシュ汚染を避けるため関数内 import)
+    # import once at the top of the test (function-local import to avoid cache pollution)
     import notify
 
     with mock.patch.dict(os.environ, env, clear=False), \
@@ -59,7 +59,7 @@ def run_notify(now, prev, force=False, creds=True, clear_home=None):
 
 
 # ===========================================================================
-# flag 無しで --force なしなら post が呼ばれない
+# no flag and no --force -> post is not called
 # ===========================================================================
 def test_no_flag_no_force_no_post():
     now = mk_state("2026-Jul", cve_total=1050, t2=10, t3=2, zero_days=[])
@@ -70,7 +70,7 @@ def test_no_flag_no_force_no_post():
 
 
 # ===========================================================================
-# flag ありで post が1回呼ばれる
+# with a flag, post is called once
 # ===========================================================================
 def test_flag_posts_once():
     now = mk_state("2026-Jul", cve_total=1050,
@@ -82,7 +82,7 @@ def test_flag_posts_once():
 
 
 # ===========================================================================
-# --force なら flag 無しでも post が呼ばれる
+# with --force, post is called even without a flag
 # ===========================================================================
 def test_force_posts_without_flag():
     now = mk_state("2026-Jul", cve_total=1050, t2=10, t3=2, zero_days=[])
@@ -92,7 +92,7 @@ def test_force_posts_without_flag():
 
 
 # ===========================================================================
-# 認証情報未設定で例外を投げず正常終了 (post も呼ばれない)
+# missing credentials: exit normally without raising (and no post)
 # ===========================================================================
 def test_missing_creds_no_exception_no_post():
     now = mk_state("2026-Jul", cve_total=1050,
@@ -104,7 +104,7 @@ def test_missing_creds_no_exception_no_post():
 
 
 # ===========================================================================
-# edge-triggered: 同じ flag セットは再通知しない
+# edge-triggered: the same flag set is not re-notified
 # ===========================================================================
 def test_edge_triggered_no_duplicate():
     now = mk_state("2026-Jul", cve_total=1050,
@@ -113,13 +113,13 @@ def test_edge_triggered_no_duplicate():
     home = tempfile.mkdtemp(prefix="msrc_notify_edge_")
     post1, _, _ = run_notify(now, prev, force=False, clear_home=home)
     assert post1.call_count == 1
-    # 同じ内容で再実行 -> 再通知しない
+    # re-run with identical content -> not re-notified
     post2, _, _ = run_notify(now, prev, force=False, clear_home=home)
     assert post2.call_count == 0
 
 
 # ===========================================================================
-# 通知本文に評価語・帰属語が含まれない
+# the notification body contains no evaluative or attribution words
 # ===========================================================================
 def test_notify_body_no_evaluative_words():
     now = mk_state("2026-Jul", cve_total=1600, t2=20, t3=5,
@@ -129,22 +129,23 @@ def test_notify_body_no_evaluative_words():
                     credit_counts={})
     post, _, _ = run_notify(now, prev, force=False)
     assert post.call_count == 1
-    # 送信引数を検査
+    # inspect the send arguments
     _, kwargs = post.call_args
     data = kwargs["data"]
-    blob = data["title"] + "\n" + data["message"]
-    forbidden = ["危険", "MDASH", "考えられる", "と思われる", "推測",
-                 "帰属", "AI が", "AIが", "だろう", "懸念"]
+    blob = (data["title"] + "\n" + data["message"]).lower()
+    # evaluative / attribution / speculation words that must never appear
+    forbidden = ["dangerous", "mdash", "likely", "probably", "attribut",
+                 "speculat", "suspect", "concern", "ai did", "believe"]
     for w in forbidden:
-        assert w not in blob, f"通知本文に評価語/帰属語 '{w}' が混入"
-    # priority は通常(0)
+        assert w not in blob, f"evaluative/attribution word '{w}' leaked into the notification body"
+    # priority is normal (0)
     assert data["priority"] == 0
-    # 秘匿値が message/title に漏れていない
+    # secrets are not leaking into message/title
     assert "fake-token" not in blob
     assert "fake-user" not in blob
 
 
-# --- pytest 無し環境でも動くランナー ----------------------------------------
+# --- runner that also works without pytest ----------------------------------
 if __name__ == "__main__":
     import traceback
     tests = [v for k, v in sorted(globals().items())

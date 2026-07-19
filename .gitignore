@@ -6,11 +6,11 @@ __pycache__/
 .venv/
 *.egg-info/
 
-# 一時ファイル
+# Temporary files
 *.tmp
 *.json.tmp
 
-# 環境変数（Pushover token 等の秘匿値）
+# Environment variables (secrets such as the Pushover token)
 .env
 env.sh
 *secret*
@@ -18,35 +18,36 @@ env.sh
 # macOS
 .DS_Store
 
-# ★state/*.json は追跡しない (公開版の方針)★
-#   collect.py が取得する月次データには、脆弱性報告者(第三者研究者)の氏名・
-#   SNSハンドル・メール等の個人情報が MSRC クレジット由来で含まれる。
-#   誤 commit による第三者 PII の公開を防ぐため、生成された state は追跡しない。
-#   ディレクトリ構造は state/.gitkeep で保持する (取得データは各自のローカルに残る)。
+# *** Do not track state/*.json (public-release policy) ***
+#   The monthly data that collect.py fetches includes personal information about vulnerability
+#   reporters (third-party researchers) — names, social handles, emails, etc. — carried over from
+#   MSRC credits.
+#   To prevent accidentally committing and publishing third-party PII, generated state is not tracked.
+#   The directory structure is preserved via state/.gitkeep (fetched data stays on your local machine).
 state/*.json
 
-# 実行時の内部アーティファクト (再生成可能。履歴に残す価値なし)
-# diff.py --json の一時保存 (run_monthly.sh 用)
+# Runtime internal artifacts (regenerable, not worth keeping in history)
+# Temporary output of diff.py --json (used by run_monthly.sh)
 state/.diff_*.json
-# notify.py の edge-triggered 重複防止記録
+# notify.py edge-triggered dedup record
 state/.last_notified_*.json
 
-# 機械生成の下書き (人間が編集する作業ファイル。確定版ではない)
+# Machine-generated drafts (human-edited working files, not final versions)
 drafts/
 
-# 匿名化ブロックリスト: 実在の個人名・組織名を含むため git に入れない。
-# 代わりに report/deny_terms.txt.example (実名なし) を管理する。
+# Anonymization blocklist: contains real personal/organization names, so keep it out of git.
+# Track report/deny_terms.txt.example (no real names) instead.
 report/deny_terms.txt
 
-# MSRC 事後改訂の検知記録 (実行時に自動生成。凍結値は state/*.json 側で保持)
+# Record of detected MSRC after-the-fact revisions (auto-generated at runtime; frozen values live in state/*.json)
 state/.revisions/
 
-# KEV/EPSS ライブ層 (毎時更新・可変。凍結 state とは別。履歴churnを避け除外)
+# KEV/EPSS live layer (updated hourly, mutable. Separate from the frozen state. Excluded to avoid history churn)
 state/enrichment.json
 
-# 作業指示書 (個人環境の固有名を含む場合がある。リポジトリに入れない)
+# Work instructions (may contain names specific to a personal environment. Keep out of the repo)
 CLAUDE_CODE_*.md
 
-# レポート生成の依存・生成物 (再生成可能)
+# Report generation dependencies and artifacts (regenerable)
 report/node_modules/
 report/assets/

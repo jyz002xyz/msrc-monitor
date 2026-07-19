@@ -1,5 +1,5 @@
 {
-  "_comment": "diff.py の閾値。ここを編集すると上書きされる。削除するとコード内デフォルトが使われる。全て実数ベース (比率トレンドは判定に使わない)。",
+  "_comment": "Thresholds for diff.py. Editing these overrides the defaults; deleting them falls back to the in-code defaults. All are absolute-value based (ratio trends are not used for detection).",
   "cve_total_pct": 0.50,
   "heavy_ratio": 1.5,
   "new_credit_min_cve": 20,

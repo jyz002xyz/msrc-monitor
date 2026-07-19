@@ -5,11 +5,11 @@ Wants=network-online.target
 
 [Service]
 Type=oneshot
-# deploy 時に実ユーザへ置換する (USER プレースホルダ)。
+# Replace with the real user at deploy time (USER placeholder).
 User=USER
 WorkingDirectory=/home/USER/msrc_monitor
-# Pushover / healthchecks の秘匿値。git 管理外。deploy 時に Pi 上で手動作成。
-#   例: PUSHOVER_TOKEN=... / PUSHOVER_USER=... / HEALTHCHECK_URL=...
+# Pushover / healthchecks secrets. Not under git control. Created manually on the Pi at deploy time.
+#   e.g.: PUSHOVER_TOKEN=... / PUSHOVER_USER=... / HEALTHCHECK_URL=...
 EnvironmentFile=/home/USER/msrc_monitor/env.sh
 ExecStart=/home/USER/msrc_monitor/run_monthly.sh
 

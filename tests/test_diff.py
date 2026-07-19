@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """
-test_diff.py — diff.py の閾値判定・新規クレジット検出を固定する
+test_diff.py — lock in diff.py's threshold checks and new-credit detection
 
-合成 state JSON をテスト内で生成して使う (実 API は叩かない)。
-既存 test_regression.py と同じく pytest 無しでも動くランナー付き。
+Synthetic state JSON is generated inside the test (no real API is hit).
+Like test_regression.py, it ships a runner that works without pytest.
 
-実行:
+Run:
     cd ~/msrc_monitor
     python tests/test_diff.py
 """
@@ -17,7 +17,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import diff
 
 
-# --- 合成 state ヘルパ -------------------------------------------------------
+# --- synthetic state helper -------------------------------------------------
 def mk_state(month, cve_total=1000, t2=10, t3=2, critical=50,
              credit_counts=None, zero_days=None):
     return {
@@ -41,7 +41,7 @@ def diff_of(now, prev):
 
 
 # ===========================================================================
-# 総CVE ±50% 超で flag が立つ／立たない境界
+# Boundary where total CVE change over ±50% does/does not raise the flag
 # ===========================================================================
 def test_cve_total_flag_over_threshold():
     now = mk_state("2026-Jul", cve_total=1600)   # +60% > 50%
@@ -59,15 +59,15 @@ def test_cve_total_no_flag_under_threshold():
 
 
 def test_cve_total_boundary_exactly_50pct_no_flag():
-    # ちょうど 50% は「超」ではないので flag は立たない
-    now = mk_state("2026-Jul", cve_total=1500)   # +50% ちょうど
+    # exactly 50% is not "over", so the flag stays down
+    now = mk_state("2026-Jul", cve_total=1500)   # exactly +50%
     prev = mk_state("2026-Jun", cve_total=1000)
     r = diff_of(now, prev)
     assert r["changes"]["cve_total"]["flag"] is False
 
 
 def test_cve_total_drop_flags():
-    # 減少方向でも絶対値 50% 超なら flag
+    # even a decrease raises the flag if its absolute value exceeds 50%
     now = mk_state("2026-Jul", cve_total=400)    # -60%
     prev = mk_state("2026-Jun", cve_total=1000)
     r = diff_of(now, prev)
@@ -75,7 +75,7 @@ def test_cve_total_drop_flags():
 
 
 # ===========================================================================
-# 重い層 T2+T3 が 1.5倍 の境界
+# Boundary where the heavy tier (T2+T3) reaches 1.5x
 # ===========================================================================
 def test_heavy_flag_over_ratio():
     now = mk_state("2026-Jul", t2=20, t3=5)      # 25
@@ -93,14 +93,14 @@ def test_heavy_no_flag_under_ratio():
 
 def test_heavy_boundary_exactly_1_5x_no_flag():
     now = mk_state("2026-Jul", t2=15, t3=3)      # 18
-    prev = mk_state("2026-Jun", t2=10, t3=2)     # 12 -> 1.5 ちょうど
+    prev = mk_state("2026-Jun", t2=10, t3=2)     # 12 -> exactly 1.5
     r = diff_of(now, prev)
     assert r["changes"]["heavy"]["ratio"] == 1.5
     assert r["changes"]["heavy"]["flag"] is False
 
 
 def test_heavy_zero_prev_jump_flags():
-    # 前月 0 -> 今月 N は比率で表せないが重要なので flag
+    # prev 0 -> now N cannot be expressed as a ratio but matters, so flag it
     now = mk_state("2026-Jul", t2=3, t3=1)       # 4
     prev = mk_state("2026-Jun", t2=0, t3=0)      # 0
     r = diff_of(now, prev)
@@ -109,30 +109,30 @@ def test_heavy_zero_prev_jump_flags():
 
 
 # ===========================================================================
-# 新規クレジット: 前月に無く今月にあるものだけが new_credits に入る
-#                 20件超だけに flag。前月にもあったものは new に入らない。
+# New credits: only names absent last month and present this month enter new_credits.
+#              Only counts over 20 get a flag. Names present last month are not "new".
 # ===========================================================================
 def test_new_credit_detection_and_flag():
     prev = mk_state("2026-Jun", credit_counts={"Alice": 5, "Bob": 100})
     now = mk_state("2026-Jul", credit_counts={
-        "Alice": 8,                          # 前月にも居た -> new でない
-        "Kugelblitz with Microsoft": 39,     # 新規・20超 -> flag
-        "Newbie": 3,                         # 新規・20以下 -> flag なし
+        "Alice": 8,                          # present last month -> not new
+        "Kugelblitz with Microsoft": 39,     # new, over 20 -> flag
+        "Newbie": 3,                         # new, 20 or under -> no flag
     })
     r = diff_of(now, prev)
     names = {c["name"]: c for c in r["new_credits"]}
-    assert "Alice" not in names, "前月に存在した名前が new に混入"
+    assert "Alice" not in names, "a name present last month leaked into new"
     assert "Bob" not in names
     assert names["Kugelblitz with Microsoft"]["flag"] is True
     assert names["Kugelblitz with Microsoft"]["count"] == 39
     assert names["Newbie"]["flag"] is False
-    # 全件挙がる (機械が勝手に捨てない)
+    # all entries surface (the machine does not silently drop any)
     assert len(r["new_credits"]) == 2
 
 
 def test_new_credit_boundary_exactly_20_no_flag():
     prev = mk_state("2026-Jun", credit_counts={})
-    now = mk_state("2026-Jul", credit_counts={"X": 20})   # ちょうど20は「超」でない
+    now = mk_state("2026-Jul", credit_counts={"X": 20})   # exactly 20 is not "over"
     r = diff_of(now, prev)
     assert r["new_credits"][0]["flag"] is False
 
@@ -146,7 +146,7 @@ def test_new_credits_sorted_desc():
 
 
 # ===========================================================================
-# ゼロデイ uncredited のカウント
+# Counting uncredited zero-days
 # ===========================================================================
 def test_zero_day_uncredited_count():
     zds = [
@@ -172,7 +172,7 @@ def test_zero_day_all_credited_no_flag():
 
 
 # ===========================================================================
-# 前月ファイル欠落時: 例外を投げず「比較対象なし」を返す
+# Missing previous-month file: return "no comparison target" instead of raising
 # ===========================================================================
 def test_missing_prev_no_exception():
     now = mk_state("2026-Jul")
@@ -185,16 +185,16 @@ def test_missing_prev_no_exception():
 
 
 # ===========================================================================
-# any_flag は個別 flag の OR
+# any_flag is the OR of the individual flags
 # ===========================================================================
 def test_any_flag_aggregation():
-    # 何も超えない -> any_flag False
+    # nothing exceeds a threshold -> any_flag False
     now = mk_state("2026-Jul", cve_total=1050, t2=10, t3=2)
     prev = mk_state("2026-Jun", cve_total=1000, t2=10, t3=2)
     r = diff_of(now, prev)
     assert r["any_flag"] is False
 
-    # ゼロデイ無しクレジット1件で any_flag True
+    # one uncredited zero-day makes any_flag True
     now2 = mk_state("2026-Jul", cve_total=1050,
                     zero_days=[{"cve": "X", "credited": False}])
     r2 = diff_of(now2, prev)
@@ -202,14 +202,14 @@ def test_any_flag_aggregation():
 
 
 # ===========================================================================
-# prev_month_tag のヘルパ (年跨ぎ含む)
+# prev_month_tag helper (including year rollover)
 # ===========================================================================
 def test_prev_month_tag():
     assert diff.prev_month_tag("2026-Jul") == "2026-Jun"
     assert diff.prev_month_tag("2026-Jan") == "2025-Dec"
 
 
-# --- pytest 無し環境でも動くランナー ----------------------------------------
+# --- runner that also works without pytest ----------------------------------
 if __name__ == "__main__":
     import traceback
     tests = [v for k, v in sorted(globals().items())

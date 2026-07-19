@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 """
-test_epss_percentile_display.py — EPSS表の表示形式を固定する。
+test_epss_percentile_display.py — pin the display format of the EPSS table.
 
-確定仕様 (表示層のみ。内部データ=小数は不変):
-    - percentile 列: パーセント表示・小数1桁 (例 0.97192 -> "97.2%")。
-    - epss 列:       小数のまま (確率値。例 "0.2035")。パーセント化しない。
-    - 日本語ラベル:  "パーセンタイル" (旧 "百分位")。英語は "Percentile" 不変。
+Fixed spec (display layer only; internal data stays as decimals):
+    - percentile column: percent format, 1 decimal place (e.g. 0.97192 -> "97.2%").
+    - epss column:       kept as a decimal (probability, e.g. "0.2035"). Not percentized.
+    - Japanese label:    "パーセンタイル" (formerly "百分位"). English stays "Percentile".
 
-生成済み docx (drafts/report_{ja,en}.docx) を検査する。build.sh 実行後に有効。
-未生成ならスキップ (test_anonymize_gate の実チャート検査と同じ方針)。
+Inspects the generated docx (drafts/report_{ja,en}.docx). Effective after build.sh runs.
+Skips if not generated (same policy as the real-chart check in test_anonymize_gate).
 """
 import os
 import re
@@ -19,19 +19,19 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DRAFTS = os.path.join(ROOT, "drafts")
 
 PCT_RE = re.compile(r"^\d{1,3}\.\d%$")      # 97.2% / 75.0% / 100.0%
-EPSS_RE = re.compile(r"^0\.\d{4}$")          # 0.2035 (小数4桁, 非パーセント)
+EPSS_RE = re.compile(r"^0\.\d{4}$")          # 0.2035 (4-decimal, non-percent)
 CVE_RE = re.compile(r"^CVE-\d{4}-\d+$")
 
 
 def _rows(docx_path):
-    """docx の全テーブル行をセル配列のリストで返す (素朴な XML パース)。"""
+    """Return all table rows of the docx as a list of cell arrays (naive XML parse)."""
     with zipfile.ZipFile(docx_path) as z:
         xml = z.read("word/document.xml").decode("utf-8")
     rows = []
     for tr in re.findall(r"<w:tr\b.*?</w:tr>", xml, re.S):
         cells = []
         for tc in re.findall(r"<w:tc\b.*?</w:tc>", tr, re.S):
-            # <w:t> / <w:t ...> のみ (w:tcPr 等に誤マッチしないよう空白or'>'を要求)
+            # Only <w:t> / <w:t ...> (require whitespace or '>' to avoid matching w:tcPr etc.)
             txt = "".join(re.findall(r"<w:t(?:\s[^>]*)?>(.*?)</w:t>", tc, re.S))
             cells.append(txt.strip())
         if cells:
@@ -39,38 +39,39 @@ def _rows(docx_path):
     return rows
 
 
-DEC_RE = re.compile(r"^0\.\d+$")  # epss スコア列の判別 (KEV表の深刻度列と区別)
+DEC_RE = re.compile(r"^0\.\d+$")  # identify the epss score column (distinct from KEV severity column)
 
 
 def _epss_data_rows(rows):
-    """EPSS表のデータ行のみ返す。列 = CVE/カテゴリ/EPSS/percentile。
-    KEV表(CVE/製品名/深刻度/tier)も4列CVE行なので、3列目が epss 小数の行だけ選ぶ。"""
+    """Return only the EPSS table data rows. Columns = CVE/category/EPSS/percentile.
+    The KEV table (CVE/product/severity/tier) is also a 4-column CVE row, so pick
+    only rows whose 3rd column is an epss decimal."""
     return [r for r in rows if len(r) == 4 and CVE_RE.match(r[0]) and DEC_RE.match(r[2])]
 
 
 def _check(lang, label_expected, label_forbidden):
     path = os.path.join(DRAFTS, f"report_{lang}.docx")
     if not os.path.exists(path):
-        print(f"  SKIP  {lang}: {path} 未生成 (build.sh 未実行)")
+        print(f"  SKIP  {lang}: {path} not generated (build.sh not run)")
         return
     rows = _rows(path)
     data = _epss_data_rows(rows)
-    assert data, f"{lang}: EPSS表のデータ行が見つからない"
+    assert data, f"{lang}: no EPSS table data rows found"
 
-    # percentile 列 = %, epss 列 = 小数
+    # percentile column = %, epss column = decimal
     for r in data:
         _, _, epss, pctile = r
-        assert EPSS_RE.match(epss), f"{lang}: epss 列が小数4桁でない: {epss!r} (行 {r})"
-        assert PCT_RE.match(pctile), f"{lang}: percentile 列が %表示(小数1桁)でない: {pctile!r} (行 {r})"
-        assert "%" not in epss, f"{lang}: epss 列がパーセント化されている: {epss!r}"
+        assert EPSS_RE.match(epss), f"{lang}: epss column is not a 4-decimal value: {epss!r} (row {r})"
+        assert PCT_RE.match(pctile), f"{lang}: percentile column is not % format (1 decimal): {pctile!r} (row {r})"
+        assert "%" not in epss, f"{lang}: epss column has been percentized: {epss!r}"
 
-    # ラベル: 期待ラベルが存在し、禁止ラベルが存在しない (ヘッダ行に出る)
+    # Labels: the expected label exists and the forbidden label does not (in the header row)
     flat = [c for r in rows for c in r]
-    assert label_expected in flat, f"{lang}: ラベル {label_expected!r} が無い"
+    assert label_expected in flat, f"{lang}: label {label_expected!r} is missing"
     if label_forbidden:
-        assert label_forbidden not in flat, f"{lang}: 旧ラベル {label_forbidden!r} が残存"
+        assert label_forbidden not in flat, f"{lang}: old label {label_forbidden!r} still present"
 
-    print(f"  PASS  {lang}: percentile=% / epss=小数 / ラベル={label_expected}")
+    print(f"  PASS  {lang}: percentile=% / epss=decimal / label={label_expected}")
 
 
 def test_ja_percentile_is_percent_and_label_renamed():

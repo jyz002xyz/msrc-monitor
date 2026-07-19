@@ -1,73 +1,75 @@
 #!/usr/bin/env bash
 #
-# run_monthly.sh — 月次実行のオーケストレーション (systemd から呼ばれる)
+# run_monthly.sh — orchestrates the monthly run (invoked by systemd).
 #
-# 処理順:
-#   0. テストを先に走らせ、壊れていたら中止 (安全弁)
-#   1. 当月を収集 (冪等)
-#   2. 差分を算出 (JSON)
-#   3. 下書きを生成
-#   4. flag があれば通知 (edge-triggered)
-#   5. healthchecks.io に成功を ping (dead-man's switch)
+# Steps:
+#   0. Run the tests first and abort if anything is broken (safety check)
+#   1. Collect the current month (idempotent)
+#   2. Compute the diff (JSON)
+#   3. Generate the draft
+#   4. Notify if a flag is set (edge-triggered)
+#   5. Ping healthchecks.io on success (dead-man's switch)
 #
-# 設計原則: テストが壊れていたら収集も通知もしない (壊れた状態で走らせない)。
+# Design principle: if the tests are broken, don't collect or notify (never run in a broken state).
 #
-# 環境変数 (env.sh / EnvironmentFile から供給。git 管理外):
-#   PUSHOVER_TOKEN / PUSHOVER_USER … Pushover 通知の秘匿値 (未設定なら通知スキップ)
-#   HEALTHCHECK_URL               … 成功 ping 先 (未設定ならスキップ)
+# Environment variables (supplied via env.sh / EnvironmentFile; not under git control):
+#   PUSHOVER_TOKEN / PUSHOVER_USER … Pushover notification secrets (skip notifications if unset)
+#   HEALTHCHECK_URL               … success ping target (skip if unset)
 #
 set -euo pipefail
 cd "$(dirname "$0")"
 
-# Pi では pyenv の 3.12 系 venv。仮想環境があれば有効化する。
+# On the Pi this is a pyenv 3.12 venv. Activate the virtualenv if present.
 if [ -f .venv312/bin/activate ]; then
   # shellcheck disable=SC1091
   source .venv312/bin/activate
 fi
 
-# Patch Tuesday (第2火曜) の翌日だけ実行する。
-# 第2火曜は毎月 8〜14 日のどこか。その翌日 (水曜) は 9〜15 日のどこか。
-# 9〜15 日の 7 連日には水曜がちょうど1つだけ入り、それが必ず第2火曜の翌日になる。
-# timer も同じ範囲 (09..15 Wed) で起動するが、念のためスクリプト側でも確認する
-# (bot 群の NTP guard と同様、ロジックはスクリプト側に持たせる)。
-# --force で門番を無視できる (手動実行用)。
+# Only run on the day after Patch Tuesday (the second Wednesday).
+# The second Tuesday (Patch Tuesday) always falls on the 8th-14th of the month, so the
+# following day (Wednesday) falls on the 9th-15th.
+# Any 7-day span from the 9th to the 15th contains exactly one Wednesday, and it is always
+# the day after the second Tuesday.
+# The timer fires over the same range (09..15 Wed), but we double-check here in the script
+# just in case (like the NTP guard on the bots, keep the logic in the script).
+# Use --force to bypass the gate (for manual runs).
 FORCE_RUN="${1:-}"
 DOM="$(date +%-d)"
-DOW="$(date +%u)"   # 1=月 ... 3=水 ... 7=日
+DOW="$(date +%u)"   # 1=Mon ... 3=Wed ... 7=Sun
 if [ "$FORCE_RUN" != "--force" ]; then
   if [ "$DOW" != "3" ] || [ "$DOM" -lt 9 ] || [ "$DOM" -gt 15 ]; then
-    echo "[run_monthly] 第2水曜 (Patch Tuesday 翌日) ではないので何もしない "
-    echo "              (DOM=$DOM DOW=$DOW)。手動実行は --force を付ける。"
+    echo "[run_monthly] Not the second Wednesday (the day after Patch Tuesday), so nothing to do "
+    echo "              (DOM=$DOM DOW=$DOW). Use --force for a manual run."
     exit 0
   fi
 fi
 
-# 0. テスト (壊れていたら即中止) ---------------------------------------------
-echo "[run_monthly] テスト実行 (安全弁)"
+# 0. Tests (abort immediately if broken) -------------------------------------
+echo "[run_monthly] Running tests (safety check)"
 python tests/test_regression.py
 python tests/test_diff.py
 python tests/test_draft.py
 python tests/test_notify.py
 
-# 1. 当月を収集 (冪等) -------------------------------------------------------
+# 1. Collect the current month (idempotent) ----------------------------------
 MONTH="$(python -c 'import collect; print(collect.current_month_tag())')"
-echo "[run_monthly] 当月: $MONTH"
+echo "[run_monthly] Current month: $MONTH"
 python collect.py "$MONTH"
 
-# 2. 差分を算出 --------------------------------------------------------------
+# 2. Compute the diff --------------------------------------------------------
 python diff.py "$MONTH" --json > "state/.diff_${MONTH}.json"
 
-# 3. 下書きを生成 ------------------------------------------------------------
+# 3. Generate the draft ------------------------------------------------------
 mkdir -p drafts
 python draft.py "$MONTH" --out "drafts/${MONTH}.md"
 
-# 4. flag があれば通知 -------------------------------------------------------
+# 4. Notify if a flag is set -------------------------------------------------
 python notify.py "$MONTH"
 
-# 5. healthchecks.io に成功を ping (dead-man's switch) -----------------------
-#    URL は環境変数。未設定ならスキップ。失敗しても全体は落とさない。
+# 5. Ping healthchecks.io on success (dead-man's switch) ---------------------
+#    URL comes from an environment variable. Skip if unset. Don't fail the whole run if it errors.
 if [ -n "${HEALTHCHECK_URL:-}" ]; then
   curl -fsS -m 10 "$HEALTHCHECK_URL" >/dev/null || true
 fi
 
-echo "[run_monthly] 完了: $MONTH"
+echo "[run_monthly] Done: $MONTH"

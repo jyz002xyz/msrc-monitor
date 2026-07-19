@@ -1,14 +1,17 @@
 #!/usr/bin/env python3
 """
-test_anonymize_gate.py — 匿名化ゲートが個人特定語・因果示唆を検出することを固定する。
+test_anonymize_gate.py — pin that the anonymization gate detects personal
+identifiers and causal implications.
 
-今回の漏洩 (個人名が interpretation/*.md コメント・PR本文・commit message に入り、
-docx しか見ないゲートを素通りした) の再発防止テスト。意図的に個人名/MDASH を入れた
-ケースでゲートが発火することを確認する。
-※テスト内では実名を使わず合成プレースホルダ ("Testperson") を用いる
-  (実名を追跡ファイルに埋め込まない=このテスト自体がスクラブ方針を守る)。
+Regression test for the recent leak (a personal name appeared in
+interpretation/*.md comments, a PR body, and a commit message, and slipped
+past the gate because it only inspected the docx). Confirms the gate fires on
+cases that deliberately include a personal name / MDASH.
+Note: the test uses a synthetic placeholder ("Testperson") instead of a real
+name (no real name is embedded in a tracked file, so this test itself follows
+the scrub policy).
 
-実行:
+Run:
     cd ~/msrc_monitor
     python tests/test_anonymize_gate.py
 """
@@ -25,14 +28,14 @@ import anonymize_gate as g
 
 
 # ===========================================================================
-# deny_terms: text/md ファイル内の個人特定語を検出する
+# deny_terms: detect personal identifiers inside text/md files
 # ===========================================================================
 def test_personal_name_detected_in_md():
     p = Path(tempfile.mktemp(suffix=".md"))
     p.write_text("<!-- APPROVED (Testperson, 2026-07-17) -->\n人間（Testperson）が確認。",
                  encoding="utf-8")
     try:
-        # 素の given name が deny_terms にあれば検出されること
+        # A bare given name present in deny_terms should be detected
         hits = g.check_file(p, ["testperson", "otherterm"])
         assert "testperson" in hits, hits
     finally:
@@ -40,12 +43,12 @@ def test_personal_name_detected_in_md():
 
 
 def test_bare_given_name_requires_bare_term():
-    # 'testpersonx' (username 相当) では bare 'Testperson' を捕捉できない (今回の盲点の再現)
+    # 'testpersonx' (username-like) cannot catch a bare 'Testperson' (reproduces the blind spot)
     p = Path(tempfile.mktemp(suffix=".md"))
     p.write_text("approved by Testperson", encoding="utf-8")
     try:
-        assert g.check_file(p, ["testpersonx"]) == [], "username term が given name を誤検出"
-        assert g.check_file(p, ["testperson"]) == ["testperson"], "bare term で検出されるべき"
+        assert g.check_file(p, ["testpersonx"]) == [], "username term false-matched a given name"
+        assert g.check_file(p, ["testperson"]) == ["testperson"], "bare term should have matched"
     finally:
         os.unlink(p)
 
@@ -61,7 +64,7 @@ def test_clean_text_no_hit():
 
 
 # ===========================================================================
-# チャート注記: 因果を含意する MDASH を検出、_note (運用メモ) は対象外
+# Chart annotations: detect a causal-implying MDASH; _note (ops memo) is exempt
 # ===========================================================================
 def test_chart_labels_catch_mdash():
     p = Path(tempfile.mktemp(suffix=".json"))
@@ -74,7 +77,7 @@ def test_chart_labels_catch_mdash():
 
 
 def test_chart_labels_note_field_ignored():
-    # _note は方針説明メモなので MDASH を含んでも対象外
+    # _note is a policy-explanation memo, so it is exempt even if it contains MDASH
     p = Path(tempfile.mktemp(suffix=".json"))
     p.write_text(json.dumps({"_note": "do not put MDASH causal claims here",
                              "c1": {"title": "Total CVE trend"}}))
@@ -94,16 +97,16 @@ def test_chart_labels_clean():
 
 
 # ===========================================================================
-# 実際のチャート設定ファイルは合格 (MDASH 因果示唆なし)
+# The real chart config files pass (no MDASH causal implication)
 # ===========================================================================
 def test_real_chart_labels_pass():
     for lang in ("ja", "en"):
         p = Path(ROOT) / "report" / f"chart_labels_{lang}.json"
         if p.exists():
-            assert g.check_chart_labels(p) == [], f"{lang} に因果示唆"
+            assert g.check_chart_labels(p) == [], f"{lang} has a causal implication"
 
 
-# --- pytest 無し環境でも動くランナー ----------------------------------------
+# --- Runner that also works without pytest ----------------------------------
 if __name__ == "__main__":
     import traceback
     tests = [v for k, v in sorted(globals().items())

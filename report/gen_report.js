@@ -1,14 +1,14 @@
 /**
- * gen_report.js — state 駆動 + 解釈差し込み + テンプレート固定の docx 生成器
+ * gen_report.js — state-driven docx generator with interpretation inlining and fixed templates.
  *
- * 設計:
- *   - 事実（数値・表・チャート）は凍結 state/*.json から読む（ハードコードしない）。
- *   - 解釈（散文）は interpretation/{lang}.md から差し込む。
- *   - 日付分離ヘッダ / MSRC改訂注記 / §14中立性 / §13免責 はテンプレート固定
- *     （人間が解釈を編集しても必ず出る）。
+ * Design:
+ *   - Facts (numbers, tables, charts) are read from frozen state/*.json (never hardcoded).
+ *   - Interpretation (prose) is inlined from interpretation/{lang}.md.
+ *   - Date-separation header / MSRC revision note / §14 neutrality / §13 disclaimer are
+ *     template-fixed (always emitted even if a human edits the interpretation).
  *
- * 使い方:  node gen_report.js --lang ja      -> drafts/report_ja.docx
- *          node gen_report.js --lang en      -> drafts/report_en.docx
+ * Usage:  node gen_report.js --lang ja      -> drafts/report_ja.docx
+ *         node gen_report.js --lang en      -> drafts/report_en.docx
  */
 const {
   Document, Packer, Paragraph, TextRun, HeadingLevel, AlignmentType,
@@ -22,20 +22,20 @@ const HOME = process.env.MSRC_MONITOR_HOME || path.resolve(__dirname, "..");
 const STATE = path.join(HOME, "state");
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"];
 
-// ---- 色・フォント ----------------------------------------------------------
+// ---- colors / fonts --------------------------------------------------------
 const NAVY = "1F3864", ACCENT = "2E5496", GREY = "595959", LIGHT = "EEF2F8";
 const REDBG = "F7E4E4", GREENBG = "E6F0E6", AMBERBG = "FBF3E2";
 const RULE = { style: BorderStyle.SINGLE, size: 6, color: ACCENT };
 
-// ---- 引数・言語 ------------------------------------------------------------
+// ---- args / language -------------------------------------------------------
 const argv = process.argv.slice(2);
 const LANG = (argv[argv.indexOf("--lang") + 1] === "en") ? "en" : "ja";
 const FONT = LANG === "ja" ? "Hiragino Sans" : "Arial";
 
 // ===========================================================================
-//  fixed templates (日英)。人間が解釈を編集しても消えない。
+//  fixed templates (ja/en). Not removable even if a human edits the interpretation.
 // ===========================================================================
-const SNAPSHOT_DATE = "2026-07-15"; // 凍結スナップショット日 (state の snapshot_date)
+const SNAPSHOT_DATE = "2026-07-15"; // frozen snapshot date (state's snapshot_date)
 
 const TPL = {
   ja: {
@@ -200,7 +200,7 @@ const TPL = {
 const L = TPL[LANG];
 
 // ===========================================================================
-//  docx ヘルパ
+//  docx helpers
 // ===========================================================================
 const run = (text, o = {}) => new TextRun({ text, font: FONT, size: 20, ...o });
 function h1(text) {
@@ -267,12 +267,12 @@ function caption(text) {
 }
 
 // ===========================================================================
-//  state (事実) の読み込み
+//  load state (facts)
 // ===========================================================================
 function loadState(m) { return JSON.parse(fs.readFileSync(path.join(STATE, `2026-${m}.json`), "utf8")); }
 const JUL = loadState("Jul");
 
-// KEV/EPSS ライブ層 (gitignore・別ファイル)。無ければ null (未生成/オフライン)。
+// KEV/EPSS live layer (gitignored, separate file). Returns null if absent (not generated / offline).
 function loadEnrichment() {
   const p = path.join(STATE, "enrichment.json");
   if (!fs.existsSync(p)) return null;
@@ -281,12 +281,14 @@ function loadEnrichment() {
 
 function pct(n, d) { return d ? `${Math.round((n / d) * 100)}%` : "-"; }
 
-// 製品カテゴリの言語中立な内部キー <-> 日英表示ラベルの単一マップ (cvrf_parse と共有)。
-// 描画は必ずこのマップ経由 (虫食い置換を防ぎ、英語版に日本語を出さない)。
+// Single map from language-neutral internal keys to ja/en display labels for product categories
+// (shared with cvrf_parse). Rendering always goes through this map (prevents partial substitution
+// and keeps Japanese out of the English version).
 const CATMAP = JSON.parse(fs.readFileSync(path.join(__dirname, "category_labels.json"), "utf8"));
-// 内部キー、または凍結 state/enrichment に残る旧表示名を受け取り、LANG の表示ラベルを返す。
-// 旧表示名は legacy_aliases で内部キーへ正規化してから引く。未登録なら raw を返す
-// (内部キーは英数字なので、最悪でも英数字が出るだけで日本語は漏れない。未登録はテストで検出)。
+// Takes an internal key, or a legacy display name still present in frozen state/enrichment, and
+// returns the LANG display label. Legacy display names are normalized to internal keys via
+// legacy_aliases before lookup. Returns raw if unregistered (internal keys are alphanumeric, so at
+// worst alphanumerics show through and no Japanese leaks; unregistered cases are caught by tests).
 function catLabel(raw) {
   if (raw == null || raw === "") return raw;
   const key = CATMAP.legacy_aliases[raw] || raw;
@@ -294,9 +296,10 @@ function catLabel(raw) {
   return entry ? entry[LANG] : raw;
 }
 
-// KEV表用: CVRF タイトル(凍結由来)から末尾の脆弱性種別句を落とし製品名/コンポーネント名を出す。
-// 例: "Microsoft SharePoint Server Elevation of Privilege Vulnerability" -> "Microsoft SharePoint Server"。
-// 落とせない/空なら元タイトル、タイトル自体が無ければ "—" (graceful)。事実の表示のみ。
+// For the KEV table: strip the trailing vulnerability-type phrase from the CVRF title (frozen source)
+// to surface the product/component name.
+// e.g. "Microsoft SharePoint Server Elevation of Privilege Vulnerability" -> "Microsoft SharePoint Server".
+// If nothing can be stripped / result is empty, use the original title; if there is no title, "—" (graceful). Fact display only.
 const VULN_SUFFIX = /\s+(?:Elevation of Privilege|Remote Code Execution|Information Disclosure|Denial of Service|Security Feature Bypass|Privilege Escalation|Cross-Site Scripting|Memory Corruption|Spoofing|Tampering)?\s*Vulnerability\s*$/i;
 function productName(title, unknown) {
   if (!title) return unknown;
@@ -304,7 +307,7 @@ function productName(title, unknown) {
   return stripped || title;
 }
 
-// 表1: 深刻度別 (全体/本体)
+// Table 1: by severity (all / core)
 function tableSeverity() {
   const order = ["Critical", "Important", "Moderate", "Low", "Unrated"];
   const all = JUL.severity_count, core = JUL.severity_core;
@@ -313,13 +316,13 @@ function tableSeverity() {
   rows.push([L.total, String(at), "100%", String(ct), "100%"]);
   return table(L.tbl1Head, rows, [2160, 1800, 1200, 2160, 1200]);
 }
-// 表2: 再起動クラス (全体/本体)
+// Table 2: reboot class (all / core)
 function tableTier() {
   const all = JUL.tier_count, core = JUL.tier_core;
   const rows = ["T3", "T2", "T0/T1"].map(t => [t, L.tbl2Desc[t], String(all[t] || 0), String(core[t] || 0)]);
   return table(L.tbl2Head, rows, [1200, 3960, 1680, 1680]);
 }
-// 表3: 発見者大分類 (全体)
+// Table 3: finder top-level categories (all)
 function tableFinder() {
   const fb = JUL.finder_bucket, tot = JUL.cve_total;
   const rows = L.finderOrder.map(k => {
@@ -328,25 +331,25 @@ function tableFinder() {
   });
   return table(L.tbl3Head, rows, [3000, 1200, 1080, 4080]);
 }
-// 表4: Critical の発見者内訳 (集約・実名なし)。件数のみを state から。
+// Table 4: finder breakdown of Critical (aggregated, no real names). Counts only, from state.
 function tableCriticalFinder() {
   const cbf = JUL.critical_by_finder || {};
   const entries = Object.entries(cbf).sort((a, b) => b[1] - a[1]);
   const rows = entries.map(([k, v]) => [L.tbl4Labels[k] || k, String(v), L.tbl4Trend[k] || "—"]);
-  // Kugelblitz は横断参考行 (加算しない)
+  // Kugelblitz is a cross-cutting reference row (not added to the total)
   rows.push([L.tbl4KugelLabel, String(JUL.kugelblitz_in_critical || 0), L.tbl4KugelTrend]);
   return table(L.tbl4Head, rows, [3600, 1800, 3960]);
 }
 
-// 表5: 製品カテゴリ (全体) — 上位を件数降順で
+// Table 5: product categories (all) — top entries by descending count
 function tableProduct() {
   const pc = JUL.product_count, tot = JUL.cve_total;
   const entries = Object.entries(pc).sort((a, b) => b[1] - a[1]);
-  // 凍結 state のキーは旧表示名(その他/Edge/Chromium 等)。catLabel で LANG 表示へ変換。
+  // Keys in frozen state are legacy display names (Other/Edge/Chromium, etc.). Convert to LANG display via catLabel.
   const rows = entries.map(([k, v]) => [catLabel(k), String(v), pct(v, tot)]);
   return table(L.tbl5Head, rows, [5000, 1600, 1600]);
 }
-// 推移表: 7ヶ月 × 6列 (凍結値)
+// Trend table: 7 months x 6 columns (frozen values)
 function tableTrend() {
   const rows = MONTHS.map(m => {
     const d = loadState(m), t = d.tier_count || {};
@@ -358,10 +361,10 @@ function tableTrend() {
 }
 
 // ===========================================================================
-//  interpretation/{lang}.md のパース
+//  parse interpretation/{lang}.md
 // ===========================================================================
 function parseInline(text) {
-  // **bold**, [text](url), `code` を TextRun 配列へ
+  // Convert **bold**, [text](url), `code` into a TextRun array
   const out = [];
   let i = 0;
   const re = /(\*\*([^*]+)\*\*)|(\[([^\]]+)\]\(([^)]+)\))|(`([^`]+)`)/g;
@@ -394,7 +397,7 @@ function parseMd(mdPath) {
     }
     let mt;
     if ((mt = line.match(/^# title:(.+)/))) { title[mt[1].trim()] = ""; lastTitleKey = mt[1].trim(); continue; }
-    // タイトル本文行 (title: 見出しの直後の非見出し行)
+    // Title body line (a non-heading line right after a title: heading)
     if ((mt = line.match(/^## (.+)/))) { pushTable(target()); cur = { heading: mt[1].trim(), lead: [], subs: [] }; curSub = null; sections.push(cur); continue; }
     if ((mt = line.match(/^#### callout:(.+)/)) || (mt = line.match(/^### callout:(.+)/))) {
       pushTable(target()); curSub = { key: "callout:" + mt[1].trim(), nodes: [], callout: mt[1].trim() }; cur.subs.push(curSub); continue;
@@ -406,7 +409,7 @@ function parseMd(mdPath) {
 
     const t = target();
     if (t === null) {
-      // title 本文
+      // title body
       if (typeof lastTitleKey === "string") { title[lastTitleKey] = (title[lastTitleKey] ? title[lastTitleKey] + " " : "") + line.trim(); }
       continue;
     }
@@ -427,7 +430,7 @@ function parseMd(mdPath) {
 }
 let lastTitleKey = null;
 
-// md ノード配列を docx 要素へ
+// Convert an array of md nodes into docx elements
 function renderNodes(nodes) {
   const out = [];
   for (const n of nodes) {
@@ -455,7 +458,7 @@ function renderSub(sub) {
 }
 
 // ===========================================================================
-//  組み立て
+//  assembly
 // ===========================================================================
 function build() {
   const mdPath = path.join(HOME, "interpretation", `${LANG}.md`);
@@ -468,25 +471,25 @@ function build() {
 
   const children = [];
 
-  // --- 表紙 ---
+  // --- cover ---
   children.push(new Paragraph({ spacing: { before: 200, after: 60 }, children: [run(L.reportKind, { size: 18, color: GREY })] }));
   children.push(new Paragraph({ spacing: { after: 40 }, children: [new TextRun({ text: LANG === "ja" ? "フロンティアAIによる脆弱性発見の急増" : "The surge in vulnerability discovery by frontier AI", bold: true, size: 34, color: NAVY, font: FONT })] }));
   children.push(new Paragraph({ spacing: { after: 160 }, border: { bottom: RULE }, children: [run(subtitle, { size: 22, color: ACCENT })] }));
   if (audience) children.push(new Paragraph({ spacing: { after: 30 }, children: [run(audience, { size: 18, color: GREY })] }));
 
-  // --- テンプレート固定: 日付分離ヘッダ ---
+  // --- template-fixed: date-separation header ---
   children.push(callout(L.headerTitle, L.headerLines(factsDate, interpDate).map(x => [run(x, { size: 19 })]), AMBERBG));
   children.push(spacer());
-  // --- テンプレート固定: MSRC 改訂注記 ---
+  // --- template-fixed: MSRC revision note ---
   children.push(callout(L.revisionTitle, L.revisionLines.map(x => [run(x, { size: 19 })]), AMBERBG));
   children.push(spacer());
-  // --- テンプレート固定: §13 免責 + §14 中立性 ---
+  // --- template-fixed: §13 disclaimer + §14 neutrality ---
   children.push(callout(L.disclaimerTitle, L.disclaimerLines(factsDate).map(x => [run("• " + x, { size: 18 })]), GREENBG));
   children.push(spacer());
   children.push(callout(L.neutralityTitle, L.neutralityLines.map(x => [run(x, { size: 18 })]), GREENBG));
 
-  // --- 本文: 解釈セクション (index ベース) ---
-  // 0:要旨 1:分析 2:示唆 3:内訳要点 4:推移 5:別紙
+  // --- body: interpretation sections (index-based) ---
+  // 0:summary 1:analysis 2:implications 3:breakdown points 4:trend 5:appendix
   const S = sections;
   const emitSection = (idx, { withHeading = true } = {}) => {
     const sec = S[idx]; if (!sec) return;
@@ -495,41 +498,41 @@ function build() {
     for (const sub of sec.subs) children.push(...renderSub(sub));
   };
 
-  emitSection(0); // 要旨
-  emitSection(1); // 分析 (三層 table は table: サブで描画)
-  emitSection(2); // 示唆
+  emitSection(0); // summary
+  emitSection(1); // analysis (three-tier table is rendered via the table: sub)
+  emitSection(2); // implications
 
-  // --- 実データ内訳 (facts + 要点 interp を交互に) ---
+  // --- actual-data breakdown (facts + point interp alternating) ---
   children.push(pageBreak());
   children.push(h1(L.dataSectionTitle));
   children.push(body(L.dataSectionLead));
   children.push(spacer());
-  const pts = S[3].subs; // 表1..表4..表5..補遺 の要点
+  const pts = S[3].subs; // points for Table 1..Table 4..Table 5..supplement
   const factForPoint = { 0: [L.tbl1Title, tableSeverity()], 1: [L.tbl2Title, tableTier()], 2: [L.tbl3Title, tableFinder()], 4: [L.tbl5Title, tableProduct()] };
   for (let i = 0; i < pts.length; i++) {
     if (factForPoint[i]) { children.push(h2(factForPoint[i][0])); children.push(factForPoint[i][1]); }
     else if (i === 3) { children.push(h2(L.tbl4Title)); children.push(tableCriticalFinder()); children.push(body([run(L.tbl4Note, { italics: true, color: GREY, size: 16 })])); }
-    children.push(...renderSub(pts[i])); // その表の要点 (解釈)
+    children.push(...renderSub(pts[i])); // points for that table (interpretation)
     children.push(spacer());
   }
 
-  // --- 推移 (facts 推移表 + charts + 図解釈) ---
+  // --- trend (facts trend table + charts + figure interpretation) ---
   children.push(pageBreak());
   children.push(h1(L.trendSectionTitle));
-  children.push(...renderNodes(S[4].lead)); // 推移の導入文 (解釈)
+  children.push(...renderNodes(S[4].lead)); // trend intro text (interpretation)
   children.push(h2(L.trendTblTitle));
   children.push(tableTrend());
   children.push(spacer());
   const chartFiles = ["chart1_cve.png", "chart2_critical.png", "chart3_kugelblitz.png", "chart4_internal.png"];
-  const trendSubs = S[4].subs; // 図1..図4 解釈 + callout要約
+  const trendSubs = S[4].subs; // Figure 1..Figure 4 interpretation + callout summary
   for (let i = 0; i < 4; i++) {
     const cp = path.join(__dirname, "assets", LANG, chartFiles[i]);
     if (fs.existsSync(cp)) { children.push(chartImg(cp, 452, 226)); children.push(caption(L.chartCaptions[i])); }
     if (trendSubs[i]) children.push(...renderSub(trendSubs[i]));
   }
-  if (trendSubs[4]) children.push(...renderSub(trendSubs[4])); // callout 要約
+  if (trendSubs[4]) children.push(...renderSub(trendSubs[4])); // callout summary
 
-  // --- KEV / EPSS (Phase 2)。事実(数値・時点)のみ。KEV=トリガー・EPSS=参考(時点付き) ---
+  // --- KEV / EPSS (Phase 2). Facts only (values, point-in-time). KEV=trigger, EPSS=reference (point-in-time) ---
   children.push(pageBreak());
   children.push(h1(L.kevEpssTitle));
   const enr = loadEnrichment();
@@ -537,17 +540,17 @@ function build() {
     children.push(body(L.enrichAbsent));
   } else {
     children.push(body(L.kevEpssLead));
-    // KEV: 即応対象 (離散事実)
+    // KEV: immediate-response targets (discrete facts)
     const kevAsof = enr.kev_asof ? String(enr.kev_asof).slice(0, 10) : "-";
     children.push(h2(L.kevTitle.replace("{asof}", kevAsof)));
-    // 製品名(具体)・カテゴリは target_cves の title/category (CVRF凍結由来。KEV/EPSS値とは別ソース)。
+    // Concrete product name / category come from target_cves' title/category (frozen from CVRF; a different source than KEV/EPSS values).
     const byCve = Object.fromEntries((enr.target_cves || []).map(t => [t.cve, t]));
     if (enr.kev_listed === null) {
       children.push(body(L.kevUnavail));
     } else if (!enr.kev_listed.length) {
       children.push(body(L.kevNone));
     } else {
-      // KEV表: CVE / 製品名(具体) / 深刻度 / 再起動クラス(tier)
+      // KEV table: CVE / product name (concrete) / severity / reboot class (tier)
       const rows = enr.kev_listed.map(c => {
         const t = byCve[c] || {};
         return [c, productName(t.title, L.prodUnknown), t.severity || "-", t.tier || "-"];
@@ -555,31 +558,31 @@ function build() {
       children.push(table(L.kevHead, rows, [2600, 3760, 1900, 1900]));
     }
     children.push(spacer());
-    // EPSS: 参考 (取得時点付き・日々変動)。通知には使わない。
+    // EPSS: reference (point-in-time, changes daily). Not used for notifications.
     const epssAsof = enr.epss_asof || "-";
     children.push(h2(L.epssTitle.replace("{asof}", epssAsof)));
     if (!enr.epss) {
       children.push(body(L.epssUnavail));
     } else {
-      // EPSS表: CVE / 製品カテゴリ / EPSS / パーセンタイル
+      // EPSS table: CVE / product category / EPSS / percentile
       const top = Object.entries(enr.epss).sort((a, b) => b[1].epss - a[1].epss).slice(0, 15);
       const rows = top.map(([c, s]) => {
         const rawCat = (byCve[c] || {}).category;
-        const cat = rawCat ? catLabel(rawCat) : L.prodUnknown;  // 内部キー -> LANG 表示
-        // epss は小数(確率値)のまま。percentile は表示時のみ % 整形(小数1桁)。内部値は不変。
+        const cat = rawCat ? catLabel(rawCat) : L.prodUnknown;  // internal key -> LANG display
+        // epss stays a decimal (probability value). percentile is % formatted (1 decimal) only for display; the internal value is unchanged.
         return [c, cat, Number(s.epss).toFixed(4), (Number(s.percentile) * 100).toFixed(1) + "%"];
       });
       children.push(table(L.epssHead, rows, [2600, 3760, 1900, 1900]));
       children.push(body([run(L.epssNote.replace(/\{asof\}/g, epssAsof), { italics: true, color: GREY, size: 16 })]));
     }
-    // 製品名/カテゴリの出所注記 (凍結CVRF・別ソース別時点。既存の日付分離の思想と同じ)
+    // Source note for product name/category (frozen CVRF; a different source and point-in-time — same principle as the existing date separation)
     children.push(body([run(L.productSrc, { italics: true, color: GREY, size: 16 })]));
   }
 
-  // --- 別紙 ---
+  // --- appendix ---
   children.push(pageBreak());
   emitSection(5);
-  // footer サブ (別紙内の footer: がある場合 renderSub で処理済み)
+  // footer sub (a footer: inside the appendix is already handled by renderSub)
 
   const doc = new Document({
     numbering: { config: [
@@ -587,7 +590,7 @@ function build() {
       { reference: "ol", levels: [{ level: 0, format: LevelFormat.DECIMAL, text: "%1.", alignment: AlignmentType.LEFT, style: { paragraph: { indent: { left: 400, hanging: 260 } }, run: { font: FONT } } }] },
     ] },
     styles: { default: { document: { run: { font: FONT, size: 20 } } } },
-    // メタデータに個人名・組織名を入れない (匿名化)
+    // No personal or organization names in metadata (anonymization)
     title: "Vulnerability situation report", creator: "Automated monitoring script", description: "Machine-generated facts with human interpretation",
     sections: [{ properties: { page: { margin: { top: 1000, bottom: 1000, left: 1100, right: 1100 } } }, children }],
   });

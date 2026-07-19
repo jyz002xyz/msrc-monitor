@@ -1,18 +1,21 @@
 #!/usr/bin/env python3
 """
-draft.py — 事実のみの Markdown 下書きを生成する
+draft.py — generate a facts-only Markdown draft
 
-diff.py の出力と当月 state から、「何がどう変わったか」だけの下書きを作る。
-人間がこれに解釈を足して初めてレポートになる。
+From diff.py's output and the current month's state, produces a draft of
+"what changed and how" only. It becomes a report only after a human adds
+interpretation.
 
-★このモジュールがやらないこと (設計原則。違反は不合格) ★
-    - 帰属をしない。クレジット名から AI/ツールの正体を書かない。
-    - 解釈・原因分析・結論を書かない (「危険」「AI が」「〜と考えられる」等)。
-    - 比率トレンドを載せない。
-    - 確定版を作らない。出力は必ず「下書き」であり固定ヘッダを刻む。
+★ What this module does NOT do (design rules; violations fail review) ★
+    - No attribution. Never state the identity of an AI/tool from a credit name.
+    - No interpretation, root-cause analysis, or conclusions (no "dangerous",
+      "the AI did X", "likely ...", etc.).
+    - No ratio trends.
+    - Never produce a final version. Output is always a "draft" and carries a
+      fixed header.
 
-使い方:
-    python draft.py 2026-Jul                    # stdout に下書き
+Usage:
+    python draft.py 2026-Jul                    # draft to stdout
     python draft.py 2026-Jul --out drafts/2026-Jul.md
 """
 from __future__ import annotations
@@ -23,7 +26,8 @@ from pathlib import Path
 
 import diff
 
-# 下書き冒頭の固定ヘッダ (改変不可)。帰属禁止・未検証を毎回明示する。
+# Fixed header at the top of every draft (do not alter). Restates the
+# no-attribution / unverified stance each time. (Body text is intentionally Japanese.)
 FIXED_HEADER = """\
 > ⚠ これは機械生成の事実記録です。解釈・帰属・結論を含みません。
 > クレジット名から AI/ツールの正体を推測しないでください
@@ -34,7 +38,7 @@ FIXED_HEADER = """\
 
 
 def _table(rows: list[tuple[str, str]]) -> list[str]:
-    """(項目, 値) の2列 Markdown テーブルを行リストで返す。"""
+    """Return a 2-column (item, value) Markdown table as a list of lines."""
     out = ["| 項目 | 値 |", "| --- | --- |"]
     for k, v in rows:
         out.append(f"| {k} | {v} |")
@@ -42,19 +46,21 @@ def _table(rows: list[tuple[str, str]]) -> list[str]:
 
 
 def _bold_if(flag: bool, text: str) -> str:
-    """flag が立った項目は太字。評価語は付けない (閾値超過という事実だけ)。"""
+    """Bold the item if the flag is set. No evaluative words — just the fact
+    that a threshold was exceeded."""
     return f"**{text}（閾値超過）**" if flag else text
 
 
 def render(month: str, rep: dict, state: dict) -> str:
-    """diff レポート rep と当月 state から下書き Markdown を組み立てる。"""
+    """Assemble the draft Markdown from the diff report `rep` and current `state`.
+    (The rendered body text is intentionally Japanese — this is the draft output.)"""
     fetched_at = state.get("fetched_at") or "不明"
     L: list[str] = []
 
     L.append(FIXED_HEADER.format(fetched_at=fetched_at))
     L.append(f"# MSRC {month} 変化記録（下書き）\n")
 
-    # --- 当月の総数・内訳 (事実) --------------------------------------------
+    # --- current month totals / breakdown (facts) ---------------------------
     L.append("## 当月の集計（CVRF 全体）\n")
     tc = state.get("tier_count") or {}
     sc = state.get("severity_count") or {}
@@ -74,7 +80,7 @@ def render(month: str, rep: dict, state: dict) -> str:
     L += _table([(k, str(v)) for k, v in tc.items()])
     L.append("")
 
-    # --- 前月比の変化 -------------------------------------------------------
+    # --- month-over-month changes -------------------------------------------
     L.append("## 前月比の変化\n")
     if not rep.get("prev_available"):
         L.append(f"{rep['note']}\n")
@@ -103,7 +109,7 @@ def render(month: str, rep: dict, state: dict) -> str:
         L.append(f"> 注記: 総CVE は {ct['note']}")
         L.append("")
 
-    # --- 新規クレジット名 (全件・帰属注記なし) ------------------------------
+    # --- new credit names (all, no attribution notes) -----------------------
     L.append("## 新規クレジット名（前月に無かったもの・全件）\n")
     nc = rep.get("new_credits") or []
     if not nc:
@@ -116,7 +122,7 @@ def render(month: str, rep: dict, state: dict) -> str:
             L.append(f"| {item['count']} | {name} |")
         L.append("")
 
-    # --- ゼロデイ一覧 -------------------------------------------------------
+    # --- zero-day list ------------------------------------------------------
     L.append("## ゼロデイ一覧\n")
     zds = state.get("zero_days") or []
     if not zds:
@@ -132,7 +138,7 @@ def render(month: str, rep: dict, state: dict) -> str:
                      f"{exploited} | {disclosed} | {credits} |")
         L.append("")
 
-    # --- 人間が確認・追記すべき点 (誘導しない・空欄) -------------------------
+    # --- points for a human to verify / add (no leading questions, left open) ---
     L.append("## 人間が確認・追記すべき点\n")
     L.append("- [ ] 新規クレジット名の正体を一次情報で確認したか")
     L.append("- [ ] 重い層 (T2+T3) の増減要因を確認したか")
@@ -144,33 +150,33 @@ def render(month: str, rep: dict, state: dict) -> str:
 
 
 def build_draft(month: str, prev_tag: str | None = None) -> str:
-    """月タグから下書き文字列を組み立てる (CLI/他モジュール共通の入口)。"""
+    """Build the draft string from a month tag (shared entry for CLI and other modules)."""
     rep = diff.build_report(month, prev_tag)
     state = diff.load_state(month)
     if state is None:
-        raise FileNotFoundError(f"当月ファイルが無い: state/{month}.json")
+        raise FileNotFoundError(f"no state file for the month: state/{month}.json")
     return render(month, rep, state)
 
 
 def main() -> int:
     ap = argparse.ArgumentParser(
-        description="事実のみの下書きを生成する (解釈・帰属なし)")
-    ap.add_argument("month", help="当月タグ 例: 2026-Jul")
-    ap.add_argument("--prev", help="比較対象の月タグ (省略時は直前月)")
-    ap.add_argument("--out", help="出力先パス (省略時は stdout)")
+        description="Generate a facts-only draft (no interpretation, no attribution)")
+    ap.add_argument("month", help="current month tag, e.g. 2026-Jul")
+    ap.add_argument("--prev", help="month tag to compare against (defaults to the previous month)")
+    ap.add_argument("--out", help="output path (defaults to stdout)")
     args = ap.parse_args()
 
     try:
         text = build_draft(args.month, args.prev)
     except FileNotFoundError as e:
-        print(f"[draft] エラー: {e}", file=sys.stderr)
+        print(f"[draft] error: {e}", file=sys.stderr)
         return 1
 
     if args.out:
         out = Path(args.out)
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text(text, encoding="utf-8")
-        print(f"[draft] 書き出し: {out}")
+        print(f"[draft] wrote: {out}")
     else:
         print(text)
     return 0

@@ -1,36 +1,38 @@
 #!/usr/bin/env bash
 #
-# publish.sh — 公開は人間が明示承認したときだけ。Claude Code は実行しない。
+# publish.sh — publish only when a human has explicitly approved. Claude Code never runs this.
 #
-# 安全弁 (二重):
-#   1. interpretation/{ja,en}.md に 'PENDING HUMAN REVIEW' マーカーが残っていたら拒否。
-#      → 人間が匿名化・解釈を目視確認し、マーカーを外すまで公開不可 (§13)。
-#   2. deny_terms 匿名化ゲートを再チェック。ヒットで拒否。
-#   3. 解釈が最新の事実を反映しているかの確認を明示的に促す。
+# Safety checks (two layers):
+#   1. Reject if the 'PENDING HUMAN REVIEW' marker still remains in interpretation/{ja,en}.md.
+#      → Cannot publish until a human has visually reviewed the anonymization and interpretation
+#        and removed the marker (§13).
+#   2. Re-run the deny_terms anonymization gate. Reject on a hit.
+#   3. Explicitly prompt to confirm that the interpretation reflects the latest facts.
 #
-# これらを通っても、実際の配布 (git push / 配布先へのコピー等) は
-# オペレータが手動で行う。本スクリプトは「公開可否の門番」まで。
+# Even after these pass, the actual distribution (git push / copy to a distribution target, etc.)
+# is done manually by the operator. This script only acts as the gatekeeper for publish approval.
 #
 set -euo pipefail
 cd "$(dirname "$0")/.."
 # shellcheck disable=SC1091
 source .venv312/bin/activate 2>/dev/null || true
 
-echo "[publish] 門番1: PENDING マーカー確認"
+echo "[publish] Gate 1: check the PENDING marker"
 python report/anonymize_gate.py --check-marker
 
-echo "[publish] 門番2: deny_terms 匿名化ゲート (docx)"
+echo "[publish] Gate 2: deny_terms anonymization gate (docx)"
 python report/anonymize_gate.py drafts/report_ja.docx drafts/report_en.docx
 
 cat <<'EOF'
 
-[publish] 門番3: 人間の最終確認 (自動化しない)
-  □ 解釈は最新の事実 (2026-07-15 凍結) を反映しているか
-  □ 事実と解釈の日付差 (ヘッダ) を確認したか
-  □ 匿名化 (個人・組織・環境) を目視で確認したか
-  □ §13 免責・§14 中立性が入っているか
+[publish] Gate 3: final human confirmation (not automated)
+  □ Does the interpretation reflect the latest facts (frozen 2026-07-15)?
+  □ Have you checked the date gap between facts and interpretation (header)?
+  □ Have you visually confirmed the anonymization (people, organizations, environment)?
+  □ Are the §13 disclaimer and §14 neutrality statement present?
 
-上記を人間が確認済みなら、配布 (git push / 配布先コピー等) を手動で実行してよい。
-本スクリプトは門番まで。実際の配布はここでは行わない。
+Once a human has confirmed the above, you may run the distribution (git push / copy to a
+distribution target, etc.) manually.
+This script only acts as the gatekeeper. It does not perform the actual distribution.
 EOF
-echo "[publish] 門番通過。配布はオペレータが手動で。"
+echo "[publish] Gate passed. The operator distributes manually."

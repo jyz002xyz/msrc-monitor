@@ -1,13 +1,16 @@
 [Unit]
-Description=MSRC monitor timer (Patch Tuesday の翌日=第2水曜に発火)
+Description=MSRC monitor timer (fires the day after Patch Tuesday = the second Wednesday)
 
 [Timer]
-# 第2火曜 (Patch Tuesday) は毎月 8〜14 日。その翌日 (水曜) は 9〜15 日。
-# 9〜15 日の 7 連日には水曜がちょうど1つだけ入り、それが必ず第2火曜の翌日になる。
-# systemd では「第2火曜の翌日」を直接書けないため、この日付範囲+曜日で表現する。
-# run_monthly.sh 側でも同じ門番 (9..15 の水曜か) を再確認する (二重の安全弁)。
+# The second Tuesday (Patch Tuesday) falls on the 8th-14th each month. The following day
+# (Wednesday) falls on the 9th-15th.
+# Any 7-day span from the 9th to the 15th contains exactly one Wednesday, and it is always the
+# day after the second Tuesday.
+# systemd cannot express "the day after the second Tuesday" directly, so we express it with this
+# date range + weekday.
+# run_monthly.sh re-checks the same gate (is it the Wednesday within 9..15?) as a second safety check.
 OnCalendar=*-*-09..15 Wed 09:00
-# Pi が寝ていて発火を逃しても、復帰後に実行する。
+# If the Pi is asleep and misses the trigger, run once it wakes back up.
 Persistent=true
 
 [Install]

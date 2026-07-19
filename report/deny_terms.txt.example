@@ -1,31 +1,31 @@
-# deny_terms.txt.example — 匿名化ブロックリストの雛形 (実名なし・公開可)
+# deny_terms.txt.example — template for the anonymization blocklist (no real names, safe to publish)
 #
-# 実運用では、これを report/deny_terms.txt にコピーし、実在の
-# 個人名・組織名・アカウント名等を1行1語で追記する。
-# 本物の deny_terms.txt は .gitignore 済み (実名を公開リポジトリに入れない)。
+# In actual use, copy this to report/deny_terms.txt and add the real personal names,
+# organization names, account names, etc., one term per line.
+# The real deny_terms.txt is gitignored (never put real names in a public repo).
 #
-# レポート生成の最終段で、生成物 (docx 本文抽出テキスト・PDF メタデータ) を
-# このリストに対して case-insensitive の部分文字列一致でチェックする。
-# 1件でもヒットしたら生成を「失敗」させる (公開前提のため安全側)。
+# In the final stage of report generation, the artifacts (text extracted from the docx body,
+# PDF metadata) are checked against this list using case-insensitive substring matching.
+# A single hit fails the build (fail-safe, since the output is meant to be published).
 #
-# 記法:
-#   - 空行と # 始まりの行は無視。
-#   - それ以外の行は「出してはいけない語」。前後空白は trim。
+# Format:
+#   - Blank lines and lines starting with # are ignored.
+#   - Every other line is a "term that must not appear". Leading/trailing whitespace is trimmed.
 #
-# ---- 環境由来の語 (自動判定できるもの。実運用では実値に置換) ----
-# GitHub アカウント / リポジトリ名
+# ---- Environment-derived terms (auto-detectable; replace with real values in actual use) ----
+# GitHub account / repository name
 YOUR_GITHUB_ACCOUNT
-# ローカルユーザ名・ホームパス断片
+# Local username / home path fragment
 YOUR_LOCAL_USERNAME
 /Users/YOUR_LOCAL_USERNAME
-# メールアドレス断片
+# Email address fragment
 YOUR_EMAIL_LOCALPART
-# クラウドストレージ名・ローカル環境の固有名
+# Cloud storage name / a name specific to the local environment
 YOUR_CLOUD_STORAGE_NAME
 #
-# ---- 人間が追記するカテゴリ (実際の語は本物の deny_terms.txt に) ----
-#   - 実在の個人名 (レポートに投影しない実務者・研究者の実名 等)
-#   - 所属組織・勤務先の固有名 (業種特定につながる名称)
-#   - 特定につながる関係先・第三者の固有名
-#   - デプロイ先や別プロジェクトのホスト名・識別子
-#   - その他、個人を特定しうる固有情報
+# ---- Categories for humans to fill in (put the actual terms in the real deny_terms.txt) ----
+#   - Real personal names (names of practitioners/researchers not to be reflected in the report, etc.)
+#   - Names of employers/affiliated organizations (names that could reveal the industry)
+#   - Names of related parties or third parties that could aid identification
+#   - Hostnames/identifiers of deploy targets or other projects
+#   - Any other identifying information that could single out an individual

@@ -1,26 +1,27 @@
 #!/usr/bin/env python3
 """
-cvrf_parse.py — MSRC CVRF v3.0 の自己完結パーサ (msrc_monitor 専用)
+cvrf_parse.py — self-contained MSRC CVRF v3.0 parser (msrc_monitor only)
 
-このモジュールは msrc_action.py から独立している。監視プログラムを
-単一ディレクトリで自己完結させ、Pi 上で外部依存なく動かすため。
+This module is independent of msrc_action.py, so the monitor can live in a
+single self-contained directory and run on the Pi with no external deps.
 
-★このパーサに焼き込んだ「教訓」(2026-07 の調査で判明したバグ群)★
-    1. HTML除去: クレジット文字列に <a href=...> が混入する。
-       除去してから氏名判定しないと分類が壊れる。
-    2. 二重掲載の排除: 1つのCVEに同一クレジットが2回載ることがある
-       (例: Kugelblitz × 2)。CVE単位で重複排除しないと件数が倍になる。
-       → 実際に "78件" と誤カウントした。正しくは39件。
-    3. クレジット無し判定: Acknowledgments フィールドが無い、または
-       氏名が全て空 = uncredited。これは binary で扱う(中身の分類はしない)。
-    4. 取得タイミングの記録: CVRFのクレジットは Patch Tuesday 後に順次
-       追記される。取得日を必ず記録し、鮮度を後から判断できるようにする。
-    5. ★帰属の禁止★: このパーサは「クレジット名」を機械的に集計するだけ。
-       「Kugelblitz = MDASH」のような、特定エンティティをAI/ツールに
-       帰属させる判断は一切しない。それは人間の仕事(一次情報での確認が必須)。
-       2026-07にKugelblitz=MDASHと誤って断定し、後に一次情報で反証された。
+Lessons baked into this parser (bugs found during the 2026-07 investigation):
+    1. Strip HTML: credit strings can contain <a href=...> markup. Names must
+       be cleaned before classification or the buckets break.
+    2. Drop duplicate listings: a single CVE can list the same credit twice
+       (e.g. Kugelblitz x2). Without per-CVE dedup the counts double.
+       -> This actually mis-counted "78" once; the correct number was 39.
+    3. Uncredited detection: no Acknowledgments field, or all names empty,
+       means uncredited. Treat this as binary (do not classify the contents).
+    4. Record fetch timing: CVRF credits are filled in gradually after Patch
+       Tuesday. Always record the fetch date so freshness can be judged later.
+    5. NO ATTRIBUTION: this parser only tallies credit names mechanically. It
+       never decides things like "Kugelblitz = MDASH", i.e. attributing an
+       entity to an AI/tool. That is a human's job (must be confirmed against
+       primary sources). In 2026-07 we wrongly asserted Kugelblitz=MDASH and
+       were later refuted by primary sources.
 
-対象: Python 3.12+ / 依存: requests のみ
+Target: Python 3.12+ / deps: requests only
 """
 from __future__ import annotations
 
@@ -28,7 +29,7 @@ import re
 from collections import defaultdict
 from typing import Any
 
-# --- CVRF スキーマ定数 (実装済みパーサおよび実データで検証済み) -------------
+# --- CVRF schema constants (verified against the parser and real data) -------
 THREAT_IMPACT = 0
 THREAT_EXPLOIT_STATUS = 1
 THREAT_SEVERITY = 3
@@ -36,7 +37,7 @@ REMEDIATION_VENDOR_FIX = 2
 
 HTML_TAG = re.compile(r"<[^>]+>")
 
-# 再起動クラス (msrc_action.py と同一定義)
+# Reboot class (same definition as msrc_action.py)
 T3_RE = re.compile(r"secure\s*boot|boot\s*manager|boot\s*loader|uefi|bitlocker|"
                    r"\btpm\b|firmware|\bdbx\b", re.I)
 T2_RE = re.compile(r"exchange\s*server|sharepoint|sql\s*server|dynamics|"
@@ -46,15 +47,15 @@ SEV_RANK = {"Critical": 4, "Important": 3, "Moderate": 2, "Low": 1}
 
 
 def clean_name(raw: str | None) -> str:
-    """HTMLタグを除去し前後空白を落とす。教訓#1。"""
+    """Strip HTML tags and surrounding whitespace. Lesson #1."""
     return HTML_TAG.sub("", raw or "").strip()
 
 
 def credit_names(vuln: dict) -> list[str]:
     """
-    このCVEの発見者名リスト(HTML除去済み・空要素除去済み)を返す。
-    同一CVE内の重複はここでは保持する(生の掲載を反映)。
-    件数集計側でCVE単位の重複排除を行う。教訓#1。
+    Return this CVE's list of finder names (HTML stripped, empties removed).
+    Duplicates within the same CVE are kept here (reflecting the raw listing).
+    Per-CVE dedup happens on the counting side. Lesson #1.
     """
     out: list[str] = []
     for ack in vuln.get("Acknowledgments") or []:
@@ -67,7 +68,7 @@ def credit_names(vuln: dict) -> list[str]:
 
 
 def is_credited(vuln: dict) -> bool:
-    """クレジットが1つでもあるか。binary。教訓#3。"""
+    """Whether there is at least one credit. Binary. Lesson #3."""
     return len(credit_names(vuln)) > 0
 
 
@@ -98,12 +99,14 @@ def tier_of(vuln: dict) -> str:
 
 
 # ===========================================================================
-# 母集団分離・製品分類・発見者バケット
-#   msrc_action.py（帰属版）の --breakdown ロジックを移植（新規発明しない）。
-#   すべて機械的な文字列分類であり、AI/ツールの正体推測（帰属）はしない。教訓#5。
+# Population split, product classification, finder buckets
+#   Ported from the --breakdown logic in msrc_action.py (the attribution
+#   version); nothing is newly invented here. Everything is mechanical string
+#   classification -- no guessing at the identity behind an AI/tool. Lesson #5.
 # ===========================================================================
 
-# --- 母集団分離: MS本体相当(core) から除外する製品 (報道が「別枠」扱いする分) ---
+# --- Population split: products excluded from the MS-core population
+#     (the ones the press treats as "separate") ---
 EXCLUDE_EDGE = re.compile(r"microsoft\s*edge|chromium", re.I)
 EXCLUDE_MARINER = re.compile(r"\bmariner\b|azure\s*linux|\bcbl-?mariner\b", re.I)
 EXCLUDE_CLOUD = re.compile(r"azure\s+(?!stack)|microsoft\s*graph|entra|"
@@ -112,7 +115,7 @@ EXCLUDE_CLOUD = re.compile(r"azure\s+(?!stack)|microsoft\s*graph|entra|"
 
 
 def population_of(title: str) -> str:
-    """CVE を母集団に振り分け: 'core'(MS本体相当) or 'excluded'(Edge/Mariner/Cloud)"""
+    """Assign a CVE to a population: 'core' (MS-core) or 'excluded' (Edge/Mariner/Cloud)."""
     if EXCLUDE_EDGE.search(title):
         return "excluded"
     if EXCLUDE_MARINER.search(title):
@@ -122,10 +125,11 @@ def population_of(title: str) -> str:
     return "core"
 
 
-# --- 製品カテゴリ (上から順に評価。より具体的なものを先に置く) ---
-# ★カテゴリ識別子は言語中立の内部キー(英数字)★。日英の表示ラベルは
-# report/category_labels.json の単一マップ経由でのみ描画する(英語版に日本語を出さない)。
-# 内部キーは表示に使わない(表示は必ずマップ変換を通す)。
+# --- Product category (evaluated top to bottom; put more specific ones first) ---
+# The category identifiers are language-neutral internal keys (alphanumeric).
+# The JA/EN display labels are rendered only via the single map in
+# report/category_labels.json (never show Japanese in the English edition).
+# Internal keys are not used for display (display always goes through the map).
 PRODUCT_CATS: list[tuple[str, re.Pattern]] = [
     ("edge_chromium", re.compile(r"microsoft\s*edge|chromium", re.I)),
     ("office", re.compile(r"\boffice\b|word|excel|powerpoint|outlook|visio|onenote|\bpublisher\b", re.I)),
@@ -142,7 +146,7 @@ PRODUCT_CATS: list[tuple[str, re.Pattern]] = [
     ("azure_cloud", re.compile(r"azure|entra|\bgraph\b|copilot|\bintune\b", re.I)),
     ("dotnet_dev", re.compile(r"\.net|visual\s*studio|\bnuget\b|powershell|\basp\.net\b", re.I)),
     ("mariner_linux", re.compile(r"mariner|azure\s*linux", re.I)),
-    # Windows本体のサービス/コンポーネント (上記に当たらない汎用EoP/RCEの受け皿)
+    # Core Windows services/components (catch-all for generic EoP/RCE not matched above)
     ("win_services", re.compile(
         r"windows\s+\w+.*(service|driver|component|subsystem|manager|provider|"
         r"agent|client|host|engine|framework|runtime|store|installer|update|"
@@ -152,47 +156,50 @@ PRODUCT_CATS: list[tuple[str, re.Pattern]] = [
         r"win32|fax|\bcsc\b|distributed|composite|connected|cloud\s*files)", re.I)),
     ("win_services", re.compile(r"brokering|file\s*system|\bmsmq\b|"
         r"win32|telephony|spooler|task\s*scheduler", re.I)),
-    ("win_services", re.compile(r"^windows\s+\w+", re.I)),  # その他のWindows *
-    ("microsoft_other", re.compile(r"^microsoft\s+\w+", re.I)),      # その他のMicrosoft *
+    ("win_services", re.compile(r"^windows\s+\w+", re.I)),  # any other Windows *
+    ("microsoft_other", re.compile(r"^microsoft\s+\w+", re.I)),      # any other Microsoft *
 ]
 
-# 分類フォールバックの内部キー (旧 "その他")。表示は category_labels.json 経由。
+# Internal key for the classification fallback (formerly "other"). Displayed via category_labels.json.
 PRODUCT_CAT_FALLBACK = "other"
 
 
 def product_cat(title: str) -> str:
-    """製品カテゴリの言語中立な内部キーを返す (英数字)。表示名ではない。
-    日英の表示は report/category_labels.json のマップで変換する。"""
+    """Return the language-neutral internal key for the product category
+    (alphanumeric), not a display name. JA/EN display is resolved through
+    the map in report/category_labels.json."""
     for name, pat in PRODUCT_CATS:
         if pat.search(title):
             return name
     return PRODUCT_CAT_FALLBACK
 
 
-# --- 発見者バケット (with Microsoft の内訳を見るため) ---
+# --- Finder buckets (to see the breakdown within "with Microsoft") ---
 MS_INTERNAL_RE = re.compile(r"with\s+microsoft|microsoft\s+(internal|red\s+team|"
                            r"security|offensive)|\bMORSE\b|\bDART\b|\bMSRC\b|\bWARP\b|\bACS\b", re.I)
 ANON_RE = re.compile(r"anonymous", re.I)
-# 32桁以上の16進文字列 = Microsoftが匿名化したハッシュ識別子
-# (例: 0123456789abcdef0123456789abcdef)。人間か自動化かは不明。教訓: 実名と別扱い。
+# 16+ hex-char string = a hash identifier anonymized by Microsoft
+# (e.g. 0123456789abcdef0123456789abcdef). Human or automation is unknown.
+# Lesson: keep separate from real names.
 HASH_RE = re.compile(r"^[0-9a-f]{16,}$", re.I)
 
 
 def is_hash_credit(name: str) -> bool:
-    """クレジット名がハッシュ識別子単独か"""
+    """Whether the credit name is a bare hash identifier."""
     return bool(HASH_RE.match(name.strip()))
 
 
 def finder_bucket(credited: bool, credits: list[str]) -> str:
-    """発見者を大分類: uncredited / ms_internal / hash_anon / anonymous / external
+    """Coarse finder bucket: uncredited / ms_internal / hash_anon / anonymous / external
 
-    判定順:
-      1. クレジット無し
-      2. 社内 (with Microsoft / MORSE / ACS 等)  ← 実名+所属で判定
-      3. ハッシュ識別子のみ (実名研究者と混ぜない)
-      4. Anonymous のみ
-      5. それ以外 = 外部研究者(実名)
-    帰属はしない（AI/ツールの正体は推測しない）。文字列の機械分類のみ。教訓#5。
+    Evaluation order:
+      1. No credit
+      2. Internal (with Microsoft / MORSE / ACS etc.)  <- judged by name + affiliation
+      3. Hash identifiers only (do not mix with named researchers)
+      4. Anonymous only
+      5. Otherwise = external researcher (named)
+    No attribution (do not guess the identity behind an AI/tool). Mechanical
+    string classification only. Lesson #5.
     """
     if not credited:
         return "uncredited"
@@ -209,11 +216,11 @@ def finder_bucket(credited: bool, credits: list[str]) -> str:
 
 
 def cve_is_target(vuln: dict) -> bool:
-    """KEV/EPSS 照合の対象CVEか。
+    """Whether this CVE is a target for KEV/EPSS matching.
 
-    条件 (いずれか): 再起動クラスが重い層 (T2/T3) / 深刻度が Critical /
-    外部研究者(実名)クレジット付き。Edge 長tailの低深刻度を除外し、API負荷と
-    ノイズを削減する。帰属判断ではなく機械的な絞り込み。
+    Condition (any of): heavy reboot class (T2/T3) / severity Critical /
+    external (named) researcher credit. Excludes the low-severity Edge long
+    tail to cut API load and noise. A mechanical filter, not an attribution call.
     """
     names = credit_names(vuln)
     return (tier_of(vuln) in ("T2", "T3")
@@ -222,12 +229,13 @@ def cve_is_target(vuln: dict) -> bool:
 
 
 def target_cves_from_doc(doc: dict) -> list[dict]:
-    """CVRF 文書から対象CVEの軽量な行リストを返す (KEV/EPSS 照合用)。
+    """Return lightweight rows for the target CVEs from a CVRF document (for KEV/EPSS matching).
 
-    各行は {cve, tier, severity, finder, title, category}。帰属・解釈はしない。
-    title/category は CVRF(この文書)由来の事実で、KEV/EPSS の値とは別ソース。
-    category は表5(製品カテゴリ別)と同一の product_cat() 分類を再利用する。
-    enrichment 層がこれを使う (凍結 state に依存しない)。
+    Each row is {cve, tier, severity, finder, title, category}. No attribution
+    or interpretation. title/category are facts derived from the CVRF (this
+    document), a different source from the KEV/EPSS values. category reuses the
+    same product_cat() classification as Table 5 (by product category). The
+    enrichment layer consumes this (it does not depend on frozen state).
     """
     out: list[dict] = []
     for v in doc.get("Vulnerability") or []:
@@ -247,10 +255,10 @@ def target_cves_from_doc(doc: dict) -> list[dict]:
 
 def summarize(doc: dict, month: str, fetched_at: str) -> dict:
     """
-    CVRF文書1件を、監視用の集計サマリに畳む。
-    判断・帰属は一切含まない。事実の集計のみ。教訓#5。
+    Fold a single CVRF document into a summary for monitoring.
+    Contains no judgment or attribution -- fact tallies only. Lesson #5.
 
-    戻り値は state/{month}.json に保存される形。
+    The return value is the shape saved to state/{month}.json.
     """
     vulns = doc.get("Vulnerability") or []
     total = len(vulns)
@@ -259,12 +267,12 @@ def summarize(doc: dict, month: str, fetched_at: str) -> dict:
     sev_count: dict[str, int] = defaultdict(int)
     credited = 0
 
-    # クレジット名 -> それを含むCVEの集合 (CVE単位で重複排除。教訓#2)
+    # credit name -> set of CVEs containing it (dedup per CVE. Lesson #2)
     credit_to_cves: dict[str, set[str]] = defaultdict(set)
 
     zero_days: list[dict] = []
 
-    # --- 母集団分離・製品・発見者バケットの集計 (msrc_action 移植) ---
+    # --- Tallies for population split / product / finder buckets (ported from msrc_action) ---
     core_total = 0
     excluded_total = 0
     sev_core: dict[str, int] = defaultdict(int)
@@ -272,10 +280,10 @@ def summarize(doc: dict, month: str, fetched_at: str) -> dict:
     product_count: dict[str, int] = defaultdict(int)
     finder_count: dict[str, int] = defaultdict(int)
     kugelblitz = 0
-    # Critical を発見者バケット別に集計 (件数のみ。個人実名は保存しない=データ最小化)
+    # Tally Critical by finder bucket (counts only; do not store individual names = data minimization)
     critical_by_finder: dict[str, int] = defaultdict(int)
     kugelblitz_in_critical = 0
-    # KEV/EPSS 照合の対象CVE (T2/T3 ∨ Critical ∨ external)。件数削減用。
+    # Target CVEs for KEV/EPSS matching (T2/T3 v Critical v external). For count reduction.
     target_cve_ids: list[str] = []
 
     for v in vulns:
@@ -289,11 +297,11 @@ def summarize(doc: dict, month: str, fetched_at: str) -> dict:
         names = credit_names(v)
         if names:
             credited += 1
-        # 同一CVE内の重複名は set への add で自然に1回になる
+        # duplicate names within the same CVE collapse to one via set.add
         for nm in set(names):
             credit_to_cves[nm].add(cve)
 
-        # 母集団 (core / excluded) と、core 側の深刻度・再起動クラス
+        # Population (core / excluded), and severity / reboot class on the core side
         if population_of(title) == "core":
             core_total += 1
             sev_core[sev] += 1
@@ -301,21 +309,21 @@ def summarize(doc: dict, month: str, fetched_at: str) -> dict:
         else:
             excluded_total += 1
 
-        # 製品カテゴリ (母集団=all)
+        # Product category (population = all)
         product_count[product_cat(title)] += 1
-        # 発見者バケット (母集団=all、CVE単位)
+        # Finder bucket (population = all, per CVE)
         bucket = finder_bucket(bool(names), names)
         finder_count[bucket] += 1
-        # Kugelblitz 系クレジットを含む CVE 数 (CVE単位)
+        # Number of CVEs with a Kugelblitz-family credit (per CVE)
         has_kugel = any("kugelblitz" in c.lower() for c in names)
         if has_kugel:
             kugelblitz += 1
-        # Critical の発見者内訳 (件数のみ。実名は state に焼き込まない)
+        # Critical finder breakdown (counts only; do not bake real names into state)
         if sev == "Critical":
             critical_by_finder[bucket] += 1
             if has_kugel:
                 kugelblitz_in_critical += 1
-        # KEV/EPSS 照合の対象CVE (T2/T3 ∨ Critical ∨ external)
+        # Target CVEs for KEV/EPSS matching (T2/T3 v Critical v external)
         if tr in ("T2", "T3") or sev == "Critical" or bucket == "external":
             target_cve_ids.append(cve)
 
@@ -333,40 +341,40 @@ def summarize(doc: dict, month: str, fetched_at: str) -> dict:
                 "credits": sorted(set(names)),
             })
 
-    # クレジット名ごとのCVE件数 (CVE単位・重複排除済み)。教訓#2
+    # CVE count per credit name (per CVE, deduped). Lesson #2
     credit_counts = {nm: len(cves) for nm, cves in credit_to_cves.items()}
 
     return {
         "month": month,
-        "fetched_at": fetched_at,          # 教訓#4: 鮮度の記録
+        "fetched_at": fetched_at,          # Lesson #4: record freshness
         "cve_total": total,
         "credited": credited,
         "uncredited": total - credited,
         "tier_count": dict(tier_count),
         "severity_count": dict(sev_count),
-        # --- 母集団分離 (MS本体相当 vs Edge/Mariner/Cloud 除外) ---
+        # --- Population split (MS-core vs Edge/Mariner/Cloud excluded) ---
         "core_total": core_total,
         "excluded_total": excluded_total,
         "severity_core": dict(sev_core),
         "tier_core": dict(tier_core),
-        # --- 製品カテゴリ別 (母集団=all)。件数降順 ---
+        # --- By product category (population = all). Descending by count ---
         "product_count": dict(sorted(product_count.items(), key=lambda x: -x[1])),
-        # --- 発見者バケット (母集団=all)。帰属判断ではなく機械分類 ---
+        # --- Finder buckets (population = all). Mechanical classification, not attribution ---
         "finder_bucket": dict(finder_count),
-        # 推移で使う社内(with Microsoft系)件数の便利フィールド (finder_bucket と同値)
+        # Convenience field for internal (with-Microsoft) count used in trends (same as finder_bucket)
         "ms_internal": finder_count.get("ms_internal", 0),
-        # --- Kugelblitz 系クレジットを含む CVE 数 (推移監視のベースライン) ---
+        # --- Number of CVEs with a Kugelblitz-family credit (baseline for trend monitoring) ---
         "kugelblitz": kugelblitz,
-        # --- Critical の発見者内訳 (件数のみ。実名なし=データ最小化) ---
+        # --- Critical finder breakdown (counts only; no real names = data minimization) ---
         "critical_by_finder": dict(critical_by_finder),
         "kugelblitz_in_critical": kugelblitz_in_critical,
-        # --- KEV/EPSS 照合の対象CVE-ID (T2/T3 ∨ Critical ∨ external) ---
+        # --- Target CVE-IDs for KEV/EPSS matching (T2/T3 v Critical v external) ---
         "target_cves": target_cve_ids,
-        # 上位のみ保存(全件だと肥大化)。並びは件数降順
+        # Save top entries only (full list would bloat). Ordered descending by count
         "credit_counts": dict(sorted(credit_counts.items(),
                                      key=lambda x: -x[1])),
         "zero_days": zero_days,
-        # メタ: このサマリが機械集計であり解釈を含まないことの明示
+        # meta: makes explicit that this summary is a machine tally with no interpretation
         "_note": ("machine-generated factual summary. "
                   "no attribution/interpretation. "
                   "do NOT infer tool/AI identity from credit names "

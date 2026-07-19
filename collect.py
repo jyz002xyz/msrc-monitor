@@ -1,22 +1,22 @@
 #!/usr/bin/env python3
 """
-collect.py — MSRC CVRF を取得し、事実サマリを state/ に保存する (冪等)
+collect.py — fetch MSRC CVRF and save a fact summary to state/ (idempotent)
 
-判断・帰属は一切しない。生データを取得して畳むだけ。
-Pi 上で systemd timer から月次実行される。
+Makes no judgment and no attribution. Just fetches the raw data and folds it.
+Runs monthly on the Pi via a systemd timer.
 
-冪等性:
-    同じ月を再取得しても安全。ただし fetched_at は更新される
-    (クレジット追記の反映を取り込むため)。--no-clobber で既存を保護可。
+Idempotency:
+    Re-fetching the same month is safe. However, fetched_at is updated
+    (to pick up newly added credits). Use --no-clobber to protect existing files.
 
-使い方:
-    python3 collect.py                # 当月を取得
-    python3 collect.py 2026-Jul       # 指定月
-    python3 collect.py --backfill 2026-Jan 2026-Jul   # 範囲を一括
-    python3 collect.py 2026-Jul --no-clobber          # 既存があればスキップ
+Usage:
+    python3 collect.py                # fetch the current month
+    python3 collect.py 2026-Jul       # a specific month
+    python3 collect.py --backfill 2026-Jan 2026-Jul   # a whole range at once
+    python3 collect.py 2026-Jul --no-clobber          # skip if it already exists
 
-環境変数:
-    MSRC_MONITOR_HOME  … state/ の親。未設定ならスクリプト位置。
+Environment variables:
+    MSRC_MONITOR_HOME  … parent of state/. Defaults to the script location.
 """
 from __future__ import annotations
 
@@ -54,7 +54,7 @@ def current_month_tag() -> str:
 
 
 def expand_range(start: str, end: str) -> list[str]:
-    """'2026-Jan' '2026-Jul' -> 各月タグのリスト"""
+    """'2026-Jan' '2026-Jul' -> list of month tags"""
     def parse(tag):
         y, m = tag.split("-")
         return int(y), MONTHS.index(m)
@@ -72,7 +72,7 @@ def expand_range(start: str, end: str) -> list[str]:
 
 
 def fetch(month: str, timeout: int = 90, retries: int = 3) -> dict:
-    """CVRF を JSON で取得。指数バックオフ付きリトライ。"""
+    """Fetch CVRF as JSON. Retries with exponential backoff."""
     url = CVRF_URL.format(month=month)
     last = None
     for attempt in range(retries):
@@ -84,13 +84,13 @@ def fetch(month: str, timeout: int = 90, retries: int = 3) -> dict:
             last = e
             if attempt < retries - 1:
                 wait = 2 ** attempt * 5
-                print(f"  [retry {attempt+1}/{retries}] {month}: {e} — {wait}s待機",
+                print(f"  [retry {attempt+1}/{retries}] {month}: {e} — waiting {wait}s",
                       file=sys.stderr)
                 time.sleep(wait)
-    raise RuntimeError(f"{month}: 取得失敗 ({retries}回) — {last}")
+    raise RuntimeError(f"{month}: fetch failed ({retries} attempts) — {last}")
 
 
-# 凍結スナップショットと再取得値を比較する軸 (取得ラグに頑健な実数のみ)
+# Axes for comparing a frozen snapshot against a re-fetched value (only counts robust to fetch lag)
 REVISION_KEYS = ["cve_total", "core_total", "credited", "kugelblitz", "ms_internal"]
 
 
@@ -101,14 +101,14 @@ def revisions_dir() -> Path:
 
 
 def detect_revision(frozen: dict, fresh: dict, detected_at: str) -> dict | None:
-    """凍結値と再取得値の差分を返す (差が無ければ None)。frozen は上書きしない。"""
+    """Return the diff between frozen and re-fetched values (None if no diff). Never overwrites frozen."""
     diff = {}
     for k in REVISION_KEYS:
         fv = frozen.get(k)
         nv = fresh.get(k)
         if fv is not None and nv is not None and fv != nv:
             diff[k] = {"frozen": fv, "revised": nv, "delta": nv - fv}
-    # severity(Critical)・重い層(T2+T3) も比較 (レポートの主要軸)
+    # Also compare severity (Critical) and the heavy tiers (T2+T3) (the report's main axes)
     fc = (frozen.get("severity_count") or {}).get("Critical", 0)
     nc = (fresh.get("severity_count") or {}).get("Critical", 0)
     if fc != nc:
@@ -126,18 +126,19 @@ def detect_revision(frozen: dict, fresh: dict, detected_at: str) -> dict | None:
         "snapshot_date": frozen.get("snapshot_date"),
         "detected_at": detected_at,
         "diff": diff,
-        "_note": ("MSRC が凍結後にこの月を事後改訂したことを検知。"
-                  "凍結値は保持し、改訂内容はここに記録する (レポート数値は不変)。"),
+        "_note": ("Detected that MSRC revised this month after it was frozen. "
+                  "The frozen values are kept; the revision is recorded here "
+                  "(report figures stay unchanged)."),
     }
 
 
 def collect_month(month: str, no_clobber: bool = False) -> dict | None:
     path = state_dir() / f"{month}.json"
     if no_clobber and path.exists():
-        print(f"  skip (既存): {month}")
+        print(f"  skip (exists): {month}")
         return json.loads(path.read_text())
 
-    # 既存が凍結済みなら上書きしない。再取得して改訂を検知・記録するのみ。
+    # If the existing file is frozen, never overwrite it. Only re-fetch to detect and record revisions.
     existing = json.loads(path.read_text()) if path.exists() else None
     is_frozen = bool(existing and existing.get("frozen"))
 
@@ -150,13 +151,13 @@ def collect_month(month: str, no_clobber: bool = False) -> dict | None:
         if rev:
             rp = revisions_dir() / f"{month}.json"
             rp.write_text(json.dumps(rev, ensure_ascii=False, indent=2))
-            print(f"  FROZEN {month}: 凍結値を保持。MSRC 改訂を検知 -> {rp.name} "
+            print(f"  FROZEN {month}: keeping frozen values. MSRC revision detected -> {rp.name} "
                   f"({', '.join(rev['diff'].keys())})")
         else:
-            print(f"  FROZEN {month}: 凍結値を保持 (改訂なし)")
+            print(f"  FROZEN {month}: keeping frozen values (no revision)")
         return existing
 
-    # 未凍結 (現在月) は通常どおり上書き。frozen:false を明示。
+    # Unfrozen (current month) is overwritten as usual. Set frozen:false explicitly.
     summary["frozen"] = False
     tmp = path.with_suffix(".json.tmp")
     tmp.write_text(json.dumps(summary, ensure_ascii=False, indent=2))
@@ -170,12 +171,12 @@ def collect_month(month: str, no_clobber: bool = False) -> dict | None:
 
 
 def main() -> int:
-    ap = argparse.ArgumentParser(description="MSRC CVRF を取得しサマリ保存 (判断なし)")
-    ap.add_argument("months", nargs="*", help="例: 2026-Jul (省略時は当月)")
+    ap = argparse.ArgumentParser(description="Fetch MSRC CVRF and save a summary (no judgment)")
+    ap.add_argument("months", nargs="*", help="e.g. 2026-Jul (defaults to current month)")
     ap.add_argument("--backfill", nargs=2, metavar=("START", "END"),
-                    help="範囲を一括取得 例: --backfill 2026-Jan 2026-Jul")
+                    help="fetch a whole range e.g. --backfill 2026-Jan 2026-Jul")
     ap.add_argument("--no-clobber", action="store_true",
-                    help="既存の月ファイルがあればスキップ")
+                    help="skip if the month file already exists")
     args = ap.parse_args()
 
     if args.backfill:
@@ -195,12 +196,12 @@ def main() -> int:
         except Exception as e:
             print(f"  FAIL {m}: {e}", file=sys.stderr)
             failed.append(m)
-        time.sleep(1)  # API への礼儀
+        time.sleep(1)  # be polite to the API
 
     if failed:
-        print(f"[collect] 失敗: {', '.join(failed)}", file=sys.stderr)
+        print(f"[collect] failed: {', '.join(failed)}", file=sys.stderr)
         return 1
-    print("[collect] 完了")
+    print("[collect] done")
     return 0
 
 
