@@ -5,6 +5,15 @@
 Microsoft の毎月の Patch Tuesday 一次データ（MSRC CVRF）を取得し、事実として集計し、
 **変化**のみを通知する監視ツールです。凍結した事実から日英バイリンガルのレポート生成も支援します。
 
+## 公開レポート
+
+📄 **[レポートを読む → jyz002xyz.github.io/msrc-monitor](https://jyz002xyz.github.io/msrc-monitor/)**
+&nbsp;([日本語](https://jyz002xyz.github.io/msrc-monitor/report_ja.html) · [English](https://jyz002xyz.github.io/msrc-monitor/report_en.html))
+
+フロンティアAIによる脆弱性発見の急増に関する状況分析（2026年7月時点）。数値は機械生成の
+事実、解釈は人間の分析で、個人名は役割へ一般化しています。情報提供のみを目的とし、助言では
+ありません。
+
 ## 設計思想
 
 **「変化検知は自動、意味づけ（解釈）は人間が行う」**
