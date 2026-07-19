@@ -6,6 +6,15 @@ A monitoring tool that fetches Microsoft's monthly Patch Tuesday primary data
 (MSRC CVRF), summarizes it into facts, and notifies only on **changes** — then
 helps generate a bilingual (Japanese / English) report from the frozen facts.
 
+## Published report
+
+📄 **[Read the report → jyz002xyz.github.io/msrc-monitor](https://jyz002xyz.github.io/msrc-monitor/)**
+&nbsp;([日本語](https://jyz002xyz.github.io/msrc-monitor/report_ja.html) · [English](https://jyz002xyz.github.io/msrc-monitor/report_en.html))
+
+A situational analysis of the surge in vulnerability discovery by frontier AI
+(as of July 2026). Facts are machine-generated; interpretation is human, and
+personal names are generalized to roles. Informational only — not advice.
+
 ## Design philosophy
 
 **"Change detection is automatic; meaning-making is manual."**
