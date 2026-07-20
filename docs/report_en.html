@@ -38,16 +38,16 @@ body { margin: 0; background: #eef0f3; color: #1a1a1a;
 </div>
 <div class="disclaimer">This report is for informational purposes only and does not constitute investment, legal, or security advice. Figures are machine-generated facts; interpretation is human analysis. Personal names are generalized to roles. See the Disclaimer section at the end.</div>
 <article class="paper">
-<p style="margin-top: 0.14in; margin-bottom: 0.04in; line-height: 100%">
+<p style="line-height: 100%; margin-top: 0.14in; margin-bottom: 0.04in">
 <font color="#595959"><font face="Arial, serif"><font size="2" style="font-size: 9pt">Technical
 report (machine-generated facts + human interpretation)</font></font></font></p>
-<p style="margin-bottom: 0.03in; line-height: 100%"><font color="#1f3864"><font face="Arial, serif"><font size="5" style="font-size: 17pt"><b>The
+<p style="line-height: 100%; margin-bottom: 0.03in"><font color="#1f3864"><font face="Arial, serif"><font size="5" style="font-size: 17pt"><b>The
 surge in vulnerability discovery by frontier AI</b></font></font></font></p>
-<p style="border-top: none; border-bottom: 1px solid #2e5496; border-left: none; border-right: none; padding: 0in; margin-bottom: 0.11in; line-height: 100%">
+<p style="line-height: 100%; margin-bottom: 0.11in; border-top: none; border-bottom: 1px solid #2e5496; border-left: none; border-right: none; padding: 0in">
 <font color="#2e5496"><font face="Arial, serif"><font size="2" style="font-size: 11pt">A
 situational analysis as of July 2026, and its implications for
 practitioners responsible for vulnerability response</font></font></font></p>
-<p style="margin-bottom: 0.02in; line-height: 100%"><font color="#595959"><font face="Arial, serif"><font size="2" style="font-size: 9pt">Practitioners
+<p style="line-height: 100%; margin-bottom: 0.02in"><font color="#595959"><font face="Arial, serif"><font size="2" style="font-size: 9pt">Practitioners
 and decision-makers responsible for vulnerability and patch response</font></font></font></p>
 <table width="100%" cellpadding="7" cellspacing="0">
 	<col width="256*"/>
@@ -70,7 +70,7 @@ and decision-makers responsible for vulnerability and patch response</font></fon
 		</td>
 	</tr>
 </table>
-<p style="margin-bottom: 0.06in; line-height: 100%"><br/>
+<p style="line-height: 100%; margin-bottom: 0.06in"><br/>
 <br/>
 
 </p>
@@ -88,7 +88,7 @@ and decision-makers responsible for vulnerability and patch response</font></fon
 		</td>
 	</tr>
 </table>
-<p style="margin-bottom: 0.06in; line-height: 100%"><br/>
+<p style="line-height: 100%; margin-bottom: 0.06in"><br/>
 <br/>
 
 </p>
@@ -118,7 +118,7 @@ and decision-makers responsible for vulnerability and patch response</font></fon
 		</td>
 	</tr>
 </table>
-<p style="margin-bottom: 0.06in; line-height: 100%"><br/>
+<p style="line-height: 100%; margin-bottom: 0.06in"><br/>
 <br/>
 
 </p>
@@ -141,7 +141,7 @@ and decision-makers responsible for vulnerability and patch response</font></fon
 <h1 class="western" style="margin-top: 0.18in; margin-bottom: 0.1in; border-top: none; border-bottom: 1px solid #2e5496; border-left: none; border-right: none; padding: 0in">
 <font color="#1f3864"><font face="Arial, serif"><font size="4" style="font-size: 14pt"><b>Executive
 summary</b></font></font></font></h1>
-<p style="margin-bottom: 0.08in; line-height: 120%"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Microsoft's
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Microsoft's
 July 14, 2026 Patch Tuesday was reported at 569–622 CVEs, described
 as the company's largest ever. However, once the population is
 normalized using MSRC primary data, the reality is that June was the
@@ -151,7 +151,7 @@ is largely a product of the counting basis (folding in Edge/Chromium
 and the like). Either way, the counts remain elevated far above
 prior-year levels, and Microsoft itself has officially attributed the
 increase to its in-house AI tool, MDASH, finding vulnerabilities.</font></font></p>
-<p style="margin-bottom: 0.08in; line-height: 120%"><font face="Arial, serif"><font size="2" style="font-size: 10pt">That
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">That
 said, from the standpoint of the actual operational workload of an
 organization responsible for vulnerability response, a calm
 assessment is warranted. First, the three zero-day vulnerabilities
@@ -167,7 +167,7 @@ those attributable to the specific entity tracked in this report)
 were concentrated in the low-severity, auto-updating domain of
 Microsoft Edge (the browser). The count exploded, but the heavy work
 requiring off-hours maintenance did not increase.</font></font></p>
-<p style="margin-bottom: 0.08in; line-height: 120%"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Meanwhile,
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Meanwhile,
 of the wave once predicted as &quot;a flood of vulnerabilities within
 ~90 days of frontier AI's arrival,&quot; the portion arising from
 coordinated disclosure targeting third-party products and OSS
@@ -219,7 +219,7 @@ to arrive as a second wave going forward (from August onward).</font></font></p>
 <h1 class="western" style="margin-top: 0.18in; margin-bottom: 0.1in; border-top: none; border-bottom: 1px solid #2e5496; border-left: none; border-right: none; padding: 0in">
 <font color="#1f3864"><font face="Arial, serif"><font size="4" style="font-size: 14pt"><b>Analysis:
 evaluating vulnerabilities across three tiers</b></font></font></font></h1>
-<p style="margin-bottom: 0.08in; line-height: 120%"><font face="Arial, serif"><font size="2" style="font-size: 10pt">&quot;AI
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">&quot;AI
 is mass-producing vulnerabilities&quot; is true but too coarse. For
 defenders to make operational judgments, vulnerabilities must be
 decomposed into three tiers by who discovers them and by operational
@@ -295,14 +295,14 @@ structure.</font></font></p>
 		</tr>
 	</tbody>
 </table>
-<p style="margin-bottom: 0.06in; line-height: 100%"><br/>
+<p style="line-height: 100%; margin-bottom: 0.06in"><br/>
 <br/>
 
 </p>
 <h3 class="western" style="margin-top: 0.1in; margin-bottom: 0.06in"><font color="#2e5496"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>The
 crux: &quot;the blade is mainly human, the surface is AI — but the
 boundary is moving&quot;</b></font></font></font></h3>
-<p style="margin-bottom: 0.08in; line-height: 120%"><font face="Arial, serif"><font size="2" style="font-size: 10pt">What
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">What
 this primary-data investigation revealed is that AI-driven
 vulnerability discovery is being deployed mainly on the &quot;surface&quot;
 — the vast long tail that humans deprioritize as tedious relative
@@ -310,7 +310,7 @@ to payoff, specifically the mechanical, exhaustive sweeping of the
 Edge browser's surface. The new credit &quot;Kugelblitz&quot; (39
 issues, all low-severity) that appeared abruptly on Edge this month
 appears to be the archetype.</font></font></p>
-<p style="margin-bottom: 0.08in; line-height: 120%"><font face="Arial, serif"><font size="2" style="font-size: 10pt">However,
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">However,
 it is a mistake to simplify this as &quot;the blade is all human.&quot;
 Microsoft's in-house AI tool MDASH had, as of May, already officially
 discovered 16 issues including Critical RCE in the most carefully
@@ -319,7 +319,7 @@ and the IKEv2 service. AI started on the &quot;surface,&quot; but it
 has already set foot in the &quot;blade&quot; domain. The movement of
 this surface-sweeping rising into core products has already begun,
 and its speed is the fork in the road ahead.</font></font></p>
-<p style="margin-bottom: 0.08in; line-height: 120%"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Note
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Note
 that the new Edge entity &quot;Kugelblitz&quot; tracked in this
 report and the officially AI-confirmed MDASH are entirely different
 things, targeting completely different domains (Edge vs.
@@ -328,18 +328,18 @@ confirmed from today's primary information (see Appendix 5 and 6).</font></font>
 <h1 class="western" style="margin-top: 0.18in; margin-bottom: 0.1in; border-top: none; border-bottom: 1px solid #2e5496; border-left: none; border-right: none; padding: 0in">
 <font color="#1f3864"><font face="Arial, serif"><font size="4" style="font-size: 14pt"><b>Implications
 and recommended actions for practitioners in regulated industries</b></font></font></font></h1>
-<p style="margin-bottom: 0.08in; line-height: 120%"><font face="Arial, serif"><font size="2" style="font-size: 10pt">The
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">The
 following are recommendations based on this report's analysis, not
 established regulatory requirements. Individual supervisory
 expectations of regulators must be confirmed against primary sources.</font></font></p>
 <h3 class="western" style="margin-top: 0.1in; margin-bottom: 0.06in"><font color="#2e5496"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>1.
 Shift your monitoring metric (top priority)</b></font></font></font></h3>
 <ul>
-	<li value="1"><p style="margin-bottom: 0.06in; line-height: 115%"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Stop
+	<li value="1"><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Stop
 	using &quot;CVE count&quot; as a threat metric.</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
 	Even professional tracking organizations disagreed on this month's
 	count (569–622); as a metric it has already broken down.</font></font></p></li>
-	<li><p style="margin-bottom: 0.06in; line-height: 115%"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Instead,
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Instead,
 	track the month-over-month change in the &quot;heavy tier&quot;
 	(server products, boot/crypto) that requires change management and
 	maintenance windows. When that grows is the inflection point for
@@ -349,25 +349,25 @@ Shift your monitoring metric (top priority)</b></font></font></font></h3>
 Move triage away from CVSS severity (most important; industry
 consensus)</b></font></font></font></h3>
 <ul>
-	<li><p style="margin-bottom: 0.06in; line-height: 115%"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Not
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Not
 	just the count, but the &quot;severity score&quot; has also
 	saturated and ceased to function.</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
 	When a single release yields 600+ CVEs, most rated High/Critical,
 	the &quot;Critical&quot; label stops helping prioritization. In
 	fact, the two actually exploited this month were not flashy CVSS 9.8
 	issues but mid-tier privilege-escalation bugs.</font></font></p></li>
-	<li><p style="margin-bottom: 0.06in; line-height: 115%"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Multiple
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Multiple
 	external expert organizations have reached the same conclusion:
 	CVSS-based prioritization predicts only about 2.3% of actual
 	exploitation attempts, while forcing response to about 57% of all
 	vulnerabilities.</font></font></p></li>
-	<li><p style="margin-bottom: 0.06in; line-height: 115%"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Where
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Where
 	to move: drop CVSS score alone and prioritize using </font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>CISA
 	KEV (the catalog of vulnerabilities with confirmed exploitation) +
 	EPSS (probability of exploitation within 30 days) + asset
 	reachability.</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
 	This aligns with regulators' risk-based supervision philosophy.</font></font></p></li>
-	<li><p style="margin-bottom: 0.06in; line-height: 115%"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Note:
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Note:
 	In April 2026, NIST shifted the NVD (vulnerability database) to
 	triage operation and declared some past CVEs &quot;not scheduled for
 	enrichment.&quot; The very data foundation underpinning CVSS can no
@@ -376,12 +376,12 @@ consensus)</b></font></font></font></h3>
 <h3 class="western" style="margin-top: 0.1in; margin-bottom: 0.06in"><font color="#2e5496"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>3.
 Shorten the emergency-patch SLA</b></font></font></font></h3>
 <ul>
-	<li><p style="margin-bottom: 0.06in; line-height: 115%"><font face="Arial, serif"><font size="2" style="font-size: 10pt">There
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">There
 	are demonstrations that working exploit code can be generated in a
 	short time with AI assistance from the diff of a released patch.
 	Raise emergency-patch decisions from a &quot;weekly&quot; cadence to
 	an &quot;hours-to-days&quot; cadence.</font></font></p></li>
-	<li><p style="margin-bottom: 0.06in; line-height: 115%"><font face="Arial, serif"><font size="2" style="font-size: 10pt">In
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">In
 	particular, this month's confirmed-exploited zero-days (AD FS /
 	SharePoint privilege escalation) are same-day response targets if
 	you run a federation platform or on-prem SharePoint. Even if not yet
@@ -391,11 +391,11 @@ Shorten the emergency-patch SLA</b></font></font></font></h3>
 <h3 class="western" style="margin-top: 0.1in; margin-bottom: 0.06in"><font color="#2e5496"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>4.
 Verify that Edge/Chromium auto-update actually works</b></font></font></font></h3>
 <ul>
-	<li><p style="margin-bottom: 0.06in; line-height: 115%"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Since
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Since
 	most AI-derived vulnerabilities concentrate in Edge, it is highly
 	worthwhile to verify that Edge/Chromium auto-update is actually
 	effective across all endpoints.</font></font></p></li>
-	<li><p style="margin-bottom: 0.06in; line-height: 115%"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Pitfall:
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Pitfall:
 	Electron/CEF-embedded apps (Teams, Slack, VS Code, etc.) do not
 	benefit from browser auto-update.</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
 	We recommend enumerating these dependencies via SBOM. A classic gap
@@ -404,23 +404,23 @@ Verify that Edge/Chromium auto-update actually works</b></font></font></font></h
 <h3 class="western" style="margin-top: 0.1in; margin-bottom: 0.06in"><font color="#2e5496"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>5.
 Prepare for the second wave (coordinated disclosure; split patches)</b></font></font></font></h3>
 <ul>
-	<li><p style="margin-bottom: 0.06in; line-height: 115%"><font face="Arial, serif"><font size="2" style="font-size: 10pt">From
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">From
 	August onward, disclosure of Glasswing-derived OSS/third-party
 	vulnerabilities may begin in earnest. Treat your own OSS
 	dependencies as &quot;not yet fixed,&quot; and prioritize
 	compensating controls such as exposure reduction and segmentation.</font></font></p></li>
-	<li><p style="margin-bottom: 0.06in; line-height: 115%"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Concrete
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Concrete
 	risk (split patches): July fixed a SharePoint authentication bypass
 	(CVE-2026-55040), but the companion RCE bug that chains with it into
 	unauthenticated RCE is unpatched, with Microsoft slated to fix it in
 	August. </font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Because
 	a single attack chain is fixed across multiple months, &quot;we
 	applied this month's fixes, so we're safe&quot; does not hold.</b></font></font></p></li>
-	<li><p style="margin-bottom: 0.06in; line-height: 115%"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Watch:
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Watch:
 	red.anthropic.com, the NVD feed, CISA KEV. Anthropic's 90-day
 	summary report is unpublished as of today and will require scrutiny
 	once released.</font></font></p></li>
-	<li><p style="margin-bottom: 0.06in; line-height: 115%"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Note
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Note
 	that AI-driven vulnerability discovery is not limited to Anthropic
 	(Glasswing/MDASH) or Microsoft's in-house effort. June's HTTP.sys
 	vulnerability was reported by OpenAI's Codex; multiple AIs are
@@ -430,24 +430,24 @@ Prepare for the second wave (coordinated disclosure; split patches)</b></font></
 <h3 class="western" style="margin-top: 0.1in; margin-bottom: 0.06in"><font color="#2e5496"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>6.
 BCP for AI dependence</b></font></font></font></h3>
 <ul>
-	<li><p style="margin-bottom: 0.06in; line-height: 115%"><font face="Arial, serif"><font size="2" style="font-size: 10pt">In
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">In
 	June 2026, a top-tier AI model was halted for 19 days due to export
 	controls. When embedding AI into a workflow, treat dependence on
 	top-tier models as within BCP scope, and make model redundancy and
 	fallback design the standard.</font></font></p></li>
 </ul>
-<p style="margin-bottom: 0in; line-height: 100%"><br/>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
 
 </p>
 <h1 class="western" style="margin-top: 0in; margin-bottom: 0.1in; border-top: none; border-bottom: 1px solid #2e5496; border-left: none; border-right: none; padding: 0in; page-break-before: always">
 <font color="#1f3864"><font face="Arial, serif"><font size="4" style="font-size: 14pt"><b>Primary-data
 breakdown — July 2026 Patch Tuesday</b></font></font></font></h1>
-<p style="margin-bottom: 0.08in; line-height: 120%"><font color="#222222"><font face="Arial, serif"><font size="2" style="font-size: 10pt">The
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font color="#222222"><font face="Arial, serif"><font size="2" style="font-size: 10pt">The
 following is a tally of primary data acquired from MSRC CVRF v3.0
 (frozen snapshot 2026-07-15). The population is shown both as 'full
 CVRF' and as 'core Microsoft products' (excluding Edge/Chromium,
 Mariner (Azure Linux), and Azure cloud).</font></font></font></p>
-<p style="margin-bottom: 0.06in; line-height: 100%"><br/>
+<p style="line-height: 100%; margin-bottom: 0.06in"><br/>
 <br/>
 
 </p>
@@ -588,14 +588,14 @@ Mariner (Azure Linux), and Azure cloud).</font></font></font></p>
 </table>
 <h3 class="western" style="margin-top: 0.1in; margin-bottom: 0.06in"><font color="#2e5496"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Table
 1 (by severity) — key point</b></font></font></font></h3>
-<p style="margin-bottom: 0.08in; line-height: 120%"><font face="Arial, serif"><font size="2" style="font-size: 10pt">37%
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">37%
 of the full CVRF (428 issues) is &quot;Unrated,&quot; but for core
 Microsoft products it is just 1. Nearly all of the Unrated derive
 from the excluded Edge/Chromium and the like. This is the true source
 of the ~485 gap versus the &quot;569–622&quot; figures the press
 uses. What is needed is not the absolute count but a
 population-normalized comparison.</font></font></p>
-<p style="margin-bottom: 0.06in; line-height: 100%"><br/>
+<p style="line-height: 100%; margin-bottom: 0.06in"><br/>
 <br/>
 
 </p>
@@ -675,13 +675,13 @@ population-normalized comparison.</font></font></p>
 </table>
 <h3 class="western" style="margin-top: 0.1in; margin-bottom: 0.06in"><font color="#2e5496"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Table
 2 (by reboot class) — key point</b></font></font></font></h3>
-<p style="margin-bottom: 0.08in; line-height: 120%"><font face="Arial, serif"><font size="2" style="font-size: 10pt">97%
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">97%
 of the record count (95% even for core Microsoft products) is T0/T1 —
 the tier absorbed by auto-update or existing monthly pipelines. The
 heavy tier (T2+T3) requiring careful staged rollout is only 34 issues
 even for the full CVRF. An explosion in count does not mean an
 explosion in operational workload.</font></font></p>
-<p style="margin-bottom: 0.06in; line-height: 100%"><br/>
+<p style="line-height: 100%; margin-bottom: 0.06in"><br/>
 <br/>
 
 </p>
@@ -792,13 +792,13 @@ explosion in operational workload.</font></font></p>
 </table>
 <h3 class="western" style="margin-top: 0.1in; margin-bottom: 0.06in"><font color="#2e5496"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Table
 3 (finder major categories) — key point</b></font></font></font></h3>
-<p style="margin-bottom: 0.08in; line-height: 120%"><font face="Arial, serif"><font size="2" style="font-size: 10pt">A
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">A
 finder's name does not mean &quot;uncredited = AI.&quot; CVRF credits
 mix external discovery, internal discovery, anonymization, and
 declined credit; the AI-derived portion cannot be separated at the
 aggregate level (see Appendix 5). This table is a factual tally, not
 an attribution judgment.</font></font></p>
-<p style="margin-bottom: 0.06in; line-height: 100%"><br/>
+<p style="line-height: 100%; margin-bottom: 0.06in"><br/>
 <br/>
 
 </p>
@@ -901,14 +901,14 @@ names)</b></font></font></font></h2>
 		</tr>
 	</tbody>
 </table>
-<p style="margin-bottom: 0.08in; line-height: 120%"><font color="#595959"><font face="Arial, serif"><font size="1" style="font-size: 8pt"><i>Counts
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font color="#595959"><font face="Arial, serif"><font size="1" style="font-size: 8pt"><i>Counts
 only (no personal names stored in the fact data). The top rows are
 per-bucket and sum to the Critical total. The Kugelblitz row is a
 cross-cutting reference (not additive). Individual researcher names
 and CVE examples are given as prose in the interpretation.</i></font></font></font></p>
 <h3 class="western" style="margin-top: 0.1in; margin-bottom: 0.06in"><font color="#2e5496"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Table
 4 (finder breakdown of Critical vulnerabilities) — key point</b></font></font></font></h3>
-<p style="margin-bottom: 0.08in; line-height: 120%"><font face="Arial, serif"><font size="2" style="font-size: 10pt">The
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">The
 overwhelming majority of Critical issues are still discovered by
 top-tier human researchers. Microsoft's in-house AI (the MDASH family
 = ACS/WARP/MORSE) has reached some Critical issues in
@@ -917,7 +917,7 @@ low-severity Edge; not a single one appears in Critical. In other
 words, the report's three-tier model (&quot;the blade is mainly
 human, AI has partly reached it, Kugelblitz is surface only&quot;) is
 corroborated by the breakdown of the 67 Critical issues.</font></font></p>
-<p style="margin-bottom: 0.06in; line-height: 100%"><br/>
+<p style="line-height: 100%; margin-bottom: 0.06in"><br/>
 <br/>
 
 </p>
@@ -1136,20 +1136,20 @@ corroborated by the breakdown of the 67 Critical issues.</font></font></p>
 </table>
 <h3 class="western" style="margin-top: 0.1in; margin-bottom: 0.06in"><font color="#2e5496"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Table
 5 (by product category) — key point</b></font></font></font></h3>
-<p style="margin-bottom: 0.08in; line-height: 120%"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Edge/Chromium
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Edge/Chromium
 accounts for 41%, driving the inflation of the count (most resolved
 by auto-update). The &quot;Other, 102&quot; is a miscellaneous set —
 games (Age of Empires), bundled OSS (ClamAV, OpenSSH, NATS), AD DS,
 Configuration Manager, etc. — left under their original titles to
 avoid forced classification.</font></font></p>
-<p style="margin-bottom: 0.06in; line-height: 100%"><br/>
+<p style="line-height: 100%; margin-bottom: 0.06in"><br/>
 <br/>
 
 </p>
 <h3 class="western" style="margin-top: 0.1in; margin-bottom: 0.06in"><font color="#2e5496"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Addendum:
 inventory of credits suggesting &quot;AI-related&quot; (a baseline
 for second-wave monitoring)</b></font></font></font></h3>
-<p style="margin-bottom: 0.08in; line-height: 120%"><font face="Arial, serif"><font size="2" style="font-size: 10pt">To
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">To
 fact-check the summary's claim that &quot;the coordinated-disclosure
 (Glasswing) second wave has not yet arrived,&quot; we verified it
 from the finder-credit angle. In July's CVRF, mechanically extracting
@@ -1158,13 +1158,13 @@ credits whose string contains any of AI / agent / Anthropic / Claude
 incidental substring matches (e.g., &quot;SEC-agent team&quot; is
 three people's names; KAIST, Akamai, and Trail of Bits merely happen
 to contain &quot;ai&quot;).</font></font></p>
-<p style="margin-bottom: 0.08in; line-height: 120%"><font face="Arial, serif"><font size="2" style="font-size: 10pt">As
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">As
 an important fact, Anthropic (the entity behind Project Glasswing
 discussed in this report) is actually involved in only 1 of the 36
 credits (a researcher at Doyensec, jointly with Claude and Anthropic
 Research; CVE-2026-50479, Windows USB Hub Driver EoP; Important;
 T0/T1; first appearing in July).</font></font></p>
-<p style="margin-bottom: 0.08in; line-height: 120%"><font face="Arial, serif"><font size="2" style="font-size: 10pt">This
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">This
 single case is (1) an individual instance in which one company,
 Doyensec, discovered it jointly with Anthropic's research division —
 not a synchronized embargo lift of coordinated disclosure (Glasswing)
@@ -1175,7 +1175,7 @@ conclusion — &quot;serious vulnerabilities (the blade) are mainly
 discovered by humans, and the Glasswing-derived second wave has not
 yet begun in earnest&quot; — is unchanged by this fact (if
 anything, it is reinforced).</font></font></p>
-<p style="margin-bottom: 0.08in; line-height: 120%"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Note
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Note
 that this inventory is retained as factual data generated by the
 monitoring program in a private repository, to serve as a baseline
 for comparing whether &quot;AI-related credits increase&quot; and
@@ -1184,17 +1184,17 @@ coming months. The policy of not asserting the true identity of a
 discoverer from a credit name is maintained (per the lesson of this
 report's misidentification of Kugelblitz as MDASH, refuted by primary
 information).</font></font></p>
-<p style="margin-bottom: 0.06in; line-height: 100%"><br/>
+<p style="line-height: 100%; margin-bottom: 0.06in"><br/>
 <br/>
 
 </p>
-<p style="margin-bottom: 0in; line-height: 100%"><br/>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
 
 </p>
 <h1 class="western" style="margin-top: 0in; margin-bottom: 0.1in; border-top: none; border-bottom: 1px solid #2e5496; border-left: none; border-right: none; padding: 0in; page-break-before: always">
 <font color="#1f3864"><font face="Arial, serif"><font size="4" style="font-size: 14pt"><b>Comparison
 with historical data — the January–July 2026 trend</b></font></font></font></h1>
-<p style="margin-bottom: 0.08in; line-height: 120%"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Below
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Below
 is a monthly trend composed only of real numbers unaffected by
 acquisition timing. Metrics that fluctuate with acquisition lag, such
 as the uncredited ratio, are intentionally excluded for accuracy (see
@@ -1401,32 +1401,32 @@ table (only real numbers robust to acquisition lag)</b></font></font></font></h2
 		</tr>
 	</tbody>
 </table>
-<p style="margin-bottom: 0.06in; line-height: 100%"><br/>
+<p style="line-height: 100%; margin-bottom: 0.06in"><br/>
 <br/>
 
 </p>
-<p align="center" style="margin-top: 0.06in; margin-bottom: 0.04in; line-height: 100%">
-<img src="assets/en/report_en_html_90ff8189.png" name="Image1" align="bottom" width="452" height="226" border="0"/>
+<p align="center" style="line-height: 100%; margin-top: 0.06in; margin-bottom: 0.04in">
+<img src="assets/en/report_en_html_72e5baeb.png" name="Image1" align="bottom" width="452" height="226" border="0"/>
 </p>
-<p align="center" style="margin-bottom: 0.11in; line-height: 100%"><font color="#595959"><font face="Arial, serif"><font size="1" style="font-size: 8pt"><i>Fig
+<p align="center" style="line-height: 100%; margin-bottom: 0.11in"><font color="#595959"><font face="Arial, serif"><font size="1" style="font-size: 8pt"><i>Fig
 1: Total CVE count trend (full CVRF / core Microsoft products)</i></font></font></font></p>
 <h3 class="western" style="margin-top: 0.1in; margin-bottom: 0.06in"><font color="#2e5496"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Figure
 1 (total CVE count) — interpretation</b></font></font></font></h3>
-<p style="margin-bottom: 0.08in; line-height: 120%"><font face="Arial, serif"><font size="2" style="font-size: 10pt">The
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">The
 press reported July as &quot;a record 570–622,&quot; but that is
 due to the counting basis (folding in Edge/Chromium, Mariner, etc.).
 Normalizing the population with MSRC primary data, the reality is
 that core Microsoft products peaked in June (724), and July (665) is
 actually a slight decrease. Either way, the second half of 2026
 remains elevated, and this conclusion does not change.</font></font></p>
-<p align="center" style="margin-top: 0.06in; margin-bottom: 0.04in; line-height: 100%">
-<img src="assets/en/report_en_html_8c2ef312.png" name="Image2" align="bottom" width="452" height="226" border="0"/>
+<p align="center" style="line-height: 100%; margin-top: 0.06in; margin-bottom: 0.04in">
+<img src="assets/en/report_en_html_b29f49e4.png" name="Image2" align="bottom" width="452" height="226" border="0"/>
 </p>
-<p align="center" style="margin-bottom: 0.11in; line-height: 100%"><font color="#595959"><font face="Arial, serif"><font size="1" style="font-size: 8pt"><i>Fig
+<p align="center" style="line-height: 100%; margin-bottom: 0.11in"><font color="#595959"><font face="Arial, serif"><font size="1" style="font-size: 8pt"><i>Fig
 2: Critical count and heavy tier (T2+T3) trend</i></font></font></font></p>
 <h3 class="western" style="margin-top: 0.1in; margin-bottom: 0.06in"><font color="#2e5496"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Figure
 2 (Critical and the heavy tier) — interpretation</b></font></font></font></h3>
-<p style="margin-bottom: 0.08in; line-height: 120%"><font face="Arial, serif"><font size="2" style="font-size: 10pt">The
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">The
 heavy tier (T2+T3), the essence of operational workload, moves
 violently up and down — 9→1→8→34→19→45→34 — not a
 monotonic increase. Rather than the simple trend of &quot;AI steadily
@@ -1434,14 +1434,14 @@ grows the heavy tier,&quot; what matters is the large month-to-month
 variance. Staffing plans should assume the variance — &quot;a
 45-class month can arrive at any time&quot; — not the average
 trend.</font></font></p>
-<p align="center" style="margin-top: 0.06in; margin-bottom: 0.04in; line-height: 100%">
-<img src="assets/en/report_en_html_458d2c6e.png" name="Image3" align="bottom" width="452" height="226" border="0"/>
+<p align="center" style="line-height: 100%; margin-top: 0.06in; margin-bottom: 0.04in">
+<img src="assets/en/report_en_html_e4ec6fe5.png" name="Image3" align="bottom" width="452" height="226" border="0"/>
 </p>
-<p align="center" style="margin-bottom: 0.11in; line-height: 100%"><font color="#595959"><font face="Arial, serif"><font size="1" style="font-size: 8pt"><i>Fig
+<p align="center" style="line-height: 100%; margin-bottom: 0.11in"><font color="#595959"><font face="Arial, serif"><font size="1" style="font-size: 8pt"><i>Fig
 3: Monthly appearance of the credit &quot;Kugelblitz&quot;</i></font></font></font></p>
 <h3 class="western" style="margin-top: 0.1in; margin-bottom: 0.06in"><font color="#2e5496"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Figure
 3 (Kugelblitz) — interpretation</b></font></font></font></h3>
-<p style="margin-bottom: 0.08in; line-height: 120%"><font face="Arial, serif"><font size="2" style="font-size: 10pt">The
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">The
 credit &quot;Kugelblitz,&quot; tied to Edge vulnerabilities, did not
 appear even once from January to June, then abruptly appeared 39
 times in July. This discontinuity cannot be explained by acquisition
@@ -1449,14 +1449,14 @@ timing, formatting variance, or headcount growth, and indicates that
 some new process was introduced in July. However, its identity
 (whether an in-house AI, and its relationship to MDASH) is
 unconfirmed as of today (see Appendix / Rejected #5).</font></font></p>
-<p align="center" style="margin-top: 0.06in; margin-bottom: 0.04in; line-height: 100%">
-<img src="assets/en/report_en_html_aecc0582.png" name="Image4" align="bottom" width="452" height="226" border="0"/>
+<p align="center" style="line-height: 100%; margin-top: 0.06in; margin-bottom: 0.04in">
+<img src="assets/en/report_en_html_b573fa27.png" name="Image4" align="bottom" width="452" height="226" border="0"/>
 </p>
-<p align="center" style="margin-bottom: 0.11in; line-height: 100%"><font color="#595959"><font face="Arial, serif"><font size="1" style="font-size: 8pt"><i>Fig
+<p align="center" style="line-height: 100%; margin-bottom: 0.11in"><font color="#595959"><font face="Arial, serif"><font size="1" style="font-size: 8pt"><i>Fig
 4: Internal (&quot;with Microsoft&quot;) credit count trend</i></font></font></font></p>
 <h3 class="western" style="margin-top: 0.1in; margin-bottom: 0.06in"><font color="#2e5496"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Figure
 4 (internal discovery) — interpretation</b></font></font></font></h3>
-<p style="margin-bottom: 0.08in; line-height: 120%"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Internal
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Internal
 credits (the &quot;with Microsoft&quot; family) hovered at 15–34
 through June, then surged to 109 in July. This includes Kugelblitz
 (39) and the WARP/ACS teams (Microsoft internal teams, 5). In the
@@ -1489,13 +1489,13 @@ as the Kugelblitz = MDASH misidentification).</font></font></p>
 		</td>
 	</tr>
 </table>
-<p style="margin-bottom: 0in; line-height: 100%"><br/>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
 
 </p>
 <h1 class="western" style="margin-top: 0in; margin-bottom: 0.1in; border-top: none; border-bottom: 1px solid #2e5496; border-left: none; border-right: none; padding: 0in; page-break-before: always">
 <font color="#1f3864"><font face="Arial, serif"><font size="4" style="font-size: 14pt"><b>KEV
 / EPSS — prioritizing immediate response</b></font></font></font></h1>
-<p style="margin-bottom: 0.08in; line-height: 120%"><font color="#222222"><font face="Arial, serif"><font size="2" style="font-size: 10pt">The
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font color="#222222"><font face="Arial, serif"><font size="2" style="font-size: 10pt">The
 following cross-references the target CVEs (T2/T3 ∨ Critical ∨
 external-researcher credit) against CISA KEV and FIRST EPSS. KEV = a
 discrete fact of confirmed exploitation (the notification trigger).
@@ -1560,7 +1560,7 @@ targets — listed in CISA KEV (as of 2026-07-17)</b></font></font></font></h2>
 		</tr>
 	</tbody>
 </table>
-<p style="margin-bottom: 0.06in; line-height: 100%"><br/>
+<p style="line-height: 100%; margin-bottom: 0.06in"><br/>
 <br/>
 
 </p>
@@ -1803,24 +1803,24 @@ EPSS — estimated exploitation probability (as of 2026-07-16)</b></font></font>
 		</tr>
 	</tbody>
 </table>
-<p style="margin-bottom: 0.08in; line-height: 120%"><font color="#595959"><font face="Arial, serif"><font size="1" style="font-size: 8pt"><i>Note:
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font color="#595959"><font face="Arial, serif"><font size="1" style="font-size: 8pt"><i>Note:
 EPSS is updated daily and its values change. The table above is a
 point-in-time snapshot (as of 2026-07-16) and is not used as a
 standalone trend metric. Only KEV is used as a notification trigger
 (EPSS is not).</i></font></font></font></p>
-<p style="margin-bottom: 0.08in; line-height: 120%"><font color="#595959"><font face="Arial, serif"><font size="1" style="font-size: 8pt"><i>Note:
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font color="#595959"><font face="Arial, serif"><font size="1" style="font-size: 8pt"><i>Note:
 product names (KEV table) and product categories (EPSS table) are
 sourced from the CVRF (2026-07-15 frozen snapshot) — a separate
 source and point in time from KEV listing status and EPSS values.
 Categories use the same classification as Table 5. No discoverer or
 causation is asserted from these product names/categories.</i></font></font></font></p>
-<p style="margin-bottom: 0in; line-height: 100%"><br/>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
 
 </p>
 <h1 class="western" style="margin-top: 0in; margin-bottom: 0.1in; border-top: none; border-bottom: 1px solid #2e5496; border-left: none; border-right: none; padding: 0in; page-break-before: always">
 <font color="#1f3864"><font face="Arial, serif"><font size="4" style="font-size: 14pt"><b>Appendix:
 investigation procedure, sources, and accountability record</b></font></font></font></h1>
-<p style="margin-bottom: 0.08in; line-height: 120%"><font face="Arial, serif"><font size="2" style="font-size: 10pt">This
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">This
 appendix records the investigation process leading to the main
 conclusions, including hypotheses that were rejected or revised along
 the way. Its purpose is to ensure reproducibility and accountability.
@@ -1829,12 +1829,12 @@ promising initially but were later rejected, it clarifies which
 grounds the final conclusion relies on — and which it does not.</font></font></p>
 <h3 class="western" style="margin-top: 0.1in; margin-bottom: 0.06in"><font color="#2e5496"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>1.
 Purpose and question of the investigation</b></font></font></font></h3>
-<p style="margin-bottom: 0.08in; line-height: 120%"><font face="Arial, serif"><font size="2" style="font-size: 10pt">The
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">The
 initial question: &quot;It is said that within roughly 90 days of the
 arrival of so-called frontier AI, a flood of vulnerabilities and
 patches emerges — is that actually so? Analyze the situation as of
 today.&quot;</font></font></p>
-<p style="margin-bottom: 0.08in; line-height: 120%"><font face="Arial, serif"><font size="2" style="font-size: 10pt">To
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">To
 answer this, in addition to secondary information such as news, we
 took the approach of directly acquiring and analyzing the primary
 data published by the Microsoft Security Response Center (MSRC). We
@@ -1846,22 +1846,22 @@ List of sources</b></font></font></font></h3>
 <h3 class="western" style="margin-top: 0.1in; margin-bottom: 0.06in"><font color="#2e5496"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>2.1
 Primary data sources</b></font></font></font></h3>
 <ul>
-	<li><p style="margin-bottom: 0.06in; line-height: 115%"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>MSRC
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>MSRC
 	CVRF API v3.0 (public, unauthenticated REST API)</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
 	— provides monthly security updates as structured, per-CVE data
 	(JSON). Includes finder credits (Acknowledgments), severity,
 	exploitation status, and affected products.</font></font></p></li>
-	<li><p style="margin-bottom: 0.06in; line-height: 115%"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Endpoint:
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Endpoint:
 	</font></font><font color="#0563c1"><u><a href="https://api.msrc.microsoft.com/cvrf/v3.0/cvrf/2026-Jul"><font face="Arial, serif"><font size="2" style="font-size: 9pt">https://api.msrc.microsoft.com/cvrf/v3.0/cvrf/{YYYY-MMM}</font></font></a></u></font></p></li>
-	<li><p style="margin-bottom: 0.06in; line-height: 115%"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Schema-validation
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Schema-validation
 	reference: </font></font><font color="#0563c1"><u><a href="https://github.com/microsoft/MSRC-Microsoft-Security-Updates-API"><font face="Arial, serif"><font size="2" style="font-size: 9pt">microsoft/MSRC-Microsoft-Security-Updates-API
 	(GitHub)</font></font></a></u></font></p></li>
-	<li><p style="margin-bottom: 0.06in; line-height: 115%"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Anthropic
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Anthropic
 	Project Glasswing official page (checking the second-wave status):
 	</font></font><font color="#0563c1"><u><a href="https://www.anthropic.com/glasswing"><font face="Arial, serif"><font size="2" style="font-size: 9pt">anthropic.com/glasswing</font></font></a></u></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
 	and the </font></font><font color="#0563c1"><u><a href="https://www.anthropic.com/research/glasswing-initial-update"><font face="Arial, serif"><font size="2" style="font-size: 9pt">initial
 	update (5/22)</font></font></a></u></font></p></li>
-	<li><p style="margin-bottom: 0.06in; line-height: 115%"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Microsoft
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Microsoft
 	Security Blog: MDASH announcement (5/12): </font></font><font color="#0563c1"><u><a href="https://www.microsoft.com/en-us/security/blog/2026/05/12/defense-at-ai-speed-microsofts-new-multi-model-agentic-security-system-tops-leading-industry-benchmark/"><font face="Arial, serif"><font size="2" style="font-size: 9pt">Defense
 	at AI speed (MDASH's identity, target CVEs, ACS/MORSE/WARP
 	structure)</font></font></a></u></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
@@ -1869,31 +1869,31 @@ Primary data sources</b></font></font></font></h3>
 </ul>
 <h3 class="western" style="margin-top: 0.1in; margin-bottom: 0.06in"><font color="#2e5496"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>2.2
 Secondary sources (press / expert analysis)</b></font></font></font></h3>
-<p style="margin-bottom: 0.08in; line-height: 120%"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Used
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Used
 to confirm July Patch Tuesday's counts, attribution, and notable
 vulnerabilities. The very fact that counts differ by source was
 treated as evidence of the count metric's breakdown.</font></font></p>
 <ul>
-	<li><p style="margin-bottom: 0.06in; line-height: 115%"><font color="#0563c1"><u><a href="https://www.bleepingcomputer.com/news/microsoft/microsoft-july-2026-patch-tuesday-fixes-massive-570-flaws-3-zero-days/"><font face="Arial, serif"><font size="2" style="font-size: 9pt">BleepingComputer</font></font></a></u></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font color="#0563c1"><u><a href="https://www.bleepingcomputer.com/news/microsoft/microsoft-july-2026-patch-tuesday-fixes-massive-570-flaws-3-zero-days/"><font face="Arial, serif"><font size="2" style="font-size: 9pt">BleepingComputer</font></font></a></u></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
 	(570; explicit counting basis; Edge 468 excluded)</font></font></p></li>
-	<li><p style="margin-bottom: 0.06in; line-height: 115%"><font color="#0563c1"><u><a href="https://krebsonsecurity.com/2026/07/microsoft-patches-a-record-570-security-flaws/"><font face="Arial, serif"><font size="2" style="font-size: 9pt">Krebs
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font color="#0563c1"><u><a href="https://krebsonsecurity.com/2026/07/microsoft-patches-a-record-570-security-flaws/"><font face="Arial, serif"><font size="2" style="font-size: 9pt">Krebs
 	on Security</font></font></a></u></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
 	(MDASH attribution; the Windows EVP's statement; a Tenable analyst's
 	comment)</font></font></p></li>
-	<li><p style="margin-bottom: 0.06in; line-height: 115%"><font color="#0563c1"><u><a href="https://www.securityweek.com/microsoft-patches-record-622-vulnerabilities-including-two-exploited-zero-days/"><font face="Arial, serif"><font size="2" style="font-size: 9pt">SecurityWeek</font></font></a></u></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font color="#0563c1"><u><a href="https://www.securityweek.com/microsoft-patches-record-622-vulnerabilities-including-two-exploited-zero-days/"><font face="Arial, serif"><font size="2" style="font-size: 9pt">SecurityWeek</font></font></a></u></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
 	· </font></font><font color="#0563c1"><u><a href="https://cyberscoop.com/microsoft-patch-tuesday-july-2026/"><font face="Arial, serif"><font size="2" style="font-size: 9pt">CyberScoop</font></font></a></u></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
 	· </font></font><font color="#0563c1"><u><a href="https://www.tenable.com/blog/microsofts-july-2026-patch-tuesday-addresses-569-cves-cve-2026-56155-cve-2026-56164"><font face="Arial, serif"><font size="2" style="font-size: 9pt">Tenable</font></font></a></u></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
 	(622/622/569 respectively)</font></font></p></li>
-	<li><p style="margin-bottom: 0.06in; line-height: 115%"><font color="#0563c1"><u><a href="https://www.schneier.com/blog/archives/2026/06/anthropics-project-glasswing-update.html"><font face="Arial, serif"><font size="2" style="font-size: 9pt">Schneier
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font color="#0563c1"><u><a href="https://www.schneier.com/blog/archives/2026/06/anthropics-project-glasswing-update.html"><font face="Arial, serif"><font size="2" style="font-size: 9pt">Schneier
 	on Security</font></font></a></u></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
 	(skepticism toward Glasswing's data; referenced to avoid a single
 	viewpoint)</font></font></p></li>
-	<li><p style="margin-bottom: 0.06in; line-height: 115%"><font color="#0563c1"><u><a href="https://www.brinqa.com/blog/june-2026-patch-tuesday-analysis"><font face="Arial, serif"><font size="2" style="font-size: 9pt">Brinqa
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font color="#0563c1"><u><a href="https://www.brinqa.com/blog/june-2026-patch-tuesday-analysis"><font face="Arial, serif"><font size="2" style="font-size: 9pt">Brinqa
 	monthly analysis</font></font></a></u></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
 	(makes the difference in counting basis explicit; core-count
 	baseline comparison; corroborates this report's population
 	separation)</font></font></p></li>
-	<li><p style="margin-bottom: 0.06in; line-height: 115%"><font face="Arial, serif"><font size="2" style="font-size: 10pt">On
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">On
 	the industry trend of moving off CVSS (EPSS+KEV): </font></font><font color="#0563c1"><u><a href="https://thehackernews.com/2026/07/microsoft-patches-record-622-flaws.html"><font face="Arial, serif"><font size="2" style="font-size: 9pt">The
 	Hacker News (July)</font></font></a></u></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
 	· </font></font><font color="#0563c1"><u><a href="https://www.hackerstorm.com/articles/our-blog/vulnerability-intelligence-analysis/vulnerability-backlog-broken-decision-model-cvss-epss-kev"><font face="Arial, serif"><font size="2" style="font-size: 9pt">Hackerstorm</font></font></a></u></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
@@ -1901,13 +1901,13 @@ treated as evidence of the count metric's breakdown.</font></font></p>
 </ul>
 <h3 class="western" style="margin-top: 0.1in; margin-bottom: 0.06in"><font color="#2e5496"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>3.
 Data acquisition method</b></font></font></font></h3>
-<p style="margin-bottom: 0.08in; line-height: 120%"><font face="Arial, serif"><font size="2" style="font-size: 10pt">The
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">The
 MSRC CVRF API is public and unauthenticated, but it could not be
 accessed directly from the analysis environment (an AI sandbox) due
 to an egress allowlist restriction. Therefore, the analysis logic was
 written as a Python script and run in the data collector's local
 environment.</font></font></p>
-<p style="margin-bottom: 0.08in; line-height: 120%"><font face="Arial, serif"><font size="2" style="font-size: 10pt">This
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">This
 is an important procedural note: the figures in this report were not
 generated by AI, but are real data acquired by the data collector
 hitting the primary API in their own environment. The AI's role is
@@ -1918,54 +1918,54 @@ validated against real data.</font></font></p>
 <h3 class="western" style="margin-top: 0.1in; margin-bottom: 0.06in"><font color="#2e5496"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>4.
 Analysis procedure (chronological)</b></font></font></font></h3>
 <ol>
-	<li value="1"><p style="margin-bottom: 0.06in; line-height: 115%"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Cross-checking
+	<li value="1"><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Cross-checking
 	the press: confirmed July Patch Tuesday's count across multiple
 	sources. Established that they disagree (569–622), that Microsoft
 	officially attributes the increase to MDASH (in-house AI), and that
 	all three exploited zero-days were human-discovered.</font></font></p></li>
-	<li><p style="margin-bottom: 0.06in; line-height: 115%"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Primary-data
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Primary-data
 	acquisition: acquired each month's data from the MSRC CVRF API for
 	January–July 2026.</font></font></p></li>
-	<li><p style="margin-bottom: 0.06in; line-height: 115%"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Decomposing
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Decomposing
 	the count: attempted folding into remediation-action counts and
 	reboot classes. Confirmed that the CVE count is excessive as a
 	metric of defensive workload (auto-updating items such as Edge make
 	up most of the count).</font></font></p></li>
-	<li><p style="margin-bottom: 0.06in; line-height: 115%"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Estimating
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Estimating
 	attribution: attempted to separate the AI-derived portion from
 	finder credits. Created several metrics, but rejected many of them
 	(see Section 5).</font></font></p></li>
-	<li><p style="margin-bottom: 0.06in; line-height: 115%"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Identifying
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Identifying
 	the decisive signal: confirmed the discontinuous appearance of the
 	credit &quot;Kugelblitz&quot; — January = 0, April = 0, July = 39
 	(Edge vulnerabilities, all low-severity, auto-update tier). We
 	initially judged this to be a trace of Microsoft's in-house AI tool
 	(MDASH), but subsequent verification (Section 5 / Rejected #5) found
 	this assertion to be wrong.</font></font></p></li>
-	<li><p style="margin-bottom: 0.06in; line-height: 115%"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Integrating
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Integrating
 	the conclusion: organized into a three-tier model (blade = human /
 	surface, first-party = AI, minor / surface, third-party = not yet
 	arrived).</font></font></p></li>
 </ol>
 <h3 class="western" style="margin-top: 0.1in; margin-bottom: 0.06in"><font color="#2e5496"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>5.
 Metrics rejected or revised during the investigation [important]</b></font></font></font></h3>
-<p style="margin-bottom: 0.08in; line-height: 120%"><font face="Arial, serif"><font size="2" style="font-size: 10pt">For
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">For
 accountability, we record the metrics initially adopted but later
 rejected or revised. The final conclusion does not rely on these
 rejected metrics.</font></font></p>
-<p style="margin-bottom: 0.08in; line-height: 120%"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Rejected
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Rejected
 #1 — CVE count (raw count):</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
 disagrees by source (569–622). The inclusion basis for Mariner,
 Azure, and Chromium re-publications differs by outlet. Not used as a
 threat metric. However, it is valid as the qualitative fact of &quot;a
 record&quot; and as evidence of the metric's breakdown.</font></font></p>
-<p style="margin-bottom: 0.08in; line-height: 120%"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Rejected
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Rejected
 #2 — remediation-action count:</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
 because it is bounded by the number of update channels the analyst
 defined, it is weak as a workload metric. The reboot-class concept
 was carried into the main report's three-tier model, but the numbers
 themselves are not used as grounds for the conclusion.</font></font></p>
-<p style="margin-bottom: 0.08in; line-height: 120%"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Rejected
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Rejected
 #3 — the trend of the &quot;uncredited ratio&quot;:</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
 initially, we interpreted the rise in the ratio of uncredited CVEs
 (62% in January → 83% in June) as MDASH's footprint. But it plunged
@@ -1977,13 +1977,13 @@ excluded from the grounds for the conclusion. Lesson: CVRF finder
 credits mix external discovery, in-house AI discovery, and declined
 credit, and are unsuited to separating the AI-derived portion at the
 aggregate level.</font></font></p>
-<p style="margin-bottom: 0.08in; line-height: 120%"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Revision
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Revision
 #4 — Kugelblitz &quot;78&quot; → &quot;39&quot;:</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
 initially hand-counted as 78 via grep. This double-counted the
 double-listing where the same name appears twice on one CVE. The
 correct value, deduplicated per CVE, is 39. The conclusion itself —
 the 0→0→39 discontinuity — is unchanged.</font></font></p>
-<p style="margin-bottom: 0.08in; line-height: 120%"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Rejected
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Rejected
 #5 — the assertion &quot;Kugelblitz = MDASH&quot; (the most
 important correction):</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
 initially, we asserted that &quot;Kugelblitz,&quot; which appeared
@@ -2007,25 +2007,25 @@ Grounds ultimately relied upon, and their limits</b></font></font></font></h3>
 <h3 class="western" style="margin-top: 0.1in; margin-bottom: 0.06in"><font color="#2e5496"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>6.1
 Grounds relied upon (confidence: high)</b></font></font></font></h3>
 <ul>
-	<li><p style="margin-bottom: 0.06in; line-height: 115%"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Record
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Record
 	count:</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
 	multiple independent expert organizations agree on &quot;the
 	company's largest ever, ~3x June&quot; (the absolute count
 	disagrees, but the fact of a record agrees).</font></font></p></li>
-	<li><p style="margin-bottom: 0.06in; line-height: 115%"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Microsoft's
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Microsoft's
 	self-report:</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
 	Microsoft's Windows EVP officially stated in the 7/9 blog the full
 	deployment of MDASH (multi-model agentic scanning harness) and the
 	increased update volume. As a primary self-report, confidence is
 	high.</font></font></p></li>
-	<li><p style="margin-bottom: 0.06in; line-height: 115%"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>MDASH's
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>MDASH's
 	official demonstration:</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
 	Microsoft published in May, with CVE numbers, that MDASH discovered
 	16 issues including 4 Critical RCEs in tcpip.sys, IKEv2, etc. That
 	AI reached serious vulnerabilities in core components is confirmed
 	by primary information. MDASH is operated through the collaboration
 	of ACS/MORSE/WARP.</font></font></p></li>
-	<li><p style="margin-bottom: 0.06in; line-height: 115%"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Kugelblitz's
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Kugelblitz's
 	discontinuity (attribution unconfirmed):</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
 	the new credit &quot;Kugelblitz&quot; tied to Edge vulnerabilities
 	appeared discontinuously — January = 0, April = 0, July = 39. The
@@ -2033,7 +2033,7 @@ Grounds relied upon (confidence: high)</b></font></font></font></h3>
 	primary data. However, the identity of this entity (AI or not) is
 	unconfirmed, and it is a different thing from MDASH (Section 5 /
 	Rejected #5).</font></font></p></li>
-	<li><p style="margin-bottom: 0.06in; line-height: 115%"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>The
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>The
 	zero-days' finders:</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
 	confirmed in primary data (Acknowledgments) that all three
 	confirmed-exploited issues this month (AD FS / SharePoint /
@@ -2042,28 +2042,28 @@ Grounds relied upon (confidence: high)</b></font></font></font></h3>
 <h3 class="western" style="margin-top: 0.1in; margin-bottom: 0.06in"><font color="#2e5496"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>6.2
 Limits (confidence: unconfirmed / caution)</b></font></font></font></h3>
 <ul>
-	<li><p style="margin-bottom: 0.06in; line-height: 115%"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>The
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>The
 	identity of &quot;Kugelblitz&quot; is unknown as of today.</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
 	We cannot determine whether it is an in-house AI, a re-crediting
 	process for Chromium-derived vulnerabilities, or a human team name.
 	Its target domain differs from MDASH, and there is no evidence they
 	are the same.</font></font></p></li>
-	<li><p style="margin-bottom: 0.06in; line-height: 115%"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Beyond
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Beyond
 	what MDASH officially credited (the 16 in May, etc.), the AI-derived
 	portion filed without a name is not captured. The full picture of
 	the AI-derived portion remains unmeasurable at the aggregate level.</font></font></p></li>
-	<li><p style="margin-bottom: 0.06in; line-height: 115%"><font face="Arial, serif"><font size="2" style="font-size: 10pt">The
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">The
 	scale and timing of the Glasswing second wave are a prediction, not
 	confirmed information. Anthropic's 90-day summary report is
 	unpublished as of today.</font></font></p></li>
-	<li><p style="margin-bottom: 0.06in; line-height: 115%"><font face="Arial, serif"><font size="2" style="font-size: 10pt">The
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">The
 	individual regulatory matters referenced in this appendix are
 	outside the scope of this primary-data analysis and require
 	confirmation against primary sources.</font></font></p></li>
 </ul>
 <h3 class="western" style="margin-top: 0.1in; margin-bottom: 0.06in"><font color="#2e5496"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>7.
 Reproduction procedure</b></font></font></font></h3>
-<p style="margin-bottom: 0.08in; line-height: 120%"><font face="Arial, serif"><font size="2" style="font-size: 10pt">The
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">The
 figures in this report were acquired with the aggregation tooling
 used at the time of the investigation. An </font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>equivalent
 aggregation can be reproduced</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
@@ -2076,15 +2076,15 @@ exactly identical value is not guaranteed to reproduce (for the
 treatment of revisions, see the report header and the snapshot-freeze
 policy).</font></font></p>
 <ul>
-	<li><p style="margin-bottom: 0.06in; line-height: 115%"><font face="Arial, serif"><font size="2" style="font-size: 10pt">(1)
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">(1)
 	Acquire each month's primary data (collecting Jan–Jul 2026):
 	</font></font><font color="#1f3864"><font face="Consolas, serif"><font size="2" style="font-size: 9pt">python
 	collect.py --backfill 2026-Jan 2026-Jul</font></font></font></p></li>
-	<li><p style="margin-bottom: 0.06in; line-height: 115%"><font face="Arial, serif"><font size="2" style="font-size: 10pt">(2)
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">(2)
 	Month-over-month comparison, threshold checks, and new credits
 	(including Kugelblitz): </font></font><font color="#1f3864"><font face="Consolas, serif"><font size="2" style="font-size: 9pt">python
 	diff.py 2026-Jul</font></font></font></p></li>
-	<li><p style="margin-bottom: 0.06in; line-height: 115%"><font face="Arial, serif"><font size="2" style="font-size: 10pt">(3)
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">(3)
 	Finder-credit tally (deduplicated per CVE; for audit): refer to
 	</font></font><font color="#1f3864"><font face="Consolas, serif"><font size="2" style="font-size: 9pt">credit_counts</font></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
 	/ </font></font><font color="#1f3864"><font face="Consolas, serif"><font size="2" style="font-size: 9pt">finder_bucket</font></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
@@ -2125,12 +2125,12 @@ policy).</font></font></p>
 		</td>
 	</tr>
 </table>
-<p style="border-top: 1px solid #2e5496; border-bottom: none; border-left: none; border-right: none; padding: 0in; margin-top: 0.08in; margin-bottom: 0.03in; line-height: 100%">
+<p style="line-height: 100%; margin-top: 0.08in; margin-bottom: 0.03in; border-top: 1px solid #2e5496; border-bottom: none; border-left: none; border-right: none; padding: 0in">
 <br/>
 <br/>
 
 </p>
-<p style="margin-bottom: 0.08in; line-height: 120%"><font color="#595959"><font face="Arial, serif"><font size="1" style="font-size: 8pt"><i>This
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font color="#595959"><font face="Arial, serif"><font size="1" style="font-size: 8pt"><i>This
 report was produced through dialogue with an AI assistant (Claude).
 Primary-data acquisition and execution were performed in the
 collection environment, and the figures are based on those execution
