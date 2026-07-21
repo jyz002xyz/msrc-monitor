@@ -118,11 +118,38 @@ table{width:100%;border-collapse:collapse;background:#fff;border-radius:10px;ove
 box-shadow:0 2px 12px rgba(0,0,0,.06)}
 th,td{text-align:left;padding:12px 16px;border-bottom:1px solid #eef0f3;font-size:14px}
 th{background:#f0f2f5;color:#333;font-size:13px}
-td.month{font-weight:700;color:#1f3864}
+td.month{color:#1f3864}
+.mmain{font-weight:700}
+.msnap{font-size:12px;color:#888;font-weight:400;margin-top:2px}
 a.rep{color:#1f3864;text-decoration:none;font-weight:600;margin-right:12px}
 a.rep:hover{text-decoration:underline}
 .footer{max-width:760px;margin:24px auto;padding:0 20px;color:#888;font-size:12px}
 """.strip()
+
+
+_MONTHS_EN = ["January", "February", "March", "April", "May", "June",
+              "July", "August", "September", "October", "November", "December"]
+
+
+def _fmt_subject(subject: str) -> tuple[str, str]:
+    """'2026-06' -> ('2026年6月', 'June 2026'). Falls back to the raw string."""
+    m = re.match(r"(\d{4})-(\d{2})$", subject or "")
+    if not m:
+        return subject, subject
+    y, mo = int(m.group(1)), int(m.group(2))
+    return f"{y}年{mo}月", f"{_MONTHS_EN[mo - 1]} {y}"
+
+
+def _count_cell(entry: dict) -> str:
+    """Two-value count when both are known, single when only --count given, else '—'
+    (never fabricated)."""
+    counts = entry.get("counts") or {}
+    cvrf, core = counts.get("cvrf"), counts.get("core")
+    if isinstance(cvrf, int) and isinstance(core, int):
+        return f"{cvrf:,} CVRF / {core:,} 本体相当・core"
+    if isinstance(entry.get("count"), int):
+        return f"{entry['count']:,}"
+    return "—"
 
 
 def build_index(docs: Path) -> None:
@@ -130,13 +157,18 @@ def build_index(docs: Path) -> None:
     manifest = _load_manifest(archive_dir)
     rows = []
     for m in manifest["months"]:
-        month = m["month"]
-        count = m.get("count")
-        cnt = f"{count:,}" if isinstance(count, int) else "—"
+        slot = m["month"]                       # folder / link key (unchanged)
+        subject = m.get("subject") or slot      # the month the report is ABOUT
+        snapshot = m.get("snapshot")            # data freshness date
+        ja_m, en_m = _fmt_subject(subject)
+        month_cell = f'<div class="mmain">{ja_m} / {en_m}</div>'
+        if snapshot:
+            month_cell += (f'<div class="msnap">スナップショット {snapshot} / '
+                           f'snapshot {snapshot}</div>')
         rows.append(
-            f'<tr><td class="month">{month}</td><td>{cnt}</td>'
-            f'<td><a class="rep" href="{month}/ja.html">日本語</a>'
-            f'<a class="rep" href="{month}/en.html">English</a></td></tr>')
+            f'<tr><td class="month">{month_cell}</td><td>{_count_cell(m)}</td>'
+            f'<td><a class="rep" href="{slot}/ja.html">日本語</a>'
+            f'<a class="rep" href="{slot}/en.html">English</a></td></tr>')
     page = f"""<!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -172,8 +204,13 @@ def build_index(docs: Path) -> None:
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--month", help="YYYY-MM to archive the current published report as")
-    ap.add_argument("--count", type=int, default=None, help="optional CVE count for the index")
+    ap.add_argument("--month", help="YYYY-MM slot (folder/link key) to archive as")
+    ap.add_argument("--subject", default=None,
+                    help="YYYY-MM the report is ABOUT (display); defaults to --month")
+    ap.add_argument("--snapshot", default=None, help="data freshness date YYYY-MM-DD (display)")
+    ap.add_argument("--count-cvrf", type=int, default=None, help="full-CVRF CVE count")
+    ap.add_argument("--count-core", type=int, default=None, help="Microsoft-core CVE count")
+    ap.add_argument("--count", type=int, default=None, help="single CVE count (fallback)")
     ap.add_argument("--docs", default=str(ROOT / "docs"), help="site docs dir")
     ap.add_argument("--rebuild-index-only", action="store_true",
                     help="only regenerate archive/index.html from the manifest")
@@ -186,13 +223,22 @@ def main() -> int:
         if not args.month or not MONTH_RE.match(args.month):
             print("[archive] ERROR: --month YYYY-MM required", file=sys.stderr)
             return 2
-        created = archive_month(args.month, docs, args.count)
+        # snapshot copy is immutable (skipped if it exists); the manifest is the nav
+        # layer, so its display metadata is (re)set here without touching the snapshot.
+        archive_month(args.month, docs, args.count)
+        meta = {"month": args.month,
+                "subject": args.subject or args.month,
+                "snapshot": args.snapshot,
+                "counts": {"cvrf": args.count_cvrf, "core": args.count_core}}
+        if args.count is not None:
+            meta["count"] = args.count
         manifest = _load_manifest(archive_dir)
-        if not any(m["month"] == args.month for m in manifest["months"]):
-            manifest["months"].append({"month": args.month, "count": args.count})
-            _save_manifest(archive_dir, manifest)
-        elif created:  # shouldn't happen, but keep manifest count in sync if provided
-            pass
+        entry = next((m for m in manifest["months"] if m["month"] == args.month), None)
+        if entry:
+            entry.update(meta)
+        else:
+            manifest["months"].append(meta)
+        _save_manifest(archive_dir, manifest)
     build_index(docs)
     return 0
 

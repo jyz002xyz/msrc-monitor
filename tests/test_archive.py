@@ -84,19 +84,42 @@ def test_idempotent_rerun_leaves_month_unchanged():
         assert sig1 == sig2, "an already-archived month must be immutable on re-run"
 
 
-def test_index_reflects_manifest_counts():
+def test_index_two_value_counts_subject_and_snapshot():
     with tempfile.TemporaryDirectory() as tmp:
         docs = Path(tmp) / "docs"; docs.mkdir()
         _fake_site(docs)
-        _run(docs, "--month", "2026-07", "--count", "1281")
-        # add a second month via a fresh "publish"
-        _run(docs, "--month", "2026-06")   # no count -> shown as em dash
+        # slot 2026-07 but the report is ABOUT June, snapshot 2026-07-15, two-value counts
+        _run(docs, "--month", "2026-07", "--subject", "2026-06", "--snapshot", "2026-07-15",
+             "--count-cvrf", "1281", "--count-core", "724")
         idx = (docs / "archive" / "index.html").read_text(encoding="utf-8")
-        assert "2026-07" in idx and "2026-06" in idx
-        assert "1,281" in idx, "known count must render"
+        assert "1,281 CVRF / 724 本体相当・core" in idx, "two-value count must render"
+        assert "2026年6月 / June 2026" in idx, "subject month must render (not the slot key)"
+        assert "スナップショット 2026-07-15" in idx and "snapshot 2026-07-15" in idx
+        # links still use the slot key, not the subject
+        assert 'href="2026-07/ja.html"' in idx and 'href="2026-07/en.html"' in idx
+
+
+def test_index_unknown_count_is_em_dash_not_fabricated():
+    with tempfile.TemporaryDirectory() as tmp:
+        docs = Path(tmp) / "docs"; docs.mkdir()
+        _fake_site(docs)
+        _run(docs, "--month", "2026-05")   # no counts
+        idx = (docs / "archive" / "index.html").read_text(encoding="utf-8")
         assert "—" in idx, "unknown count must render as em dash, not a fabricated number"
-        # newest first
-        assert idx.index("2026-07") < idx.index("2026-06")
+
+
+def test_rerun_updates_index_metadata_but_not_snapshot():
+    with tempfile.TemporaryDirectory() as tmp:
+        docs = Path(tmp) / "docs"; docs.mkdir()
+        _fake_site(docs)
+        _run(docs, "--month", "2026-07")   # first pass: no counts -> —
+        snap = {p.name: p.read_bytes() for p in (docs / "archive" / "2026-07").rglob("*") if p.is_file()}
+        # a later pass can set display metadata; the frozen snapshot must not change
+        _run(docs, "--month", "2026-07", "--subject", "2026-06", "--count-cvrf", "1281", "--count-core", "724")
+        snap2 = {p.name: p.read_bytes() for p in (docs / "archive" / "2026-07").rglob("*") if p.is_file()}
+        assert snap == snap2, "updating index metadata must not touch the frozen snapshot"
+        idx = (docs / "archive" / "index.html").read_text(encoding="utf-8")
+        assert "1,281 CVRF / 724 本体相当・core" in idx
 
 
 if __name__ == "__main__":
