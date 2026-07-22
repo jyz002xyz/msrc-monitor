@@ -73,14 +73,48 @@ def _inject_archive_banner(html: str, month: str) -> str:
     return re.sub(r"(<body[^>]*>)", r"\1\n" + banner, html, count=1)
 
 
-def archive_month(month: str, docs: Path, count: int | None) -> bool:
+def _recorded_subject(dest: Path) -> str | None:
+    """The subject-month recorded in a frozen slot's meta.json, or None when the slot
+    has no meta.json / no recorded subject (a legacy snapshot predating this field)."""
+    meta_p = dest / "meta.json"
+    if not meta_p.exists():
+        return None
+    try:
+        return json.loads(meta_p.read_text(encoding="utf-8")).get("subject")
+    except (ValueError, OSError):
+        return None
+
+
+def archive_month(month: str, docs: Path, count: int | None, subject: str) -> bool:
     """File the current published report as archive/<month>/. Returns True if newly
-    created, False if it already existed (idempotent skip)."""
+    created, False if it already existed as a genuine idempotent re-run.
+
+    Slot-collision guard (fail-halt): an existing slot is only skipped when its
+    recorded subject-month matches the incoming one (the same month re-run). If the
+    slot exists but records a DIFFERENT subject-month — or records none at all — this
+    is a mis-key that would silently drop the incoming report, so we halt (exit 3)
+    instead of skipping. This is what makes Phase B's freeze fail loudly rather than
+    quietly no-op when a slot key collides with a different report."""
     archive_dir = docs / "archive"
     dest = archive_dir / month
     if dest.exists():
-        print(f"[archive] {month} already archived (immutable) — skipping copy")
-        return False
+        recorded = _recorded_subject(dest)
+        if recorded == subject:
+            print(f"[archive] {month} already archived (immutable, subject "
+                  f"{subject}) — skipping copy")
+            return False
+        if recorded is None:
+            print(f"[archive] HALT: slot {month}/ already exists but records no "
+                  f"subject-month; refusing to skip (incoming subject {subject!r}). "
+                  f"The slot may be mis-keyed — resolve manually before retrying.",
+                  file=sys.stderr)
+        else:
+            print(f"[archive] HALT: slot {month}/ is occupied by subject-month "
+                  f"{recorded!r}, but the incoming report's subject-month is "
+                  f"{subject!r}. Skipping would silently drop the incoming report. "
+                  f"Re-key the occupying slot (see docs/archive/REKEY.md) first.",
+                  file=sys.stderr)
+        sys.exit(3)
 
     # inputs: the currently published report + assets
     missing = [f"report_{l}.html" for l in ("ja", "en")
@@ -100,7 +134,8 @@ def archive_month(month: str, docs: Path, count: int | None) -> bool:
         if src_assets.exists():
             shutil.copytree(src_assets, dest / "assets" / lang)
     (dest / "meta.json").write_text(
-        json.dumps({"month": month, "count": count}, ensure_ascii=False, indent=2) + "\n",
+        json.dumps({"month": month, "count": count, "subject": subject},
+                   ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8")
     print(f"[archive] {month}: wrote {dest}/ja.html, en.html (+assets, meta.json)")
     return True
@@ -226,11 +261,13 @@ def main() -> int:
         if not args.month or not MONTH_RE.match(args.month):
             print("[archive] ERROR: --month YYYY-MM required", file=sys.stderr)
             return 2
-        # snapshot copy is immutable (skipped if it exists); the manifest is the nav
-        # layer, so its display metadata is (re)set here without touching the snapshot.
-        archive_month(args.month, docs, args.count)
+        # snapshot copy is immutable (skipped only on a genuine same-subject re-run;
+        # a different/absent subject halts). The manifest is the nav layer, so its
+        # display metadata is (re)set here without touching the snapshot.
+        subject = args.subject or args.month
+        archive_month(args.month, docs, args.count, subject)
         meta = {"month": args.month,
-                "subject": args.subject or args.month,
+                "subject": subject,
                 "snapshot": args.snapshot,
                 "counts": {"cvrf": args.count_cvrf, "core": args.count_core}}
         if args.count is not None:
