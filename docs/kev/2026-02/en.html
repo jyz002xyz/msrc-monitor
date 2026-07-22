@@ -22,6 +22,12 @@ h1{color:#1f3864;font-size:22px;margin:0 0 6px}h2{color:#1f3864;border-bottom:2p
 padding-bottom:4px;margin-top:26px;font-size:17px}h3{color:#33415c;font-size:15px}
 table{border-collapse:collapse;width:100%;font-size:13px;margin:10px 0}
 th,td{border-bottom:1px solid #eef0f3;padding:7px 10px;text-align:left}th{background:#f0f2f5}
+th.sortable{cursor:pointer;user-select:none;white-space:nowrap}th.sortable:hover{background:#e7ebf1}
+th .caret{opacity:.4;font-size:11px;margin-left:5px}
+th[aria-sort="ascending"] .caret::after{content:"\25B2"}
+th[aria-sort="descending"] .caret::after{content:"\25BC"}
+th[aria-sort="none"] .caret::after{content:"\2195"}
+th[aria-sort="ascending"] .caret,th[aria-sort="descending"] .caret{opacity:1}
 .notes{background:#eef3fb;border:1px solid #c9dcf5;border-left:4px solid #1f3864;border-radius:6px;
 padding:12px 16px;color:#26364d;font-size:13px;line-height:1.7;margin:16px 0}
 .sub{color:#666;font-size:13px}.footer{max-width:960px;margin:0 auto 40px;color:#888;font-size:12px;text-align:center}
@@ -37,35 +43,60 @@ padding:12px 16px;color:#26364d;font-size:13px;line-height:1.7;margin:16px 0}
 
 <h2>Facts (machine-generated)</h2>
 <h3>KEV additions in the window (28)</h3>
-<table><thead><tr><th>CVE</th><th>Vendor</th><th>Product</th><th>Added</th><th>Due</th><th>Ransomware</th><th>EPSS/pctl</th><th>NVD published</th><th>Pub→KEV (days)</th></tr></thead><tbody><tr><td>CVE-2019-19006</td><td>Sangoma</td><td>FreePBX</td><td>2026-02-03</td><td>2026-02-24</td><td>Unknown</td><td>—</td><td>2019-11-21</td><td>2266</td></tr>
-<tr><td>CVE-2021-39935</td><td>GitLab</td><td>Community and Enterprise Editions</td><td>2026-02-03</td><td>2026-02-24</td><td>Unknown</td><td>—</td><td>2021-12-13</td><td>1513</td></tr>
-<tr><td>CVE-2025-40551</td><td>SolarWinds</td><td>Web Help Desk</td><td>2026-02-03</td><td>2026-02-06</td><td>Unknown</td><td>—</td><td>2026-01-28</td><td>6</td></tr>
-<tr><td>CVE-2025-64328</td><td>Sangoma</td><td>FreePBX </td><td>2026-02-03</td><td>2026-02-24</td><td>Unknown</td><td>—</td><td>2025-11-07</td><td>88</td></tr>
-<tr><td>CVE-2025-11953</td><td>React Native Community</td><td>CLI</td><td>2026-02-05</td><td>2026-02-26</td><td>Unknown</td><td>—</td><td>2025-11-03</td><td>94</td></tr>
-<tr><td>CVE-2026-24423</td><td>SmarterTools</td><td>SmarterMail</td><td>2026-02-05</td><td>2026-02-26</td><td>Known</td><td>—</td><td>2026-01-23</td><td>13</td></tr>
-<tr><td>CVE-2026-21510</td><td>Microsoft</td><td>Windows</td><td>2026-02-10</td><td>2026-03-03</td><td>Unknown</td><td>—</td><td>2026-02-10</td><td>0</td></tr>
-<tr><td>CVE-2026-21513</td><td>Microsoft</td><td>Windows</td><td>2026-02-10</td><td>2026-03-03</td><td>Unknown</td><td>—</td><td>2026-02-10</td><td>0</td></tr>
-<tr><td>CVE-2026-21514</td><td>Microsoft</td><td>Office</td><td>2026-02-10</td><td>2026-03-03</td><td>Unknown</td><td>—</td><td>2026-02-10</td><td>0</td></tr>
-<tr><td>CVE-2026-21519</td><td>Microsoft</td><td>Windows</td><td>2026-02-10</td><td>2026-03-03</td><td>Unknown</td><td>—</td><td>2026-02-10</td><td>0</td></tr>
-<tr><td>CVE-2026-21525</td><td>Microsoft</td><td>Windows</td><td>2026-02-10</td><td>2026-03-03</td><td>Unknown</td><td>—</td><td>2026-02-10</td><td>0</td></tr>
-<tr><td>CVE-2026-21533</td><td>Microsoft</td><td>Windows</td><td>2026-02-10</td><td>2026-03-03</td><td>Unknown</td><td>—</td><td>2026-02-10</td><td>0</td></tr>
-<tr><td>CVE-2024-43468</td><td>Microsoft</td><td>Configuration Manager</td><td>2026-02-12</td><td>2026-03-05</td><td>Unknown</td><td>—</td><td>2024-10-08</td><td>492</td></tr>
-<tr><td>CVE-2025-15556</td><td>Notepad++</td><td>Notepad++</td><td>2026-02-12</td><td>2026-03-05</td><td>Unknown</td><td>—</td><td>2026-02-03</td><td>9</td></tr>
-<tr><td>CVE-2025-40536</td><td>SolarWinds</td><td>Web Help Desk</td><td>2026-02-12</td><td>2026-02-15</td><td>Unknown</td><td>—</td><td>2026-01-28</td><td>15</td></tr>
-<tr><td>CVE-2026-20700</td><td>Apple</td><td>Multiple Products</td><td>2026-02-12</td><td>2026-03-05</td><td>Unknown</td><td>—</td><td>2026-02-11</td><td>1</td></tr>
-<tr><td>CVE-2026-1731</td><td>BeyondTrust</td><td>Remote Support (RS) and Privileged Remote Access (PRA)</td><td>2026-02-13</td><td>2026-02-16</td><td>Known</td><td>—</td><td>2026-02-06</td><td>7</td></tr>
-<tr><td>CVE-2008-0015</td><td>Microsoft</td><td>Windows</td><td>2026-02-17</td><td>2026-03-10</td><td>Unknown</td><td>—</td><td>2009-07-07</td><td>6069</td></tr>
-<tr><td>CVE-2020-7796</td><td>Synacor</td><td>Zimbra Collaboration Suite</td><td>2026-02-17</td><td>2026-03-10</td><td>Unknown</td><td>—</td><td>2020-02-18</td><td>2191</td></tr>
-<tr><td>CVE-2024-7694</td><td>TeamT5</td><td>ThreatSonar Anti-Ransomware</td><td>2026-02-17</td><td>2026-03-10</td><td>Unknown</td><td>—</td><td>2024-08-12</td><td>554</td></tr>
-<tr><td>CVE-2026-2441</td><td>Google</td><td>Chromium</td><td>2026-02-17</td><td>2026-03-10</td><td>Unknown</td><td>—</td><td>2026-02-13</td><td>4</td></tr>
-<tr><td>CVE-2021-22175</td><td>GitLab</td><td>GitLab</td><td>2026-02-18</td><td>2026-03-11</td><td>Unknown</td><td>—</td><td>2021-06-11</td><td>1713</td></tr>
-<tr><td>CVE-2026-22769</td><td>Dell</td><td>RecoverPoint for Virtual Machines (RP4VMs)</td><td>2026-02-18</td><td>2026-02-21</td><td>Unknown</td><td>—</td><td>2026-02-17</td><td>1</td></tr>
-<tr><td>CVE-2025-49113</td><td>Roundcube</td><td>Webmail</td><td>2026-02-20</td><td>2026-03-13</td><td>Unknown</td><td>—</td><td>2025-06-02</td><td>263</td></tr>
-<tr><td>CVE-2025-68461</td><td>Roundcube</td><td>Webmail</td><td>2026-02-20</td><td>2026-03-13</td><td>Unknown</td><td>—</td><td>2025-12-18</td><td>64</td></tr>
-<tr><td>CVE-2026-25108</td><td>Soliton Systems K.K</td><td>FileZen</td><td>2026-02-24</td><td>2026-03-17</td><td>Unknown</td><td>—</td><td>2026-02-13</td><td>11</td></tr>
-<tr><td>CVE-2022-20775</td><td>Cisco</td><td>SD-WAN</td><td>2026-02-25</td><td>2026-02-27</td><td>Unknown</td><td>—</td><td>2022-09-30</td><td>1244</td></tr>
-<tr><td>CVE-2026-20127</td><td>Cisco</td><td>Catalyst SD-WAN Controller and Manager</td><td>2026-02-25</td><td>2026-02-27</td><td>Unknown</td><td>—</td><td>2026-02-25</td><td>0</td></tr></tbody></table>
+<table id="kevtable"><thead><tr><th class="sortable" data-type="text" aria-sort="none">CVE<span class="caret"></span></th><th class="sortable" data-type="text" aria-sort="none">Vendor<span class="caret"></span></th><th class="sortable" data-type="text" aria-sort="none">Product<span class="caret"></span></th><th class="sortable" data-type="date" aria-sort="descending">Added<span class="caret"></span></th><th class="sortable" data-type="date" aria-sort="none">Due<span class="caret"></span></th><th class="sortable" data-type="text" aria-sort="none">Ransomware<span class="caret"></span></th><th class="sortable" data-type="num" aria-sort="none">EPSS/pctl<span class="caret"></span></th><th class="sortable" data-type="date" aria-sort="none">NVD published<span class="caret"></span></th><th class="sortable" data-type="num" aria-sort="none">Pub→KEV (days)<span class="caret"></span></th></tr></thead><tbody><tr><td data-sort="CVE-2022-20775">CVE-2022-20775</td><td data-sort="Cisco">Cisco</td><td data-sort="SD-WAN">SD-WAN</td><td data-sort="2026-02-25">2026-02-25</td><td data-sort="2026-02-27">2026-02-27</td><td data-sort="Unknown">Unknown</td><td data-sort="">—</td><td data-sort="2022-09-30">2022-09-30</td><td data-sort="1244">1244</td></tr>
+<tr><td data-sort="CVE-2026-20127">CVE-2026-20127</td><td data-sort="Cisco">Cisco</td><td data-sort="Catalyst SD-WAN Controller and Manager">Catalyst SD-WAN Controller and Manager</td><td data-sort="2026-02-25">2026-02-25</td><td data-sort="2026-02-27">2026-02-27</td><td data-sort="Unknown">Unknown</td><td data-sort="">—</td><td data-sort="2026-02-25">2026-02-25</td><td data-sort="0">0</td></tr>
+<tr><td data-sort="CVE-2026-25108">CVE-2026-25108</td><td data-sort="Soliton Systems K.K">Soliton Systems K.K</td><td data-sort="FileZen">FileZen</td><td data-sort="2026-02-24">2026-02-24</td><td data-sort="2026-03-17">2026-03-17</td><td data-sort="Unknown">Unknown</td><td data-sort="">—</td><td data-sort="2026-02-13">2026-02-13</td><td data-sort="11">11</td></tr>
+<tr><td data-sort="CVE-2025-49113">CVE-2025-49113</td><td data-sort="Roundcube">Roundcube</td><td data-sort="Webmail">Webmail</td><td data-sort="2026-02-20">2026-02-20</td><td data-sort="2026-03-13">2026-03-13</td><td data-sort="Unknown">Unknown</td><td data-sort="">—</td><td data-sort="2025-06-02">2025-06-02</td><td data-sort="263">263</td></tr>
+<tr><td data-sort="CVE-2025-68461">CVE-2025-68461</td><td data-sort="Roundcube">Roundcube</td><td data-sort="Webmail">Webmail</td><td data-sort="2026-02-20">2026-02-20</td><td data-sort="2026-03-13">2026-03-13</td><td data-sort="Unknown">Unknown</td><td data-sort="">—</td><td data-sort="2025-12-18">2025-12-18</td><td data-sort="64">64</td></tr>
+<tr><td data-sort="CVE-2021-22175">CVE-2021-22175</td><td data-sort="GitLab">GitLab</td><td data-sort="GitLab">GitLab</td><td data-sort="2026-02-18">2026-02-18</td><td data-sort="2026-03-11">2026-03-11</td><td data-sort="Unknown">Unknown</td><td data-sort="">—</td><td data-sort="2021-06-11">2021-06-11</td><td data-sort="1713">1713</td></tr>
+<tr><td data-sort="CVE-2026-22769">CVE-2026-22769</td><td data-sort="Dell">Dell</td><td data-sort="RecoverPoint for Virtual Machines (RP4VMs)">RecoverPoint for Virtual Machines (RP4VMs)</td><td data-sort="2026-02-18">2026-02-18</td><td data-sort="2026-02-21">2026-02-21</td><td data-sort="Unknown">Unknown</td><td data-sort="">—</td><td data-sort="2026-02-17">2026-02-17</td><td data-sort="1">1</td></tr>
+<tr><td data-sort="CVE-2008-0015">CVE-2008-0015</td><td data-sort="Microsoft">Microsoft</td><td data-sort="Windows">Windows</td><td data-sort="2026-02-17">2026-02-17</td><td data-sort="2026-03-10">2026-03-10</td><td data-sort="Unknown">Unknown</td><td data-sort="">—</td><td data-sort="2009-07-07">2009-07-07</td><td data-sort="6069">6069</td></tr>
+<tr><td data-sort="CVE-2020-7796">CVE-2020-7796</td><td data-sort="Synacor">Synacor</td><td data-sort="Zimbra Collaboration Suite">Zimbra Collaboration Suite</td><td data-sort="2026-02-17">2026-02-17</td><td data-sort="2026-03-10">2026-03-10</td><td data-sort="Unknown">Unknown</td><td data-sort="">—</td><td data-sort="2020-02-18">2020-02-18</td><td data-sort="2191">2191</td></tr>
+<tr><td data-sort="CVE-2024-7694">CVE-2024-7694</td><td data-sort="TeamT5">TeamT5</td><td data-sort="ThreatSonar Anti-Ransomware">ThreatSonar Anti-Ransomware</td><td data-sort="2026-02-17">2026-02-17</td><td data-sort="2026-03-10">2026-03-10</td><td data-sort="Unknown">Unknown</td><td data-sort="">—</td><td data-sort="2024-08-12">2024-08-12</td><td data-sort="554">554</td></tr>
+<tr><td data-sort="CVE-2026-2441">CVE-2026-2441</td><td data-sort="Google">Google</td><td data-sort="Chromium">Chromium</td><td data-sort="2026-02-17">2026-02-17</td><td data-sort="2026-03-10">2026-03-10</td><td data-sort="Unknown">Unknown</td><td data-sort="">—</td><td data-sort="2026-02-13">2026-02-13</td><td data-sort="4">4</td></tr>
+<tr><td data-sort="CVE-2026-1731">CVE-2026-1731</td><td data-sort="BeyondTrust">BeyondTrust</td><td data-sort="Remote Support (RS) and Privileged Remote Access (PRA)">Remote Support (RS) and Privileged Remote Access (PRA)</td><td data-sort="2026-02-13">2026-02-13</td><td data-sort="2026-02-16">2026-02-16</td><td data-sort="Known">Known</td><td data-sort="">—</td><td data-sort="2026-02-06">2026-02-06</td><td data-sort="7">7</td></tr>
+<tr><td data-sort="CVE-2024-43468">CVE-2024-43468</td><td data-sort="Microsoft">Microsoft</td><td data-sort="Configuration Manager">Configuration Manager</td><td data-sort="2026-02-12">2026-02-12</td><td data-sort="2026-03-05">2026-03-05</td><td data-sort="Unknown">Unknown</td><td data-sort="">—</td><td data-sort="2024-10-08">2024-10-08</td><td data-sort="492">492</td></tr>
+<tr><td data-sort="CVE-2025-15556">CVE-2025-15556</td><td data-sort="Notepad++">Notepad++</td><td data-sort="Notepad++">Notepad++</td><td data-sort="2026-02-12">2026-02-12</td><td data-sort="2026-03-05">2026-03-05</td><td data-sort="Unknown">Unknown</td><td data-sort="">—</td><td data-sort="2026-02-03">2026-02-03</td><td data-sort="9">9</td></tr>
+<tr><td data-sort="CVE-2025-40536">CVE-2025-40536</td><td data-sort="SolarWinds">SolarWinds</td><td data-sort="Web Help Desk">Web Help Desk</td><td data-sort="2026-02-12">2026-02-12</td><td data-sort="2026-02-15">2026-02-15</td><td data-sort="Unknown">Unknown</td><td data-sort="">—</td><td data-sort="2026-01-28">2026-01-28</td><td data-sort="15">15</td></tr>
+<tr><td data-sort="CVE-2026-20700">CVE-2026-20700</td><td data-sort="Apple">Apple</td><td data-sort="Multiple Products">Multiple Products</td><td data-sort="2026-02-12">2026-02-12</td><td data-sort="2026-03-05">2026-03-05</td><td data-sort="Unknown">Unknown</td><td data-sort="">—</td><td data-sort="2026-02-11">2026-02-11</td><td data-sort="1">1</td></tr>
+<tr><td data-sort="CVE-2026-21510">CVE-2026-21510</td><td data-sort="Microsoft">Microsoft</td><td data-sort="Windows">Windows</td><td data-sort="2026-02-10">2026-02-10</td><td data-sort="2026-03-03">2026-03-03</td><td data-sort="Unknown">Unknown</td><td data-sort="">—</td><td data-sort="2026-02-10">2026-02-10</td><td data-sort="0">0</td></tr>
+<tr><td data-sort="CVE-2026-21513">CVE-2026-21513</td><td data-sort="Microsoft">Microsoft</td><td data-sort="Windows">Windows</td><td data-sort="2026-02-10">2026-02-10</td><td data-sort="2026-03-03">2026-03-03</td><td data-sort="Unknown">Unknown</td><td data-sort="">—</td><td data-sort="2026-02-10">2026-02-10</td><td data-sort="0">0</td></tr>
+<tr><td data-sort="CVE-2026-21514">CVE-2026-21514</td><td data-sort="Microsoft">Microsoft</td><td data-sort="Office">Office</td><td data-sort="2026-02-10">2026-02-10</td><td data-sort="2026-03-03">2026-03-03</td><td data-sort="Unknown">Unknown</td><td data-sort="">—</td><td data-sort="2026-02-10">2026-02-10</td><td data-sort="0">0</td></tr>
+<tr><td data-sort="CVE-2026-21519">CVE-2026-21519</td><td data-sort="Microsoft">Microsoft</td><td data-sort="Windows">Windows</td><td data-sort="2026-02-10">2026-02-10</td><td data-sort="2026-03-03">2026-03-03</td><td data-sort="Unknown">Unknown</td><td data-sort="">—</td><td data-sort="2026-02-10">2026-02-10</td><td data-sort="0">0</td></tr>
+<tr><td data-sort="CVE-2026-21525">CVE-2026-21525</td><td data-sort="Microsoft">Microsoft</td><td data-sort="Windows">Windows</td><td data-sort="2026-02-10">2026-02-10</td><td data-sort="2026-03-03">2026-03-03</td><td data-sort="Unknown">Unknown</td><td data-sort="">—</td><td data-sort="2026-02-10">2026-02-10</td><td data-sort="0">0</td></tr>
+<tr><td data-sort="CVE-2026-21533">CVE-2026-21533</td><td data-sort="Microsoft">Microsoft</td><td data-sort="Windows">Windows</td><td data-sort="2026-02-10">2026-02-10</td><td data-sort="2026-03-03">2026-03-03</td><td data-sort="Unknown">Unknown</td><td data-sort="">—</td><td data-sort="2026-02-10">2026-02-10</td><td data-sort="0">0</td></tr>
+<tr><td data-sort="CVE-2025-11953">CVE-2025-11953</td><td data-sort="React Native Community">React Native Community</td><td data-sort="CLI">CLI</td><td data-sort="2026-02-05">2026-02-05</td><td data-sort="2026-02-26">2026-02-26</td><td data-sort="Unknown">Unknown</td><td data-sort="">—</td><td data-sort="2025-11-03">2025-11-03</td><td data-sort="94">94</td></tr>
+<tr><td data-sort="CVE-2026-24423">CVE-2026-24423</td><td data-sort="SmarterTools">SmarterTools</td><td data-sort="SmarterMail">SmarterMail</td><td data-sort="2026-02-05">2026-02-05</td><td data-sort="2026-02-26">2026-02-26</td><td data-sort="Known">Known</td><td data-sort="">—</td><td data-sort="2026-01-23">2026-01-23</td><td data-sort="13">13</td></tr>
+<tr><td data-sort="CVE-2019-19006">CVE-2019-19006</td><td data-sort="Sangoma">Sangoma</td><td data-sort="FreePBX">FreePBX</td><td data-sort="2026-02-03">2026-02-03</td><td data-sort="2026-02-24">2026-02-24</td><td data-sort="Unknown">Unknown</td><td data-sort="">—</td><td data-sort="2019-11-21">2019-11-21</td><td data-sort="2266">2266</td></tr>
+<tr><td data-sort="CVE-2021-39935">CVE-2021-39935</td><td data-sort="GitLab">GitLab</td><td data-sort="Community and Enterprise Editions">Community and Enterprise Editions</td><td data-sort="2026-02-03">2026-02-03</td><td data-sort="2026-02-24">2026-02-24</td><td data-sort="Unknown">Unknown</td><td data-sort="">—</td><td data-sort="2021-12-13">2021-12-13</td><td data-sort="1513">1513</td></tr>
+<tr><td data-sort="CVE-2025-40551">CVE-2025-40551</td><td data-sort="SolarWinds">SolarWinds</td><td data-sort="Web Help Desk">Web Help Desk</td><td data-sort="2026-02-03">2026-02-03</td><td data-sort="2026-02-06">2026-02-06</td><td data-sort="Unknown">Unknown</td><td data-sort="">—</td><td data-sort="2026-01-28">2026-01-28</td><td data-sort="6">6</td></tr>
+<tr><td data-sort="CVE-2025-64328">CVE-2025-64328</td><td data-sort="Sangoma">Sangoma</td><td data-sort="FreePBX ">FreePBX </td><td data-sort="2026-02-03">2026-02-03</td><td data-sort="2026-02-24">2026-02-24</td><td data-sort="Unknown">Unknown</td><td data-sort="">—</td><td data-sort="2025-11-07">2025-11-07</td><td data-sort="88">88</td></tr></tbody></table>
 <div class="tablecaveat">Pub→KEV (days) = KEV listing date minus NVD publication; KEV listing is not when exploitation began, so this is NOT time-to-exploitation (large values are old CVEs listed recently).</div>
+<p class="sub">Click a column header to sort (default: Added descending; this order also shows when JS is off). The EPSS column sorts by score (percentile shown alongside). Blanks always sort last.</p>
+<script>
+(function(){
+  var t=document.getElementById('kevtable'); if(!t||!t.tHead) return;
+  var ths=t.tHead.rows[0].cells, tb=t.tBodies[0];
+  for(var i=0;i<ths.length;i++){(function(idx){
+    var th=ths[idx]; if((th.className||'').indexOf('sortable')<0) return;
+    th.addEventListener('click',function(){
+      var dir=th.getAttribute('aria-sort')==='ascending'?'descending':'ascending';
+      for(var j=0;j<ths.length;j++) ths[j].setAttribute('aria-sort','none');
+      th.setAttribute('aria-sort',dir);
+      var type=th.getAttribute('data-type')||'text', sgn=dir==='ascending'?1:-1;
+      var rows=Array.prototype.slice.call(tb.rows);
+      rows.sort(function(ra,rb){
+        var a=ra.cells[idx].getAttribute('data-sort'), b=rb.cells[idx].getAttribute('data-sort');
+        var ea=(a===''||a==null), eb=(b===''||b==null);
+        if(ea||eb){ return ea&&eb?0:(ea?1:-1); }   /* blanks always last, both directions */
+        var r = type==='num' ? (parseFloat(a)-parseFloat(b)) : (a<b?-1:(a>b?1:0));
+        return sgn*r;
+      });
+      rows.forEach(function(r){tb.appendChild(r);});
+    });
+  })(i);}
+})();
+</script>
 <h3>Aggregates</h3>
 <p>Ransomware (knownRansomwareCampaignUse): <b>Known 2 / Unknown 26</b></p>
 <p>By vendor (not a ranking — reflects deployment/visibility):</p><ul><li>Microsoft: 8</li><li>Sangoma: 2</li><li>GitLab: 2</li><li>SolarWinds: 2</li><li>Roundcube: 2</li><li>Cisco: 2</li><li>React Native Community: 1</li><li>SmarterTools: 1</li><li>Notepad++: 1</li><li>Apple: 1</li><li>BeyondTrust: 1</li><li>Synacor: 1</li><li>TeamT5: 1</li><li>Google: 1</li><li>Dell: 1</li><li>Soliton Systems K.K: 1</li></ul><p class='sub'>EPSS: this window was not observed (backfill). The EPSS column is blank.</p>
