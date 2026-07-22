@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Revision note — July 2026 report / 改訂ノート — MSRC Vulnerability Trend Report</title>
+<meta name="description" content="Post-publication revision note for the July 2026 MSRC vulnerability trend report.">
+<style>
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Hiragino Kaku Gothic ProN','Noto Sans JP',Meiryo,sans-serif;margin:0;color:#222;background:#f5f6f8}
+.topbar{position:sticky;top:0;background:#1f3864;color:#fff;padding:12px 16px;display:flex;justify-content:space-between;align-items:center}
+.topbar a{color:#fff;text-decoration:none}.topbar a:hover{text-decoration:underline}
+.wrap{max-width:760px;margin:0 auto;padding:32px 20px}
+h1{color:#1f3864;font-size:22px;margin:0 0 6px}
+h2{color:#1f3864;font-size:16px;margin:26px 0 8px;border-bottom:1px solid #e3e6ea;padding-bottom:4px}
+.sub{color:#555;font-size:14px;margin:0 0 8px}
+.card{background:#fff;border-radius:10px;box-shadow:0 2px 12px rgba(0,0,0,.06);padding:20px 22px;margin:16px 0}
+.banner{background:#fff3cd;border:1px solid #ffe69c;color:#664d03;border-radius:8px;padding:10px 14px;font-size:13px;margin:0 0 16px}
+p{font-size:14px;line-height:1.7;margin:8px 0}
+li{font-size:14px;line-height:1.7}
+table{width:100%;border-collapse:collapse;margin:10px 0}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid #eef0f3;font-size:14px}
+th{background:#f0f2f5;color:#333;font-size:13px}
+.fact{color:#1f3864;font-weight:700}
+.caution{color:#8a5a00;font-weight:700}
+.footer{max-width:760px;margin:24px auto;padding:0 20px;color:#888;font-size:12px}
+code{background:#eef0f3;padding:1px 5px;border-radius:4px;font-size:13px}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a href="../index.html">MSRC Vulnerability Trend Report</a>
+  <div><a href="index.html">Archive / アーカイブ</a> · <a href="notes-2026-07.ja.html">日本語</a></div>
+</div>
+<div class="wrap">
+  <h1>Revision note — July 2026 report</h1>
+  <p class="sub">A record of source-data movement observed after this report was published. English first, then Japanese (site convention). 日本語版は <a href="notes-2026-07.ja.html">こちら</a>。</p>
+
+  <div class="banner">The published July 2026 report is a point-in-time snapshot frozen on <b>2026-07-15</b>, and <b>its content has not been changed</b>. This note records changes MSRC made to the underlying data <b>after</b> that snapshot, detected on <b>2026-07-23</b>. The report was correct as a snapshot; the data has since moved.</div>
+
+  <div class="card">
+    <h2>What this note is</h2>
+    <p>Each monthly report is a frozen snapshot of MSRC primary data taken on a specific day. MSRC revises past months after the fact — adding CVEs, re-classifying products, and updating exploitation status. The report itself already discloses this and preserves its snapshot values unchanged. This note is the companion record for the movement observed for the July 2026 data after publication. It does not correct or replace the report.</p>
+  </div>
+
+  <div class="card">
+    <h2>Observed changes (detected 2026-07-23)</h2>
+    <p>Comparing the frozen 2026-07-15 snapshot against MSRC's data as of 2026-07-23:</p>
+    <table>
+      <thead><tr><th>Metric</th><th>Frozen (2026-07-15)</th><th>Revised (2026-07-23)</th></tr></thead>
+      <tbody>
+        <tr><td>Exploitation-confirmed CVEs</td><td>2</td><td class="fact">3 (+CVE-2026-58644; none removed)</td></tr>
+        <tr><td>Critical</td><td>67</td><td class="fact">102</td></tr>
+        <tr><td>Microsoft core-equivalent</td><td>665</td><td class="fact">832</td></tr>
+        <tr><td>Full CVRF population</td><td>1,150</td><td class="fact">1,339</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:13px;color:#666">Source: MSRC post-freeze revision record (<code>state/.revisions/2026-Jul.json</code>) against the frozen snapshot (<code>state/2026-Jul.json</code>). The frozen values above match the report as published.</p>
+  </div>
+
+  <div class="card">
+    <h2>Effect on two statements in the report</h2>
+
+    <p><b>1. "The exploitation-confirmed zero-days were all discovered by humans."</b></p>
+    <p>The newly exploitation-confirmed CVE, <b>CVE-2026-58644</b> (Microsoft SharePoint Remote Code Execution; Critical), has <b>no acknowledged finder — its credit is "uncredited"</b> in the CVRF. As of this note the accurate statement is therefore: <span class="fact">three exploitation-confirmed issues were human-discovered; one (CVE-2026-58644) has unknown attribution.</span> The report's original wording no longer holds as-is.</p>
+    <p class="caution">Important — do not read "uncredited" as "AI-discovered."</p>
+    <p>The absence of an acknowledgment is not evidence of an AI finder. It has several ordinary explanations — internal Microsoft response, a reporter declining acknowledgment, or disclosure routed through an authority (e.g., a national CERT). We do not infer an AI origin from a missing credit. Concretely, the one change in AI-related credit this period (the "kugelblitz" credit, +1) is on a <b>different</b> CVE, not on CVE-2026-58644. This note records the attribution of CVE-2026-58644 as <b>unknown</b> and draws no link to AI.</p>
+
+    <p style="margin-top:18px"><b>2. "Once the population is normalized, the peak was June."</b></p>
+    <p>Under the revised data, July's core-equivalent count (832) now exceeds June's (frozen 724 / revised 648). Taken at face value this reverses the comparison. But we do <b>not</b> simply rewrite the conclusion to "the peak was July," for a structural reason:</p>
+    <ul>
+      <li>At snapshot time the two months were at very different <b>data maturity</b>: July was <b>one day past its Patch Tuesday</b> (2026-07-14 → snapshot 2026-07-15), while June had matured for roughly five weeks. A newer month is systematically undercounted relative to an older one.</li>
+      <li>The revision (+167 core over the following week) is exactly the kind of catch-up a one-day-old month accrues as MSRC keeps adding and re-classifying entries.</li>
+    </ul>
+    <p>The defensible statement is therefore: <span class="fact">cross-month count comparisons are only valid when the months are at equal data maturity.</span> This <b>reinforces</b>, rather than contradicts, the report's core argument that raw counts do not reflect the real picture. We do not assert whether the added entries are out-of-band new CVEs or re-classifications of existing ones — the revision record does not carry per-CVE before/after detail, so that breakdown is left undetermined.</p>
+  </div>
+
+  <div class="card">
+    <h2>A systematic caveat, not a one-off</h2>
+    <p>As long as each month's snapshot is taken the day after its Patch Tuesday, every report structurally <b>undercounts its own month and overcounts the prior month</b> at snapshot time. This is a property of the acquisition schedule, not something specific to July 2026. It is the same effect that makes "this month set a record" and "the prior month was the true peak" both fragile until the data matures.</p>
+  </div>
+
+  <p class="sub" style="margin-top:20px">Dates — data snapshot: 2026-07-15 · revision detected: 2026-07-23 · note prepared: 2026-07-23.</p>
+</div>
+<div class="footer">Facts are machine-generated; interpretation is human. The frozen snapshot is unchanged. Source: Microsoft Security Response Center (MSRC) CVRF.</div>
+</body>
+</html>

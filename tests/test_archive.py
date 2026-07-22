@@ -197,6 +197,32 @@ def test_rekey_frees_slot_for_normal_operation():
         assert 'href="2026-06/en.html"' in idx and 'href="2026-07/en.html"' in idx
 
 
+def test_index_renders_revision_note_link_when_present():
+    """A manifest entry with a bilingual `notes` field renders a revision-note link in
+    the index row (outside the frozen snapshot dir); absent it renders nothing."""
+    import json
+    with tempfile.TemporaryDirectory() as tmp:
+        docs = Path(tmp) / "docs"; docs.mkdir()
+        _fake_site(docs)
+        _run(docs, "--month", "2026-07", "--subject", "2026-07",
+             "--count-cvrf", "1150", "--count-core", "665")
+        idx0 = (docs / "archive" / "index.html").read_text(encoding="utf-8")
+        assert "notes-2026-07.en.html" not in idx0, "no note link without a notes field"
+        # add a notes field to the manifest, then rebuild the index only
+        mp = docs / "archive" / "manifest.json"
+        man = json.loads(mp.read_text(encoding="utf-8"))
+        man["months"][0]["notes"] = {"en": "notes-2026-07.en.html",
+                                     "ja": "notes-2026-07.ja.html"}
+        mp.write_text(json.dumps(man, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        _run(docs, "--rebuild-index-only")
+        idx = (docs / "archive" / "index.html").read_text(encoding="utf-8")
+        assert 'href="notes-2026-07.en.html"' in idx and 'href="notes-2026-07.ja.html"' in idx
+        assert "Source data revised after publication" in idx  # English first
+        assert idx.index("Source data revised") < idx.index("公開後に元データが改訂")
+        # the frozen snapshot dir must not contain the note files
+        assert not (docs / "archive" / "2026-07" / "notes-2026-07.en.html").exists()
+
+
 if __name__ == "__main__":
     import traceback
     tests = [v for k, v in sorted(globals().items())
