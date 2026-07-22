@@ -93,8 +93,10 @@ def test_index_two_value_counts_subject_and_snapshot():
              "--count-cvrf", "1281", "--count-core", "724")
         idx = (docs / "archive" / "index.html").read_text(encoding="utf-8")
         assert "1,281 CVRF / 724 本体相当・core" in idx, "two-value count must render"
-        assert "2026年6月 / June 2026" in idx, "subject month must render (not the slot key)"
-        assert "スナップショット 2026-07-15" in idx and "snapshot 2026-07-15" in idx
+        # bilingual order is English first, then Japanese (site convention)
+        assert "June 2026 / 2026年6月" in idx, "subject month must render English-first"
+        assert "snapshot 2026-07-15 / スナップショット 2026-07-15" in idx
+        assert idx.index(">English<") < idx.index(">日本語<"), "report links English-first"
         # links still use the slot key, not the subject
         assert 'href="2026-07/ja.html"' in idx and 'href="2026-07/en.html"' in idx
 

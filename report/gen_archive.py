@@ -153,6 +153,9 @@ def _count_cell(entry: dict) -> str:
 
 
 def build_index(docs: Path) -> None:
+    # Bilingual order = English first, then Japanese (headers, month cell, links, text).
+    # See docs/SITE_BILINGUAL_CONVENTION.md (private msrc_monitor). The frozen snapshots
+    # docs/archive/YYYY-MM/{ja,en}.html are immutable and NOT touched here.
     archive_dir = docs / "archive"
     manifest = _load_manifest(archive_dir)
     rows = []
@@ -161,36 +164,36 @@ def build_index(docs: Path) -> None:
         subject = m.get("subject") or slot      # the month the report is ABOUT
         snapshot = m.get("snapshot")            # data freshness date
         ja_m, en_m = _fmt_subject(subject)
-        month_cell = f'<div class="mmain">{ja_m} / {en_m}</div>'
+        month_cell = f'<div class="mmain">{en_m} / {ja_m}</div>'
         if snapshot:
-            month_cell += (f'<div class="msnap">スナップショット {snapshot} / '
-                           f'snapshot {snapshot}</div>')
+            month_cell += (f'<div class="msnap">snapshot {snapshot} / '
+                           f'スナップショット {snapshot}</div>')
         rows.append(
             f'<tr><td class="month">{month_cell}</td><td>{_count_cell(m)}</td>'
-            f'<td><a class="rep" href="{slot}/ja.html">日本語</a>'
-            f'<a class="rep" href="{slot}/en.html">English</a></td></tr>')
+            f'<td><a class="rep" href="{slot}/en.html">English</a> · '
+            f'<a class="rep" href="{slot}/ja.html">日本語</a></td></tr>')
     page = f"""<!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>アーカイブ / Archive — MSRC 脆弱性動向レポート</title>
+<title>Archive / アーカイブ — MSRC Vulnerability Trend Report</title>
 <meta name="description" content="Monthly archive of the MSRC vulnerability trend report.">
 <style>{ARCHIVE_INDEX_CSS}</style>
 </head>
 <body>
 <div class="topbar">
-  <a href="../index.html">MSRC 脆弱性動向レポート</a>
-  <div class="nav"><a href="../index.html">最新レポート / Latest</a></div>
+  <a href="../index.html">MSRC Vulnerability Trend Report</a>
+  <div class="nav"><a href="../index.html">Latest / 最新レポート</a></div>
 </div>
 <div class="wrap">
-  <h1>アーカイブ / Archive</h1>
-  <p class="sub">過去に公開した月次レポートの一覧。各月のスナップショットは公開時点のまま保持されます。<br>
-  A list of previously published monthly reports. Each month's snapshot is preserved as published.</p>
+  <h1>Archive / アーカイブ</h1>
+  <p class="sub">A list of previously published monthly reports. Each month's snapshot is preserved as published.<br>
+  過去に公開した月次レポートの一覧。各月のスナップショットは公開時点のまま保持されます。</p>
   <table>
-    <thead><tr><th>年月 / Month</th><th>CVE 件数 / Count</th><th>レポート / Report</th></tr></thead>
+    <thead><tr><th>Month / 年月</th><th>Count / CVE 件数</th><th>Report / レポート</th></tr></thead>
     <tbody>
-    {chr(10).join("    " + r for r in rows) if rows else '<tr><td colspan="3">（まだアーカイブがありません / no archives yet）</td></tr>'}
+    {chr(10).join("    " + r for r in rows) if rows else '<tr><td colspan="3">(no archives yet / まだアーカイブがありません)</td></tr>'}
     </tbody>
   </table>
 </div>
