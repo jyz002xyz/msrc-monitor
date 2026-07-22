@@ -9,6 +9,10 @@ body{margin:0;background:#eef0f3;color:#1a1a1a;font-family:-apple-system,BlinkMa
 align-items:center;justify-content:space-between;padding:10px 18px;font-size:14px}
 .topbar a{color:#fff;text-decoration:none;opacity:.92}.topbar a:hover{opacity:1;text-decoration:underline}
 .topbar .nav a{margin-left:16px}
+.topbar .langpill{border:1px solid rgba(255,255,255,.6);border-radius:14px;padding:3px 13px;margin-left:22px;opacity:1}
+.topbar .langpill:hover{background:rgba(255,255,255,.16);text-decoration:none}
+.tablecaveat{font-size:12px;color:#7a4e00;background:#fff7e6;border:1px solid #f0d9a8;border-left:3px solid #d99b1c;border-radius:6px;padding:8px 12px;margin:2px 0 16px}
+.idxlinks a{margin-right:6px;color:#1f3864;font-weight:600;text-decoration:none}.idxlinks a:hover{text-decoration:underline}
 .banner{max-width:960px;margin:16px auto 0;padding:10px 16px;border-radius:6px;font-size:13px;line-height:1.6}
 .banner.open{background:#fff3cd;border:1px solid #ffe69c;color:#664d03}
 .banner.sealed{background:#e7f1e9;border:1px solid #b9d9c1;color:#20502f}
@@ -23,8 +27,8 @@ padding:12px 16px;color:#26364d;font-size:13px;line-height:1.7;margin:16px 0}
 .sub{color:#666;font-size:13px}.footer{max-width:960px;margin:0 auto 40px;color:#888;font-size:12px;text-align:center}
 </style></head><body>
 <div class="topbar"><a href="../../index.html">MSRC 脆弱性動向レポート</a>
-<div class="nav"><a href="../index.html">クロスベンダー KEV/EPSS</a>
-<a href="../../index.html">トップへ</a><a href="en.html">English</a></div></div>
+<div class="nav"><a href="../index.html">クロスベンダー KEV/EPSS</a><a href="../../index.html">トップへ</a>
+<a class="langpill" href="en.html">English</a></div></div>
 <div class="banner sealed"><b>確定 / sealed.</b> この窓は確定（sealed・不変）です。</div>
 <article class="paper">
 <h1>クロスベンダー KEV/EPSS — 2026-04</h1>
@@ -33,41 +37,42 @@ padding:12px 16px;color:#26364d;font-size:13px;line-height:1.7;margin:16px 0}
 
 <h2>事実 (機械生成)</h2>
 <h3>窓内の KEV 追加 (31)</h3>
-<table><thead><tr><th>CVE</th><th>ベンダー</th><th>製品</th><th>追加日</th><th>期限</th><th>ランサムウェア</th><th>EPSS/百分位</th></tr></thead><tbody><tr><td>CVE-2026-5281</td><td>Google</td><td>Dawn</td><td>2026-04-01</td><td>2026-04-15</td><td>Unknown</td><td>—</td></tr>
-<tr><td>CVE-2026-3502</td><td>TrueConf</td><td>Client</td><td>2026-04-02</td><td>2026-04-16</td><td>Unknown</td><td>—</td></tr>
-<tr><td>CVE-2026-35616</td><td>Fortinet</td><td>FortiClient EMS</td><td>2026-04-06</td><td>2026-04-09</td><td>Unknown</td><td>—</td></tr>
-<tr><td>CVE-2026-1340</td><td>Ivanti</td><td>Endpoint Manager Mobile (EPMM)</td><td>2026-04-08</td><td>2026-04-11</td><td>Unknown</td><td>—</td></tr>
-<tr><td>CVE-2012-1854</td><td>Microsoft</td><td>Visual Basic for Applications (VBA)</td><td>2026-04-13</td><td>2026-04-27</td><td>Unknown</td><td>—</td></tr>
-<tr><td>CVE-2020-9715</td><td>Adobe</td><td>Acrobat</td><td>2026-04-13</td><td>2026-04-27</td><td>Unknown</td><td>—</td></tr>
-<tr><td>CVE-2023-21529</td><td>Microsoft</td><td>Exchange Server</td><td>2026-04-13</td><td>2026-04-27</td><td>Known</td><td>—</td></tr>
-<tr><td>CVE-2023-36424</td><td>Microsoft</td><td>Windows</td><td>2026-04-13</td><td>2026-04-27</td><td>Unknown</td><td>—</td></tr>
-<tr><td>CVE-2025-60710</td><td>Microsoft</td><td>Windows</td><td>2026-04-13</td><td>2026-04-27</td><td>Unknown</td><td>—</td></tr>
-<tr><td>CVE-2026-21643</td><td>Fortinet</td><td>FortiClient EMS</td><td>2026-04-13</td><td>2026-04-16</td><td>Unknown</td><td>—</td></tr>
-<tr><td>CVE-2026-34621</td><td>Adobe</td><td>Acrobat and Reader</td><td>2026-04-13</td><td>2026-04-27</td><td>Unknown</td><td>—</td></tr>
-<tr><td>CVE-2009-0238</td><td>Microsoft</td><td>Office</td><td>2026-04-14</td><td>2026-04-28</td><td>Unknown</td><td>—</td></tr>
-<tr><td>CVE-2026-32201</td><td>Microsoft</td><td>SharePoint Server</td><td>2026-04-14</td><td>2026-04-28</td><td>Unknown</td><td>—</td></tr>
-<tr><td>CVE-2026-34197</td><td>Apache</td><td>ActiveMQ</td><td>2026-04-16</td><td>2026-04-30</td><td>Unknown</td><td>—</td></tr>
-<tr><td>CVE-2023-27351</td><td>PaperCut</td><td>NG/MF</td><td>2026-04-20</td><td>2026-05-04</td><td>Known</td><td>—</td></tr>
-<tr><td>CVE-2024-27199</td><td>JetBrains</td><td>TeamCity</td><td>2026-04-20</td><td>2026-05-04</td><td>Known</td><td>—</td></tr>
-<tr><td>CVE-2025-2749</td><td>Kentico</td><td>Kentico Xperience</td><td>2026-04-20</td><td>2026-05-04</td><td>Unknown</td><td>—</td></tr>
-<tr><td>CVE-2025-32975</td><td>Quest</td><td>KACE Systems Management Appliance (SMA)</td><td>2026-04-20</td><td>2026-05-04</td><td>Unknown</td><td>—</td></tr>
-<tr><td>CVE-2025-48700</td><td>Synacor</td><td>Zimbra Collaboration Suite (ZCS)</td><td>2026-04-20</td><td>2026-04-23</td><td>Unknown</td><td>—</td></tr>
-<tr><td>CVE-2026-20122</td><td>Cisco</td><td>Catalyst SD-WAN Manger</td><td>2026-04-20</td><td>2026-04-23</td><td>Unknown</td><td>—</td></tr>
-<tr><td>CVE-2026-20128</td><td>Cisco</td><td>Catalyst SD-WAN Manager</td><td>2026-04-20</td><td>2026-04-23</td><td>Unknown</td><td>—</td></tr>
-<tr><td>CVE-2026-20133</td><td>Cisco</td><td>Catalyst SD-WAN Manager</td><td>2026-04-20</td><td>2026-04-23</td><td>Unknown</td><td>—</td></tr>
-<tr><td>CVE-2026-33825</td><td>Microsoft</td><td>Defender</td><td>2026-04-22</td><td>2026-05-06</td><td>Known</td><td>—</td></tr>
-<tr><td>CVE-2026-39987</td><td>Marimo</td><td>Marimo</td><td>2026-04-23</td><td>2026-05-07</td><td>Unknown</td><td>—</td></tr>
-<tr><td>CVE-2024-57726</td><td>SimpleHelp </td><td>SimpleHelp</td><td>2026-04-24</td><td>2026-05-08</td><td>Known</td><td>—</td></tr>
-<tr><td>CVE-2024-57728</td><td>SimpleHelp </td><td>SimpleHelp</td><td>2026-04-24</td><td>2026-05-08</td><td>Known</td><td>—</td></tr>
-<tr><td>CVE-2024-7399</td><td>Samsung</td><td>MagicINFO 9 Server</td><td>2026-04-24</td><td>2026-05-08</td><td>Unknown</td><td>—</td></tr>
-<tr><td>CVE-2025-29635</td><td>D-Link</td><td>DIR-823X</td><td>2026-04-24</td><td>2026-05-08</td><td>Unknown</td><td>—</td></tr>
-<tr><td>CVE-2024-1708</td><td>ConnectWise</td><td>ScreenConnect</td><td>2026-04-28</td><td>2026-05-12</td><td>Known</td><td>—</td></tr>
-<tr><td>CVE-2026-32202</td><td>Microsoft</td><td>Windows</td><td>2026-04-28</td><td>2026-05-12</td><td>Unknown</td><td>—</td></tr>
-<tr><td>CVE-2026-41940</td><td>WebPros</td><td>cPanel &amp; WHM and WP2 (WordPress Squared)</td><td>2026-04-30</td><td>2026-05-03</td><td>Known</td><td>—</td></tr></tbody></table>
+<table><thead><tr><th>CVE</th><th>ベンダー</th><th>製品</th><th>追加日</th><th>期限</th><th>ランサムウェア</th><th>EPSS/百分位</th><th>NVD 公開日</th><th>公開→収載(日)</th></tr></thead><tbody><tr><td>CVE-2026-5281</td><td>Google</td><td>Dawn</td><td>2026-04-01</td><td>2026-04-15</td><td>Unknown</td><td>—</td><td>2026-04-01</td><td>0</td></tr>
+<tr><td>CVE-2026-3502</td><td>TrueConf</td><td>Client</td><td>2026-04-02</td><td>2026-04-16</td><td>Unknown</td><td>—</td><td>2026-03-30</td><td>3</td></tr>
+<tr><td>CVE-2026-35616</td><td>Fortinet</td><td>FortiClient EMS</td><td>2026-04-06</td><td>2026-04-09</td><td>Unknown</td><td>—</td><td>2026-04-04</td><td>2</td></tr>
+<tr><td>CVE-2026-1340</td><td>Ivanti</td><td>Endpoint Manager Mobile (EPMM)</td><td>2026-04-08</td><td>2026-04-11</td><td>Unknown</td><td>—</td><td>2026-01-29</td><td>69</td></tr>
+<tr><td>CVE-2012-1854</td><td>Microsoft</td><td>Visual Basic for Applications (VBA)</td><td>2026-04-13</td><td>2026-04-27</td><td>Unknown</td><td>—</td><td>2012-07-10</td><td>5025</td></tr>
+<tr><td>CVE-2020-9715</td><td>Adobe</td><td>Acrobat</td><td>2026-04-13</td><td>2026-04-27</td><td>Unknown</td><td>—</td><td>2020-08-19</td><td>2063</td></tr>
+<tr><td>CVE-2023-21529</td><td>Microsoft</td><td>Exchange Server</td><td>2026-04-13</td><td>2026-04-27</td><td>Known</td><td>—</td><td>2023-02-14</td><td>1154</td></tr>
+<tr><td>CVE-2023-36424</td><td>Microsoft</td><td>Windows</td><td>2026-04-13</td><td>2026-04-27</td><td>Unknown</td><td>—</td><td>2023-11-14</td><td>881</td></tr>
+<tr><td>CVE-2025-60710</td><td>Microsoft</td><td>Windows</td><td>2026-04-13</td><td>2026-04-27</td><td>Unknown</td><td>—</td><td>2025-11-11</td><td>153</td></tr>
+<tr><td>CVE-2026-21643</td><td>Fortinet</td><td>FortiClient EMS</td><td>2026-04-13</td><td>2026-04-16</td><td>Unknown</td><td>—</td><td>2026-02-06</td><td>66</td></tr>
+<tr><td>CVE-2026-34621</td><td>Adobe</td><td>Acrobat and Reader</td><td>2026-04-13</td><td>2026-04-27</td><td>Unknown</td><td>—</td><td>2026-04-11</td><td>2</td></tr>
+<tr><td>CVE-2009-0238</td><td>Microsoft</td><td>Office</td><td>2026-04-14</td><td>2026-04-28</td><td>Unknown</td><td>—</td><td>2009-02-25</td><td>6257</td></tr>
+<tr><td>CVE-2026-32201</td><td>Microsoft</td><td>SharePoint Server</td><td>2026-04-14</td><td>2026-04-28</td><td>Unknown</td><td>—</td><td>2026-04-14</td><td>0</td></tr>
+<tr><td>CVE-2026-34197</td><td>Apache</td><td>ActiveMQ</td><td>2026-04-16</td><td>2026-04-30</td><td>Unknown</td><td>—</td><td>2026-04-07</td><td>9</td></tr>
+<tr><td>CVE-2023-27351</td><td>PaperCut</td><td>NG/MF</td><td>2026-04-20</td><td>2026-05-04</td><td>Known</td><td>—</td><td>2023-04-20</td><td>1096</td></tr>
+<tr><td>CVE-2024-27199</td><td>JetBrains</td><td>TeamCity</td><td>2026-04-20</td><td>2026-05-04</td><td>Known</td><td>—</td><td>2024-03-04</td><td>777</td></tr>
+<tr><td>CVE-2025-2749</td><td>Kentico</td><td>Kentico Xperience</td><td>2026-04-20</td><td>2026-05-04</td><td>Unknown</td><td>—</td><td>2025-03-24</td><td>392</td></tr>
+<tr><td>CVE-2025-32975</td><td>Quest</td><td>KACE Systems Management Appliance (SMA)</td><td>2026-04-20</td><td>2026-05-04</td><td>Unknown</td><td>—</td><td>2025-06-24</td><td>300</td></tr>
+<tr><td>CVE-2025-48700</td><td>Synacor</td><td>Zimbra Collaboration Suite (ZCS)</td><td>2026-04-20</td><td>2026-04-23</td><td>Unknown</td><td>—</td><td>2025-06-23</td><td>301</td></tr>
+<tr><td>CVE-2026-20122</td><td>Cisco</td><td>Catalyst SD-WAN Manger</td><td>2026-04-20</td><td>2026-04-23</td><td>Unknown</td><td>—</td><td>2026-02-25</td><td>54</td></tr>
+<tr><td>CVE-2026-20128</td><td>Cisco</td><td>Catalyst SD-WAN Manager</td><td>2026-04-20</td><td>2026-04-23</td><td>Unknown</td><td>—</td><td>2026-02-25</td><td>54</td></tr>
+<tr><td>CVE-2026-20133</td><td>Cisco</td><td>Catalyst SD-WAN Manager</td><td>2026-04-20</td><td>2026-04-23</td><td>Unknown</td><td>—</td><td>2026-02-25</td><td>54</td></tr>
+<tr><td>CVE-2026-33825</td><td>Microsoft</td><td>Defender</td><td>2026-04-22</td><td>2026-05-06</td><td>Known</td><td>—</td><td>2026-04-14</td><td>8</td></tr>
+<tr><td>CVE-2026-39987</td><td>Marimo</td><td>Marimo</td><td>2026-04-23</td><td>2026-05-07</td><td>Unknown</td><td>—</td><td>2026-04-09</td><td>14</td></tr>
+<tr><td>CVE-2024-57726</td><td>SimpleHelp </td><td>SimpleHelp</td><td>2026-04-24</td><td>2026-05-08</td><td>Known</td><td>—</td><td>2025-01-15</td><td>464</td></tr>
+<tr><td>CVE-2024-57728</td><td>SimpleHelp </td><td>SimpleHelp</td><td>2026-04-24</td><td>2026-05-08</td><td>Known</td><td>—</td><td>2025-01-15</td><td>464</td></tr>
+<tr><td>CVE-2024-7399</td><td>Samsung</td><td>MagicINFO 9 Server</td><td>2026-04-24</td><td>2026-05-08</td><td>Unknown</td><td>—</td><td>2024-08-12</td><td>620</td></tr>
+<tr><td>CVE-2025-29635</td><td>D-Link</td><td>DIR-823X</td><td>2026-04-24</td><td>2026-05-08</td><td>Unknown</td><td>—</td><td>2025-03-25</td><td>395</td></tr>
+<tr><td>CVE-2024-1708</td><td>ConnectWise</td><td>ScreenConnect</td><td>2026-04-28</td><td>2026-05-12</td><td>Known</td><td>—</td><td>2024-02-21</td><td>797</td></tr>
+<tr><td>CVE-2026-32202</td><td>Microsoft</td><td>Windows</td><td>2026-04-28</td><td>2026-05-12</td><td>Unknown</td><td>—</td><td>2026-04-14</td><td>14</td></tr>
+<tr><td>CVE-2026-41940</td><td>WebPros</td><td>cPanel &amp; WHM and WP2 (WordPress Squared)</td><td>2026-04-30</td><td>2026-05-03</td><td>Known</td><td>—</td><td>2026-04-29</td><td>1</td></tr></tbody></table>
+<div class="tablecaveat">「公開→収載(日)」= KEV 収載日 − NVD 公開日。KEV 収載は悪用開始日ではないため「悪用までの時間」ではない（点在する大きな値は古い CVE の近年収載）。</div>
 <h3>集計</h3>
 <p>ランサムウェア (knownRansomwareCampaignUse): <b>Known 8 / Unknown 23</b></p>
 <p>ベンダー別内訳（順位ではない・配備/可視性の反映）:</p><ul><li>Microsoft: 8</li><li>Cisco: 3</li><li>Fortinet: 2</li><li>Adobe: 2</li><li>SimpleHelp : 2</li><li>Google: 1</li><li>TrueConf: 1</li><li>Ivanti: 1</li><li>Apache: 1</li><li>PaperCut: 1</li><li>JetBrains: 1</li><li>Kentico: 1</li><li>Quest: 1</li><li>Synacor: 1</li><li>Marimo: 1</li><li>Samsung: 1</li><li>D-Link: 1</li><li>ConnectWise: 1</li><li>WebPros: 1</li></ul><p class='sub'>EPSS: このウィンドウは未観測（バックフィル）。EPSS 列は空欄。</p>
-<h2>定義・注記（データが何であるか）</h2><div class="notes"><ul><li>KEV は悪用の完全な記録ではない。CISA が確認し、連邦機関向けに優先付けしたもの。</li><li>EPSS は「30日以内に悪用活動が観測される確率」であって深刻度ではない。KEV 追加時点で記録した属性として提示し、予測の当否は評価しない。</li><li>ベンダー別件数は、連邦環境での配備状況と CISA の可視性を反映するものであり、セキュリティ品質の順位ではない。ベンダーを件数で順位付けしない。</li><li>バックフィルした過去月は EPSS 空欄（観測時点の値のみ記録し、現在値では埋めない）。</li></ul></div>
+<h2>定義・注記（データが何であるか）</h2><div class="notes"><ul><li>KEV は悪用の完全な記録ではない。CISA が確認し、連邦機関向けに優先付けしたもの。</li><li>EPSS は「30日以内に悪用活動が観測される確率」であって深刻度ではない。KEV 追加時点で記録した属性として提示し、予測の当否は評価しない。</li><li>ベンダー別件数は、連邦環境での配備状況と CISA の可視性を反映するものであり、セキュリティ品質の順位ではない。ベンダーを件数で順位付けしない。</li><li>バックフィルした過去月は EPSS 空欄（観測時点の値のみ記録し、現在値では埋めない）。</li><li>「NVD 公開日」は NVD が CVE レコードを公開した日であり、ベンダーの原開示日ではない（近いが遅れうる）。</li><li>「公開→収載(日)」= KEV 収載日(dateAdded) − NVD 公開日。KEV 収載日は CISA が KEV に載せた日であって悪用開始日ではない。よって本値は「悪用までの時間」ではない。</li><li>要約統計（中央値・平均）は出さない。古い CVE の近年収載と新規開示の速やかな収載は質的に異なり「典型的な日数」は意味を持たないため。CVE ごとの値をそのまま提示する。</li></ul></div>
 </article>
 <div class="footer">MSRC 脆弱性動向レポート · クロスベンダー KEV/EPSS</div>
 </body></html>

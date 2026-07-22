@@ -9,6 +9,10 @@ body{margin:0;background:#eef0f3;color:#1a1a1a;font-family:-apple-system,BlinkMa
 align-items:center;justify-content:space-between;padding:10px 18px;font-size:14px}
 .topbar a{color:#fff;text-decoration:none;opacity:.92}.topbar a:hover{opacity:1;text-decoration:underline}
 .topbar .nav a{margin-left:16px}
+.topbar .langpill{border:1px solid rgba(255,255,255,.6);border-radius:14px;padding:3px 13px;margin-left:22px;opacity:1}
+.topbar .langpill:hover{background:rgba(255,255,255,.16);text-decoration:none}
+.tablecaveat{font-size:12px;color:#7a4e00;background:#fff7e6;border:1px solid #f0d9a8;border-left:3px solid #d99b1c;border-radius:6px;padding:8px 12px;margin:2px 0 16px}
+.idxlinks a{margin-right:6px;color:#1f3864;font-weight:600;text-decoration:none}.idxlinks a:hover{text-decoration:underline}
 .banner{max-width:960px;margin:16px auto 0;padding:10px 16px;border-radius:6px;font-size:13px;line-height:1.6}
 .banner.open{background:#fff3cd;border:1px solid #ffe69c;color:#664d03}
 .banner.sealed{background:#e7f1e9;border:1px solid #b9d9c1;color:#20502f}
@@ -23,8 +27,8 @@ padding:12px 16px;color:#26364d;font-size:13px;line-height:1.7;margin:16px 0}
 .sub{color:#666;font-size:13px}.footer{max-width:960px;margin:0 auto 40px;color:#888;font-size:12px;text-align:center}
 </style></head><body>
 <div class="topbar"><a href="../../index.html">MSRC Vulnerability Trend Report</a>
-<div class="nav"><a href="../index.html">Cross-vendor KEV/EPSS</a>
-<a href="../../index.html">Home</a><a href="ja.html">日本語</a></div></div>
+<div class="nav"><a href="../index.html">Cross-vendor KEV/EPSS</a><a href="../../index.html">Home</a>
+<a class="langpill" href="ja.html">日本語</a></div></div>
 <div class="banner sealed"><b>sealed.</b> This window is final (sealed, immutable).</div>
 <article class="paper">
 <h1>Cross-vendor KEV/EPSS — 2026-05</h1>
@@ -33,31 +37,32 @@ padding:12px 16px;color:#26364d;font-size:13px;line-height:1.7;margin:16px 0}
 
 <h2>Facts (machine-generated)</h2>
 <h3>KEV additions in the window (21)</h3>
-<table><thead><tr><th>CVE</th><th>Vendor</th><th>Product</th><th>Added</th><th>Due</th><th>Ransomware</th><th>EPSS/pctl</th></tr></thead><tbody><tr><td>CVE-2026-31431</td><td>Linux</td><td>Kernel</td><td>2026-05-01</td><td>2026-05-15</td><td>Unknown</td><td>—</td></tr>
-<tr><td>CVE-2026-0300</td><td>Palo Alto Networks</td><td>PAN-OS</td><td>2026-05-06</td><td>2026-05-09</td><td>Unknown</td><td>—</td></tr>
-<tr><td>CVE-2026-6973</td><td>Ivanti</td><td>Endpoint Manager Mobile (EPMM)</td><td>2026-05-07</td><td>2026-05-10</td><td>Unknown</td><td>—</td></tr>
-<tr><td>CVE-2026-42208</td><td>BerriAI</td><td>LiteLLM</td><td>2026-05-08</td><td>2026-05-11</td><td>Unknown</td><td>—</td></tr>
-<tr><td>CVE-2026-20182</td><td>Cisco</td><td>Catalyst SD-WAN</td><td>2026-05-14</td><td>2026-05-17</td><td>Unknown</td><td>—</td></tr>
-<tr><td>CVE-2026-42897</td><td>Microsoft</td><td>Microsoft</td><td>2026-05-15</td><td>2026-05-29</td><td>Unknown</td><td>—</td></tr>
-<tr><td>CVE-2008-4250</td><td>Microsoft</td><td>Windows</td><td>2026-05-20</td><td>2026-06-03</td><td>Unknown</td><td>—</td></tr>
-<tr><td>CVE-2009-1537</td><td>Microsoft</td><td>DirectX</td><td>2026-05-20</td><td>2026-06-03</td><td>Unknown</td><td>—</td></tr>
-<tr><td>CVE-2009-3459</td><td>Adobe</td><td>Acrobat and Reader</td><td>2026-05-20</td><td>2026-06-03</td><td>Unknown</td><td>—</td></tr>
-<tr><td>CVE-2010-0249</td><td>Microsoft</td><td>Internet Explorer</td><td>2026-05-20</td><td>2026-06-03</td><td>Unknown</td><td>—</td></tr>
-<tr><td>CVE-2010-0806</td><td>Microsoft</td><td>Internet Explorer</td><td>2026-05-20</td><td>2026-06-03</td><td>Unknown</td><td>—</td></tr>
-<tr><td>CVE-2026-41091</td><td>Microsoft</td><td>Defender</td><td>2026-05-20</td><td>2026-06-03</td><td>Unknown</td><td>—</td></tr>
-<tr><td>CVE-2026-45498</td><td>Microsoft</td><td>Defender</td><td>2026-05-20</td><td>2026-06-03</td><td>Unknown</td><td>—</td></tr>
-<tr><td>CVE-2025-34291</td><td>Langflow</td><td>Langflow</td><td>2026-05-21</td><td>2026-06-04</td><td>Unknown</td><td>—</td></tr>
-<tr><td>CVE-2026-34926</td><td>Trend Micro</td><td>Apex One</td><td>2026-05-21</td><td>2026-06-04</td><td>Unknown</td><td>—</td></tr>
-<tr><td>CVE-2026-9082</td><td>Drupal</td><td>Core</td><td>2026-05-22</td><td>2026-05-27</td><td>Unknown</td><td>—</td></tr>
-<tr><td>CVE-2026-48172</td><td>LiteSpeed</td><td>cPanel Plugin</td><td>2026-05-26</td><td>2026-05-29</td><td>Unknown</td><td>—</td></tr>
-<tr><td>CVE-2026-45321</td><td>TanStack</td><td>TanStack</td><td>2026-05-27</td><td>2026-06-10</td><td>Known</td><td>—</td></tr>
-<tr><td>CVE-2026-48027</td><td>Nx</td><td>Nx Console</td><td>2026-05-27</td><td>2026-06-10</td><td>Known</td><td>—</td></tr>
-<tr><td>CVE-2026-8398</td><td>Daemon</td><td>Daemon Tools Lite</td><td>2026-05-27</td><td>2026-05-30</td><td>Unknown</td><td>—</td></tr>
-<tr><td>CVE-2026-0257</td><td>Palo Alto Networks</td><td>PAN-OS</td><td>2026-05-29</td><td>2026-06-01</td><td>Known</td><td>—</td></tr></tbody></table>
+<table><thead><tr><th>CVE</th><th>Vendor</th><th>Product</th><th>Added</th><th>Due</th><th>Ransomware</th><th>EPSS/pctl</th><th>NVD published</th><th>Pub→KEV (days)</th></tr></thead><tbody><tr><td>CVE-2026-31431</td><td>Linux</td><td>Kernel</td><td>2026-05-01</td><td>2026-05-15</td><td>Unknown</td><td>—</td><td>2026-04-22</td><td>9</td></tr>
+<tr><td>CVE-2026-0300</td><td>Palo Alto Networks</td><td>PAN-OS</td><td>2026-05-06</td><td>2026-05-09</td><td>Unknown</td><td>—</td><td>2026-05-06</td><td>0</td></tr>
+<tr><td>CVE-2026-6973</td><td>Ivanti</td><td>Endpoint Manager Mobile (EPMM)</td><td>2026-05-07</td><td>2026-05-10</td><td>Unknown</td><td>—</td><td>2026-05-07</td><td>0</td></tr>
+<tr><td>CVE-2026-42208</td><td>BerriAI</td><td>LiteLLM</td><td>2026-05-08</td><td>2026-05-11</td><td>Unknown</td><td>—</td><td>2026-05-08</td><td>0</td></tr>
+<tr><td>CVE-2026-20182</td><td>Cisco</td><td>Catalyst SD-WAN</td><td>2026-05-14</td><td>2026-05-17</td><td>Unknown</td><td>—</td><td>2026-05-14</td><td>0</td></tr>
+<tr><td>CVE-2026-42897</td><td>Microsoft</td><td>Microsoft</td><td>2026-05-15</td><td>2026-05-29</td><td>Unknown</td><td>—</td><td>2026-05-14</td><td>1</td></tr>
+<tr><td>CVE-2008-4250</td><td>Microsoft</td><td>Windows</td><td>2026-05-20</td><td>2026-06-03</td><td>Unknown</td><td>—</td><td>2008-10-23</td><td>6418</td></tr>
+<tr><td>CVE-2009-1537</td><td>Microsoft</td><td>DirectX</td><td>2026-05-20</td><td>2026-06-03</td><td>Unknown</td><td>—</td><td>2009-05-29</td><td>6200</td></tr>
+<tr><td>CVE-2009-3459</td><td>Adobe</td><td>Acrobat and Reader</td><td>2026-05-20</td><td>2026-06-03</td><td>Unknown</td><td>—</td><td>2009-10-13</td><td>6063</td></tr>
+<tr><td>CVE-2010-0249</td><td>Microsoft</td><td>Internet Explorer</td><td>2026-05-20</td><td>2026-06-03</td><td>Unknown</td><td>—</td><td>2010-01-15</td><td>5969</td></tr>
+<tr><td>CVE-2010-0806</td><td>Microsoft</td><td>Internet Explorer</td><td>2026-05-20</td><td>2026-06-03</td><td>Unknown</td><td>—</td><td>2010-03-10</td><td>5915</td></tr>
+<tr><td>CVE-2026-41091</td><td>Microsoft</td><td>Defender</td><td>2026-05-20</td><td>2026-06-03</td><td>Unknown</td><td>—</td><td>2026-05-20</td><td>0</td></tr>
+<tr><td>CVE-2026-45498</td><td>Microsoft</td><td>Defender</td><td>2026-05-20</td><td>2026-06-03</td><td>Unknown</td><td>—</td><td>2026-05-20</td><td>0</td></tr>
+<tr><td>CVE-2025-34291</td><td>Langflow</td><td>Langflow</td><td>2026-05-21</td><td>2026-06-04</td><td>Unknown</td><td>—</td><td>2025-12-05</td><td>167</td></tr>
+<tr><td>CVE-2026-34926</td><td>Trend Micro</td><td>Apex One</td><td>2026-05-21</td><td>2026-06-04</td><td>Unknown</td><td>—</td><td>2026-05-21</td><td>0</td></tr>
+<tr><td>CVE-2026-9082</td><td>Drupal</td><td>Core</td><td>2026-05-22</td><td>2026-05-27</td><td>Unknown</td><td>—</td><td>2026-05-20</td><td>2</td></tr>
+<tr><td>CVE-2026-48172</td><td>LiteSpeed</td><td>cPanel Plugin</td><td>2026-05-26</td><td>2026-05-29</td><td>Unknown</td><td>—</td><td>2026-05-21</td><td>5</td></tr>
+<tr><td>CVE-2026-45321</td><td>TanStack</td><td>TanStack</td><td>2026-05-27</td><td>2026-06-10</td><td>Known</td><td>—</td><td>2026-05-12</td><td>15</td></tr>
+<tr><td>CVE-2026-48027</td><td>Nx</td><td>Nx Console</td><td>2026-05-27</td><td>2026-06-10</td><td>Known</td><td>—</td><td>2026-05-27</td><td>0</td></tr>
+<tr><td>CVE-2026-8398</td><td>Daemon</td><td>Daemon Tools Lite</td><td>2026-05-27</td><td>2026-05-30</td><td>Unknown</td><td>—</td><td>2026-05-15</td><td>12</td></tr>
+<tr><td>CVE-2026-0257</td><td>Palo Alto Networks</td><td>PAN-OS</td><td>2026-05-29</td><td>2026-06-01</td><td>Known</td><td>—</td><td>2026-05-13</td><td>16</td></tr></tbody></table>
+<div class="tablecaveat">Pub→KEV (days) = KEV listing date minus NVD publication; KEV listing is not when exploitation began, so this is NOT time-to-exploitation (large values are old CVEs listed recently).</div>
 <h3>Aggregates</h3>
 <p>Ransomware (knownRansomwareCampaignUse): <b>Known 3 / Unknown 18</b></p>
 <p>By vendor (not a ranking — reflects deployment/visibility):</p><ul><li>Microsoft: 7</li><li>Palo Alto Networks: 2</li><li>Linux: 1</li><li>Ivanti: 1</li><li>BerriAI: 1</li><li>Cisco: 1</li><li>Adobe: 1</li><li>Langflow: 1</li><li>Trend Micro: 1</li><li>Drupal: 1</li><li>LiteSpeed: 1</li><li>TanStack: 1</li><li>Nx: 1</li><li>Daemon: 1</li></ul><p class='sub'>EPSS: this window was not observed (backfill). The EPSS column is blank.</p>
-<h2>Definitions / notes (what the data is)</h2><div class="notes"><ul><li>KEV is not a complete record of exploitation; it is what CISA confirmed and prioritized for federal agencies.</li><li>EPSS is the probability of exploitation activity within 30 days — not severity. It is presented as an attribute recorded at KEV-add time; its predictive correctness is not judged.</li><li>Vendor counts reflect federal deployment and CISA visibility, not security quality. Vendors are never ranked by count.</li><li>Backfilled past windows leave EPSS blank (only observed-time values are recorded; current values are not back-filled).</li></ul></div>
+<h2>Definitions / notes (what the data is)</h2><div class="notes"><ul><li>KEV is not a complete record of exploitation; it is what CISA confirmed and prioritized for federal agencies.</li><li>EPSS is the probability of exploitation activity within 30 days — not severity. It is presented as an attribute recorded at KEV-add time; its predictive correctness is not judged.</li><li>Vendor counts reflect federal deployment and CISA visibility, not security quality. Vendors are never ranked by count.</li><li>Backfilled past windows leave EPSS blank (only observed-time values are recorded; current values are not back-filled).</li><li>“NVD published” is the date NVD published the CVE record — a proxy for disclosure, NOT the vendor&#x27;s original disclosure date (it can lag).</li><li>“Pub→KEV (days)” = KEV listing date (dateAdded) minus NVD publication date. The KEV listing date is when CISA added it to KEV, NOT when exploitation began; so this is NOT time-to-exploitation.</li><li>No summary statistics (median/mean) are given: a decades-old CVE listed recently and a just-disclosed CVE listed promptly are qualitatively different, so a “typical” figure is not meaningful. Per-CVE values are shown as-is.</li></ul></div>
 </article>
 <div class="footer">MSRC Vulnerability Trend Report · Cross-vendor KEV/EPSS</div>
 </body></html>

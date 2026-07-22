@@ -9,6 +9,10 @@ body{margin:0;background:#eef0f3;color:#1a1a1a;font-family:-apple-system,BlinkMa
 align-items:center;justify-content:space-between;padding:10px 18px;font-size:14px}
 .topbar a{color:#fff;text-decoration:none;opacity:.92}.topbar a:hover{opacity:1;text-decoration:underline}
 .topbar .nav a{margin-left:16px}
+.topbar .langpill{border:1px solid rgba(255,255,255,.6);border-radius:14px;padding:3px 13px;margin-left:22px;opacity:1}
+.topbar .langpill:hover{background:rgba(255,255,255,.16);text-decoration:none}
+.tablecaveat{font-size:12px;color:#7a4e00;background:#fff7e6;border:1px solid #f0d9a8;border-left:3px solid #d99b1c;border-radius:6px;padding:8px 12px;margin:2px 0 16px}
+.idxlinks a{margin-right:6px;color:#1f3864;font-weight:600;text-decoration:none}.idxlinks a:hover{text-decoration:underline}
 .banner{max-width:960px;margin:16px auto 0;padding:10px 16px;border-radius:6px;font-size:13px;line-height:1.6}
 .banner.open{background:#fff3cd;border:1px solid #ffe69c;color:#664d03}
 .banner.sealed{background:#e7f1e9;border:1px solid #b9d9c1;color:#20502f}
@@ -23,41 +27,42 @@ padding:12px 16px;color:#26364d;font-size:13px;line-height:1.7;margin:16px 0}
 .sub{color:#666;font-size:13px}.footer{max-width:960px;margin:0 auto 40px;color:#888;font-size:12px;text-align:center}
 </style></head><body>
 <div class="topbar"><a href="../../index.html">MSRC Vulnerability Trend Report</a>
-<div class="nav"><a href="../index.html">Cross-vendor KEV/EPSS</a>
-<a href="../../index.html">Home</a><a href="ja.html">日本語</a></div></div>
+<div class="nav"><a href="../index.html">Cross-vendor KEV/EPSS</a><a href="../../index.html">Home</a>
+<a class="langpill" href="ja.html">日本語</a></div></div>
 <div class="banner open"><b>in progress.</b> This window is in progress. Values are not final; more KEV entries may be added before month-end and updated in later publications.</div>
 <article class="paper">
 <h1>Cross-vendor KEV/EPSS — 2026-07</h1>
 <div class="notes">This is a cross-vendor KEV/EPSS section accompanying the MSRC Vulnerability Trend Report (Microsoft-focused). While the main report covers Microsoft&#x27;s monthly CVEs, this section records — across all vendors — the vulnerabilities listed in CISA KEV.</div>
-<p class="sub">Generated 2026-07-22T18:55:00. This section is a cross-vendor KEV/EPSS prototype.</p>
+<p class="sub">Generated 2026-07-22T22:40:52. This section is a cross-vendor KEV/EPSS prototype.</p>
 <div class='notes'><b>corrections:</b><ul><li>re-opened 2026-07: was mid-month sealed at 2026-07-22T17:24:26 (21 items) before the calendar month closed; reverted to OPEN (immutability exception, recorded).</li></ul></div>
 <h2>Facts (machine-generated)</h2>
 <h3>KEV additions in the window (21)</h3>
-<table><thead><tr><th>CVE</th><th>Vendor</th><th>Product</th><th>Added</th><th>Due</th><th>Ransomware</th><th>EPSS/pctl</th></tr></thead><tbody><tr><td>CVE-2026-45659</td><td>Microsoft</td><td>SharePoint Server</td><td>2026-07-01</td><td>2026-07-04</td><td>Unknown</td><td>0.032 / p87</td></tr>
-<tr><td>CVE-2026-48282</td><td>Adobe</td><td>ColdFusion</td><td>2026-07-07</td><td>2026-07-10</td><td>Unknown</td><td>0.286 / p98</td></tr>
-<tr><td>CVE-2026-48908</td><td>JoomShaper</td><td>SP Page Builder</td><td>2026-07-07</td><td>2026-07-10</td><td>Unknown</td><td>0.016 / p73</td></tr>
-<tr><td>CVE-2026-55255</td><td>Langflow</td><td>Langflow</td><td>2026-07-07</td><td>2026-07-10</td><td>Unknown</td><td>0.006 / p43</td></tr>
-<tr><td>CVE-2026-56290</td><td>Joomlack</td><td>Page Builder</td><td>2026-07-07</td><td>2026-07-10</td><td>Unknown</td><td>0.029 / p85</td></tr>
-<tr><td>CVE-2026-48939</td><td>iCagenda</td><td>iCagenda</td><td>2026-07-10</td><td>2026-07-13</td><td>Unknown</td><td>0.015 / p72</td></tr>
-<tr><td>CVE-2026-56291</td><td>Balbooa</td><td>Forms</td><td>2026-07-10</td><td>2026-07-13</td><td>Unknown</td><td>0.086 / p95</td></tr>
-<tr><td>CVE-2008-4128</td><td>Cisco</td><td>IOS</td><td>2026-07-13</td><td>2026-07-16</td><td>Unknown</td><td>0.239 / p98</td></tr>
-<tr><td>CVE-2026-15409</td><td>SonicWall</td><td>SMA1000 Appliances</td><td>2026-07-14</td><td>2026-07-17</td><td>Unknown</td><td>0.013 / p67</td></tr>
-<tr><td>CVE-2026-15410</td><td>SonicWall</td><td>SMA1000 Appliances</td><td>2026-07-14</td><td>2026-07-17</td><td>Unknown</td><td>0.015 / p71</td></tr>
-<tr><td>CVE-2026-56155</td><td>Microsoft</td><td>Active Directory Federation Services</td><td>2026-07-14</td><td>2026-07-28</td><td>Unknown</td><td>0.004 / p30</td></tr>
-<tr><td>CVE-2026-56164</td><td>Microsoft</td><td>SharePoint Server</td><td>2026-07-14</td><td>2026-07-17</td><td>Unknown</td><td>0.056 / p92</td></tr>
-<tr><td>CVE-2023-4346</td><td>KNX Association</td><td>KNX Protocol Connection Authorization Option 1</td><td>2026-07-15</td><td>2026-07-29</td><td>Unknown</td><td>0.009 / p54</td></tr>
-<tr><td>CVE-2026-46817</td><td>Oracle</td><td>E-Business Suite</td><td>2026-07-15</td><td>2026-07-18</td><td>Unknown</td><td>0.010 / p60</td></tr>
-<tr><td>CVE-2026-25089</td><td>Fortinet</td><td>FortiSandbox</td><td>2026-07-16</td><td>2026-07-19</td><td>Unknown</td><td>0.361 / p98</td></tr>
-<tr><td>CVE-2026-39808</td><td>Fortinet</td><td>FortiSandbox</td><td>2026-07-16</td><td>2026-07-19</td><td>Unknown</td><td>0.842 / p100</td></tr>
-<tr><td>CVE-2026-58644</td><td>Microsoft</td><td>SharePoint</td><td>2026-07-16</td><td>2026-07-19</td><td>Unknown</td><td>0.015 / p71</td></tr>
-<tr><td>CVE-2021-27137</td><td>DD-WRT</td><td>DD-WRT</td><td>2026-07-21</td><td>2026-07-24</td><td>Unknown</td><td>0.054 / p92</td></tr>
-<tr><td>CVE-2026-0770</td><td>Langflow</td><td>Langflow</td><td>2026-07-21</td><td>2026-07-24</td><td>Unknown</td><td>0.104 / p95</td></tr>
-<tr><td>CVE-2026-60137</td><td>WordPress</td><td>Core</td><td>2026-07-21</td><td>2026-08-04</td><td>Unknown</td><td>0.040 / p89</td></tr>
-<tr><td>CVE-2026-63030</td><td>WordPress</td><td>Core</td><td>2026-07-21</td><td>2026-07-24</td><td>Unknown</td><td>0.089 / p95</td></tr></tbody></table>
+<table><thead><tr><th>CVE</th><th>Vendor</th><th>Product</th><th>Added</th><th>Due</th><th>Ransomware</th><th>EPSS/pctl</th><th>NVD published</th><th>Pub→KEV (days)</th></tr></thead><tbody><tr><td>CVE-2026-45659</td><td>Microsoft</td><td>SharePoint Server</td><td>2026-07-01</td><td>2026-07-04</td><td>Unknown</td><td>0.032 / p87</td><td>2026-05-22</td><td>40</td></tr>
+<tr><td>CVE-2026-48282</td><td>Adobe</td><td>ColdFusion</td><td>2026-07-07</td><td>2026-07-10</td><td>Unknown</td><td>0.286 / p98</td><td>2026-06-30</td><td>7</td></tr>
+<tr><td>CVE-2026-48908</td><td>JoomShaper</td><td>SP Page Builder</td><td>2026-07-07</td><td>2026-07-10</td><td>Unknown</td><td>0.016 / p73</td><td>2026-06-20</td><td>17</td></tr>
+<tr><td>CVE-2026-55255</td><td>Langflow</td><td>Langflow</td><td>2026-07-07</td><td>2026-07-10</td><td>Unknown</td><td>0.006 / p43</td><td>2026-06-23</td><td>14</td></tr>
+<tr><td>CVE-2026-56290</td><td>Joomlack</td><td>Page Builder</td><td>2026-07-07</td><td>2026-07-10</td><td>Unknown</td><td>0.029 / p85</td><td>2026-06-29</td><td>8</td></tr>
+<tr><td>CVE-2026-48939</td><td>iCagenda</td><td>iCagenda</td><td>2026-07-10</td><td>2026-07-13</td><td>Unknown</td><td>0.015 / p72</td><td>2026-06-20</td><td>20</td></tr>
+<tr><td>CVE-2026-56291</td><td>Balbooa</td><td>Forms</td><td>2026-07-10</td><td>2026-07-13</td><td>Unknown</td><td>0.086 / p95</td><td>2026-07-09</td><td>1</td></tr>
+<tr><td>CVE-2008-4128</td><td>Cisco</td><td>IOS</td><td>2026-07-13</td><td>2026-07-16</td><td>Unknown</td><td>0.239 / p98</td><td>2008-09-18</td><td>6507</td></tr>
+<tr><td>CVE-2026-15409</td><td>SonicWall</td><td>SMA1000 Appliances</td><td>2026-07-14</td><td>2026-07-17</td><td>Unknown</td><td>0.013 / p67</td><td>2026-07-14</td><td>0</td></tr>
+<tr><td>CVE-2026-15410</td><td>SonicWall</td><td>SMA1000 Appliances</td><td>2026-07-14</td><td>2026-07-17</td><td>Unknown</td><td>0.015 / p71</td><td>2026-07-14</td><td>0</td></tr>
+<tr><td>CVE-2026-56155</td><td>Microsoft</td><td>Active Directory Federation Services</td><td>2026-07-14</td><td>2026-07-28</td><td>Unknown</td><td>0.004 / p30</td><td>2026-07-14</td><td>0</td></tr>
+<tr><td>CVE-2026-56164</td><td>Microsoft</td><td>SharePoint Server</td><td>2026-07-14</td><td>2026-07-17</td><td>Unknown</td><td>0.056 / p92</td><td>2026-07-14</td><td>0</td></tr>
+<tr><td>CVE-2023-4346</td><td>KNX Association</td><td>KNX Protocol Connection Authorization Option 1</td><td>2026-07-15</td><td>2026-07-29</td><td>Unknown</td><td>0.009 / p54</td><td>2023-08-29</td><td>1051</td></tr>
+<tr><td>CVE-2026-46817</td><td>Oracle</td><td>E-Business Suite</td><td>2026-07-15</td><td>2026-07-18</td><td>Unknown</td><td>0.010 / p60</td><td>2026-05-28</td><td>48</td></tr>
+<tr><td>CVE-2026-25089</td><td>Fortinet</td><td>FortiSandbox</td><td>2026-07-16</td><td>2026-07-19</td><td>Unknown</td><td>0.361 / p98</td><td>2026-06-09</td><td>37</td></tr>
+<tr><td>CVE-2026-39808</td><td>Fortinet</td><td>FortiSandbox</td><td>2026-07-16</td><td>2026-07-19</td><td>Unknown</td><td>0.842 / p100</td><td>2026-04-14</td><td>93</td></tr>
+<tr><td>CVE-2026-58644</td><td>Microsoft</td><td>SharePoint</td><td>2026-07-16</td><td>2026-07-19</td><td>Unknown</td><td>0.015 / p71</td><td>2026-07-14</td><td>2</td></tr>
+<tr><td>CVE-2021-27137</td><td>DD-WRT</td><td>DD-WRT</td><td>2026-07-21</td><td>2026-07-24</td><td>Unknown</td><td>0.054 / p92</td><td>2026-07-16</td><td>5</td></tr>
+<tr><td>CVE-2026-0770</td><td>Langflow</td><td>Langflow</td><td>2026-07-21</td><td>2026-07-24</td><td>Unknown</td><td>0.104 / p95</td><td>2026-01-23</td><td>179</td></tr>
+<tr><td>CVE-2026-60137</td><td>WordPress</td><td>Core</td><td>2026-07-21</td><td>2026-08-04</td><td>Unknown</td><td>0.040 / p89</td><td>2026-07-17</td><td>4</td></tr>
+<tr><td>CVE-2026-63030</td><td>WordPress</td><td>Core</td><td>2026-07-21</td><td>2026-07-24</td><td>Unknown</td><td>0.089 / p95</td><td>2026-07-17</td><td>4</td></tr></tbody></table>
+<div class="tablecaveat">Pub→KEV (days) = KEV listing date minus NVD publication; KEV listing is not when exploitation began, so this is NOT time-to-exploitation (large values are old CVEs listed recently).</div>
 <h3>Aggregates</h3>
 <p>Ransomware (knownRansomwareCampaignUse): <b>Known 0 / Unknown 21</b></p>
 <p>By vendor (not a ranking — reflects deployment/visibility):</p><ul><li>Microsoft: 4</li><li>Langflow: 2</li><li>SonicWall: 2</li><li>Fortinet: 2</li><li>WordPress: 2</li><li>Adobe: 1</li><li>JoomShaper: 1</li><li>Joomlack: 1</li><li>iCagenda: 1</li><li>Balbooa: 1</li><li>Cisco: 1</li><li>KNX Association: 1</li><li>Oracle: 1</li><li>DD-WRT: 1</li></ul><p><b>Distribution of EPSS scores recorded at KEV-add time (a fact; no conclusion drawn):</b> &lt;0.05=12, 0.05–0.20=5, 0.20–0.50=3, ≥0.50=1, n/a=0</p>
-<h2>Definitions / notes (what the data is)</h2><div class="notes"><ul><li>KEV is not a complete record of exploitation; it is what CISA confirmed and prioritized for federal agencies.</li><li>EPSS is the probability of exploitation activity within 30 days — not severity. It is presented as an attribute recorded at KEV-add time; its predictive correctness is not judged.</li><li>Vendor counts reflect federal deployment and CISA visibility, not security quality. Vendors are never ranked by count.</li><li>Backfilled past windows leave EPSS blank (only observed-time values are recorded; current values are not back-filled).</li></ul></div>
+<h2>Definitions / notes (what the data is)</h2><div class="notes"><ul><li>KEV is not a complete record of exploitation; it is what CISA confirmed and prioritized for federal agencies.</li><li>EPSS is the probability of exploitation activity within 30 days — not severity. It is presented as an attribute recorded at KEV-add time; its predictive correctness is not judged.</li><li>Vendor counts reflect federal deployment and CISA visibility, not security quality. Vendors are never ranked by count.</li><li>Backfilled past windows leave EPSS blank (only observed-time values are recorded; current values are not back-filled).</li><li>“NVD published” is the date NVD published the CVE record — a proxy for disclosure, NOT the vendor&#x27;s original disclosure date (it can lag).</li><li>“Pub→KEV (days)” = KEV listing date (dateAdded) minus NVD publication date. The KEV listing date is when CISA added it to KEV, NOT when exploitation began; so this is NOT time-to-exploitation.</li><li>No summary statistics (median/mean) are given: a decades-old CVE listed recently and a just-disclosed CVE listed promptly are qualitatively different, so a “typical” figure is not meaningful. Per-CVE values are shown as-is.</li></ul></div>
 </article>
 <div class="footer">MSRC Vulnerability Trend Report · Cross-vendor KEV/EPSS</div>
 </body></html>
