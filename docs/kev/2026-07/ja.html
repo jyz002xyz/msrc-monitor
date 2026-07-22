@@ -9,6 +9,10 @@ body{margin:0;background:#eef0f3;color:#1a1a1a;font-family:-apple-system,BlinkMa
 align-items:center;justify-content:space-between;padding:10px 18px;font-size:14px}
 .topbar a{color:#fff;text-decoration:none;opacity:.92}.topbar a:hover{opacity:1;text-decoration:underline}
 .topbar .nav a{margin-left:16px}
+.topbar .langpill{border:1px solid rgba(255,255,255,.6);border-radius:14px;padding:3px 13px;margin-left:22px;opacity:1}
+.topbar .langpill:hover{background:rgba(255,255,255,.16);text-decoration:none}
+.tablecaveat{font-size:12px;color:#7a4e00;background:#fff7e6;border:1px solid #f0d9a8;border-left:3px solid #d99b1c;border-radius:6px;padding:8px 12px;margin:2px 0 16px}
+.idxlinks a{margin-right:6px;color:#1f3864;font-weight:600;text-decoration:none}.idxlinks a:hover{text-decoration:underline}
 .banner{max-width:960px;margin:16px auto 0;padding:10px 16px;border-radius:6px;font-size:13px;line-height:1.6}
 .banner.open{background:#fff3cd;border:1px solid #ffe69c;color:#664d03}
 .banner.sealed{background:#e7f1e9;border:1px solid #b9d9c1;color:#20502f}
@@ -18,46 +22,78 @@ h1{color:#1f3864;font-size:22px;margin:0 0 6px}h2{color:#1f3864;border-bottom:2p
 padding-bottom:4px;margin-top:26px;font-size:17px}h3{color:#33415c;font-size:15px}
 table{border-collapse:collapse;width:100%;font-size:13px;margin:10px 0}
 th,td{border-bottom:1px solid #eef0f3;padding:7px 10px;text-align:left}th{background:#f0f2f5}
+th.sortable{cursor:pointer;user-select:none;white-space:nowrap}th.sortable:hover{background:#e7ebf1}
+th .caret{opacity:.4;font-size:11px;margin-left:5px}
+th[aria-sort="ascending"] .caret::after{content:"\25B2"}
+th[aria-sort="descending"] .caret::after{content:"\25BC"}
+th[aria-sort="none"] .caret::after{content:"\2195"}
+th[aria-sort="ascending"] .caret,th[aria-sort="descending"] .caret{opacity:1}
 .notes{background:#eef3fb;border:1px solid #c9dcf5;border-left:4px solid #1f3864;border-radius:6px;
 padding:12px 16px;color:#26364d;font-size:13px;line-height:1.7;margin:16px 0}
 .sub{color:#666;font-size:13px}.footer{max-width:960px;margin:0 auto 40px;color:#888;font-size:12px;text-align:center}
 </style></head><body>
 <div class="topbar"><a href="../../index.html">MSRC 脆弱性動向レポート</a>
-<div class="nav"><a href="../index.html">クロスベンダー KEV/EPSS</a>
-<a href="../../index.html">トップへ</a><a href="en.html">English</a></div></div>
+<div class="nav"><a href="../index.html">クロスベンダー KEV/EPSS</a><a href="../../index.html">トップへ</a>
+<a class="langpill" href="en.html">English</a></div></div>
 <div class="banner open"><b>進行中 / in progress.</b> この窓は進行中です。値は確定しておらず、月末までに KEV が追加される可能性があり、後続の公開で更新されます。</div>
 <article class="paper">
 <h1>クロスベンダー KEV/EPSS — 2026-07</h1>
 <div class="notes">本セクションは「MSRC 脆弱性動向レポート」（Microsoft 中心）に付随する、ベンダー横断の KEV/EPSS セクションです。主レポートが Microsoft 起票の月次を扱うのに対し、本セクションは CISA KEV に載った全ベンダーの脆弱性を横断的に記録します。</div>
-<p class="sub">生成 2026-07-22T18:55:00. 本セクションはクロスベンダー KEV/EPSS の試作です。</p>
+<p class="sub">生成 2026-07-22T22:40:52. 本セクションはクロスベンダー KEV/EPSS の試作です。</p>
 <div class='notes'><b>corrections:</b><ul><li>re-opened 2026-07: was mid-month sealed at 2026-07-22T17:24:26 (21 items) before the calendar month closed; reverted to OPEN (immutability exception, recorded).</li></ul></div>
 <h2>事実 (機械生成)</h2>
 <h3>窓内の KEV 追加 (21)</h3>
-<table><thead><tr><th>CVE</th><th>ベンダー</th><th>製品</th><th>追加日</th><th>期限</th><th>ランサムウェア</th><th>EPSS/百分位</th></tr></thead><tbody><tr><td>CVE-2026-45659</td><td>Microsoft</td><td>SharePoint Server</td><td>2026-07-01</td><td>2026-07-04</td><td>Unknown</td><td>0.032 / p87</td></tr>
-<tr><td>CVE-2026-48282</td><td>Adobe</td><td>ColdFusion</td><td>2026-07-07</td><td>2026-07-10</td><td>Unknown</td><td>0.286 / p98</td></tr>
-<tr><td>CVE-2026-48908</td><td>JoomShaper</td><td>SP Page Builder</td><td>2026-07-07</td><td>2026-07-10</td><td>Unknown</td><td>0.016 / p73</td></tr>
-<tr><td>CVE-2026-55255</td><td>Langflow</td><td>Langflow</td><td>2026-07-07</td><td>2026-07-10</td><td>Unknown</td><td>0.006 / p43</td></tr>
-<tr><td>CVE-2026-56290</td><td>Joomlack</td><td>Page Builder</td><td>2026-07-07</td><td>2026-07-10</td><td>Unknown</td><td>0.029 / p85</td></tr>
-<tr><td>CVE-2026-48939</td><td>iCagenda</td><td>iCagenda</td><td>2026-07-10</td><td>2026-07-13</td><td>Unknown</td><td>0.015 / p72</td></tr>
-<tr><td>CVE-2026-56291</td><td>Balbooa</td><td>Forms</td><td>2026-07-10</td><td>2026-07-13</td><td>Unknown</td><td>0.086 / p95</td></tr>
-<tr><td>CVE-2008-4128</td><td>Cisco</td><td>IOS</td><td>2026-07-13</td><td>2026-07-16</td><td>Unknown</td><td>0.239 / p98</td></tr>
-<tr><td>CVE-2026-15409</td><td>SonicWall</td><td>SMA1000 Appliances</td><td>2026-07-14</td><td>2026-07-17</td><td>Unknown</td><td>0.013 / p67</td></tr>
-<tr><td>CVE-2026-15410</td><td>SonicWall</td><td>SMA1000 Appliances</td><td>2026-07-14</td><td>2026-07-17</td><td>Unknown</td><td>0.015 / p71</td></tr>
-<tr><td>CVE-2026-56155</td><td>Microsoft</td><td>Active Directory Federation Services</td><td>2026-07-14</td><td>2026-07-28</td><td>Unknown</td><td>0.004 / p30</td></tr>
-<tr><td>CVE-2026-56164</td><td>Microsoft</td><td>SharePoint Server</td><td>2026-07-14</td><td>2026-07-17</td><td>Unknown</td><td>0.056 / p92</td></tr>
-<tr><td>CVE-2023-4346</td><td>KNX Association</td><td>KNX Protocol Connection Authorization Option 1</td><td>2026-07-15</td><td>2026-07-29</td><td>Unknown</td><td>0.009 / p54</td></tr>
-<tr><td>CVE-2026-46817</td><td>Oracle</td><td>E-Business Suite</td><td>2026-07-15</td><td>2026-07-18</td><td>Unknown</td><td>0.010 / p60</td></tr>
-<tr><td>CVE-2026-25089</td><td>Fortinet</td><td>FortiSandbox</td><td>2026-07-16</td><td>2026-07-19</td><td>Unknown</td><td>0.361 / p98</td></tr>
-<tr><td>CVE-2026-39808</td><td>Fortinet</td><td>FortiSandbox</td><td>2026-07-16</td><td>2026-07-19</td><td>Unknown</td><td>0.842 / p100</td></tr>
-<tr><td>CVE-2026-58644</td><td>Microsoft</td><td>SharePoint</td><td>2026-07-16</td><td>2026-07-19</td><td>Unknown</td><td>0.015 / p71</td></tr>
-<tr><td>CVE-2021-27137</td><td>DD-WRT</td><td>DD-WRT</td><td>2026-07-21</td><td>2026-07-24</td><td>Unknown</td><td>0.054 / p92</td></tr>
-<tr><td>CVE-2026-0770</td><td>Langflow</td><td>Langflow</td><td>2026-07-21</td><td>2026-07-24</td><td>Unknown</td><td>0.104 / p95</td></tr>
-<tr><td>CVE-2026-60137</td><td>WordPress</td><td>Core</td><td>2026-07-21</td><td>2026-08-04</td><td>Unknown</td><td>0.040 / p89</td></tr>
-<tr><td>CVE-2026-63030</td><td>WordPress</td><td>Core</td><td>2026-07-21</td><td>2026-07-24</td><td>Unknown</td><td>0.089 / p95</td></tr></tbody></table>
+<table id="kevtable"><thead><tr><th class="sortable" data-type="text" aria-sort="none">CVE<span class="caret"></span></th><th class="sortable" data-type="text" aria-sort="none">ベンダー<span class="caret"></span></th><th class="sortable" data-type="text" aria-sort="none">製品<span class="caret"></span></th><th class="sortable" data-type="date" aria-sort="descending">追加日<span class="caret"></span></th><th class="sortable" data-type="date" aria-sort="none">期限<span class="caret"></span></th><th class="sortable" data-type="text" aria-sort="none">ランサムウェア<span class="caret"></span></th><th class="sortable" data-type="num" aria-sort="none">EPSS/百分位<span class="caret"></span></th><th class="sortable" data-type="date" aria-sort="none">NVD 公開日<span class="caret"></span></th><th class="sortable" data-type="num" aria-sort="none">公開→収載(日)<span class="caret"></span></th></tr></thead><tbody><tr><td data-sort="CVE-2021-27137">CVE-2021-27137</td><td data-sort="DD-WRT">DD-WRT</td><td data-sort="DD-WRT">DD-WRT</td><td data-sort="2026-07-21">2026-07-21</td><td data-sort="2026-07-24">2026-07-24</td><td data-sort="Unknown">Unknown</td><td data-sort="0.05447">0.054 / p92</td><td data-sort="2026-07-16">2026-07-16</td><td data-sort="5">5</td></tr>
+<tr><td data-sort="CVE-2026-0770">CVE-2026-0770</td><td data-sort="Langflow">Langflow</td><td data-sort="Langflow">Langflow</td><td data-sort="2026-07-21">2026-07-21</td><td data-sort="2026-07-24">2026-07-24</td><td data-sort="Unknown">Unknown</td><td data-sort="0.10371">0.104 / p95</td><td data-sort="2026-01-23">2026-01-23</td><td data-sort="179">179</td></tr>
+<tr><td data-sort="CVE-2026-60137">CVE-2026-60137</td><td data-sort="WordPress">WordPress</td><td data-sort="Core">Core</td><td data-sort="2026-07-21">2026-07-21</td><td data-sort="2026-08-04">2026-08-04</td><td data-sort="Unknown">Unknown</td><td data-sort="0.04026">0.040 / p89</td><td data-sort="2026-07-17">2026-07-17</td><td data-sort="4">4</td></tr>
+<tr><td data-sort="CVE-2026-63030">CVE-2026-63030</td><td data-sort="WordPress">WordPress</td><td data-sort="Core">Core</td><td data-sort="2026-07-21">2026-07-21</td><td data-sort="2026-07-24">2026-07-24</td><td data-sort="Unknown">Unknown</td><td data-sort="0.08946">0.089 / p95</td><td data-sort="2026-07-17">2026-07-17</td><td data-sort="4">4</td></tr>
+<tr><td data-sort="CVE-2026-25089">CVE-2026-25089</td><td data-sort="Fortinet">Fortinet</td><td data-sort="FortiSandbox">FortiSandbox</td><td data-sort="2026-07-16">2026-07-16</td><td data-sort="2026-07-19">2026-07-19</td><td data-sort="Unknown">Unknown</td><td data-sort="0.36135">0.361 / p98</td><td data-sort="2026-06-09">2026-06-09</td><td data-sort="37">37</td></tr>
+<tr><td data-sort="CVE-2026-39808">CVE-2026-39808</td><td data-sort="Fortinet">Fortinet</td><td data-sort="FortiSandbox">FortiSandbox</td><td data-sort="2026-07-16">2026-07-16</td><td data-sort="2026-07-19">2026-07-19</td><td data-sort="Unknown">Unknown</td><td data-sort="0.84158">0.842 / p100</td><td data-sort="2026-04-14">2026-04-14</td><td data-sort="93">93</td></tr>
+<tr><td data-sort="CVE-2026-58644">CVE-2026-58644</td><td data-sort="Microsoft">Microsoft</td><td data-sort="SharePoint">SharePoint</td><td data-sort="2026-07-16">2026-07-16</td><td data-sort="2026-07-19">2026-07-19</td><td data-sort="Unknown">Unknown</td><td data-sort="0.01465">0.015 / p71</td><td data-sort="2026-07-14">2026-07-14</td><td data-sort="2">2</td></tr>
+<tr><td data-sort="CVE-2023-4346">CVE-2023-4346</td><td data-sort="KNX Association">KNX Association</td><td data-sort="KNX Protocol Connection Authorization Option 1">KNX Protocol Connection Authorization Option 1</td><td data-sort="2026-07-15">2026-07-15</td><td data-sort="2026-07-29">2026-07-29</td><td data-sort="Unknown">Unknown</td><td data-sort="0.00855">0.009 / p54</td><td data-sort="2023-08-29">2023-08-29</td><td data-sort="1051">1051</td></tr>
+<tr><td data-sort="CVE-2026-46817">CVE-2026-46817</td><td data-sort="Oracle">Oracle</td><td data-sort="E-Business Suite">E-Business Suite</td><td data-sort="2026-07-15">2026-07-15</td><td data-sort="2026-07-18">2026-07-18</td><td data-sort="Unknown">Unknown</td><td data-sort="0.01045">0.010 / p60</td><td data-sort="2026-05-28">2026-05-28</td><td data-sort="48">48</td></tr>
+<tr><td data-sort="CVE-2026-15409">CVE-2026-15409</td><td data-sort="SonicWall">SonicWall</td><td data-sort="SMA1000 Appliances">SMA1000 Appliances</td><td data-sort="2026-07-14">2026-07-14</td><td data-sort="2026-07-17">2026-07-17</td><td data-sort="Unknown">Unknown</td><td data-sort="0.01266">0.013 / p67</td><td data-sort="2026-07-14">2026-07-14</td><td data-sort="0">0</td></tr>
+<tr><td data-sort="CVE-2026-15410">CVE-2026-15410</td><td data-sort="SonicWall">SonicWall</td><td data-sort="SMA1000 Appliances">SMA1000 Appliances</td><td data-sort="2026-07-14">2026-07-14</td><td data-sort="2026-07-17">2026-07-17</td><td data-sort="Unknown">Unknown</td><td data-sort="0.01486">0.015 / p71</td><td data-sort="2026-07-14">2026-07-14</td><td data-sort="0">0</td></tr>
+<tr><td data-sort="CVE-2026-56155">CVE-2026-56155</td><td data-sort="Microsoft">Microsoft</td><td data-sort="Active Directory Federation Services">Active Directory Federation Services</td><td data-sort="2026-07-14">2026-07-14</td><td data-sort="2026-07-28">2026-07-28</td><td data-sort="Unknown">Unknown</td><td data-sort="0.00379">0.004 / p30</td><td data-sort="2026-07-14">2026-07-14</td><td data-sort="0">0</td></tr>
+<tr><td data-sort="CVE-2026-56164">CVE-2026-56164</td><td data-sort="Microsoft">Microsoft</td><td data-sort="SharePoint Server">SharePoint Server</td><td data-sort="2026-07-14">2026-07-14</td><td data-sort="2026-07-17">2026-07-17</td><td data-sort="Unknown">Unknown</td><td data-sort="0.05601">0.056 / p92</td><td data-sort="2026-07-14">2026-07-14</td><td data-sort="0">0</td></tr>
+<tr><td data-sort="CVE-2008-4128">CVE-2008-4128</td><td data-sort="Cisco">Cisco</td><td data-sort="IOS">IOS</td><td data-sort="2026-07-13">2026-07-13</td><td data-sort="2026-07-16">2026-07-16</td><td data-sort="Unknown">Unknown</td><td data-sort="0.23857">0.239 / p98</td><td data-sort="2008-09-18">2008-09-18</td><td data-sort="6507">6507</td></tr>
+<tr><td data-sort="CVE-2026-48939">CVE-2026-48939</td><td data-sort="iCagenda">iCagenda</td><td data-sort="iCagenda">iCagenda</td><td data-sort="2026-07-10">2026-07-10</td><td data-sort="2026-07-13">2026-07-13</td><td data-sort="Unknown">Unknown</td><td data-sort="0.01505">0.015 / p72</td><td data-sort="2026-06-20">2026-06-20</td><td data-sort="20">20</td></tr>
+<tr><td data-sort="CVE-2026-56291">CVE-2026-56291</td><td data-sort="Balbooa">Balbooa</td><td data-sort="Forms">Forms</td><td data-sort="2026-07-10">2026-07-10</td><td data-sort="2026-07-13">2026-07-13</td><td data-sort="Unknown">Unknown</td><td data-sort="0.08635">0.086 / p95</td><td data-sort="2026-07-09">2026-07-09</td><td data-sort="1">1</td></tr>
+<tr><td data-sort="CVE-2026-48282">CVE-2026-48282</td><td data-sort="Adobe">Adobe</td><td data-sort="ColdFusion">ColdFusion</td><td data-sort="2026-07-07">2026-07-07</td><td data-sort="2026-07-10">2026-07-10</td><td data-sort="Unknown">Unknown</td><td data-sort="0.28583">0.286 / p98</td><td data-sort="2026-06-30">2026-06-30</td><td data-sort="7">7</td></tr>
+<tr><td data-sort="CVE-2026-48908">CVE-2026-48908</td><td data-sort="JoomShaper">JoomShaper</td><td data-sort="SP Page Builder">SP Page Builder</td><td data-sort="2026-07-07">2026-07-07</td><td data-sort="2026-07-10">2026-07-10</td><td data-sort="Unknown">Unknown</td><td data-sort="0.01569">0.016 / p73</td><td data-sort="2026-06-20">2026-06-20</td><td data-sort="17">17</td></tr>
+<tr><td data-sort="CVE-2026-55255">CVE-2026-55255</td><td data-sort="Langflow">Langflow</td><td data-sort="Langflow">Langflow</td><td data-sort="2026-07-07">2026-07-07</td><td data-sort="2026-07-10">2026-07-10</td><td data-sort="Unknown">Unknown</td><td data-sort="0.0056">0.006 / p43</td><td data-sort="2026-06-23">2026-06-23</td><td data-sort="14">14</td></tr>
+<tr><td data-sort="CVE-2026-56290">CVE-2026-56290</td><td data-sort="Joomlack">Joomlack</td><td data-sort="Page Builder">Page Builder</td><td data-sort="2026-07-07">2026-07-07</td><td data-sort="2026-07-10">2026-07-10</td><td data-sort="Unknown">Unknown</td><td data-sort="0.02912">0.029 / p85</td><td data-sort="2026-06-29">2026-06-29</td><td data-sort="8">8</td></tr>
+<tr><td data-sort="CVE-2026-45659">CVE-2026-45659</td><td data-sort="Microsoft">Microsoft</td><td data-sort="SharePoint Server">SharePoint Server</td><td data-sort="2026-07-01">2026-07-01</td><td data-sort="2026-07-04">2026-07-04</td><td data-sort="Unknown">Unknown</td><td data-sort="0.03219">0.032 / p87</td><td data-sort="2026-05-22">2026-05-22</td><td data-sort="40">40</td></tr></tbody></table>
+<div class="tablecaveat">「公開→収載(日)」= KEV 収載日 − NVD 公開日。KEV 収載は悪用開始日ではないため「悪用までの時間」ではない（点在する大きな値は古い CVE の近年収載）。</div>
+<p class="sub">列見出しをクリックで並べ替え（既定は追加日の降順。JS 無効時もこの順で表示）。EPSS 列はスコアで並べ替え（百分位は併記）。空欄は常に末尾。</p>
+<script>
+(function(){
+  var t=document.getElementById('kevtable'); if(!t||!t.tHead) return;
+  var ths=t.tHead.rows[0].cells, tb=t.tBodies[0];
+  for(var i=0;i<ths.length;i++){(function(idx){
+    var th=ths[idx]; if((th.className||'').indexOf('sortable')<0) return;
+    th.addEventListener('click',function(){
+      var dir=th.getAttribute('aria-sort')==='ascending'?'descending':'ascending';
+      for(var j=0;j<ths.length;j++) ths[j].setAttribute('aria-sort','none');
+      th.setAttribute('aria-sort',dir);
+      var type=th.getAttribute('data-type')||'text', sgn=dir==='ascending'?1:-1;
+      var rows=Array.prototype.slice.call(tb.rows);
+      rows.sort(function(ra,rb){
+        var a=ra.cells[idx].getAttribute('data-sort'), b=rb.cells[idx].getAttribute('data-sort');
+        var ea=(a===''||a==null), eb=(b===''||b==null);
+        if(ea||eb){ return ea&&eb?0:(ea?1:-1); }   /* blanks always last, both directions */
+        var r = type==='num' ? (parseFloat(a)-parseFloat(b)) : (a<b?-1:(a>b?1:0));
+        return sgn*r;
+      });
+      rows.forEach(function(r){tb.appendChild(r);});
+    });
+  })(i);}
+})();
+</script>
 <h3>集計</h3>
 <p>ランサムウェア (knownRansomwareCampaignUse): <b>Known 0 / Unknown 21</b></p>
 <p>ベンダー別内訳（順位ではない・配備/可視性の反映）:</p><ul><li>Microsoft: 4</li><li>Langflow: 2</li><li>SonicWall: 2</li><li>Fortinet: 2</li><li>WordPress: 2</li><li>Adobe: 1</li><li>JoomShaper: 1</li><li>Joomlack: 1</li><li>iCagenda: 1</li><li>Balbooa: 1</li><li>Cisco: 1</li><li>KNX Association: 1</li><li>Oracle: 1</li><li>DD-WRT: 1</li></ul><p><b>KEV 追加時点で記録された EPSS スコアの分布（事実・結論は導かない）:</b> &lt;0.05=12, 0.05–0.20=5, 0.20–0.50=3, ≥0.50=1, n/a=0</p>
-<h2>定義・注記（データが何であるか）</h2><div class="notes"><ul><li>KEV は悪用の完全な記録ではない。CISA が確認し、連邦機関向けに優先付けしたもの。</li><li>EPSS は「30日以内に悪用活動が観測される確率」であって深刻度ではない。KEV 追加時点で記録した属性として提示し、予測の当否は評価しない。</li><li>ベンダー別件数は、連邦環境での配備状況と CISA の可視性を反映するものであり、セキュリティ品質の順位ではない。ベンダーを件数で順位付けしない。</li><li>バックフィルした過去月は EPSS 空欄（観測時点の値のみ記録し、現在値では埋めない）。</li></ul></div>
+<h2>定義・注記（データが何であるか）</h2><div class="notes"><ul><li>KEV は悪用の完全な記録ではない。CISA が確認し、連邦機関向けに優先付けしたもの。</li><li>EPSS は「30日以内に悪用活動が観測される確率」であって深刻度ではない。KEV 追加時点で記録した属性として提示し、予測の当否は評価しない。</li><li>ベンダー別件数は、連邦環境での配備状況と CISA の可視性を反映するものであり、セキュリティ品質の順位ではない。ベンダーを件数で順位付けしない。</li><li>バックフィルした過去月は EPSS 空欄（観測時点の値のみ記録し、現在値では埋めない）。</li><li>「NVD 公開日」は NVD が CVE レコードを公開した日であり、ベンダーの原開示日ではない（近いが遅れうる）。</li><li>「公開→収載(日)」= KEV 収載日(dateAdded) − NVD 公開日。KEV 収載日は CISA が KEV に載せた日であって悪用開始日ではない。よって本値は「悪用までの時間」ではない。</li><li>要約統計（中央値・平均）は出さない。古い CVE の近年収載と新規開示の速やかな収載は質的に異なり「典型的な日数」は意味を持たないため。CVE ごとの値をそのまま提示する。</li></ul></div>
 </article>
 <div class="footer">MSRC 脆弱性動向レポート · クロスベンダー KEV/EPSS</div>
 </body></html>
