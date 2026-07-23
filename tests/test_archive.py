@@ -42,6 +42,12 @@ def _run(docs: Path, *args):
                           capture_output=True, text=True, check=True)
 
 
+def _run_nocheck(docs: Path, *args):
+    """Run the generator without raising on non-zero exit (for halt assertions)."""
+    return subprocess.run([sys.executable, str(GEN), "--docs", str(docs), *args],
+                          capture_output=True, text=True, check=False)
+
+
 def test_backfill_creates_selfcontained_month_and_index():
     with tempfile.TemporaryDirectory() as tmp:
         docs = Path(tmp) / "docs"; docs.mkdir()
@@ -114,14 +120,81 @@ def test_rerun_updates_index_metadata_but_not_snapshot():
     with tempfile.TemporaryDirectory() as tmp:
         docs = Path(tmp) / "docs"; docs.mkdir()
         _fake_site(docs)
-        _run(docs, "--month", "2026-07")   # first pass: no counts -> —
+        # slot 2026-07 for a June report; first pass sets subject but no counts -> —
+        _run(docs, "--month", "2026-07", "--subject", "2026-06")
         snap = {p.name: p.read_bytes() for p in (docs / "archive" / "2026-07").rglob("*") if p.is_file()}
-        # a later pass can set display metadata; the frozen snapshot must not change
+        # a later pass (SAME subject-month) can set display counts; the frozen snapshot
+        # must not change. Changing the subject-month mid-slot is a collision, tested
+        # separately in test_slot_collision_different_subject_halts.
         _run(docs, "--month", "2026-07", "--subject", "2026-06", "--count-cvrf", "1281", "--count-core", "724")
         snap2 = {p.name: p.read_bytes() for p in (docs / "archive" / "2026-07").rglob("*") if p.is_file()}
         assert snap == snap2, "updating index metadata must not touch the frozen snapshot"
         idx = (docs / "archive" / "index.html").read_text(encoding="utf-8")
         assert "1,281 CVRF / 724 本体相当・core" in idx
+
+
+def test_slot_collision_same_subject_is_a_safe_skip():
+    """A genuine re-run (same slot, same subject-month) skips the copy and exits 0."""
+    with tempfile.TemporaryDirectory() as tmp:
+        docs = Path(tmp) / "docs"; docs.mkdir()
+        _fake_site(docs)
+        _run(docs, "--month", "2026-06", "--subject", "2026-06")
+        snap = {p.name: p.read_bytes() for p in (docs / "archive" / "2026-06").rglob("*") if p.is_file()}
+        r = _run_nocheck(docs, "--month", "2026-06", "--subject", "2026-06")
+        assert r.returncode == 0, f"same-subject re-run must succeed, got {r.returncode}: {r.stderr}"
+        assert "skipping copy" in (r.stdout + r.stderr)
+        snap2 = {p.name: p.read_bytes() for p in (docs / "archive" / "2026-06").rglob("*") if p.is_file()}
+        assert snap == snap2, "a safe skip must leave the frozen snapshot unchanged"
+
+
+def test_slot_collision_different_subject_halts():
+    """An occupied slot whose subject-month differs from the incoming one must HALT
+    (non-zero exit), not silently skip — otherwise the incoming report is dropped."""
+    with tempfile.TemporaryDirectory() as tmp:
+        docs = Path(tmp) / "docs"; docs.mkdir()
+        _fake_site(docs)
+        # slot 2026-07 occupied by a June report (the pre-re-key collision scenario)
+        _run(docs, "--month", "2026-07", "--subject", "2026-06")
+        snap = {p.name: p.read_bytes() for p in (docs / "archive" / "2026-07").rglob("*") if p.is_file()}
+        # Phase B tries to freeze the July report (subject 2026-07) into the same slot
+        r = _run_nocheck(docs, "--month", "2026-07", "--subject", "2026-07")
+        assert r.returncode != 0, "a subject-month collision must halt, not skip"
+        assert "HALT" in r.stderr and "2026-06" in r.stderr and "2026-07" in r.stderr
+        snap2 = {p.name: p.read_bytes() for p in (docs / "archive" / "2026-07").rglob("*") if p.is_file()}
+        assert snap == snap2, "a halted run must not mutate the occupying snapshot"
+
+
+def test_slot_collision_no_recorded_subject_halts():
+    """An occupied slot that records no subject-month (legacy) must HALT rather than
+    skip — we cannot prove it is a genuine re-run of the same month."""
+    with tempfile.TemporaryDirectory() as tmp:
+        docs = Path(tmp) / "docs"; docs.mkdir()
+        _fake_site(docs)
+        _run(docs, "--month", "2026-07", "--subject", "2026-06")
+        # simulate a legacy snapshot: strip the recorded subject from meta.json
+        meta_p = docs / "archive" / "2026-07" / "meta.json"
+        meta_p.write_text('{"month": "2026-07", "count": null}\n', encoding="utf-8")
+        r = _run_nocheck(docs, "--month", "2026-07", "--subject", "2026-06")
+        assert r.returncode != 0, "an occupied slot with no recorded subject must halt"
+        assert "HALT" in r.stderr and "no" in r.stderr.lower()
+
+
+def test_rekey_frees_slot_for_normal_operation():
+    """After the June report lives under 2026-06, freezing the July report (subject
+    2026-07) into the now-free 2026-07 slot works normally."""
+    with tempfile.TemporaryDirectory() as tmp:
+        docs = Path(tmp) / "docs"; docs.mkdir()
+        _fake_site(docs)
+        _run(docs, "--month", "2026-06", "--subject", "2026-06")   # June re-keyed home
+        r = _run_nocheck(docs, "--month", "2026-07", "--subject", "2026-07")  # July freeze
+        assert r.returncode == 0, f"July freeze into a free slot must succeed: {r.stderr}"
+        july = docs / "archive" / "2026-07"
+        assert (july / "ja.html").exists() and (july / "en.html").exists()
+        import json as _json
+        assert _json.loads((july / "meta.json").read_text())["subject"] == "2026-07"
+        idx = (docs / "archive" / "index.html").read_text(encoding="utf-8")
+        # both months now listed, each linking its own slot
+        assert 'href="2026-06/en.html"' in idx and 'href="2026-07/en.html"' in idx
 
 
 if __name__ == "__main__":

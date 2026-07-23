@@ -3,11 +3,11 @@
     {
       "month": "2026-07",
       "count": null,
-      "subject": "2026-06",
+      "subject": "2026-07",
       "snapshot": "2026-07-15",
       "counts": {
-        "cvrf": 1281,
-        "core": 724
+        "cvrf": 1150,
+        "core": 665
       }
     }
   ]
