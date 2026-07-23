@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>改訂ノート — 2026年7月レポート / Revision note — MSRC Vulnerability Trend Report</title>
+<meta name="description" content="2026年7月 MSRC 脆弱性トレンドレポートの公開後改訂ノート。">
+<style>
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Hiragino Kaku Gothic ProN','Noto Sans JP',Meiryo,sans-serif;margin:0;color:#222;background:#f5f6f8}
+.topbar{position:sticky;top:0;background:#1f3864;color:#fff;padding:12px 16px;display:flex;justify-content:space-between;align-items:center}
+.topbar a{color:#fff;text-decoration:none}.topbar a:hover{text-decoration:underline}
+.wrap{max-width:760px;margin:0 auto;padding:32px 20px}
+h1{color:#1f3864;font-size:22px;margin:0 0 6px}
+h2{color:#1f3864;font-size:16px;margin:26px 0 8px;border-bottom:1px solid #e3e6ea;padding-bottom:4px}
+.sub{color:#555;font-size:14px;margin:0 0 8px}
+.card{background:#fff;border-radius:10px;box-shadow:0 2px 12px rgba(0,0,0,.06);padding:20px 22px;margin:16px 0}
+.banner{background:#fff3cd;border:1px solid #ffe69c;color:#664d03;border-radius:8px;padding:10px 14px;font-size:13px;margin:0 0 16px}
+p{font-size:14px;line-height:1.8;margin:8px 0}
+li{font-size:14px;line-height:1.8}
+table{width:100%;border-collapse:collapse;margin:10px 0}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid #eef0f3;font-size:14px}
+th{background:#f0f2f5;color:#333;font-size:13px}
+.fact{color:#1f3864;font-weight:700}
+.caution{color:#8a5a00;font-weight:700}
+.footer{max-width:760px;margin:24px auto;padding:0 20px;color:#888;font-size:12px}
+code{background:#eef0f3;padding:1px 5px;border-radius:4px;font-size:13px}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a href="../index.html">MSRC Vulnerability Trend Report</a>
+  <div><a href="index.html">Archive / アーカイブ</a> · <a href="notes-2026-07.en.html">English</a></div>
+</div>
+<div class="wrap">
+  <h1>改訂ノート — 2026年7月レポート</h1>
+  <p class="sub">本レポート公開後に観測された、元データの変動の記録。English version is <a href="notes-2026-07.en.html">here</a>.</p>
+
+  <div class="banner">公開済みの2026年7月レポートは <b>2026-07-15</b> 時点で凍結した時点スナップショットであり、<b>内容は一切変更していない</b>。本ノートは、そのスナップショット取得<b>後</b>に MSRC が元データに加えた変動（検知 <b>2026-07-23</b>）を記録するもの。レポートはスナップショットとして正しく、その後にデータが動いた、という位置づけである。</div>
+
+  <div class="card">
+    <h2>このノートの位置づけ</h2>
+    <p>各月次レポートは、特定日に取得した MSRC 一次データの凍結スナップショットである。MSRC は過去月を事後改訂する — CVE の追加、製品の再分類、悪用状況の更新など。レポート本文はこの性質を既に開示し、スナップショット値を変更せず保持している。本ノートは、公開後に観測された2026年7月データの変動を記録する補助資料であり、レポートを訂正・置換するものではない。</p>
+  </div>
+
+  <div class="card">
+    <h2>観測された変動（検知 2026-07-23）</h2>
+    <p>凍結スナップショット（2026-07-15）と、2026-07-23 時点の MSRC データを比較:</p>
+    <table>
+      <thead><tr><th>指標</th><th>凍結値（2026-07-15）</th><th>改訂値（2026-07-23）</th></tr></thead>
+      <tbody>
+        <tr><td>悪用確認 CVE</td><td>2</td><td class="fact">3（+CVE-2026-58644、除外なし）</td></tr>
+        <tr><td>Critical</td><td>67</td><td class="fact">102</td></tr>
+        <tr><td>Microsoft 本体相当</td><td>665</td><td class="fact">832</td></tr>
+        <tr><td>CVRF 全体</td><td>1,150</td><td class="fact">1,339</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:13px;color:#666">出典: MSRC 事後改訂記録（<code>state/.revisions/2026-Jul.json</code>）と凍結スナップショット（<code>state/2026-Jul.json</code>）。上表の凍結値は公開レポートと一致する。</p>
+  </div>
+
+  <div class="card">
+    <h2>レポート内の2つの記述への影響</h2>
+
+    <p><b>1.「悪用が確認されたゼロデイは、いずれも人間が発見した」</b></p>
+    <p>新たに悪用確認された <b>CVE-2026-58644</b>（Microsoft SharePoint リモートコード実行・Critical）は、CVRF 上で<b>謝辞がなく「uncredited（発見者不明）」</b>である。したがって本ノート時点の正確な記述は次のとおり: <span class="fact">悪用確認は3件、うち3件が人間発見、1件（CVE-2026-58644）は帰属不明。</span> レポートの当初の文言はそのままでは成立しない。</p>
+    <p class="caution">重要 —「uncredited」を「AI が発見した」と読まないこと。</p>
+    <p>謝辞の不在は AI 発見者の証拠ではない。社内対応、報告者による謝辞の辞退、当局（国の CERT 等）経由の開示など、通常の説明が複数ありうる。謝辞の不在から AI 起源を推論しない。具体的には、今回の AI 関連クレジットの変化（「kugelblitz」クレジット +1）は CVE-2026-58644 とは<b>別の</b> CVE に対するものである。本ノートは CVE-2026-58644 の帰属を<b>不明</b>と記録し、AI と結び付けない。</p>
+
+    <p style="margin-top:18px"><b>2.「母集団を揃えると、ピークは6月」</b></p>
+    <p>改訂後のデータでは、7月の本体相当件数（832）が6月（凍結 724 / 改訂後 648）を上回る。額面どおりに取ればこの比較は逆転する。しかし、構造的な理由から、結論を単に「ピークは7月だった」と書き換えることは<b>しない</b>:</p>
+    <ul>
+      <li>スナップショット取得時点で、両月は<b>データの成熟度</b>が大きく異なっていた: 7月は<b>Patch Tuesday の翌日</b>（2026-07-14 → スナップショット 2026-07-15）だったのに対し、6月は約5週間成熟していた。新しい月は古い月に比べ、構造的に過小計上される。</li>
+      <li>今回の改訂（続く1週間で本体相当 +167）は、1日齢の月が MSRC の追加・再分類にともなって取り込む「追いつき」そのものである。</li>
+    </ul>
+    <p>したがって擁護できる記述は次のとおり: <span class="fact">月をまたぐ件数比較は、両月のデータ成熟度が揃っている場合にのみ有効である。</span> これはレポートの中核的主張「生件数は実像を映さない」を<b>否定するのではなく強化する</b>。追加されたエントリがアウトオブバンドの新規 CVE か、既存の再分類かは断定しない — 改訂記録に per-CVE の before/after が無いため、その内訳は未確定のままとする。</p>
+  </div>
+
+  <div class="card">
+    <h2>今回限りではなく、系統的な注記</h2>
+    <p>各月のスナップショットを Patch Tuesday の翌日に取得する限り、どのレポートもスナップショット時点で<b>自月を過小計上し、前月を過大計上する</b>。これは取得スケジュールの性質であって、2026年7月に固有の事象ではない。「今月は記録更新」も「前月こそ真のピーク」も、データが成熟するまではどちらも脆い、という同じ効果である。</p>
+  </div>
+
+  <p class="sub" style="margin-top:20px">日付 — データスナップショット: 2026-07-15 ／ 改訂検知: 2026-07-23 ／ 本ノート作成: 2026-07-23。</p>
+</div>
+<div class="footer">事実は機械生成、解釈は人間による。凍結スナップショットは不変。出典: Microsoft Security Response Center (MSRC) CVRF。</div>
+</body>
+</html>

@@ -156,6 +156,9 @@ th{background:#f0f2f5;color:#333;font-size:13px}
 td.month{color:#1f3864}
 .mmain{font-weight:700}
 .msnap{font-size:12px;color:#888;font-weight:400;margin-top:2px}
+.mnote{font-size:12px;color:#8a5a00;font-weight:400;margin-top:4px}
+.mnote a{color:#8a5a00;font-weight:700;text-decoration:none}
+.mnote a:hover{text-decoration:underline}
 a.rep{color:#1f3864;text-decoration:none;font-weight:600;margin-right:12px}
 a.rep:hover{text-decoration:underline}
 .footer{max-width:760px;margin:24px auto;padding:0 20px;color:#888;font-size:12px}
@@ -203,6 +206,18 @@ def build_index(docs: Path) -> None:
         if snapshot:
             month_cell += (f'<div class="msnap">snapshot {snapshot} / '
                            f'スナップショット {snapshot}</div>')
+        # optional revision note: source data revised after publication. Links live
+        # OUTSIDE the frozen snapshot dir (docs/archive/notes-*.html), so the immutable
+        # YYYY-MM/ snapshot is never touched.
+        notes = m.get("notes") or {}
+        if notes.get("en") and notes.get("ja"):
+            month_cell += (
+                '<div class="mnote">⚠ Source data revised after publication — '
+                f'revision note: <a href="{notes["en"]}">English</a> · '
+                f'<a href="{notes["ja"]}">日本語</a><br>'
+                '公開後に元データが改訂 — 改訂ノート: '
+                f'<a href="{notes["en"]}">English</a> · '
+                f'<a href="{notes["ja"]}">日本語</a></div>')
         rows.append(
             f'<tr><td class="month">{month_cell}</td><td>{_count_cell(m)}</td>'
             f'<td><a class="rep" href="{slot}/en.html">English</a> · '
