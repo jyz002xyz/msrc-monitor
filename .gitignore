@@ -51,3 +51,6 @@ CLAUDE_CODE_*.md
 # Report generation dependencies and artifacts (regenerable)
 report/node_modules/
 report/assets/
+
+# KEV/EPSS generator internal preview (regenerable; the published output is docs/kev/)
+kev/out/
