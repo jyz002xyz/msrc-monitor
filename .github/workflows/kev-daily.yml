@@ -7,14 +7,14 @@ name: kev-daily
 # an auto-PR from a deterministic branch and merges it (auto-merge). The branch-protection
 # policy is NOT weakened; the PR diff is the audit trail and the guards are the gatekeeper.
 #
-# GATE: the `schedule` trigger below is intentionally DISABLED (commented out) until the
-# owner gives an explicit go. Until then this runs only via manual `workflow_dispatch`.
+# Triggers: manual dispatch plus the daily schedule (enabled on explicit owner go after the
+# workflow_dispatch verification runs passed — auto-PR opened/merged, positive control, no-op).
 on:
   workflow_dispatch:
-  # schedule:
-  #   # 23:30 UTC == 08:30 JST. CISA KEV is updated on US business days; a JST-morning run
-  #   # picks up the prior US day. Uncomment ONLY on explicit owner go to enable the schedule.
-  #   - cron: "30 23 * * *"
+  schedule:
+    # 23:30 UTC == 08:30 JST. CISA KEV is updated on US business days; a JST-morning run
+    # picks up the prior US day.
+    - cron: "30 23 * * *"
 
 # Least privilege: commit the regenerated site (contents) and open/merge its PR
 # (pull-requests). No PAT — the built-in GITHUB_TOKEN only.
