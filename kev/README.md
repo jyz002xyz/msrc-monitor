@@ -34,10 +34,31 @@ can regenerate `docs/kev/` directly.
 ## Run
     python3 kev/run.py                 # regenerate docs/kev/ (fetches KEV/EPSS/NVD live)
     python3 kev/run.py --months 6
-    python3 kev/test_kevtrack.py       # offline tests
+    python3 kev/test_kevtrack.py       # offline lifecycle tests
+    python3 kev/test_integrity.py      # offline integrity-gate tests
 
-Committing the regenerated `docs/kev/` is a **separate, gated step** (a daily GitHub Actions
-workflow is planned; data updates only, code/display changes stay behind PR review).
+Committing the regenerated `docs/kev/` is a **separate, gated step**: the daily workflow
+`.github/workflows/kev-daily.yml` does it. Data updates only — code/display changes stay
+behind normal PR review.
+
+## Integrity gate (`integrity.py`)
+Before generating or sealing, `run.py` fail-halts (non-zero exit, nothing written) if the KEV
+catalog looks degraded — so a partial/broken fetch never publishes bad data and, critically,
+never seals a month permanently incomplete (`kevtrack.seal()` never overwrites an existing
+seal). Checks, all evaluated every run: fetch succeeded and non-empty; total count above a
+floor and not dropped past a fraction vs the last successful run (KEV is ~monotonic); required
+fields (`cveID`/`vendorProject`/`product`/`dateAdded`) present above a threshold; any month
+about to be sealed has a non-empty window. Thresholds live in `integrity.py`, overridable via
+env (`KEV_MIN_CATALOG`, `KEV_MAX_DECREASE_FRAC`, `KEV_MAX_MISSING_FRAC`, `KEV_ALLOW_EMPTY_SEAL`).
+The last successful catalog size is recorded in `snapshots/catalog_meta.json` (git-tracked).
+
+## Daily workflow (`.github/workflows/kev-daily.yml`)
+`workflow_dispatch` + `schedule` (schedule **disabled until explicit owner go**). Runs
+`python kev/run.py`, then: enforces the diff is confined to `docs/kev/` and `kev/snapshots/`;
+skips the commit when `docs/kev/` is unchanged (no-op — `generated_at` is held stable so
+identical data produces no diff); otherwise commits with a bot identity via `GITHUB_TOKEN`
+(`contents: write`, no PAT). A per-run success ping to an external monitor (URL in the
+`KEV_HEALTHCHECK_URL` secret, never committed) acts as a dead-man's switch.
 
 ## Dependencies
 Python 3.10+ (uses `X | None` runtime types). **Standard library only** — no third-party

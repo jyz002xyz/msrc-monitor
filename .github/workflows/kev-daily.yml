@@ -1,0 +1,101 @@
+name: kev-daily
+
+# Daily regeneration of the public docs/kev/ Cross-vendor KEV/EPSS section.
+# Data updates only — code/display changes stay behind normal PR review.
+#
+# GATE: the `schedule` trigger below is intentionally DISABLED (commented out) until the
+# owner gives an explicit go. Until then this runs only via manual `workflow_dispatch`.
+on:
+  workflow_dispatch:
+  # schedule:
+  #   # 23:30 UTC == 08:30 JST. CISA KEV is updated on US business days; a JST-morning run
+  #   # picks up the prior US day. Uncomment ONLY on explicit owner go to enable the schedule.
+  #   - cron: "30 23 * * *"
+
+# Least privilege: only the ability to commit the regenerated site. No PAT — GITHUB_TOKEN only.
+permissions:
+  contents: write
+
+# Never run two regenerations at once (avoids racing pushes to main).
+concurrency:
+  group: kev-daily
+  cancel-in-progress: false
+
+jobs:
+  regenerate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+        # No pip install / requirements.txt: the generator is standard-library only.
+
+      - name: Regenerate docs/kev (fetch KEV/EPSS/NVD; integrity-gated seal)
+        # run.py fail-halts (non-zero exit) on a degraded catalog, so a bad upstream fetch
+        # fails the job here and never seals an incomplete month or publishes bad data.
+        run: python kev/run.py
+
+      - name: Enforce diff scope (only docs/kev/ and kev/snapshots/)
+        # Contain the "no direct commits to main" exception: the automated commit may only
+        # touch these paths. Any change outside them fails the job before committing.
+        run: |
+          bad=0
+          while IFS= read -r line; do
+            [ -z "$line" ] && continue
+            path=${line:3}
+            case "$path" in
+              docs/kev/*|kev/snapshots/*) ;;
+              *) echo "::error::out-of-scope change not allowed for auto-commit: $path"; bad=1 ;;
+            esac
+          done < <(git status --porcelain)
+          if [ "$bad" -ne 0 ]; then exit 1; fi
+
+      - name: Detect no-op (skip commit if docs/kev/ is unchanged)
+        id: noop
+        # The published output is docs/kev/. If it did not change, do not commit — this avoids
+        # a daily empty commit and a needless Pages rebuild. Snapshot timestamp churn alone
+        # (open snapshot / catalog_meta) never triggers a commit.
+        run: |
+          if [ -n "$(git status --porcelain docs/kev)" ]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "docs/kev changed — will commit"
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "docs/kev unchanged — no-op, nothing to commit"
+          fi
+
+      - name: Commit and push
+        if: steps.noop.outputs.changed == 'true'
+        run: |
+          git config user.name "kev-daily-bot"
+          git config user.email "kev-daily-bot@users.noreply.github.com"
+          git add docs/kev kev/snapshots
+          git commit -m "kev: daily data update (docs/kev + snapshots) [skip ci]"
+          # Absorb a concurrent push (e.g. Method-D auto-PR) with one rebase+retry; a persistent
+          # failure fails the job and the next run recovers (regeneration is idempotent).
+          for attempt in 1 2; do
+            if git push; then break; fi
+            echo "push rejected (attempt $attempt) — rebasing on origin/main"
+            git pull --rebase origin main
+          done
+
+      - name: Dead-man's switch — ping on success (every run, incl. no-op)
+        if: success()
+        # A daily success ping regardless of commit lets an external monitor (e.g.
+        # healthchecks.io) detect a silently-stopped job — including GitHub auto-disabling the
+        # schedule after 60 days of no repo activity. URL lives in a secret (never committed).
+        env:
+          HC: ${{ secrets.KEV_HEALTHCHECK_URL }}
+        run: |
+          if [ -n "$HC" ]; then curl -fsS -m 10 --retry 3 "$HC" || true; fi
+
+      - name: Dead-man's switch — signal failure
+        if: failure()
+        env:
+          HC: ${{ secrets.KEV_HEALTHCHECK_URL }}
+        run: |
+          if [ -n "$HC" ]; then curl -fsS -m 10 --retry 3 "${HC%/}/fail" || true; fi
