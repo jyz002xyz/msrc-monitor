@@ -17,8 +17,12 @@ Nothing is published or pushed.
 from __future__ import annotations
 
 import argparse
+import datetime as dt
+import json
+import sys
 from pathlib import Path
 
+import integrity
 import kevtrack
 import report
 import publish
@@ -29,6 +33,30 @@ OUT = HERE / "out"
 # repo's docs/kev/ tree directly (../docs/kev). Path adaptation to the new home only — the
 # rendered bytes are unchanged from the kev_cross_vendor prototype (verified byte-identical).
 SITE_KEV = HERE.parent / "docs" / "kev"
+# Lightweight cross-run meta (git-tracked, under snapshots/): catalog size at the last
+# successful run, for the integrity decrease-rate check. Only written on a successful run.
+META = HERE / "snapshots" / "catalog_meta.json"
+
+
+def load_prev_count() -> int | None:
+    try:
+        return int(json.loads(META.read_text(encoding="utf-8"))["last_catalog_count"])
+    except Exception:  # noqa: BLE001 — missing/corrupt meta just skips the decrease check
+        return None
+
+
+def write_meta(count: int, now_iso: str) -> None:
+    META.parent.mkdir(parents=True, exist_ok=True)
+    META.write_text(
+        json.dumps({"last_catalog_count": count, "updated_at": now_iso}, indent=2) + "\n",
+        encoding="utf-8")
+
+
+def _content_sig(snap: dict) -> str:
+    """Snapshot content minus its generation timestamp — used to keep generated_at (and the
+    published HTML, which embeds it) stable across no-op runs so no-op detection is exact."""
+    return json.dumps({k: v for k, v in snap.items() if k != "generated_at"},
+                      sort_keys=True, ensure_ascii=False)
 
 
 def prev_months(ym: str, n: int) -> list[str]:
@@ -102,6 +130,20 @@ def main() -> int:
 
     today_m = args.current or kevtrack.current_month()
 
+    # INTEGRITY GATE (fail-halt): evaluated every run, before anything is written. A degraded
+    # catalog must not be published, and — critically — must not seal a month permanently.
+    seal_candidates = [m for m in prev_months(today_m, args.months)
+                       if kevtrack.load_sealed(m) is None]
+    failures, stats = integrity.evaluate(kev, prev_count=load_prev_count(),
+                                         seal_months=seal_candidates)
+    print(f"[run] integrity stats: {stats}")
+    if failures:
+        for f in failures:
+            print(f"[run] INTEGRITY FAIL: {f}", file=sys.stderr)
+        print("[run] fail-halt: nothing generated or sealed; open window left intact for "
+              "recovery on the next run.", file=sys.stderr)
+        return 3
+
     # (1) OPEN current month, with mid-month-seal correction + EPSS accumulation.
     corrections, prev_rows = [], None
     prev_open = kevtrack.load_open(today_m)
@@ -120,6 +162,10 @@ def main() -> int:
         print(f"[run] CORRECTION: {note}")
     open_snap = kevtrack.build_open(today_m, kev, prev_rows,
                                     fetch_nvd_fn=kevtrack.fetch_nvd_published, corrections=corrections)
+    # No-op determinism: if the open window's data is unchanged, keep the previous generated_at
+    # so neither the snapshot nor the published HTML (which prints it) churns on identical data.
+    if prev_open is not None and _content_sig(open_snap) == _content_sig(prev_open):
+        open_snap["generated_at"] = prev_open["generated_at"]
     kevtrack.write_open(open_snap)
     print(f"[run] {today_m}: OPEN (in progress) — {open_snap['count']} KEV additions, "
           f"EPSS {'observed' if open_snap['epss_observed'] else 'none'}")
@@ -150,6 +196,8 @@ def main() -> int:
     # public bilingual site: regenerate the repo's docs/kev/ tree in place
     publish.build_site(built, SITE_KEV)
     print(f"[run] public site -> {SITE_KEV}/  (docs/kev/; commit is a separate, gated step)")
+    # Record catalog size for the next run's integrity decrease-rate check (success only).
+    write_meta(len(kev), dt.datetime.now().isoformat(timespec="seconds"))
     return 0
 
 
