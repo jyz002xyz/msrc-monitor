@@ -3,6 +3,10 @@ name: kev-daily
 # Daily regeneration of the public docs/kev/ Cross-vendor KEV/EPSS section.
 # Data updates only — code/display changes stay behind normal PR review.
 #
+# main is a protected branch (PR required), so the bot cannot push to main directly. It opens
+# an auto-PR from a deterministic branch and merges it (auto-merge). The branch-protection
+# policy is NOT weakened; the PR diff is the audit trail and the guards are the gatekeeper.
+#
 # GATE: the `schedule` trigger below is intentionally DISABLED (commented out) until the
 # owner gives an explicit go. Until then this runs only via manual `workflow_dispatch`.
 on:
@@ -12,14 +16,19 @@ on:
   #   # picks up the prior US day. Uncomment ONLY on explicit owner go to enable the schedule.
   #   - cron: "30 23 * * *"
 
-# Least privilege: only the ability to commit the regenerated site. No PAT — GITHUB_TOKEN only.
+# Least privilege: commit the regenerated site (contents) and open/merge its PR
+# (pull-requests). No PAT — the built-in GITHUB_TOKEN only.
 permissions:
   contents: write
+  pull-requests: write
 
-# Never run two regenerations at once (avoids racing pushes to main).
+# Never run two regenerations at once (avoids racing PRs against main).
 concurrency:
   group: kev-daily
   cancel-in-progress: false
+
+env:
+  BOT_BRANCH: bot/kev-daily
 
 jobs:
   regenerate:
@@ -35,59 +44,136 @@ jobs:
         # No pip install / requirements.txt: the generator is standard-library only.
 
       - name: Regenerate docs/kev (fetch KEV/EPSS/NVD; integrity-gated seal)
-        # run.py fail-halts (non-zero exit) on a degraded catalog, so a bad upstream fetch
-        # fails the job here and never seals an incomplete month or publishes bad data.
-        run: python kev/run.py
+        id: run
+        # run.py fail-halts (non-zero exit) on a degraded catalog, so a bad upstream fetch fails
+        # the job here and never seals an incomplete month or publishes bad data. pipefail is
+        # essential: without it `python | tee` would mask a run.py failure (a silent success).
+        run: |
+          set -euo pipefail
+          python kev/run.py | tee "$RUNNER_TEMP/run.log"
+          stats=$(grep -m1 'integrity stats' "$RUNNER_TEMP/run.log" | sed 's/^\[run\] //' || true)
+          echo "stats=$stats" >> "$GITHUB_OUTPUT"
 
       - name: Enforce diff scope (only docs/kev/ and kev/snapshots/)
-        # Contain the "no direct commits to main" exception: the automated commit may only
-        # touch these paths. Any change outside them fails the job before committing.
+        # Contain the "no direct commits to main" exception: the automated change may only touch
+        # these paths. Any change outside them fails the job before a PR is opened.
         run: |
+          set -euo pipefail
           bad=0
           while IFS= read -r line; do
             [ -z "$line" ] && continue
             path=${line:3}
             case "$path" in
               docs/kev/*|kev/snapshots/*) ;;
-              *) echo "::error::out-of-scope change not allowed for auto-commit: $path"; bad=1 ;;
+              *) echo "::error::out-of-scope change not allowed for auto-update: $path"; bad=1 ;;
             esac
           done < <(git status --porcelain)
           if [ "$bad" -ne 0 ]; then exit 1; fi
 
-      - name: Detect no-op (skip commit if docs/kev/ is unchanged)
+      - name: Detect no-op (skip PR if docs/kev/ is unchanged)
         id: noop
-        # The published output is docs/kev/. If it did not change, do not commit — this avoids
-        # a daily empty commit and a needless Pages rebuild. Snapshot timestamp churn alone
-        # (open snapshot / catalog_meta) never triggers a commit.
+        # The published output is docs/kev/. If it did not change, open no PR — this avoids a
+        # daily empty commit and a needless Pages rebuild. Snapshot timestamp churn alone
+        # (open snapshot / catalog_meta) never triggers a PR.
         run: |
+          set -euo pipefail
           if [ -n "$(git status --porcelain docs/kev)" ]; then
             echo "changed=true" >> "$GITHUB_OUTPUT"
-            echo "docs/kev changed — will commit"
+            echo "docs/kev changed — will open a PR"
           else
             echo "changed=false" >> "$GITHUB_OUTPUT"
-            echo "docs/kev unchanged — no-op, nothing to commit"
+            echo "docs/kev unchanged — no-op, nothing to publish"
           fi
 
-      - name: Commit and push
+      - name: Open and merge auto-PR
+        id: autopr
         if: steps.noop.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          STATS: ${{ steps.run.outputs.stats }}
         run: |
+          set -euo pipefail
+
+          # Never stack PRs: an already-open bot PR means a prior run failed mid-flight. Fail
+          # loudly and let a human resolve it rather than overwriting or opening a parallel one.
+          open_count=$(gh pr list --repo "$GITHUB_REPOSITORY" --head "$BOT_BRANCH" \
+                         --state open --json number --jq 'length')
+          if [ "$open_count" != "0" ]; then
+            echo "::error::an open PR from $BOT_BRANCH already exists — a previous run likely"
+            echo "::error::failed after opening it. Resolve/close it before re-running."
+            exit 1
+          fi
+
+          base=$(git rev-parse HEAD)                 # main as checked out (PR base)
+          echo "base=$base" >> "$GITHUB_OUTPUT"
+
           git config user.name "kev-daily-bot"
           git config user.email "kev-daily-bot@users.noreply.github.com"
-          git add docs/kev kev/snapshots
-          git commit -m "kev: daily data update (docs/kev + snapshots) [skip ci]"
-          # Absorb a concurrent push (e.g. Method-D auto-PR) with one rebase+retry; a persistent
-          # failure fails the job and the next run recovers (regeneration is idempotent).
-          for attempt in 1 2; do
-            if git push; then break; fi
-            echo "push rejected (attempt $attempt) — rebasing on origin/main"
-            git pull --rebase origin main
-          done
 
-      - name: Dead-man's switch — ping on success (every run, incl. no-op)
+          # Recreate the branch deterministically. A stale remote branch with no open PR (prior
+          # partial run) is safe to delete first, since we verified no open PR references it.
+          git push origin --delete "$BOT_BRANCH" 2>/dev/null || true
+          git checkout -B "$BOT_BRANCH"
+          git add docs/kev kev/snapshots
+          git commit -m "kev: daily data update (docs/kev + snapshots)"
+          commit=$(git rev-parse HEAD)
+          echo "commit=$commit" >> "$GITHUB_OUTPUT"
+
+          git push origin "$BOT_BRANCH"
+
+          body=$(cat <<EOF
+          Automated daily KEV/EPSS data update (auto-PR + auto-merge).
+
+          - Integrity gate passed: ${STATS:-(stats unavailable)}
+          - Diff scope enforced: changes confined to docs/kev/ and kev/snapshots/
+          - Generator/guard logic unchanged; data only.
+
+          Opened and merged by .github/workflows/kev-daily.yml.
+          EOF
+          )
+          gh pr create --repo "$GITHUB_REPOSITORY" --base main --head "$BOT_BRANCH" \
+            --title "kev: daily data update" --body "$body"
+
+          # Merge. Retry briefly for mergeability computation lag, but exit 1 if it never
+          # succeeds — a failed merge must NOT pass as success (the earlier silent-failure bug).
+          merged=0
+          for i in 1 2 3 4 5; do
+            if gh pr merge --repo "$GITHUB_REPOSITORY" "$BOT_BRANCH" --merge --delete-branch; then
+              merged=1; break
+            fi
+            echo "merge not ready (attempt $i) — retrying"
+            sleep 6
+          done
+          if [ "$merged" -ne 1 ]; then
+            echo "::error::auto-merge failed after retries"
+            exit 1
+          fi
+
+      - name: Positive control — confirm the update actually landed on main
+        if: steps.noop.outputs.changed == 'true'
+        # Trust state, not exit codes (the Run #1 lesson: the command "succeeded" but nothing
+        # changed). Verify the data commit is really an ancestor of origin/main and that main
+        # advanced. If not, fail the job so NO success ping is sent.
+        env:
+          COMMIT: ${{ steps.autopr.outputs.commit }}
+          BASE: ${{ steps.autopr.outputs.base }}
+        run: |
+          set -euo pipefail
+          git fetch origin main --quiet
+          head=$(git rev-parse origin/main)
+          if [ "$head" = "$BASE" ]; then
+            echo "::error::origin/main did not advance ($head) — update did not land"; exit 1
+          fi
+          if ! git merge-base --is-ancestor "$COMMIT" origin/main; then
+            echo "::error::merge reported success but $COMMIT is NOT on origin/main"; exit 1
+          fi
+          echo "positive control OK: $COMMIT is on origin/main (now ${head})"
+
+      - name: Dead-man's switch — ping on CONFIRMED success only
         if: success()
-        # A daily success ping regardless of commit lets an external monitor (e.g.
-        # healthchecks.io) detect a silently-stopped job — including GitHub auto-disabling the
-        # schedule after 60 days of no repo activity. URL lives in a secret (never committed).
+        # Reached only if every prior step succeeded: integrity passed AND (no-op OR
+        # PR-merged-and-verified-on-main). A guard halt or any failure skips this step, so the
+        # ping never lies. no-op is a legitimate success and does ping.
         env:
           HC: ${{ secrets.KEV_HEALTHCHECK_URL }}
         run: |

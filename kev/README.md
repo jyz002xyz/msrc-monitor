@@ -55,10 +55,18 @@ The last successful catalog size is recorded in `snapshots/catalog_meta.json` (g
 ## Daily workflow (`.github/workflows/kev-daily.yml`)
 `workflow_dispatch` + `schedule` (schedule **disabled until explicit owner go**). Runs
 `python kev/run.py`, then: enforces the diff is confined to `docs/kev/` and `kev/snapshots/`;
-skips the commit when `docs/kev/` is unchanged (no-op — `generated_at` is held stable so
-identical data produces no diff); otherwise commits with a bot identity via `GITHUB_TOKEN`
-(`contents: write`, no PAT). A per-run success ping to an external monitor (URL in the
-`KEV_HEALTHCHECK_URL` secret, never committed) acts as a dead-man's switch.
+skips everything when `docs/kev/` is unchanged (no-op — `generated_at` is held stable so
+identical data produces no diff); otherwise, because `main` is a protected branch (PR
+required), it opens an **auto-PR** from `bot/kev-daily` and **auto-merges** it (`contents` +
+`pull-requests: write`, built-in `GITHUB_TOKEN`, no PAT). The branch-protection policy is not
+weakened; the PR diff is the audit trail and the guards are the gatekeeper.
+
+Failure handling is explicit: a degraded catalog (integrity halt), an out-of-scope diff, or a
+failed push/PR/merge all fail the job — none pass as success. After merging, a **positive
+control** confirms the data commit actually landed on `origin/main` (state, not just exit
+codes). The dead-man's switch pings `KEV_HEALTHCHECK_URL` (a secret, never committed) **only on
+confirmed success** — a no-op, or a PR merged and verified on main — and pings `/fail`
+otherwise, so the monitor fires on both "silently stopped" and "failed".
 
 ## Dependencies
 Python 3.10+ (uses `X | None` runtime types). **Standard library only** — no third-party
