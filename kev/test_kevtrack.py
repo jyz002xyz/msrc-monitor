@@ -264,6 +264,101 @@ def test_month_table_tiebreak_is_deterministic():
     assert h2.index("CVE-A") < h2.index("CVE-C")
 
 
+# --- per-CVE NVD links (sort keys must survive) ------------------------------
+REAL = {"cveID": "CVE-2026-56164", "vendorProject": "Microsoft", "product": "SharePoint Server",
+        "dateAdded": "2026-07-14", "dueDate": "2026-07-17",
+        "knownRansomwareCampaignUse": "Unknown"}
+
+
+def _real_snap():
+    return kevtrack.build_open("2026-07", [REAL, A], None, fetch_epss_fn=_epss({}),
+                               fetch_nvd_fn=_nvd({"CVE-2026-56164": "2026-07-14T00:00:00"}),
+                               now_iso="t")
+
+
+def test_cve_cell_links_to_nvd_and_keeps_sort_key():
+    import publish
+    for lang in ("ja", "en"):
+        h = publish.render_month(_real_snap(), lang)
+        assert ('<td data-sort="CVE-2026-56164"><a class="cvelink" '
+                'href="https://nvd.nist.gov/vuln/detail/CVE-2026-56164" rel="noopener">'
+                'CVE-2026-56164</a></td>') in h, f"{lang}: CVE cell must link to NVD"
+        # the sort key stays the bare id -> column-click sort is unaffected
+        assert 'data-type="text" aria-sort="none">CVE' in h and 'class="sortable"' in h
+        # a malformed id is never interpolated into an href
+        assert '<td data-sort="CVE-A">CVE-A</td>' in h
+        assert "vuln/detail/CVE-A" not in h
+
+
+def test_every_cve_row_is_linked_exactly_once():
+    import publish
+    h = publish.render_month(_real_snap(), "en")
+    assert h.count('href="https://nvd.nist.gov/vuln/detail/CVE-2026-56164"') == 1
+
+
+# --- ransomware column meaning, about block, glossary, sources ---------------
+def test_ransomware_column_meaning_is_explained_both_langs():
+    import publish
+    ja = publish.render_month(_real_snap(), "ja")
+    en = publish.render_month(_real_snap(), "en")
+    idx = publish.render_index([_real_snap()])
+    for page in (ja, idx):
+        assert "knownRansomwareCampaignUse" in page
+        assert "CISA が確認していない" in page and "使われていない" in page
+    for page in (en, idx):
+        assert "CISA has NOT confirmed it" in page
+        assert "not mean the vulnerability is unused by ransomware" in page
+    # no hard-coded catalog-wide counts (they change daily)
+    for page in (ja, en, idx):
+        assert "件を占める" not in page
+
+
+def test_about_block_states_daily_update_and_immutability():
+    import publish
+    ja = publish.render_month(_real_snap(), "ja")
+    en = publish.render_month(_real_snap(), "en")
+    idx = publish.render_index([_real_snap()])
+    assert "このデータについて" in ja and "日次自動更新" in ja and "08:30 JST" in ja
+    assert "About this data" in en and "every day" in en and "08:30 JST" in en
+    # sealed data is fixed, but the page may be re-rendered — stated, not implied
+    assert "データの不変性とは別" in ja and "immutability of the data" in en
+    # the index carries both languages (English first per the site convention)
+    assert idx.index("About this data") < idx.index("このデータについて")
+
+
+def test_glossary_defines_the_table_vocabulary():
+    import publish
+    ja = publish.render_month(_real_snap(), "ja")
+    en = publish.render_month(_real_snap(), "en")
+    for term in ("KEV", "EPSS", "NVD 公開日", "公開→収載(日)", "open（進行中）", "Known / Unknown"):
+        assert term in ja, f"missing glossary term: {term}"
+    for term in ("KEV", "EPSS (score / percentile)", "NVD published", "Pub→KEV (days)",
+                 "open / sealed", "Known / Unknown"):
+        assert term in en, f"missing glossary term: {term}"
+    assert "class='gloss'" in ja and "class='gloss'" in en
+
+
+def test_sources_are_linked_and_disclaim_endorsement():
+    import publish
+    pages = [publish.render_month(_real_snap(), "ja"), publish.render_month(_real_snap(), "en"),
+             publish.render_index([_real_snap()])]
+    for page in pages:
+        for url in ("https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+                    "https://www.first.org/epss/", "https://nvd.nist.gov/",
+                    "https://msrc.microsoft.com/update-guide"):
+            assert url in page, f"missing source link: {url}"
+        # the NVD's requested notice, verbatim
+        assert ("This product uses data from the NVD API but is not endorsed or certified "
+                "by the NVD.") in page
+        # sources are listed, never thanked or claimed as partners
+        for banned in ("感謝", "Thanks", "thank you", "in partnership", "提携", "協力を得"):
+            assert banned not in page, f"affiliation-implying wording: {banned}"
+    ja, en, idx = pages
+    assert "推奨するものではない" in ja and "CC0 1.0" in ja
+    assert "endorse its contents" in en and "CC0 1.0" in en
+    assert idx.index("Data sources") < idx.index("出典データ")   # English first on the index
+
+
 if __name__ == "__main__":
     import traceback
     tests = [v for k, v in sorted(globals().items()) if k.startswith("test_") and callable(v)]

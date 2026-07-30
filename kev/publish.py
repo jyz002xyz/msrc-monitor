@@ -14,11 +14,20 @@ from __future__ import annotations
 
 import datetime as dt
 import html
+import re
 from collections import Counter
 from pathlib import Path
 
 import report as _r   # reuse ransomware_split / aggregates helpers
 import kevtrack as _k  # days_to_kev
+
+# Per-CVE deep link. NVD is chosen because these pages already display nvd_published, so a
+# reader can verify that same date at the same source. Vendor advisories are per-vendor and
+# would be inconsistent across a cross-vendor table.
+NVD_CVE_BASE = "https://nvd.nist.gov/vuln/detail/"
+# Only a well-formed CVE id becomes a link; anything else is rendered as plain text, so a
+# malformed/unexpected id can never be interpolated into an href.
+CVE_ID_RE = re.compile(r"^CVE-\d{4}-\d{4,}$")
 
 # Site CSS reused from the existing public pages (gen_public_html look: dark topbar,
 # paper card, amber note). Kept inline so each page is self-contained like the archive.
@@ -52,6 +61,12 @@ th[aria-sort="ascending"] .caret,th[aria-sort="descending"] .caret{opacity:1}
 .notes{background:#eef3fb;border:1px solid #c9dcf5;border-left:4px solid #1f3864;border-radius:6px;
 padding:12px 16px;color:#26364d;font-size:13px;line-height:1.7;margin:16px 0}
 .sub{color:#666;font-size:13px}.footer{max-width:960px;margin:0 auto 40px;color:#888;font-size:12px;text-align:center}
+a.cvelink{color:#1f3864;text-decoration:none;border-bottom:1px dotted #9ab0d4}
+a.cvelink:hover{text-decoration:underline}
+dl.gloss{margin:8px 0 0}dl.gloss dt{font-weight:700;margin-top:8px}
+dl.gloss dd{margin:2px 0 0 14px}
+.sources{max-width:960px;margin:0 auto 10px;padding:0 20px;color:#666;font-size:12px;line-height:1.7}
+.sources a{color:#1f3864}.sources p{margin:6px 0}.sources .srchead{font-weight:700;color:#444}
 """
 
 # Bilingual UI labels + the confounder/definition notes (both languages, always shown).
@@ -116,9 +131,135 @@ LABELS = {
     },
 }
 
+# --- "About this data" block -------------------------------------------------
+# What the page is, how often it changes, and the vocabulary needed to read the table.
+# Orientation only — no evaluative claims, and no hard-coded counts (they change daily; the
+# per-month Known/Unknown and KEV-added figures are already in the tables).
+ABOUT = {
+    "ja": {
+        "h": "このデータについて",
+        "what_month": "このページは、CISA KEV（悪用が確認された脆弱性のカタログ）に収載された脆弱性を、"
+                      "暦月ごとに記録したものです。対象は KEV 収載日（dateAdded）がその月に入るもので、"
+                      "ベンダーを問いません（Microsoft 以外も含む）。",
+        "what_index": "このセクションは、CISA KEV（悪用が確認された脆弱性のカタログ）に収載された脆弱性を、"
+                      "暦月ごとに記録したものです。各行が1か月分で、ベンダーを問いません"
+                      "（Microsoft 以外も含む）。",
+        "update": "更新頻度: 日次自動更新（GitHub Actions・08:30 JST 予定）。ベストエフォートのため"
+                  "遅延することがあり、新規収載がない日は更新されません。増えるのは進行中（open）の"
+                  "月だけで、確定（sealed）月のデータは変更しません。",
+        "render": "確定（sealed）月のデータは不変ですが、ページの表示は説明の追加・改善に伴って"
+                  "再生成されることがあります（データの不変性とは別のことです）。",
+        "ransom_caveat": "「ランサムウェア」列の Unknown は CISA が未確認という意味であり、"
+                         "「使われていない」という意味ではない。",
+        "gloss_h": "用語",
+    },
+    "en": {
+        "h": "About this data",
+        "what_month": "This page records the vulnerabilities listed in CISA KEV (the catalog of "
+                      "vulnerabilities confirmed as exploited) for one calendar month. A row is "
+                      "included when its KEV listing date (dateAdded) falls in that month, "
+                      "regardless of vendor (not only Microsoft).",
+        "what_index": "This section records the vulnerabilities listed in CISA KEV (the catalog of "
+                      "vulnerabilities confirmed as exploited), one row per calendar month, "
+                      "across vendors (not only Microsoft).",
+        "update": "Update frequency: updated automatically every day (GitHub Actions, scheduled "
+                  "08:30 JST). It is best-effort, so it can be delayed, and there is no update on "
+                  "a day with no new KEV listings. Only the in-progress (open) month grows; the "
+                  "data of a sealed month is never changed.",
+        "render": "The data of a sealed month is immutable, but the rendered page may be "
+                  "regenerated when explanations are added or improved (that is separate from "
+                  "the immutability of the data).",
+        "ransom_caveat": "In the “Ransomware” column, Unknown means CISA has not confirmed it — "
+                         "not that the vulnerability is unused by ransomware.",
+        "gloss_h": "Terms",
+    },
+}
+
+GLOSSARY = {
+    "ja": [
+        ("KEV", "CISA Known Exploited Vulnerabilities Catalog。CISA が悪用を確認した脆弱性の一覧で、"
+                "連邦機関向けに是正期限（Due）が付く。"),
+        ("EPSS（スコア / 百分位）", "スコアは「今後30日以内に悪用活動が観測される確率」(0–1)。"
+                                    "百分位 (p) は全 CVE 中の相対位置。深刻度ではない。"),
+        ("NVD 公開日", "NVD が CVE レコードを公開した日。開示の目安であり、ベンダーの原開示日ではない。"),
+        ("公開→収載(日)", "KEV 収載日(dateAdded) − NVD 公開日。0 は同日収載、負値は NVD 公開前の収載。"
+                          "悪用までの時間ではない。"),
+        ("open（進行中） / sealed（確定）", "open は当月の窓で、月末まで KEV が追加されうる。"
+                                            "sealed は暦月が閉じた後に確定した窓で、以後データは変更しない。"),
+        ("Known / Unknown", "CISA KEV の knownRansomwareCampaignUse の値。Unknown は「CISA が確認していない」"
+                            "であって「使われていない」ではない（下記の注記を参照）。"),
+    ],
+    "en": [
+        ("KEV", "CISA Known Exploited Vulnerabilities Catalog — vulnerabilities CISA has confirmed "
+                "as exploited, each with a remediation due date for federal agencies."),
+        ("EPSS (score / percentile)", "The score is the probability that exploitation activity will "
+                                      "be observed in the next 30 days (0–1). The percentile (p) is "
+                                      "its position among all CVEs. It is not severity."),
+        ("NVD published", "The date NVD published the CVE record — a proxy for disclosure, not the "
+                          "vendor's original disclosure date."),
+        ("Pub→KEV (days)", "KEV listing date (dateAdded) minus NVD publication date. 0 means listed "
+                           "the same day; a negative value means listed before NVD published. It is "
+                           "not time-to-exploitation."),
+        ("open / sealed", "open is the current month's window — more KEV entries may still be added "
+                          "before month-end. sealed is a window finalized after its calendar month "
+                          "closed; its data is never changed afterwards."),
+        ("Known / Unknown", "The value of CISA KEV's knownRansomwareCampaignUse. Unknown means "
+                            "“CISA has not confirmed it”, not “it is not used” "
+                            "(see the note below)."),
+    ],
+}
+
+# --- Data sources -------------------------------------------------------------
+# Listed as sources, NOT as an endorsement or a partnership. Terms as published by each
+# source (checked): CISA KEV is CC0 1.0 and its license text states that use of the data is
+# not an endorsement by CISA or DHS; NIST publications are public domain and the NVD asks
+# services that use its API to display a specific notice; FIRST requests attribution when
+# EPSS data is used in publications.
+SOURCES = [
+    ("CISA Known Exploited Vulnerabilities Catalog",
+     "https://www.cisa.gov/known-exploited-vulnerabilities-catalog"),
+    ("FIRST EPSS", "https://www.first.org/epss/"),
+    ("NVD (NIST National Vulnerability Database)", "https://nvd.nist.gov/"),
+]
+# The main (Microsoft-focused) report's source. Not a source of THIS section's data; shown
+# only so a reader arriving here can find where the main report's data comes from.
+MAIN_REPORT_SOURCE = ("Microsoft Security Response Center (MSRC) Security Update Guide (CVRF)",
+                      "https://msrc.microsoft.com/update-guide")
+# Verbatim notice the NVD asks API consumers to display (nvd.nist.gov General FAQs).
+NVD_NOTICE = ("This product uses data from the NVD API but is not endorsed or certified "
+              "by the NVD.")
+
+SOURCE_TERMS = {
+    "ja": [
+        "CISA KEV は CC0 1.0 で公開されている。データの利用は CISA・DHS による推奨を意味しない。",
+        "EPSS は FIRST の EPSS SIG が維持し、スコアは Empirical Security が生成して無償公開している。"
+        "利用時には出典の表示が求められている。",
+        "NVD は NIST の公開データ（パブリックドメイン）。本セクションは NVD API のデータを使用しているが、"
+        "NVD による推奨・認証を受けたものではない: 「" + NVD_NOTICE + "」",
+        "上記の組織は本レポートと無関係であり、その内容を推奨するものではない。",
+    ],
+    "en": [
+        "The CISA KEV catalog is published under CC0 1.0. Use of the data does not imply "
+        "endorsement by CISA or DHS.",
+        "EPSS is maintained by the EPSS SIG at FIRST; the scores are generated by Empirical "
+        "Security and published freely. Attribution is requested when the data is used.",
+        "NVD data is public domain (NIST). " + NVD_NOTICE,
+        "None of the organizations above are affiliated with this report, and none of them "
+        "endorse its contents.",
+    ],
+}
+SOURCE_LABELS = {
+    "ja": {"h": "出典データ", "main": "主レポート（Microsoft 中心）の出典"},
+    "en": {"h": "Data sources", "main": "Source of the main report (Microsoft-focused)"},
+}
+
 NOTES = {
     "ja": [
         "KEV は悪用の完全な記録ではない。CISA が確認し、連邦機関向けに優先付けしたもの。",
+        "「ランサムウェア」列の出典は CISA KEV の knownRansomwareCampaignUse。Known は CISA が"
+        "ランサムウェアキャンペーンでの使用を確認したもの。Unknown は CISA が確認していないという"
+        "意味であり、「ランサムウェアで使われていない」という意味ではない。カタログ全体では"
+        "Unknown が多数を占めるため、Unknown を「安全」と読むと系統的に誤る。",
         "EPSS は「30日以内に悪用活動が観測される確率」であって深刻度ではない。KEV 追加時点で"
         "記録した属性として提示し、予測の当否は評価しない。",
         "ベンダー別件数は、連邦環境での配備状況と CISA の可視性を反映するものであり、"
@@ -134,6 +275,10 @@ NOTES = {
     "en": [
         "KEV is not a complete record of exploitation; it is what CISA confirmed and prioritized "
         "for federal agencies.",
+        "The “Ransomware” column comes from CISA KEV's knownRansomwareCampaignUse. Known = CISA "
+        "has confirmed use in a ransomware campaign. Unknown = CISA has NOT confirmed it; it does "
+        "not mean the vulnerability is unused by ransomware. Unknown is the majority of the "
+        "catalog, so reading Unknown as “safe” is a systematic error.",
         "EPSS is the probability of exploitation activity within 30 days — not severity. It is "
         "presented as an attribute recorded at KEV-add time; its predictive correctness is not judged.",
         "Vendor counts reflect federal deployment and CISA visibility, not security quality. "
@@ -160,6 +305,47 @@ def _epss_cell(r) -> str:
     return "—" if r["epss"] is None else f"{r['epss']:.3f} / p{r['percentile']*100:.0f}"
 
 
+def _cve_cell(cve) -> str:
+    """CVE cell linking to its NVD record. The sort key (data-sort) stays the plain CVE id, so
+    the column-click sort is unaffected; only the cell's text becomes a link."""
+    key = _h(cve or "")
+    if cve and CVE_ID_RE.match(cve):
+        inner = f'<a class="cvelink" href="{NVD_CVE_BASE}{key}" rel="noopener">{key}</a>'
+    else:
+        inner = key                      # unexpected id -> plain text, never a link
+    return f'<td data-sort="{key}">{inner}</td>'
+
+
+def _about_html(lang: str, *, index: bool) -> str:
+    """"About this data" block: what the page is, how often it updates, and the fact that a
+    sealed month's DATA is fixed even though the page may be re-rendered."""
+    a = ABOUT[lang]
+    what = a["what_index"] if index else a["what_month"]
+    return (f"<div class='notes'><b>{_h(a['h'])}</b>"
+            f"<ul><li>{_h(what)}</li><li>{_h(a['update'])}</li><li>{_h(a['render'])}</li></ul></div>")
+
+
+def _glossary_html(lang: str) -> str:
+    items = "".join(f"<dt>{_h(t)}</dt><dd>{_h(d)}</dd>" for t, d in GLOSSARY[lang])
+    return f"<b>{_h(ABOUT[lang]['gloss_h'])}</b><dl class='gloss'>{items}</dl>"
+
+
+def _sources_html(langs: list[str]) -> str:
+    """Data-source list with links + the terms/non-endorsement lines. Listing a source is not
+    a claim of affiliation or endorsement; the wording says so explicitly."""
+    blocks = []
+    for lang in langs:
+        sl = SOURCE_LABELS[lang]
+        links = " · ".join(f"<a href='{u}' rel='noopener'>{_h(n)}</a>" for n, u in SOURCES)
+        main_n, main_u = MAIN_REPORT_SOURCE
+        terms = " ".join(_h(t) for t in SOURCE_TERMS[lang])
+        blocks.append(f"<p><span class='srchead'>{_h(sl['h'])}:</span> {links}</p>"
+                      f"<p>{terms}</p>"
+                      f"<p>{_h(sl['main'])}: "
+                      f"<a href='{main_u}' rel='noopener'>{_h(main_n)}</a></p>")
+    return "<div class='sources'>" + "".join(blocks) + "</div>"
+
+
 def render_month(snap: dict, lang: str) -> str:
     L, N = LABELS[lang], NOTES[lang]
     agg = _r._aggregates(snap)
@@ -183,7 +369,7 @@ def render_month(snap: dict, lang: str) -> str:
         rw = "Known" if r["ransomware"] else "Unknown"
         trs.append(
             "<tr>"
-            + _c(r["cve"], r["cve"]) + _c(r.get("vendor") or "", r.get("vendor") or "")
+            + _cve_cell(r["cve"]) + _c(r.get("vendor") or "", r.get("vendor") or "")
             + _c(r.get("product") or "", r.get("product") or "")
             + _c(r.get("date_added") or "", r.get("date_added") or "")
             + _c(r.get("due_date") or "", r.get("due_date") or "")
@@ -222,12 +408,13 @@ def render_month(snap: dict, lang: str) -> str:
 <article class="paper">
 <h1>{_h(L['section'])} — {_h(snap['window'])}</h1>
 <div class="notes">{_h(L['positioning'])}</div>
+{_about_html(lang, index=False)}
 <p class="sub">{_h(L['generated'])} {_h(snap['generated_at'])}. {_h(L['prototype'])}</p>
 {corr}
 <h2>{_h(L['facts'])}</h2>
 <h3>{_h(L['adds'])} ({agg['n']})</h3>
 <table id="kevtable"><thead><tr>{th}</tr></thead><tbody>{rows}</tbody></table>
-<div class="tablecaveat">{_h(L['col_caveat'])}</div>
+<div class="tablecaveat">{_h(L['col_caveat'])}<br>{_h(ABOUT[lang]['ransom_caveat'])}</div>
 <p class="sub">{_h(L['sort_note'])}</p>
 <script>
 (function(){{
@@ -256,8 +443,10 @@ def render_month(snap: dict, lang: str) -> str:
 <h3>{_h(L['agg'])}</h3>
 <p>{_h(L['ransom'])}: <b>Known {known} / Unknown {unknown}</b></p>
 <p>{_h(L['vendors'])}:</p><ul>{vend}</ul>{dist}
-<h2>{_h(L['notes_h'])}</h2><div class="notes"><ul>{notes}</ul></div>
+<h2>{_h(L['notes_h'])}</h2>
+<div class="notes">{_glossary_html(lang)}<ul>{notes}</ul></div>
 </article>
+{_sources_html([lang])}
 <div class="footer">{_h(L['site'])} · {_h(L['section'])}</div>
 </body></html>"""
 
@@ -295,11 +484,15 @@ def render_index(snaps: list[dict]) -> str:
 <article class="paper">
 <h1>{_h(en['index_title'])}<br><span style="font-size:16px;color:#33415c">{_h(ja['index_title'])}</span></h1>
 <div class="notes">{_h(en['positioning'])}<br><br>{_h(ja['positioning'])}</div>
+{_about_html("en", index=True)}
+{_about_html("ja", index=True)}
 <p class="sub">{_h(en['index_lead'])} {_h(en['prototype'])}<br>{_h(ja['index_lead'])}</p>
 <table><thead><tr>{th}</tr></thead><tbody>{''.join(tr)}</tbody></table>
+<div class="tablecaveat">{_h(ABOUT['en']['ransom_caveat'])}<br>{_h(ABOUT['ja']['ransom_caveat'])}</div>
 <h2>Definitions &amp; notes / 定義・注記</h2>
-<div class="notes"><ul>{notes}</ul></div>
+<div class="notes">{_glossary_html("en")}{_glossary_html("ja")}<ul>{notes}</ul></div>
 </article>
+{_sources_html(["en", "ja"])}
 <div class="footer">MSRC Vulnerability Trend Report · Cross-vendor KEV/EPSS (prototype)</div>
 </body></html>"""
 
