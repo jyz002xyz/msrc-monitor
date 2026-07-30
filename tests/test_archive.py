@@ -223,6 +223,28 @@ def test_index_renders_revision_note_link_when_present():
         assert not (docs / "archive" / "2026-07" / "notes-2026-07.en.html").exists()
 
 
+def test_index_explains_immutability_and_when_entries_appear():
+    """Nav-layer explanation (additive): what the archive is, English first then Japanese.
+    The frozen snapshot pages themselves must not gain this text."""
+    with tempfile.TemporaryDirectory() as tmp:
+        docs = Path(tmp) / "docs"; docs.mkdir()
+        _fake_site(docs)
+        _run(docs, "--month", "2026-07", "--count", "1281")
+        idx = (docs / "archive" / "index.html").read_text(encoding="utf-8")
+        assert "Frozen snapshots are immutable" in idx
+        assert "not edited afterwards" in idx
+        assert "凍結スナップショットは不変です" in idx and "以後編集しません" in idx
+        # a new entry appears at the "latest" swap — stated in both languages
+        assert "replaced by the next month" in idx and "差し替わるときに追加" in idx
+        # English first (site bilingual convention)
+        assert idx.index("Frozen snapshots") < idx.index("凍結スナップショット")
+        # the immutable snapshots stay free of it
+        for lang in ("ja", "en"):
+            snap = (docs / "archive" / "2026-07" / f"{lang}.html").read_text(encoding="utf-8")
+            assert "Frozen snapshots are immutable" not in snap
+            assert "凍結スナップショットは不変です" not in snap
+
+
 if __name__ == "__main__":
     import traceback
     tests = [v for k, v in sorted(globals().items())

@@ -162,7 +162,23 @@ td.month{color:#1f3864}
 a.rep{color:#1f3864;text-decoration:none;font-weight:600;margin-right:12px}
 a.rep:hover{text-decoration:underline}
 .footer{max-width:760px;margin:24px auto;padding:0 20px;color:#888;font-size:12px}
+.note{margin:20px 0 0;background:#eef3fb;border:1px solid #c9dcf5;border-left:4px solid #1f3864;
+border-radius:6px;padding:12px 16px;color:#26364d;font-size:13px;line-height:1.7}
 """.strip()
+
+
+# Nav-layer explanation of what the archive IS (English first, then Japanese, per
+# docs/SITE_BILINGUAL_CONVENTION.md). Additive: the frozen snapshots themselves are not
+# touched by this text.
+ARCHIVE_ABOUT_EN = (
+    "Frozen snapshots are immutable: once a month is filed here, its pages are not edited "
+    "afterwards. A new entry appears when the “latest” report is replaced by the "
+    "next month's — the outgoing report is filed here as it was published, with its own "
+    "copy of its images.")
+ARCHIVE_ABOUT_JA = (
+    "凍結スナップショットは不変です。ここに収めた月のページは、以後編集しません。新しいエントリは"
+    "「最新」レポートが次の月のものに差し替わるときに追加され、入れ替わる前のレポートが公開時点の"
+    "まま（画像も各月ごとの複製として）収められます。")
 
 
 _MONTHS_EN = ["January", "February", "March", "April", "May", "June",
@@ -246,6 +262,7 @@ def build_index(docs: Path) -> None:
     {chr(10).join("    " + r for r in rows) if rows else '<tr><td colspan="3">(no archives yet / まだアーカイブがありません)</td></tr>'}
     </tbody>
   </table>
+  <div class="note">{ARCHIVE_ABOUT_EN}<br><br>{ARCHIVE_ABOUT_JA}</div>
 </div>
 <div class="footer">Facts are machine-generated; interpretation is human. Source: Microsoft Security Response Center (MSRC) CVRF.</div>
 </body>
