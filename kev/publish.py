@@ -179,8 +179,12 @@ GLOSSARY = {
     "ja": [
         ("KEV", "CISA Known Exploited Vulnerabilities Catalog。CISA が悪用を確認した脆弱性の一覧で、"
                 "連邦機関向けに是正期限（Due）が付く。"),
-        ("EPSS（スコア / 百分位）", "スコアは「今後30日以内に悪用活動が観測される確率」(0–1)。"
-                                    "百分位 (p) は全 CVE 中の相対位置。深刻度ではない。"),
+        ("EPSS（スコア / 百分位）", "スコアは「今後30日以内に悪用活動が観測される確率」で、"
+                                    "0 から 1 の値をとる（0.21 ならおよそ 21%）。百分位 (p) は"
+                                    "これとは別の軸で、そのスコアが全 CVE の中でどの位置にあるかを示す。"
+                                    "p92 は「全 CVE の 92% よりスコアが高い」という意味。スコアは"
+                                    "低い側に大きく偏っているため、スコアが小さくても百分位は"
+                                    "高く出ることがある。どちらも深刻度ではない。"),
         ("NVD 公開日", "NVD が CVE レコードを公開した日。開示の目安であり、ベンダーの原開示日ではない。"),
         ("公開→収載(日)", "KEV 収載日(dateAdded) − NVD 公開日。0 は同日収載、負値は NVD 公開前の収載。"
                           "悪用までの時間ではない。"),
@@ -193,8 +197,12 @@ GLOSSARY = {
         ("KEV", "CISA Known Exploited Vulnerabilities Catalog — vulnerabilities CISA has confirmed "
                 "as exploited, each with a remediation due date for federal agencies."),
         ("EPSS (score / percentile)", "The score is the probability that exploitation activity will "
-                                      "be observed in the next 30 days (0–1). The percentile (p) is "
-                                      "its position among all CVEs. It is not severity."),
+                                      "be observed in the next 30 days; it runs from 0 to 1 "
+                                      "(0.21 is roughly 21%). The percentile (p) is a separate "
+                                      "axis: where that score sits among all CVEs. p92 means the "
+                                      "score is higher than 92% of all CVEs. Scores are heavily "
+                                      "concentrated at the low end, so a small score can still "
+                                      "land in a high percentile. Neither is severity."),
         ("NVD published", "The date NVD published the CVE record — a proxy for disclosure, not the "
                           "vendor's original disclosure date."),
         ("Pub→KEV (days)", "KEV listing date (dateAdded) minus NVD publication date. 0 means listed "
