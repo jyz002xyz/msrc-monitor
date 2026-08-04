@@ -32,10 +32,10 @@ code{background:#eef0f3;padding:1px 5px;border-radius:4px;font-size:13px}
   <div><a href="index.html">Archive / アーカイブ</a> · <a href="notes-2026-07.ja.html">日本語</a></div>
 </div>
 <div class="wrap">
-  <h1>Revision note — July 2026 report</h1>
-  <p class="sub">A record of source-data movement observed after this report was published. English first, then Japanese (site convention). 日本語版は <a href="notes-2026-07.ja.html">こちら</a>。</p>
+  <h1>Revision note and correction — July 2026 report</h1>
+  <p class="sub">A record of source-data movement observed after this report was published, and a correction to how one of its figures was defined. English first, then Japanese (site convention). 日本語版は <a href="notes-2026-07.ja.html">こちら</a>。</p>
 
-  <div class="banner">The published July 2026 report is a point-in-time snapshot frozen on <b>2026-07-15</b>, and <b>its content has not been changed</b>. This note records changes MSRC made to the underlying data <b>after</b> that snapshot, detected on <b>2026-07-23</b>. The report was correct as a snapshot; the data has since moved.</div>
+  <div class="banner">The published July 2026 report is a point-in-time snapshot frozen on <b>2026-07-15</b>, and <b>its content has not been changed</b>. This note records changes MSRC made to the underlying data <b>after</b> that snapshot, detected on <b>2026-07-23</b>. The report was correct as a snapshot; the data has since moved.<br><br><b>Added 2026-08-05 — a correction.</b> Separately from the data movement above, we found a defect in how the figure labelled &ldquo;core Microsoft&rdquo; was defined. It reverses one of the report's statements. See <a href="#correction">Correction — a defect in how &ldquo;core Microsoft&rdquo; was defined</a>.</div>
 
   <div class="card">
     <h2>What this note is</h2>
@@ -72,6 +72,7 @@ code{background:#eef0f3;padding:1px 5px;border-radius:4px;font-size:13px}
       <li>The revision (+167 core over the following week) is exactly the kind of catch-up a one-day-old month accrues as MSRC keeps adding and re-classifying entries.</li>
     </ul>
     <p>The defensible statement is therefore: <span class="fact">cross-month count comparisons are only valid when the months are at equal data maturity.</span> This <b>reinforces</b>, rather than contradicts, the report's core argument that raw counts do not reflect the real picture. We do not assert whether the added entries are out-of-band new CVEs or re-classifications of existing ones — the revision record does not carry per-CVE before/after detail, so that breakdown is left undetermined.</p>
+    <p style="font-size:13px;color:#666">Added 2026-08-05: this statement is affected a second time, and more fundamentally, by a defect in the &ldquo;core Microsoft&rdquo; definition itself — see <a href="#correction">the correction below</a>.</p>
   </div>
 
   <div class="card">
@@ -79,7 +80,57 @@ code{background:#eef0f3;padding:1px 5px;border-radius:4px;font-size:13px}
     <p>As long as each month's snapshot is taken the day after its Patch Tuesday, every report structurally <b>undercounts its own month and overcounts the prior month</b> at snapshot time. This is a property of the acquisition schedule, not something specific to July 2026. It is the same effect that makes "this month set a record" and "the prior month was the true peak" both fragile until the data matures.</p>
   </div>
 
-  <p class="sub" style="margin-top:20px">Dates — data snapshot: 2026-07-15 · revision detected: 2026-07-23 · note prepared: 2026-07-23.</p>
+  <div class="card" id="correction">
+    <h2>Correction — a defect in how &ldquo;core Microsoft&rdquo; was defined (identified 2026-08-05)</h2>
+
+    <p>Everything above records movement in <b>MSRC's</b> data. This section is different: it records a defect in <b>our own</b> figure. The number published as &ldquo;core Microsoft&rdquo; was produced by a rule that did not do what the label says.</p>
+
+    <p><b>What the defect was.</b> &ldquo;Core Microsoft&rdquo; was meant to be the month's CVE records with the Edge/Chromium, Azure Linux (Mariner) and Azure cloud re-listings removed. Which records to remove was decided by matching <b>the vulnerability's title</b> against product-name patterns. Azure Linux package advisories, however, carry the upstream open-source CVE title and contain no product name at all:</p>
+    <ul>
+      <li><code>netfilter: nft_inner: Fix IPv6 inner_thoff desync</code></li>
+      <li><code>libexpat before 2.8.2 lacks handler call depth tracking</code></li>
+      <li><code>Xorg-x11-server: use-after-free in miext</code></li>
+    </ul>
+    <p>No pattern could match, so these advisories were counted as core Microsoft. The snapshot was fetched and stored faithfully. <span class="fact">The definition of the metric was defective, and the published figure was the value that definition produced.</span> This is not an error in acquiring or recording the data.</p>
+
+    <p>Estimated Azure Linux share of each published &ldquo;core Microsoft&rdquo; figure:</p>
+    <table>
+      <thead><tr><th>Month (all frozen 2026-07-15)</th><th>Published &ldquo;core Microsoft&rdquo;</th><th>Microsoft-product records</th><th>Azure Linux share</th></tr></thead>
+      <tbody>
+        <tr><td>January 2026</td><td>287</td><td>125</td><td>56%</td></tr>
+        <tr><td>February 2026</td><td>141</td><td>60</td><td>57%</td></tr>
+        <tr><td>March 2026</td><td>372</td><td>96</td><td>74%</td></tr>
+        <tr><td>April 2026</td><td>611</td><td>183</td><td>70%</td></tr>
+        <tr><td>May 2026</td><td>588</td><td>154</td><td>74%</td></tr>
+        <tr><td>June 2026</td><td>724</td><td>219</td><td>70%</td></tr>
+        <tr><td><b>July 2026</b> (this report)</td><td><b>665</b></td><td><b>about 575</b></td><td><b>14%</b></td></tr>
+      </tbody>
+    </table>
+
+    <p style="margin-top:18px"><b>Effect on the report.</b> The statement <b>&ldquo;once the population is normalized, the peak was June&rdquo;</b> is the one affected. Counting Microsoft-product records only, June is <span class="fact">219</span> and July is <span class="fact">about 575</span> — July is roughly <span class="fact">2.6 times</span> June. The statement reverses.</p>
+
+    <p class="caution">Those two numbers are not the same kind of measurement. Read them as follows.</p>
+    <ul>
+      <li><b>June 219</b> was measured on 2026-08-05 against MSRC's current document for June, using the corrected rule. The same rule applied to the reconstructed 2026-07-15 state also gives 219 — June's Microsoft-product count did not move between the snapshot and now.</li>
+      <li><b>July &ldquo;about 575&rdquo; is a measurement on a reconstruction, not on the frozen document.</b> MSRC's monthly document cannot be retrieved as it stood on 2026-07-15, so that state was reconstructed by keeping only the records whose earliest per-CVE revision date is on or before 2026-07-15. The reconstruction holds <b>1,164</b> records against the frozen snapshot's <b>1,150</b> (+14, +1.2%). Applying the corrected rule to MSRC's <i>current</i> July document gives <b>596</b>.</li>
+    </ul>
+    <p>We state this explicitly because presenting a reconstruction as a measurement of the frozen document would repeat, in the correction, the same class of error being corrected.</p>
+
+    <p style="margin-top:18px"><b>Why July was the least affected.</b> All seven months were frozen on the same day, 2026-07-15. July alone was <b>one day past its Patch Tuesday</b> (2026-07-14); the other months had matured for one to six months. Azure Linux advisories arrive in bulk starting a few weeks after Patch Tuesday — for June, the most common first-revision date on those records is 2026-06-27 / 2026-06-28. July was fetched before that wave; the older months were fetched after it.</p>
+    <p>So the published month-over-month &ldquo;core Microsoft&rdquo; series was, in effect, <span class="fact">a series of how far the Azure Linux backfill had progressed at the moment each month happened to be fetched.</span> The section above already states that cross-month comparison is only valid at equal data maturity. That holds at a deeper level than was known when it was written.</p>
+
+    <p style="margin-top:18px"><b>No corrected time series.</b> We are not publishing a corrected month-by-month table. Removing the contamination does not make the months comparable: each month was frozen at a different distance from its own Patch Tuesday, so the maturity problem remains underneath. A corrected series would look authoritative while still carrying the defect the report itself warns about.</p>
+
+    <p style="margin-top:18px"><b>What this does not say.</b></p>
+    <ul>
+      <li><b>Microsoft's own advisories were not removed from anything.</b> The Microsoft-product record count is identical between the reconstructed 2026-07-15 state and 2026-08-05 for all seven months — July being the sole exception at 575 &rarr; 596, which is twenty-one advisories published after the snapshot. What moves over time is the Azure Linux portion.</li>
+      <li><b>Why MSRC includes Azure Linux package advisories in the monthly document, and why that set changes after publication, is unknown to us.</b> We record what the data does; we do not assert why.</li>
+    </ul>
+
+    <p style="font-size:13px;color:#666;margin-top:18px">The report itself, the frozen snapshot and its figures are unchanged. This note is the record; nothing has been regenerated or restated in the published edition.</p>
+  </div>
+
+  <p class="sub" style="margin-top:20px">Dates — data snapshot: 2026-07-15 · revision detected: 2026-07-23 · note prepared: 2026-07-23 · classification defect identified: 2026-08-05 · correction added: 2026-08-05.</p>
 </div>
 <div class="footer">Facts are machine-generated; interpretation is human. The frozen snapshot is unchanged. Source: Microsoft Security Response Center (MSRC) CVRF.</div>
 </body>
