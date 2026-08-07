@@ -1,0 +1,238 @@
+name: incidents-daily
+
+# Daily collection of SEC 8-K Item 1.05 disclosures into docs/incidents/.
+# Data updates only — code/display changes stay behind normal PR review.
+#
+# Shaped after kev-daily.yml: main is protected, so the bot cannot push to main. It opens an
+# auto-PR from a deterministic branch and merges it. Branch protection is not weakened; the PR
+# diff is the audit trail and the guards are the gatekeeper.
+#
+# The schedule is DELIBERATELY COMMENTED OUT. It is enabled only on an explicit owner go, after
+# the workflow_dispatch verification run has been inspected.
+on:
+  workflow_dispatch:
+  # schedule:
+  #   # 22:00 UTC == 07:00 JST. 8-K filings land during US business hours; a JST-morning run
+  #   # picks up the prior US day. Kept clear of kev-daily (23:30 UTC) so the two never race
+  #   # for the same base commit.
+  #   - cron: "0 22 * * *"
+
+# Least privilege: commit the regenerated section (contents) and open/merge its PR
+# (pull-requests). No PAT — the built-in GITHUB_TOKEN only.
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write            # the "new disclosure" notice is a GitHub issue (no new credential)
+
+concurrency:
+  group: incidents-daily
+  cancel-in-progress: false
+
+env:
+  BOT_BRANCH: bot/incidents-daily
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+        # No pip install: the collector is standard-library only.
+
+      - name: Collect SEC Item 1.05 disclosures (integrity-gated, append-only)
+        id: run
+        # run.py fail-halts (non-zero exit) on a degraded fetch, so a bad upstream response
+        # fails the job here and never appends to the permanent record. pipefail is essential:
+        # without it `python | tee` would mask a failure as success.
+        env:
+          # SEC requires a declared User-Agent with contact information (403 without one).
+          # Held as a secret so no contact address is committed to this public repo.
+          SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
+        run: |
+          set -euo pipefail
+          if [ -z "${SEC_USER_AGENT:-}" ]; then
+            echo "::error::SEC_USER_AGENT secret is not set. SEC requires a declared"
+            echo "::error::User-Agent with contact information; without it EDGAR returns 403."
+            exit 1
+          fi
+          python -m incidents.run | tee "$RUNNER_TEMP/run.log"
+          stats=$(grep -m1 'integrity stats' "$RUNNER_TEMP/run.log" | sed 's/^\[incidents\] //' || true)
+          echo "stats=$stats" >> "$GITHUB_OUTPUT"
+          {
+            echo "new<<__EOF__"
+            grep '^\[incidents\] NEW ' "$RUNNER_TEMP/run.log" | sed 's/^\[incidents\] NEW  //' || true
+            echo "__EOF__"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Enforce diff scope (only docs/incidents/ and incidents/data/)
+        # Contain the "no direct commits to main" exception: the automated change may only touch
+        # these paths. Any change outside them fails the job before a PR is opened.
+        run: |
+          set -euo pipefail
+          bad=0
+          while IFS= read -r line; do
+            [ -z "$line" ] && continue
+            path=${line:3}
+            case "$path" in
+              docs/incidents/*|incidents/data/*) ;;
+              *) echo "::error::out-of-scope change not allowed for auto-update: $path"; bad=1 ;;
+            esac
+          done < <(git status --porcelain)
+          if [ "$bad" -ne 0 ]; then exit 1; fi
+
+      - name: Verify the published sections nobody may touch are untouched
+        # docs/archive/ is the frozen month archive, docs/kev/ is a separately published
+        # section, and docs/report_*.html / docs/index.html come from the private Method-D
+        # build. This job must never alter any of them.
+        run: |
+          set -euo pipefail
+          if [ -n "$(git status --porcelain docs/archive docs/kev docs/index.html docs/report_en.html docs/report_ja.html)" ]; then
+            echo "::error::this job modified a section it must not touch:"
+            git status --porcelain docs/archive docs/kev docs/index.html docs/report_*.html
+            exit 1
+          fi
+
+      - name: Detect no-op (skip PR if docs/incidents/ is unchanged)
+        id: noop
+        # The published output is docs/incidents/. If it did not change, open no PR — this
+        # avoids a daily empty commit and a needless Pages rebuild. Item 1.05 filings are rare,
+        # so the no-op path is the ordinary daily outcome.
+        run: |
+          set -euo pipefail
+          if [ -n "$(git status --porcelain docs/incidents incidents/data)" ]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "docs/incidents changed — will open a PR"
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "no change — no-op, nothing to publish (the ordinary daily outcome)"
+          fi
+
+      - name: Open and merge auto-PR
+        id: autopr
+        if: steps.noop.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          STATS: ${{ steps.run.outputs.stats }}
+        run: |
+          set -euo pipefail
+
+          # Never stack PRs: an already-open bot PR means a prior run failed mid-flight. Fail
+          # loudly and let a human resolve it rather than opening a parallel one.
+          open_count=$(gh pr list --repo "$GITHUB_REPOSITORY" --head "$BOT_BRANCH" \
+                         --state open --json number --jq 'length')
+          if [ "$open_count" != "0" ]; then
+            echo "::error::an open PR from $BOT_BRANCH already exists — a previous run likely"
+            echo "::error::failed after opening it. Resolve/close it before re-running."
+            exit 1
+          fi
+
+          base=$(git rev-parse HEAD)
+          echo "base=$base" >> "$GITHUB_OUTPUT"
+
+          git config user.name "incidents-daily-bot"
+          git config user.email "incidents-daily-bot@users.noreply.github.com"
+
+          git push origin --delete "$BOT_BRANCH" 2>/dev/null || true
+          git checkout -B "$BOT_BRANCH"
+          git add docs/incidents incidents/data
+          git commit -m "incidents: daily disclosure update (docs/incidents + record)"
+          commit=$(git rev-parse HEAD)
+          echo "commit=$commit" >> "$GITHUB_OUTPUT"
+
+          git push origin "$BOT_BRANCH"
+
+          body=$(cat <<EOF
+          Automated daily SEC Item 1.05 disclosure update (auto-PR + auto-merge).
+
+          - Integrity gate passed: ${STATS:-(stats unavailable)}
+          - Diff scope enforced: changes confined to docs/incidents/ and incidents/data/
+          - docs/archive/, docs/kev/, docs/index.html and docs/report_*.html verified untouched
+          - Record is append-only; existing statements are never rewritten
+          - Collector/guard logic unchanged; data only.
+
+          Opened and merged by .github/workflows/incidents-daily.yml.
+          EOF
+          )
+          gh pr create --repo "$GITHUB_REPOSITORY" --base main --head "$BOT_BRANCH" \
+            --title "incidents: daily disclosure update" --body "$body"
+
+          merged=0
+          for i in 1 2 3 4 5; do
+            if gh pr merge --repo "$GITHUB_REPOSITORY" "$BOT_BRANCH" --merge --delete-branch; then
+              merged=1; break
+            fi
+            echo "merge not ready (attempt $i) — retrying"
+            sleep 6
+          done
+          if [ "$merged" -ne 1 ]; then
+            echo "::error::auto-merge failed after retries"
+            exit 1
+          fi
+
+      - name: Positive control — confirm the update actually landed on main
+        if: steps.noop.outputs.changed == 'true'
+        # Trust state, not exit codes. Verify the data commit is really an ancestor of
+        # origin/main and that main advanced. If not, fail so NO success ping is sent.
+        env:
+          COMMIT: ${{ steps.autopr.outputs.commit }}
+          BASE: ${{ steps.autopr.outputs.base }}
+        run: |
+          set -euo pipefail
+          git fetch origin main --quiet
+          head=$(git rev-parse origin/main)
+          if [ "$head" = "$BASE" ]; then
+            echo "::error::origin/main did not advance ($head) — update did not land"; exit 1
+          fi
+          if ! git merge-base --is-ancestor "$COMMIT" origin/main; then
+            echo "::error::merge reported success but $COMMIT is NOT on origin/main"; exit 1
+          fi
+          echo "positive control OK: $COMMIT is on origin/main (now ${head})"
+
+      - name: Notice — open an issue listing the new disclosures
+        # The notification IS the work item: a new Item 1.05 filing is exactly the prompt to
+        # consider whether to write it up in the curated layer. An issue keeps this inside
+        # GitHub, so no new credential (Pushover token) has to be stored here.
+        if: steps.noop.outputs.changed == 'true' && steps.run.outputs.new != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NEW: ${{ steps.run.outputs.new }}
+        run: |
+          set -euo pipefail
+          [ -z "${NEW//[[:space:]]/}" ] && exit 0
+          body=$(cat <<EOF
+          New SEC Form 8-K **Item 1.05** disclosure(s) recorded in \`docs/incidents/\`.
+
+          \`\`\`
+          ${NEW}
+          \`\`\`
+
+          These are now on the automatic layer. Nothing further is required — this notice
+          exists so the curated layer can be considered while the filing is current.
+
+          Opened by .github/workflows/incidents-daily.yml.
+          EOF
+          )
+          gh issue create --repo "$GITHUB_REPOSITORY" \
+            --title "incidents: new Item 1.05 disclosure(s)" --body "$body" || \
+            echo "::warning::could not open the notice issue (the data update itself succeeded)"
+
+      - name: Dead-man's switch — ping on CONFIRMED success only
+        if: success()
+        # Reached only if every prior step succeeded: guard passed AND (no-op OR
+        # PR-merged-and-verified-on-main). no-op is a legitimate success and does ping.
+        env:
+          HC: ${{ secrets.INCIDENTS_HEALTHCHECK_URL }}
+        run: |
+          if [ -n "$HC" ]; then curl -fsS -m 10 --retry 3 "$HC" || true; fi
+
+      - name: Dead-man's switch — signal failure
+        if: failure()
+        env:
+          HC: ${{ secrets.INCIDENTS_HEALTHCHECK_URL }}
+        run: |
+          if [ -n "$HC" ]; then curl -fsS -m 10 --retry 3 "${HC%/}/fail" || true; fi

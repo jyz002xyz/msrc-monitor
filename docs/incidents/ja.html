@@ -1,0 +1,57 @@
+<!DOCTYPE html><html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>米国上場企業が SEC に開示したサイバーインシデント — MSRC 脆弱性動向レポート</title>
+<meta name="description" content="「誰が何を開示したか」の記録です。事実とリンクのみで、解釈は書きません。報道の文章を要約することもしません。">
+<style>
+:root{color-scheme:light}*{box-sizing:border-box}
+body{margin:0;background:#eef0f3;color:#1a1a1a;font-family:-apple-system,BlinkMacSystemFont,
+'Segoe UI','Hiragino Kaku Gothic ProN','Noto Sans JP',Arial,sans-serif}
+.topbar{position:sticky;top:0;z-index:10;background:#1f3864;color:#fff;display:flex;
+align-items:center;justify-content:space-between;padding:10px 18px;font-size:14px}
+.topbar a{color:#fff;text-decoration:none;opacity:.92}.topbar a:hover{opacity:1;text-decoration:underline}
+.topbar .nav{display:flex;flex-wrap:wrap}.topbar .nav a{margin-left:16px;white-space:nowrap}
+.topbar .langpill{border:1px solid rgba(255,255,255,.6);border-radius:14px;padding:3px 13px;margin-left:22px;opacity:1}
+.topbar .langpill:hover{background:rgba(255,255,255,.16);text-decoration:none}
+.paper{max-width:960px;margin:18px auto 40px;background:#fff;padding:32px 40px;border-radius:8px;
+box-shadow:0 2px 12px rgba(0,0,0,.08);overflow-x:auto}
+h1{color:#1f3864;font-size:22px;margin:0 0 6px}
+h2{color:#1f3864;border-bottom:2px solid #e3e6ea;padding-bottom:4px;margin-top:30px;font-size:17px}
+.sub{color:#666;font-size:13px;line-height:1.7}
+.scope{background:#fff7e6;border:1px solid #f0d9a8;border-left:4px solid #d99b1c;border-radius:6px;
+padding:14px 18px;margin:18px 0 6px;color:#5a4600;font-size:13px;line-height:1.75}
+.scope .h{font-weight:700;display:block;margin-bottom:6px}
+.scope ul{margin:8px 0 0;padding-left:20px}.scope li{margin:4px 0}
+.layer{background:#eef3fb;border:1px solid #c9dcf5;border-left:4px solid #1f3864;border-radius:6px;
+padding:12px 16px;margin:10px 0 14px;color:#26364d;font-size:13px;line-height:1.7}
+table{border-collapse:collapse;width:100%;font-size:13px;margin:10px 0}
+th,td{border-bottom:1px solid #eef0f3;padding:7px 10px;text-align:left;vertical-align:top}
+th{background:#f0f2f5;font-size:12.5px}
+td.org{font-weight:600;color:#1f3864}
+.stmt{font-size:12.5px;color:#444;margin:2px 0}
+.stmt a{color:#1f3864;text-decoration:none;border-bottom:1px dotted #9ab0d4}
+.stmt a:hover{text-decoration:underline}
+.amend{color:#7a4e00}
+.empty{background:#f5f6f8;border:1px dashed #c9ccd2;border-radius:6px;padding:18px 20px;
+color:#555;font-size:13px;line-height:1.7;margin:10px 0}
+.xlink{font-size:12px;color:#7a4e00;margin-top:4px}
+.xlink a{color:#7a4e00}
+.sources{max-width:960px;margin:0 auto 10px;padding:0 20px;color:#666;font-size:12px;line-height:1.7}
+.sources a{color:#1f3864}.sources .srchead{font-weight:700;color:#444}
+.footer{max-width:960px;margin:0 auto 40px;color:#888;font-size:12px;text-align:center;padding:0 20px}
+@media (max-width:640px){.paper{margin:12px;padding:22px 18px}}
+</style></head><body>
+<div class="topbar"><a href="../index.html">MSRC 脆弱性動向レポート</a><div class="nav"><a href="../index.html">トップへ</a><a href="../archive/index.html">アーカイブ</a><a href="../kev/index.html">クロスベンダー KEV/EPSS</a><a class="langpill" href="en.html">English</a></div></div>
+<div class="paper">
+  <h1>米国上場企業が SEC に開示したサイバーインシデント</h1>
+  <p class="sub">「誰が何を開示したか」の記録です。事実とリンクのみで、解釈は書きません。報道の文章を要約することもしません。</p>
+  <div class="scope"><span class="h">このセクションに入っているもの、入っていないもの</span><ul><li><b>自動で集めるのは SEC Form 8-K の Item 1.05 だけです。</b>この項目は、企業自身がそのインシデントを重要と判断したときに提出されます。1.05 に限るのは意図的で、何を重要とするかを決めるのは当サイトではなく企業自身です。</li><li><b>日本・豪州・欧州は自動では1件も入りません。</b>それらの地域でインシデントが少ないからではありません。個別事案を構造化して公開する仕組みが存在しないためです。たとえば豪州 OAIC は統計を公表しますが個別事案の記録は公開していません — ここでの0件は「取得できない」であって「起きていない」ではありません。したがって本セクションでは<b>合計件数も地域別件数も示しません</b>。</li><li><b>米国内でも、対象は SEC 登録企業（上場企業）だけです。</b>Item 1.05 の義務を負うのは上場企業です。非上場企業・政府機関・非営利団体・医療機関の大半は入りません。とくに医療分野はまるごと欠けます — HHS の侵害ポータルはブラウザ自動化なしには機械可読でなく、その収集は<b>見送った</b>ものです（試みて断念したのではありません）。</li><li><b>編者が記録する層は網羅的ではありません。</b>編者が選んで記録したものだけで、そこに無いことから何かが言えるわけではありません。</li></ul></div>
+  <h2>SEC への開示（Item 1.05）</h2>
+  <div class="layer">日次で収集しています。インシデントは「企業」と「報告された最初の事象の日付」の組で識別し、初報の 8-K と以後の 8-K/A（訂正・追報）は、その下に個別の言明として並べます。記録した内容は後から書き換えません。</div>
+  <table><thead><tr><th>組織</th><th>事象の日付</th><th>言明（提出書類）</th></tr></thead><tbody><tr><td class="org">AMGEN INC<div class="stmt">CIK 0000318154</div></td><td>2026-07-29</td><td><div class="stmt"><span>2026-07-31 · 8-K</span> · items 1.05 · <a href="https://www.sec.gov/Archives/edgar/data/318154/000031815426000119/0000318154-26-000119-index.htm" rel="noopener">0000318154-26-000119</a></div></td></tr><tr><td class="org">NAVIENT CORP<div class="stmt">CIK 0001593538</div></td><td>2026-06-29</td><td><div class="stmt"><span>2026-07-02 · 8-K</span> · items 1.05 · <a href="https://www.sec.gov/Archives/edgar/data/1593538/000114036126027441/0001140361-26-027441-index.htm" rel="noopener">0001140361-26-027441</a></div></td></tr><tr><td class="org">AdaptHealth Corp.<div class="stmt">CIK 0001725255</div></td><td>2026-06-27</td><td><div class="stmt"><span>2026-07-02 · 8-K</span> · items 1.05 · <a href="https://www.sec.gov/Archives/edgar/data/1725255/000110465926080297/0001104659-26-080297-index.htm" rel="noopener">0001104659-26-080297</a></div></td></tr><tr><td class="org">River Financial Corp<div class="stmt">CIK 0001641601</div></td><td>2026-06-19</td><td><div class="stmt"><span>2026-06-25 · 8-K</span> · items 1.05, 9.01 · <a href="https://www.sec.gov/Archives/edgar/data/1641601/000119312526282946/0001193125-26-282946-index.htm" rel="noopener">0001193125-26-282946</a></div><div class="stmt"><span class="amend">2026-07-06 · 8-K/A</span> · items 1.05, 9.01 · <a href="https://www.sec.gov/Archives/edgar/data/1641601/000119312526295704/0001193125-26-295704-index.htm" rel="noopener">0001193125-26-295704</a></div><div class="stmt"><span class="amend">2026-07-10 · 8-K/A</span> · items 1.05, 9.01 · <a href="https://www.sec.gov/Archives/edgar/data/1641601/000119312526300763/0001193125-26-300763-index.htm" rel="noopener">0001193125-26-300763</a></div><div class="stmt"><span class="amend">2026-07-17 · 8-K/A</span> · items 1.05, 9.01 · <a href="https://www.sec.gov/Archives/edgar/data/1641601/000119312526307288/0001193125-26-307288-index.htm" rel="noopener">0001193125-26-307288</a></div><div class="stmt"><span class="amend">2026-07-30 · 8-K/A</span> · items 1.05, 9.01 · <a href="https://www.sec.gov/Archives/edgar/data/1641601/000119312526325324/0001193125-26-325324-index.htm" rel="noopener">0001193125-26-325324</a></div></td></tr><tr><td class="org">8X8 INC /DE/<div class="stmt">CIK 0001023731</div></td><td>2026-06-17</td><td><div class="stmt"><span>2026-06-23 · 8-K</span> · items 1.05 · <a href="https://www.sec.gov/Archives/edgar/data/1023731/000102373126000084/0001023731-26-000084-index.htm" rel="noopener">0001023731-26-000084</a></div></td></tr><tr><td class="org">iRhythm Holdings, Inc.<div class="stmt">CIK 0001388658</div></td><td>2026-06-10</td><td><div class="stmt"><span>2026-06-15 · 8-K</span> · items 1.05 · <a href="https://www.sec.gov/Archives/edgar/data/1388658/000138865826000055/0001388658-26-000055-index.htm" rel="noopener">0001388658-26-000055</a></div></td></tr><tr><td class="org">Oncology Institute, Inc.<div class="stmt">CIK 0001799191</div></td><td>2026-05-20</td><td><div class="stmt"><span>2026-05-22 · 8-K</span> · items 1.05, 9.01 · <a href="https://www.sec.gov/Archives/edgar/data/1799191/000107997326000721/0001079973-26-000721-index.htm" rel="noopener">0001079973-26-000721</a></div></td></tr><tr><td class="org">CB Financial Services, Inc.<div class="stmt">CIK 0001605301</div></td><td>2026-05-07</td><td><div class="stmt"><span>2026-05-11 · 8-K</span> · items 1.05 · <a href="https://www.sec.gov/Archives/edgar/data/1605301/000160530126000021/0001605301-26-000021-index.htm" rel="noopener">0001605301-26-000021</a></div></td></tr><tr><td class="org">WEST PHARMACEUTICAL SERVICES INC<div class="stmt">CIK 0000105770</div></td><td>2026-05-07</td><td><div class="stmt"><span>2026-05-11 · 8-K</span> · items 1.05, 7.01, 9.01 · <a href="https://www.sec.gov/Archives/edgar/data/105770/000010577026000068/0000105770-26-000068-index.htm" rel="noopener">0000105770-26-000068</a></div><div class="stmt"><span class="amend">2026-05-20 · 8-K/A</span> · items 1.05, 9.01 · <a href="https://www.sec.gov/Archives/edgar/data/105770/000010577026000077/0000105770-26-000077-index.htm" rel="noopener">0000105770-26-000077</a></div></td></tr></tbody></table>
+  <h2>編者が記録したインシデント</h2>
+  <div class="layer">記録すべきことがあるときに手で追加します。各エントリは「誰が・いつ・何と述べたか」を並べます。訂正は言明の追加として足し、元の言明は残します。攻撃者の帰属がある場合は「誰が何を主張したか」として記録し、「誰がやったか」としては書きません。</div>
+  <div class="empty">編者が記録したインシデントはまだありません。この層は記録すべきことがあるときに書くもので、定期的に埋めるものではありません。</div>
+</div>
+<div class="sources"><p class="srchead">出典</p><p><a href="https://www.sec.gov/edgar/search/" rel="noopener">U.S. Securities and Exchange Commission — EDGAR</a></p><p>sec.gov に掲載された情報は公開情報であり、複製・再配布が可能です。出典として SEC を明示しています。本セクションは SEC と提携しておらず、SEC の承認・公認を受けたものではありません。</p><p class="srchead">主レポートの出典</p><p><a href="https://msrc.microsoft.com/update-guide" rel="noopener">Microsoft Security Response Center (MSRC) Security Update Guide (CVRF)</a></p></div>
+<div class="footer">事実は公開された提出書類から機械的に収集しています。編者が記録する層は人間が書いています。ここでは解釈を提示しません。</div>
+</body></html>
