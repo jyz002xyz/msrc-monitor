@@ -39,6 +39,8 @@ padding:14px 18px;margin:18px 0 6px;color:#5a4600;font-size:13px;line-height:1.7
 .scope ul{margin:8px 0 0;padding-left:20px}.scope li{margin:4px 0}
 .layer{background:#eef3fb;border:1px solid #c9dcf5;border-left:4px solid #1f3864;border-radius:6px;
 padding:12px 16px;margin:10px 0 14px;color:#26364d;font-size:13px;line-height:1.7}
+.coverage{font-size:12.5px;color:#7a4e00;background:#fff7e6;border:1px solid #f0d9a8;
+border-left:3px solid #d99b1c;border-radius:6px;padding:8px 12px;margin:2px 0 14px;line-height:1.6}
 table{border-collapse:collapse;width:100%;font-size:13px;margin:10px 0}
 th,td{border-bottom:1px solid #eef0f3;padding:7px 10px;text-align:left;vertical-align:top}
 th{background:#f0f2f5;font-size:12.5px}
@@ -98,6 +100,10 @@ L = {
         "auto_note": "Collected daily. One incident is one company and one date of the earliest "
                      "reported event; the original 8-K and every later 8-K/A amendment are listed "
                      "as separate statements under it. Nothing here is edited after it is recorded.",
+        "coverage": "This record begins at {since}. Item 1.05 filings made before that date "
+                    "were never collected and are absent — the table is not a complete history "
+                    "of the item.",
+        "coverage_none": "The collected range is not recorded yet.",
         "cur_h": "Editor-recorded incidents",
         "cur_note": "Added by hand, when there is something to record. Each entry lists who stated "
                     "what, and when. A correction is added as a further statement; the earlier one "
@@ -148,6 +154,10 @@ L = {
         "auto_note": "日次で収集しています。インシデントは「企業」と「報告された最初の事象の日付」の"
                      "組で識別し、初報の 8-K と以後の 8-K/A（訂正・追報）は、その下に個別の言明として"
                      "並べます。記録した内容は後から書き換えません。",
+        "coverage": "この記録は {since} 以降を対象としています。それより前に提出された "
+                    "Item 1.05 は収集しておらず、ここには入っていません — この表は Item 1.05 の"
+                    "全履歴ではありません。",
+        "coverage_none": "収集した範囲がまだ記録されていません。",
         "cur_h": "編者が記録したインシデント",
         "cur_note": "記録すべきことがあるときに手で追加します。各エントリは「誰が・いつ・何と述べたか」を"
                     "並べます。訂正は言明の追加として足し、元の言明は残します。攻撃者の帰属がある場合は"
@@ -209,6 +219,18 @@ def _statement_line(s: dict) -> str:
     return (f'<div class="stmt"><span{amend}>{_h(s.get("filing_date"))} · {form}</span> '
             f'· items {items} · <a href="{_h(s.get("url"))}" rel="noopener">'
             f'{_h(s.get("adsh"))}</a></div>')
+
+
+def _coverage(store: dict, lang: str) -> str:
+    """The record's start date, stated next to the table it qualifies.
+
+    Rendered from the record itself rather than written into the template, so it cannot drift
+    away from what was actually collected.
+    """
+    t = L[lang]
+    since = ((store.get("coverage") or {}).get("since"))
+    text = t["coverage"].format(since=since) if since else t["coverage_none"]
+    return f'<div class="coverage">{_h(text)}</div>'
 
 
 def _auto_table(store: dict, lang: str, linked_keys: set[str]) -> str:
@@ -279,6 +301,7 @@ def render(store: dict, recs: dict, lang: str) -> str:
   {_scope(lang)}
   <h2>{_h(t['auto_h'])}</h2>
   <div class="layer">{_h(t['auto_note'])}</div>
+  {_coverage(store, lang)}
   {_auto_table(store, lang, linked)}
   <h2>{_h(t['cur_h'])}</h2>
   <div class="layer">{_h(t['cur_note'])}</div>

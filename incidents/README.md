@@ -64,6 +64,11 @@ environment so that no contact address is committed to this public repository.
 The record was seeded on 2026-08-08 with the 2026-05-09..2026-08-07 window (nine incidents,
 fourteen filings) so the section is not empty at launch.
 
+That start date is not prose in a template: `coverage.since` is stored in the record, widened
+by any earlier backfill and never narrowed by a later daily window, and the page renders it
+next to the table. A table with no stated start reads as the complete history of Item 1.05,
+which it is not.
+
 ## Source and terms
 
 sec.gov states its information is public and may be copied or further distributed, asking for

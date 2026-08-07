@@ -246,10 +246,41 @@ def test_statement_needs_a_checkable_url():
 
 
 # --- rendering ---------------------------------------------------------------
-def _pages():
+def _pages(since: str | None = "2026-05-09"):
     filings, _ = fetch_sec.parse(FIXTURE)
     st, _ = store.merge(store.empty(), filings, seen_date="2026-08-08")
+    if since:
+        store.note_coverage(st, since)
     return {lang: publish.render(st, records.empty(), lang) for lang in ("en", "ja")}
+
+
+# --- coverage ----------------------------------------------------------------
+def test_coverage_start_is_stated_next_to_the_table():
+    """A table with no start reads as the complete history of Item 1.05, which it is not."""
+    for lang, page in _pages().items():
+        assert "2026-05-09" in page, f"{lang}: the collected-from date is not on the page"
+        assert page.index('class="coverage"') < page.index("<table"), \
+            f"{lang}: the coverage note must precede the table it qualifies"
+    assert "not a complete history" in _pages()["en"]
+    assert "全履歴ではありません" in _pages()["ja"]
+
+
+def test_coverage_widens_but_never_narrows():
+    st = store.note_coverage(store.empty(), "2026-05-09")
+    assert st["coverage"]["since"] == "2026-05-09"
+    store.note_coverage(st, "2026-08-01")           # a later, narrower daily window
+    assert st["coverage"]["since"] == "2026-05-09", "a later window must not narrow coverage"
+    store.note_coverage(st, "2026-01-01")           # an earlier backfill
+    assert st["coverage"]["since"] == "2026-01-01", "an earlier backfill must widen coverage"
+
+
+def test_coverage_absent_says_so_rather_than_implying_completeness():
+    import re
+    for lang, page in _pages(since=None).items():
+        m = re.search(r'<div class="coverage">(.*?)</div>', page, re.S)
+        assert m, f"{lang}: the coverage block must still be present"
+        assert not re.search(r"\d{4}-\d{2}-\d{2}", m.group(1)), \
+            f"{lang}: must not invent a start date when none is recorded: {m.group(1)}"
 
 
 def test_scope_is_stated_before_any_table():

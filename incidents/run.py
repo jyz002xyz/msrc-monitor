@@ -65,6 +65,7 @@ def main(argv: list[str] | None = None) -> int:
             return 1
 
         st, added = store.merge(st, filings, seen_date=today.isoformat())
+        store.note_coverage(st, since)
         after = store.counts(st)
         failures, gstats = integrity.evaluate(filings, fstats, before, after)
         if failures:

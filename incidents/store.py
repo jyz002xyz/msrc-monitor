@@ -37,7 +37,20 @@ def incident_key(cik: str, report_date: str | None) -> str:
 
 
 def empty() -> dict:
-    return {"schema": SCHEMA, "incidents": []}
+    # `coverage.since` is the earliest filing date this record has ever looked at. It is a
+    # property OF THE RECORD, not prose in a template: without it a reader meets a table with
+    # no start and reads it as the whole history of Item 1.05, which it is not.
+    return {"schema": SCHEMA, "coverage": {"since": None}, "incidents": []}
+
+
+def note_coverage(store: dict, since: str) -> dict:
+    """Widen the recorded coverage start. Never narrows — a shorter later window does not
+    unsee what was already collected, so the earliest window ever fetched is what holds."""
+    cov = store.setdefault("coverage", {"since": None})
+    cur = cov.get("since")
+    if not cur or since < cur:
+        cov["since"] = since
+    return store
 
 
 def load(path: Path) -> dict:
@@ -46,6 +59,7 @@ def load(path: Path) -> dict:
     d = json.loads(path.read_text(encoding="utf-8"))
     if not isinstance(d, dict) or "incidents" not in d:
         raise ValueError(f"{path}: not a disclosure store")
+    d.setdefault("coverage", {"since": None})
     return d
 
 
