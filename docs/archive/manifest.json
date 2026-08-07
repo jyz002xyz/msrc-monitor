@@ -12,6 +12,11 @@
       "notes": {
         "en": "notes-2026-07.en.html",
         "ja": "notes-2026-07.ja.html"
+      },
+      "_counts_note": "counts are the report's own published figures and stay as the record of what the report states. The 2026-08-05 correction concerns how 'core' was DEFINED, not what this row records — see `correction`.",
+      "correction": {
+        "en": "notes-2026-07.en.html#correction",
+        "ja": "notes-2026-07.ja.html#correction"
       }
     }
   ]

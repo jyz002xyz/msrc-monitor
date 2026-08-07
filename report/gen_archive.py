@@ -159,6 +159,9 @@ td.month{color:#1f3864}
 .mnote{font-size:12px;color:#8a5a00;font-weight:400;margin-top:4px}
 .mnote a{color:#8a5a00;font-weight:700;text-decoration:none}
 .mnote a:hover{text-decoration:underline}
+.mcorr{font-size:12px;color:#8f342d;font-weight:400;margin-top:6px;line-height:1.6}
+.mcorr a{color:#8f342d;font-weight:700;text-decoration:none}
+.mcorr a:hover{text-decoration:underline}
 a.rep{color:#1f3864;text-decoration:none;font-weight:600;margin-right:12px}
 a.rep:hover{text-decoration:underline}
 .footer{max-width:760px;margin:24px auto;padding:0 20px;color:#888;font-size:12px}
@@ -196,14 +199,31 @@ def _fmt_subject(subject: str) -> tuple[str, str]:
 
 def _count_cell(entry: dict) -> str:
     """Two-value count when both are known, single when only --count given, else '—'
-    (never fabricated)."""
+    (never fabricated).
+
+    A `correction` entry adds a marker and a link, and NEVER changes the numbers. The
+    counts are the report's own published figures: they are the record of what the
+    report states, so rewriting them here would break the correspondence with the frozen
+    snapshot. The correction says the figure was produced by a defective definition; the
+    figure itself stays as published.
+    """
     counts = entry.get("counts") or {}
     cvrf, core = counts.get("cvrf"), counts.get("core")
     if isinstance(cvrf, int) and isinstance(core, int):
-        return f"{cvrf:,} CVRF / {core:,} 本体相当・core"
-    if isinstance(entry.get("count"), int):
-        return f"{entry['count']:,}"
-    return "—"
+        cell = f"{cvrf:,} CVRF / {core:,} 本体相当・core"
+    elif isinstance(entry.get("count"), int):
+        cell = f"{entry['count']:,}"
+    else:
+        cell = "—"
+    corr = entry.get("correction") or {}
+    if corr.get("en") and corr.get("ja"):
+        cell += (
+            '<div class="mcorr">⚠ Correction — the &ldquo;core&rdquo; figure was produced '
+            'by a defective population rule: '
+            f'<a href="{corr["en"]}">English</a> · <a href="{corr["ja"]}">日本語</a><br>'
+            '訂正 —「本体相当」は母集団規則の欠陥により算出された値: '
+            f'<a href="{corr["en"]}">English</a> · <a href="{corr["ja"]}">日本語</a></div>')
+    return cell
 
 
 def build_index(docs: Path) -> None:
