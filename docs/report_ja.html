@@ -42,6 +42,12 @@ body { margin: 0; background: #eef0f3; color: #1a1a1a;
 .about dd { margin: 2px 0 0 14px; }
 .about a { color: #1f3864; }
 @media (max-width: 640px) { .about { margin: 0 12px 20px; } }
+.correction { max-width: 840px; margin: 14px auto 0; padding: 12px 16px;
+  background: #fdf0ef; border: 1px solid #e9b7b2; border-left: 4px solid #b3453c;
+  border-radius: 6px; font-size: 13px; line-height: 1.7; color: #5c2b26; }
+.correction .h { font-weight: 700; }
+.correction a { color: #8f342d; }
+@media (max-width: 640px) { .correction { margin: 12px 12px 0; } }
 </style>
 </head>
 <body>
@@ -50,6 +56,7 @@ body { margin: 0; background: #eef0f3; color: #1a1a1a;
   <div class="nav"><a href="index.html">トップへ</a><a href="archive/index.html">アーカイブ</a><a href="kev/index.html">クロスベンダー KEV/EPSS</a><a href="report_en.html">English</a></div>
 </div>
 <div class="disclaimer">本レポートは情報提供のみを目的とし、投資・法務・セキュリティ上の助言を構成しません。数値は機械生成の事実、解釈は人間の分析です。個人名は役割へ一般化しています。詳細は本文末尾の【免責・出典】を参照。</div>
+<div class="correction"><span class="h">訂正</span> — 本レポートが「MS本体相当」として掲載している数値は、除外すべきものを除外できていない母集団規則で算出されていました。これによりレポートの記述のひとつが反転します。以下のレポートは公開時のまま残してあります。訂正の内容と、影響を受ける数値およびその但し書きは<a href="archive/notes-2026-07.ja.html#correction">改訂ノートと訂正</a>に記載しています。</div>
 <article class="paper">
 <p style="line-height: 100%; margin-top: 0.14in; margin-bottom: 0.04in">
 <font face="Hiragino Sans"><span lang="zh-CN"><font color="#595959"><font face="Hiragino Sans"><font size="2" style="font-size: 9pt">技術レポート（機械生成の事実
@@ -1747,7 +1754,7 @@ diff.py 2026-Jul</font></font></font></p>
 <p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Hiragino Sans"><span lang="zh-CN"><font color="#595959"><font face="Hiragino Sans"><font size="1" style="font-size: 8pt"><i>本レポートは</i></font></font></span></font><font face="Hiragino Sans, serif"><font size="1" style="font-size: 8pt"><i>AI</i></font></font><font face="Hiragino Sans"><span lang="zh-CN"><font face="Hiragino Sans"><font size="1" style="font-size: 8pt"><i>アシスタント（</i></font></font></span></font><font face="Hiragino Sans, serif"><font size="1" style="font-size: 8pt"><i>Claude</i></font></font><font face="Hiragino Sans"><span lang="zh-CN"><font face="Hiragino Sans"><font size="1" style="font-size: 8pt"><i>）との対話を通じて作成された。一次データの取得・実行は取得環境で行われ、数値はその実行結果に基づく。解釈・分析には</i></font></font></span></font><font face="Hiragino Sans, serif"><font size="1" style="font-size: 8pt"><i>AI</i></font></font><font face="Hiragino Sans"><span lang="zh-CN"><font face="Hiragino Sans"><font size="1" style="font-size: 8pt"><i>の寄与が含まれるため、重要な意思決定に用いる際は一次情報での再確認を推奨する。</i></font></font></span></font></font></p>
 
 </article>
-<div class="about"><div class="h">このデータについて</div><ul><li>本ページは MSRC の月次脆弱性動向レポートです。事実は Microsoft の CVRF データから機械的に集計し、解釈は人間が書いています。</li><li>更新頻度: Patch Tuesday を基準とする月次。各号は取得時点のデータのスナップショットで凍結し、事後に再生成しません（公開時の数値がそのまま残ります）。対象月とデータ取得日はレポート本文に記載しています（この2つは別の日付です）。</li><li>事後の改訂: Microsoft は過去月のデータを公開後に改訂することがあります。本号は公開時のまま残し、過去号と改訂の記録は<a href="archive/index.html">アーカイブ</a>から辿れます。</li></ul><div class="h" style="margin-top:12px">用語</div><dl><dt>CVRF</dt><dd>Microsoft が毎月公開する機械可読の脆弱性フィード（MSRC CVRF v3.0）。本レポートの一次データ。</dd><dt>CVRF全体 / MS本体相当（再掲載）</dt><dd>「CVRF全体」はフィードがその月に返す全 CVE レコードで、Edge/Chromium（Google が修正し Microsoft が再掲載する分）・Mariner（Azure Linux）・Azure クラウドサービスが混在する。「MS本体相当」は同じ月からこれらの再掲載を除いた母集団。本レポートは両方を併記する。</dd><dt>ゼロデイ</dt><dd>本レポートでは、Microsoft のデータで「悪用済み」または「公開済み」（もしくは両方）とされている CVE を指す。</dd><dt>悪用確認</dt><dd>その CVE に Microsoft 自身の悪用フラグが立っていること。CISA KEV とは別の出典であり、両者はどちら向きにも一致しないことがある。</dd><dt>KEV</dt><dd>CISA の Known Exploited Vulnerabilities Catalog。CISA が悪用を確認した脆弱性の一覧。ベンダー横断の収載は本サイトのクロスベンダー KEV/EPSS セクションに記録している。</dd><dt>EPSS</dt><dd>30日以内に悪用活動が観測される確率（0〜1）。深刻度スコアではない。</dd></dl></div>
+<div class="about"><div class="h">このデータについて</div><ul><li>本ページは MSRC の月次脆弱性動向レポートです。事実は Microsoft の CVRF データから機械的に集計し、解釈は人間が書いています。</li><li>更新頻度: Patch Tuesday を基準とする月次。各号は取得時点のデータのスナップショットで凍結し、事後に再生成しません（公開時の数値がそのまま残ります）。対象月とデータ取得日はレポート本文に記載しています（この2つは別の日付です）。</li><li>事後の改訂: Microsoft は過去月のデータを公開後に改訂することがあります。本号は公開時のまま残し、過去号と改訂の記録は<a href="archive/index.html">アーカイブ</a>から辿れます。</li></ul><div class="h" style="margin-top:12px">用語</div><dl><dt>CVRF</dt><dd>Microsoft が毎月公開する機械可読の脆弱性フィード（MSRC CVRF v3.0）。本レポートの一次データ。</dd><dt>CVRF全体 / MS本体相当（再掲載）</dt><dd>「CVRF全体」はフィードがその月に返す全 CVE レコードで、Edge/Chromium（Google が修正し Microsoft が再掲載する分）・Mariner（Azure Linux）・Azure クラウドサービスが混在する。「MS本体相当」は同じ月からこれらの再掲載を除いた母集団。本レポートは両方を併記する。<b>訂正:</b> 本号では Azure Linux の再掲載が実際には除外できていなかった。<a href="archive/notes-2026-07.ja.html#correction">訂正</a>を参照。</dd><dt>ゼロデイ</dt><dd>本レポートでは、Microsoft のデータで「悪用済み」または「公開済み」（もしくは両方）とされている CVE を指す。</dd><dt>悪用確認</dt><dd>その CVE に Microsoft 自身の悪用フラグが立っていること。CISA KEV とは別の出典であり、両者はどちら向きにも一致しないことがある。</dd><dt>KEV</dt><dd>CISA の Known Exploited Vulnerabilities Catalog。CISA が悪用を確認した脆弱性の一覧。ベンダー横断の収載は本サイトのクロスベンダー KEV/EPSS セクションに記録している。</dd><dt>EPSS</dt><dd>30日以内に悪用活動が観測される確率（0〜1）。深刻度スコアではない。</dd></dl></div>
 <div class="footer">
   <a href="index.html">トップへ</a> ·
   <a href="report_en.html">English</a><br>
