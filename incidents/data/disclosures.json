@@ -1,0 +1,229 @@
+{
+  "schema": 1,
+  "incidents": [
+    {
+      "key": "0000318154:2026-07-29",
+      "cik": "0000318154",
+      "company": "AMGEN INC",
+      "report_date": "2026-07-29",
+      "statements": [
+        {
+          "adsh": "0000318154-26-000119",
+          "filing_date": "2026-07-31",
+          "form": "8-K",
+          "items": [
+            "1.05"
+          ],
+          "url": "https://www.sec.gov/Archives/edgar/data/318154/000031815426000119/0000318154-26-000119-index.htm",
+          "first_seen": "2026-08-08"
+        }
+      ]
+    },
+    {
+      "key": "0001593538:2026-06-29",
+      "cik": "0001593538",
+      "company": "NAVIENT CORP",
+      "report_date": "2026-06-29",
+      "statements": [
+        {
+          "adsh": "0001140361-26-027441",
+          "filing_date": "2026-07-02",
+          "form": "8-K",
+          "items": [
+            "1.05"
+          ],
+          "url": "https://www.sec.gov/Archives/edgar/data/1593538/000114036126027441/0001140361-26-027441-index.htm",
+          "first_seen": "2026-08-08"
+        }
+      ]
+    },
+    {
+      "key": "0001725255:2026-06-27",
+      "cik": "0001725255",
+      "company": "AdaptHealth Corp.",
+      "report_date": "2026-06-27",
+      "statements": [
+        {
+          "adsh": "0001104659-26-080297",
+          "filing_date": "2026-07-02",
+          "form": "8-K",
+          "items": [
+            "1.05"
+          ],
+          "url": "https://www.sec.gov/Archives/edgar/data/1725255/000110465926080297/0001104659-26-080297-index.htm",
+          "first_seen": "2026-08-08"
+        }
+      ]
+    },
+    {
+      "key": "0001641601:2026-06-19",
+      "cik": "0001641601",
+      "company": "River Financial Corp",
+      "report_date": "2026-06-19",
+      "statements": [
+        {
+          "adsh": "0001193125-26-282946",
+          "filing_date": "2026-06-25",
+          "form": "8-K",
+          "items": [
+            "1.05",
+            "9.01"
+          ],
+          "url": "https://www.sec.gov/Archives/edgar/data/1641601/000119312526282946/0001193125-26-282946-index.htm",
+          "first_seen": "2026-08-08"
+        },
+        {
+          "adsh": "0001193125-26-295704",
+          "filing_date": "2026-07-06",
+          "form": "8-K/A",
+          "items": [
+            "1.05",
+            "9.01"
+          ],
+          "url": "https://www.sec.gov/Archives/edgar/data/1641601/000119312526295704/0001193125-26-295704-index.htm",
+          "first_seen": "2026-08-08"
+        },
+        {
+          "adsh": "0001193125-26-300763",
+          "filing_date": "2026-07-10",
+          "form": "8-K/A",
+          "items": [
+            "1.05",
+            "9.01"
+          ],
+          "url": "https://www.sec.gov/Archives/edgar/data/1641601/000119312526300763/0001193125-26-300763-index.htm",
+          "first_seen": "2026-08-08"
+        },
+        {
+          "adsh": "0001193125-26-307288",
+          "filing_date": "2026-07-17",
+          "form": "8-K/A",
+          "items": [
+            "1.05",
+            "9.01"
+          ],
+          "url": "https://www.sec.gov/Archives/edgar/data/1641601/000119312526307288/0001193125-26-307288-index.htm",
+          "first_seen": "2026-08-08"
+        },
+        {
+          "adsh": "0001193125-26-325324",
+          "filing_date": "2026-07-30",
+          "form": "8-K/A",
+          "items": [
+            "1.05",
+            "9.01"
+          ],
+          "url": "https://www.sec.gov/Archives/edgar/data/1641601/000119312526325324/0001193125-26-325324-index.htm",
+          "first_seen": "2026-08-08"
+        }
+      ]
+    },
+    {
+      "key": "0001023731:2026-06-17",
+      "cik": "0001023731",
+      "company": "8X8 INC /DE/",
+      "report_date": "2026-06-17",
+      "statements": [
+        {
+          "adsh": "0001023731-26-000084",
+          "filing_date": "2026-06-23",
+          "form": "8-K",
+          "items": [
+            "1.05"
+          ],
+          "url": "https://www.sec.gov/Archives/edgar/data/1023731/000102373126000084/0001023731-26-000084-index.htm",
+          "first_seen": "2026-08-08"
+        }
+      ]
+    },
+    {
+      "key": "0001388658:2026-06-10",
+      "cik": "0001388658",
+      "company": "iRhythm Holdings, Inc.",
+      "report_date": "2026-06-10",
+      "statements": [
+        {
+          "adsh": "0001388658-26-000055",
+          "filing_date": "2026-06-15",
+          "form": "8-K",
+          "items": [
+            "1.05"
+          ],
+          "url": "https://www.sec.gov/Archives/edgar/data/1388658/000138865826000055/0001388658-26-000055-index.htm",
+          "first_seen": "2026-08-08"
+        }
+      ]
+    },
+    {
+      "key": "0001799191:2026-05-20",
+      "cik": "0001799191",
+      "company": "Oncology Institute, Inc.",
+      "report_date": "2026-05-20",
+      "statements": [
+        {
+          "adsh": "0001079973-26-000721",
+          "filing_date": "2026-05-22",
+          "form": "8-K",
+          "items": [
+            "1.05",
+            "9.01"
+          ],
+          "url": "https://www.sec.gov/Archives/edgar/data/1799191/000107997326000721/0001079973-26-000721-index.htm",
+          "first_seen": "2026-08-08"
+        }
+      ]
+    },
+    {
+      "key": "0001605301:2026-05-07",
+      "cik": "0001605301",
+      "company": "CB Financial Services, Inc.",
+      "report_date": "2026-05-07",
+      "statements": [
+        {
+          "adsh": "0001605301-26-000021",
+          "filing_date": "2026-05-11",
+          "form": "8-K",
+          "items": [
+            "1.05"
+          ],
+          "url": "https://www.sec.gov/Archives/edgar/data/1605301/000160530126000021/0001605301-26-000021-index.htm",
+          "first_seen": "2026-08-08"
+        }
+      ]
+    },
+    {
+      "key": "0000105770:2026-05-07",
+      "cik": "0000105770",
+      "company": "WEST PHARMACEUTICAL SERVICES INC",
+      "report_date": "2026-05-07",
+      "statements": [
+        {
+          "adsh": "0000105770-26-000068",
+          "filing_date": "2026-05-11",
+          "form": "8-K",
+          "items": [
+            "1.05",
+            "7.01",
+            "9.01"
+          ],
+          "url": "https://www.sec.gov/Archives/edgar/data/105770/000010577026000068/0000105770-26-000068-index.htm",
+          "first_seen": "2026-08-08"
+        },
+        {
+          "adsh": "0000105770-26-000077",
+          "filing_date": "2026-05-20",
+          "form": "8-K/A",
+          "items": [
+            "1.05",
+            "9.01"
+          ],
+          "url": "https://www.sec.gov/Archives/edgar/data/105770/000010577026000077/0000105770-26-000077-index.htm",
+          "first_seen": "2026-08-08"
+        }
+      ]
+    }
+  ],
+  "coverage": {
+    "since": "2026-05-09"
+  }
+}
