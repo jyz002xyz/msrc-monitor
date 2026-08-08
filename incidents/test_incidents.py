@@ -265,6 +265,18 @@ def test_coverage_start_is_stated_next_to_the_table():
     assert "全履歴ではありません" in _pages()["ja"]
 
 
+def test_amendment_only_rows_are_explained():
+    """An 8-K/A with no original above it has two possible causes; both are named.
+
+    Observed live: STRYKER CORP filed under Item 8.01 on 2026-03-11 and switched to Item 1.05
+    in an 8-K/A on 2026-04-09, so the record legitimately holds an amendment with no original.
+    Leaving that unexplained reads as a gap in the collection, which it is not.
+    """
+    en, ja = _pages()["en"], _pages()["ja"]
+    assert "switched to Item 1.05" in en and "before the date this record begins" in en, en[:0]
+    assert "Item 1.05 に切り替えた場合" in ja and "開始日より前に提出された場合" in ja
+
+
 def test_coverage_widens_but_never_narrows():
     st = store.note_coverage(store.empty(), "2026-05-09")
     assert st["coverage"]["since"] == "2026-05-09"

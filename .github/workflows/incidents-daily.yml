@@ -7,8 +7,11 @@ name: incidents-daily
 # auto-PR from a deterministic branch and merges it. Branch protection is not weakened; the PR
 # diff is the audit trail and the guards are the gatekeeper.
 #
-# The schedule is DELIBERATELY COMMENTED OUT. It is enabled only on an explicit owner go, after
-# the workflow_dispatch verification run has been inspected.
+# The schedule was enabled on 2026-08-08, on explicit owner go, after two workflow_dispatch
+# verification runs: one with --since that exercised the auto-PR path end to end (PR opened and
+# merged, positive control confirmed it landed on main, notice issue opened, success ping), and
+# one with no input that confirmed the no-op path (no PR, main unchanged, success ping still
+# sent).
 on:
   workflow_dispatch:
     inputs:
@@ -19,11 +22,11 @@ on:
           100-hit page limit halts rather than returning a truncated result.
         required: false
         type: string
-  # schedule:
-  #   # 22:00 UTC == 07:00 JST. 8-K filings land during US business hours; a JST-morning run
-  #   # picks up the prior US day. Kept clear of kev-daily (23:30 UTC) so the two never race
-  #   # for the same base commit.
-  #   - cron: "0 22 * * *"
+  schedule:
+    # 22:00 UTC == 07:00 JST. 8-K filings land during US business hours; a JST-morning run
+    # picks up the prior US day. Kept clear of kev-daily (23:30 UTC) so the two never race
+    # for the same base commit.
+    - cron: "0 22 * * *"
 
 # Least privilege: commit the regenerated section (contents) and open/merge its PR
 # (pull-requests). No PAT — the built-in GITHUB_TOKEN only.

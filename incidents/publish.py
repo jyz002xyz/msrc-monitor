@@ -104,6 +104,12 @@ L = {
                     "were never collected and are absent — the table is not a complete history "
                     "of the item.",
         "coverage_none": "The collected range is not recorded yet.",
+        # Two different causes produce identical-looking rows, so both are named rather than
+        # leaving a reader to guess which one they are looking at.
+        "amendment_note": "A row can therefore begin at an 8-K/A with no original 8-K above it: "
+                          "either the company first filed under a different item and only later "
+                          "switched to Item 1.05, or the original was filed before the date this "
+                          "record begins.",
         "cur_h": "Editor-recorded incidents",
         "cur_note": "Added by hand, when there is something to record. Each entry lists who stated "
                     "what, and when. A correction is added as a further statement; the earlier one "
@@ -158,6 +164,9 @@ L = {
                     "Item 1.05 は収集しておらず、ここには入っていません — この表は Item 1.05 の"
                     "全履歴ではありません。",
         "coverage_none": "収集した範囲がまだ記録されていません。",
+        "amendment_note": "そのため、初報の 8-K が無く 8-K/A から始まって見える行がありえます — "
+                          "企業が当初は別の項目で提出し、後から Item 1.05 に切り替えた場合か、"
+                          "初報がこの記録の開始日より前に提出された場合です。",
         "cur_h": "編者が記録したインシデント",
         "cur_note": "記録すべきことがあるときに手で追加します。各エントリは「誰が・いつ・何と述べたか」を"
                     "並べます。訂正は言明の追加として足し、元の言明は残します。攻撃者の帰属がある場合は"
@@ -230,7 +239,7 @@ def _coverage(store: dict, lang: str) -> str:
     t = L[lang]
     since = ((store.get("coverage") or {}).get("since"))
     text = t["coverage"].format(since=since) if since else t["coverage_none"]
-    return f'<div class="coverage">{_h(text)}</div>'
+    return (f'<div class="coverage">{_h(text)} {_h(t["amendment_note"])}</div>')
 
 
 def _auto_table(store: dict, lang: str, linked_keys: set[str]) -> str:
