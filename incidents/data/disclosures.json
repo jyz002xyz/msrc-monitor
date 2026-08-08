@@ -221,9 +221,120 @@
           "first_seen": "2026-08-08"
         }
       ]
+    },
+    {
+      "key": "0001901799:2026-04-06",
+      "cik": "0001901799",
+      "company": "Bitcoin Depot Inc.",
+      "report_date": "2026-04-06",
+      "statements": [
+        {
+          "adsh": "0001193125-26-147772",
+          "filing_date": "2026-04-08",
+          "form": "8-K",
+          "items": [
+            "1.05",
+            "9.01"
+          ],
+          "url": "https://www.sec.gov/Archives/edgar/data/1901799/000119312526147772/0001193125-26-147772-index.htm",
+          "first_seen": "2026-08-08"
+        }
+      ]
+    },
+    {
+      "key": "0001582982:2026-03-24",
+      "cik": "0001582982",
+      "company": "CareCloud, Inc.",
+      "report_date": "2026-03-24",
+      "statements": [
+        {
+          "adsh": "0001493152-26-013239",
+          "filing_date": "2026-03-27",
+          "form": "8-K",
+          "items": [
+            "1.05",
+            "9.01"
+          ],
+          "url": "https://www.sec.gov/Archives/edgar/data/1582982/000149315226013239/0001493152-26-013239-index.htm",
+          "first_seen": "2026-08-08"
+        }
+      ]
+    },
+    {
+      "key": "0000732026:2026-03-18",
+      "cik": "0000732026",
+      "company": "TRIO-TECH INTERNATIONAL",
+      "report_date": "2026-03-18",
+      "statements": [
+        {
+          "adsh": "0001437749-26-009193",
+          "filing_date": "2026-03-20",
+          "form": "8-K",
+          "items": [
+            "1.05"
+          ],
+          "url": "https://www.sec.gov/Archives/edgar/data/732026/000143774926009193/0001437749-26-009193-index.htm",
+          "first_seen": "2026-08-08"
+        }
+      ]
+    },
+    {
+      "key": "0000310764:2026-03-11",
+      "cik": "0000310764",
+      "company": "STRYKER CORP",
+      "report_date": "2026-03-11",
+      "statements": [
+        {
+          "adsh": "0001193125-26-149607",
+          "filing_date": "2026-04-09",
+          "form": "8-K/A",
+          "items": [
+            "1.05",
+            "7.01"
+          ],
+          "url": "https://www.sec.gov/Archives/edgar/data/310764/000119312526149607/0001193125-26-149607-index.htm",
+          "first_seen": "2026-08-08"
+        }
+      ]
+    },
+    {
+      "key": "0000914156:2026-02-19",
+      "cik": "0000914156",
+      "company": "UFP TECHNOLOGIES INC",
+      "report_date": "2026-02-19",
+      "statements": [
+        {
+          "adsh": "0001628280-26-011152",
+          "filing_date": "2026-02-24",
+          "form": "8-K",
+          "items": [
+            "1.05"
+          ],
+          "url": "https://www.sec.gov/Archives/edgar/data/914156/000162828026011152/0001628280-26-011152-index.htm",
+          "first_seen": "2026-08-08"
+        }
+      ]
+    },
+    {
+      "key": "0001560143:2025-08-25",
+      "cik": "0001560143",
+      "company": "WYTEC INTERNATIONAL INC",
+      "report_date": "2025-08-25",
+      "statements": [
+        {
+          "adsh": "0001683168-26-000732",
+          "filing_date": "2026-02-03",
+          "form": "8-K/A",
+          "items": [
+            "1.05"
+          ],
+          "url": "https://www.sec.gov/Archives/edgar/data/1560143/000168316826000732/0001683168-26-000732-index.htm",
+          "first_seen": "2026-08-08"
+        }
+      ]
     }
   ],
   "coverage": {
-    "since": "2026-05-09"
+    "since": "2026-01-01"
   }
 }
