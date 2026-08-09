@@ -72,6 +72,8 @@ L = {
     "en": {
         "lang": "en", "site": "MSRC Vulnerability Trend Report",
         "section": "Disclosed cybersecurity incidents",
+        # The topbar is one row; the full section name is too long for it.
+        "section_nav": "Disclosed incidents",
         "home": "Home", "archive": "Archive", "kev": "Cross-vendor KEV/EPSS",
         "other": "日本語", "other_href": "ja.html",
         "title": "Cybersecurity incidents disclosed to the SEC by US-listed companies",
@@ -134,6 +136,7 @@ L = {
     "ja": {
         "lang": "ja", "site": "MSRC 脆弱性動向レポート",
         "section": "開示されたサイバーインシデント",
+        "section_nav": "開示インシデント",
         "home": "トップへ", "archive": "アーカイブ", "kev": "クロスベンダー KEV/EPSS",
         "other": "English", "other_href": "en.html",
         "title": "米国上場企業が SEC に開示したサイバーインシデント",
@@ -194,12 +197,19 @@ def _h(x) -> str:
 
 
 def _topbar(lang: str, *, depth: int = 1) -> str:
+    """Section nav. Includes a link back to this section's own index.
+
+    The per-language pages are sub-pages of the section; without a link to index.html a
+    reader who arrives at en.html cannot reach the section landing page at all. The KEV
+    month pages already work this way (they link to their own ../index.html).
+    """
     up = "../" * depth
     t = L[lang]
     return (f'<div class="topbar"><a href="{up}index.html">{_h(t["site"])}</a>'
             f'<div class="nav"><a href="{up}index.html">{_h(t["home"])}</a>'
             f'<a href="{up}archive/index.html">{_h(t["archive"])}</a>'
             f'<a href="{up}kev/index.html">{_h(t["kev"])}</a>'
+            f'<a href="index.html">{_h(t["section_nav"])}</a>'
             f'<a class="langpill" href="{t["other_href"]}">{_h(t["other"])}</a></div></div>')
 
 

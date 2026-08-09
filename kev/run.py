@@ -76,6 +76,36 @@ def _write_reports(snap: dict) -> None:
     (OUT / f"{snap['window']}.html").write_text(report.render_html(snap), encoding="utf-8")
 
 
+def _for_display(built: list[dict]) -> list[dict]:
+    """What the site should SHOW: every window with a snapshot on disk, newest first.
+
+    The build window (`--months`) decides what gets fetched and sealed. It must not also decide
+    what is displayed: a month that rolls out of it keeps its published pages but disappears
+    from the index — reachable by URL, invisible in navigation, and skipped by every later
+    wording or layout fix. Freshly-built snapshots win over the on-disk copy for the same
+    window (the open month is regenerated each run).
+    """
+    by_window = {s["window"]: s for s in built}
+    for m in kevtrack.all_windows():
+        if m in by_window:
+            continue
+        s = kevtrack.load_sealed(m) or kevtrack.load_open(m)
+        if s is not None:
+            by_window[m] = s
+    return sorted(by_window.values(), key=lambda s: s["window"], reverse=True)
+
+
+def _render_all(snaps: list[dict]) -> None:
+    for snap in snaps:
+        _write_reports(snap)
+    _build_index(snaps)
+    print(f"[run] internal preview -> {OUT}/index.html")
+    # public bilingual site: regenerate the repo's docs/kev/ tree in place
+    publish.build_site(snaps, SITE_KEV)
+    print(f"[run] public site -> {SITE_KEV}/  ({len(snaps)} window(s); "
+          f"commit is a separate, gated step)")
+
+
 def _build_index(snaps: list[dict]) -> None:
     rows = sorted(snaps, key=lambda s: s["window"], reverse=True)
     head = ["# Cross-vendor KEV/EPSS — index (prototype, local)\n",
@@ -120,7 +150,20 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--months", type=int, default=5, help="backfill this many past months")
     ap.add_argument("--current", default=None, help="override 'today' month YYYY-MM (testing)")
+    ap.add_argument("--render-only", action="store_true",
+                    help="re-render every stored window from disk; no network, no seal, "
+                         "no snapshot is written")
     args = ap.parse_args()
+
+    if args.render_only:
+        # Display-only path: pick up wording/layout changes for every stored window,
+        # including ones that have rolled out of the build window. Touches no snapshot.
+        snaps = _for_display([])
+        if not snaps:
+            print("[run] no snapshots on disk — nothing to render.", file=sys.stderr)
+            return 1
+        _render_all(snaps)
+        return 0
 
     kev = kevtrack.fetch_kev_full()
     if kev is None:
@@ -189,13 +232,8 @@ def main() -> int:
             print(f"[run] {m}: backfilled -> SEALED (EPSS blank, nvd_published filled)")
         built.append(kevtrack.load_sealed(m))
 
-    for snap in built:
-        _write_reports(snap)
-    _build_index(built)
-    print(f"[run] internal preview -> {OUT}/index.html")
-    # public bilingual site: regenerate the repo's docs/kev/ tree in place
-    publish.build_site(built, SITE_KEV)
-    print(f"[run] public site -> {SITE_KEV}/  (docs/kev/; commit is a separate, gated step)")
+    published = _for_display(built)
+    _render_all(published)
     # Record catalog size for the next run's integrity decrease-rate check (success only).
     write_meta(len(kev), dt.datetime.now().isoformat(timespec="seconds"))
     return 0

@@ -155,6 +155,54 @@ def test_publish_index_lists_state_both_langs():
     assert "2026-07/ja.html" in idx and "2026-06/en.html" in idx
 
 
+# --- every stored window is displayed (no orphan pages) ----------------------
+def test_all_windows_lists_every_snapshot_on_disk():
+    with tempfile.TemporaryDirectory() as tmp:
+        d = Path(tmp)
+        kevtrack.seal(kevtrack.build_backfill("2026-02", [OLD], now_iso="t"), snap_dir=d)
+        kevtrack.seal(kevtrack.build_backfill("2026-03", [OLD], now_iso="t"), snap_dir=d)
+        kevtrack.write_open(_july_open(), snap_dir=d)
+        (d / "not-a-window.json.gz").write_bytes(b"")          # ignored: not a YYYY-MM name
+        assert kevtrack.all_windows(snap_dir=d) == ["2026-07", "2026-03", "2026-02"]
+
+
+def test_all_windows_is_empty_without_snapshots():
+    with tempfile.TemporaryDirectory() as tmp:
+        assert kevtrack.all_windows(snap_dir=Path(tmp)) == []
+
+
+def test_display_set_includes_windows_outside_the_build_window():
+    """The rolling build window must not decide what is DISPLAYED.
+
+    A month that falls out of `--months` keeps its published pages but vanishes from the
+    index — reachable by URL, invisible in navigation, and skipped by later wording fixes.
+    2026-02 was in exactly that state before this change.
+    """
+    import run
+    on_disk = set(kevtrack.all_windows())
+    shown = [s["window"] for s in run._for_display([_july_open()])]
+    assert set(shown) == on_disk | {"2026-07"}, shown
+    assert shown == sorted(shown, reverse=True), "newest first"
+
+
+def test_display_set_prefers_the_freshly_built_snapshot():
+    """The open month is rebuilt each run; the fresh object must win over the stored copy."""
+    import run
+    fresh = _july_open()
+    fresh["count"] = 12345
+    picked = next(s for s in run._for_display([fresh]) if s["window"] == "2026-07")
+    assert picked["count"] == 12345
+
+
+def test_index_links_only_windows_that_exist():
+    """Never advertise a month whose snapshot is not on disk."""
+    import publish, re
+    snaps = [kevtrack.build_backfill(m, [OLD], now_iso="t") for m in ("2026-03", "2026-02")]
+    idx = publish.render_index(snaps)
+    linked = {m for m in re.findall(r"href='(\d{4}-\d{2})/", idx)}
+    assert linked == {"2026-03", "2026-02"}, linked
+
+
 # --- NVD publication enrichment (path B) ------------------------------------
 def _nvd(m):
     return lambda cves: {c: m[c] for c in cves if c in m}

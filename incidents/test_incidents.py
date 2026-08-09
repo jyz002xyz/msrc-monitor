@@ -342,6 +342,19 @@ def test_empty_curated_layer_says_so():
         assert 'class="empty"' in page, f"{lang}: an empty layer must say it is empty"
 
 
+def test_topbar_reaches_this_sections_own_index():
+    """en.html / ja.html are sub-pages; without this link the section landing page is
+    unreachable from them. The KEV month pages already work this way."""
+    import re
+    for lang, label in (("en", "Disclosed incidents"), ("ja", "開示インシデント")):
+        nav = re.search(r'<div class="nav">.*?</div>', _pages()[lang], re.S).group(0)
+        assert 'href="index.html"' in nav, f"{lang}: no link to the section index"
+        assert label in nav, f"{lang}: section label missing from the nav"
+        # single-language page -> single-language labels (SITE_BILINGUAL_CONVENTION rule 2)
+        other = "開示インシデント" if lang == "en" else "Disclosed incidents"
+        assert other not in nav, f"{lang}: the other language leaked into the nav"
+
+
 def test_both_languages_link_to_each_other():
     pages = _pages()
     assert 'href="ja.html"' in pages["en"]
