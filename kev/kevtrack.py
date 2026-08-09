@@ -25,6 +25,7 @@ from __future__ import annotations
 import datetime as dt
 import gzip
 import json
+import re
 import sys
 import urllib.parse
 import urllib.request
@@ -230,6 +231,25 @@ def migrate_sealed_add_nvd(month: str, fetch_nvd_fn, *, snap_dir: Path = SNAP_DI
 
 
 # --- storage: open (mutable) + sealed (immutable) ----------------------------
+def all_windows(snap_dir: Path = SNAP_DIR) -> list[str]:
+    """Every window that has a snapshot on disk, newest first.
+
+    The build window (`--months`) rolls forward, so a month that falls out of it stops being
+    regenerated and stops appearing in the index while its pages stay published — reachable by
+    URL but not by navigation, and quietly left behind by later wording and layout fixes (the
+    EPSS wording update actually did skip one). Snapshots are kept for every month, so what is
+    DISPLAYED is driven by what exists on disk, not by the rolling build window.
+    """
+    out: set[str] = set()
+    for p in snap_dir.glob("*.json.gz"):
+        name = p.name[: -len(".json.gz")]
+        if name.endswith(".open"):
+            name = name[: -len(".open")]
+        if re.fullmatch(r"\d{4}-\d{2}", name):
+            out.add(name)
+    return sorted(out, reverse=True)
+
+
 def open_path(month: str, snap_dir: Path = SNAP_DIR) -> Path:
     return snap_dir / f"{month}.open.json.gz"
 
