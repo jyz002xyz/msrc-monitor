@@ -1,0 +1,2447 @@
+{
+  "schema": 1,
+  "coverage": {
+    "since": "2026-05-12"
+  },
+  "filings": [
+    {
+      "key": "CA:2026-08-07:cushman-wakefield:2026-04-21|2026-04-29",
+      "jurisdiction": "CA",
+      "organization": "Cushman & Wakefield",
+      "reported_date": "2026-08-07",
+      "breach_dates": [
+        "2026-04-21",
+        "2026-04-29"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-08-07:american-addiction-centers:2026-05-12",
+      "jurisdiction": "CA",
+      "organization": "American Addiction Centers",
+      "reported_date": "2026-08-07",
+      "breach_dates": [
+        "2026-05-12"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-08-06:hamill-kaplan:",
+      "jurisdiction": "CA",
+      "organization": "Hamill & Kaplan",
+      "reported_date": "2026-08-06",
+      "breach_dates": [],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-08-05:station-casinos-llc:2026-03-05",
+      "jurisdiction": "CA",
+      "organization": "Station Casinos, LLC",
+      "reported_date": "2026-08-05",
+      "breach_dates": [
+        "2026-03-05"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-08-05:new-york-city-regional-center-llc:2026-03-30|2026-04-27",
+      "jurisdiction": "CA",
+      "organization": "New York City Regional Center, LLC",
+      "reported_date": "2026-08-05",
+      "breach_dates": [
+        "2026-03-30",
+        "2026-04-27"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-08-04:ucla-health:2024-12-27|2026-04-21",
+      "jurisdiction": "CA",
+      "organization": "UCLA Health",
+      "reported_date": "2026-08-04",
+      "breach_dates": [
+        "2024-12-27",
+        "2026-04-21"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-08-04:malin-goetz-inc:2026-05-22|2026-06-10",
+      "jurisdiction": "CA",
+      "organization": "Malin + Goetz, Inc.",
+      "reported_date": "2026-08-04",
+      "breach_dates": [
+        "2026-05-22",
+        "2026-06-10"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-08-03:cts-journey-holdings-llc-a-delaware-limited-liability-company-dba-corporate-travel-service:2025-12-03|2025-12-11",
+      "jurisdiction": "CA",
+      "organization": "CTS Journey Holdings, LLC, a Delaware limited liability company (DBA Corporate Travel Service)",
+      "reported_date": "2026-08-03",
+      "breach_dates": [
+        "2025-12-03",
+        "2025-12-11"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-07-31:stanislaus-county-health-services-agency:2025-12-02|2025-12-18",
+      "jurisdiction": "CA",
+      "organization": "Stanislaus County Health Services Agency",
+      "reported_date": "2026-07-31",
+      "breach_dates": [
+        "2025-12-02",
+        "2025-12-18"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-07-31:everside-health:2025-12-02|2025-12-18",
+      "jurisdiction": "CA",
+      "organization": "Everside Health",
+      "reported_date": "2026-07-31",
+      "breach_dates": [
+        "2025-12-02",
+        "2025-12-18"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-07-30:sm-energy-company:2026-05-15",
+      "jurisdiction": "CA",
+      "organization": "SM Energy Company",
+      "reported_date": "2026-07-30",
+      "breach_dates": [
+        "2026-05-15"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-07-29:clinical-registry-solutions:2026-04-09",
+      "jurisdiction": "CA",
+      "organization": "Clinical Registry Solutions",
+      "reported_date": "2026-07-29",
+      "breach_dates": [
+        "2026-04-09"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "WA:BreachA42014",
+      "jurisdiction": "WA",
+      "organization": "ADT, Inc.",
+      "reported_date": "2026-07-28",
+      "breach_dates": [
+        "2026-04-20"
+      ],
+      "affected": 5129,
+      "data_types": "Name; Social Security Number; Full Date of Birth",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA42014.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-07-28:sunrise-company:2026-04-23",
+      "jurisdiction": "CA",
+      "organization": "Sunrise Company",
+      "reported_date": "2026-07-28",
+      "breach_dates": [
+        "2026-04-23"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-07-28:fresno-county-department-of-social-services:2025-08-26",
+      "jurisdiction": "CA",
+      "organization": "Fresno County Department of Social Services",
+      "reported_date": "2026-07-28",
+      "breach_dates": [
+        "2025-08-26"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "WA:BreachA42008",
+      "jurisdiction": "WA",
+      "organization": "JRK Property Holdings, Inc.",
+      "reported_date": "2026-07-27",
+      "breach_dates": [
+        "2026-03-26"
+      ],
+      "affected": 5667,
+      "data_types": "Name; Social Security Number; Driver's License or Washington ID Card Number; Financial & Banking Information; Military ID Number; Passport Number; Other",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA42008.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "WA:BreachA42002",
+      "jurisdiction": "WA",
+      "organization": "SPay Inc dba Stack Sports",
+      "reported_date": "2026-07-27",
+      "breach_dates": [
+        "2026-05-08"
+      ],
+      "affected": 1190,
+      "data_types": "Name; Financial & Banking Information",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA42002.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-07-27:spay-inc-dba-stack-sports:2026-05-08",
+      "jurisdiction": "CA",
+      "organization": "SPay Inc dba Stack Sports",
+      "reported_date": "2026-07-27",
+      "breach_dates": [
+        "2026-05-08"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-07-27:regional-center-of-orange-county:2026-05-27",
+      "jurisdiction": "CA",
+      "organization": "Regional Center of Orange County",
+      "reported_date": "2026-07-27",
+      "breach_dates": [
+        "2026-05-27"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-07-27:jrk-property-holdings-inc:2026-03-26",
+      "jurisdiction": "CA",
+      "organization": "JRK Property Holdings, Inc.",
+      "reported_date": "2026-07-27",
+      "breach_dates": [
+        "2026-03-26"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-07-25:carecloud-inc:2026-03-10",
+      "jurisdiction": "CA",
+      "organization": "CareCloud, Inc.",
+      "reported_date": "2026-07-25",
+      "breach_dates": [
+        "2026-03-10"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "WA:BreachA41958",
+      "jurisdiction": "WA",
+      "organization": "Eyemart Express, LLC",
+      "reported_date": "2026-07-24",
+      "breach_dates": [
+        "2026-02-12"
+      ],
+      "affected": 1704,
+      "data_types": "Name; Social Security Number; Driver's License or Washington ID Card Number; Financial & Banking Information; Full Date of Birth; Passport Number; Health Insurance Policy or ID Number; Medical Information; Protected Health Information owned or licensed by a HIPAA covered entity",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA41958.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-07-24:the-line-los-angeles:2025-09-25",
+      "jurisdiction": "CA",
+      "organization": "The LINE Los Angeles",
+      "reported_date": "2026-07-24",
+      "breach_dates": [
+        "2025-09-25"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-07-24:eyemart-express-llc:2026-02-13",
+      "jurisdiction": "CA",
+      "organization": "Eyemart Express, LLC",
+      "reported_date": "2026-07-24",
+      "breach_dates": [
+        "2026-02-13"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-07-24:bridgeway-benefit-technologies-llc:2026-03-05|2026-05-19",
+      "jurisdiction": "CA",
+      "organization": "Bridgeway Benefit Technologies LLC",
+      "reported_date": "2026-07-24",
+      "breach_dates": [
+        "2026-03-05",
+        "2026-05-19"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "WA:BreachA41947",
+      "jurisdiction": "WA",
+      "organization": "The Moody Bible Institute of Chicago",
+      "reported_date": "2026-07-23",
+      "breach_dates": [
+        "2026-06-12"
+      ],
+      "affected": 8955,
+      "data_types": "Social Security Number; Driver's License or Washington ID Card Number; Full Date of Birth",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA41947.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-07-23:the-moody-bible-institute-of-chicago:2026-06-12",
+      "jurisdiction": "CA",
+      "organization": "The Moody Bible Institute of Chicago",
+      "reported_date": "2026-07-23",
+      "breach_dates": [
+        "2026-06-12"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-07-23:safetyfirst-systems-llc:2026-01-16|2026-01-19",
+      "jurisdiction": "CA",
+      "organization": "Safetyfirst Systems, LLC",
+      "reported_date": "2026-07-23",
+      "breach_dates": [
+        "2026-01-16",
+        "2026-01-19"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-07-23:devereux-foundation:2025-11-06|2025-11-09",
+      "jurisdiction": "CA",
+      "organization": "Devereux Foundation",
+      "reported_date": "2026-07-23",
+      "breach_dates": [
+        "2025-11-06",
+        "2025-11-09"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-07-22:the-lawson-roofing-co-inc:2026-04-23",
+      "jurisdiction": "CA",
+      "organization": "The Lawson Roofing Co Inc.",
+      "reported_date": "2026-07-22",
+      "breach_dates": [
+        "2026-04-23"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-07-22:lasership-inc-dba-ontrac-final-mile:2026-03-20|2026-03-22",
+      "jurisdiction": "CA",
+      "organization": "LaserShip, Inc. dba OnTrac Final Mile",
+      "reported_date": "2026-07-22",
+      "breach_dates": [
+        "2026-03-20",
+        "2026-03-22"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-07-21:xsolis-inc:2026-01-20",
+      "jurisdiction": "CA",
+      "organization": "Xsolis, Inc.",
+      "reported_date": "2026-07-21",
+      "breach_dates": [
+        "2026-01-20"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-07-21:unlimited-technology-systems-llc:2025-10-05",
+      "jurisdiction": "CA",
+      "organization": "Unlimited Technology Systems, LLC",
+      "reported_date": "2026-07-21",
+      "breach_dates": [
+        "2025-10-05"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-07-20:transglobal-insurance-agency-inc:2026-02-18",
+      "jurisdiction": "CA",
+      "organization": "TransGlobal Insurance Agency, Inc.",
+      "reported_date": "2026-07-20",
+      "breach_dates": [
+        "2026-02-18"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "WA:BreachA41847",
+      "jurisdiction": "WA",
+      "organization": "The Estée Lauder Companies (Oracle)",
+      "reported_date": "2026-07-17",
+      "breach_dates": [
+        "2025-08-09"
+      ],
+      "affected": 2110,
+      "data_types": "Name; Social Security Number; Financial & Banking Information; Full Date of Birth; Passport Number; Medical Information; Other",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA41847.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-07-17:zenpatient-inc:2025-12-05|2026-02-12",
+      "jurisdiction": "CA",
+      "organization": "ZenPatient, Inc.",
+      "reported_date": "2026-07-17",
+      "breach_dates": [
+        "2025-12-05",
+        "2026-02-12"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-07-17:the-est-e-lauder-companies:2025-08-09|2025-08-12",
+      "jurisdiction": "CA",
+      "organization": "The Estée Lauder Companies",
+      "reported_date": "2026-07-17",
+      "breach_dates": [
+        "2025-08-09",
+        "2025-08-12"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-07-17:quontic-bank-acquisition-corp:",
+      "jurisdiction": "CA",
+      "organization": "Quontic Bank Acquisition Corp.",
+      "reported_date": "2026-07-17",
+      "breach_dates": [],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-07-17:bayada-home-health-care-inc:2026-03-02",
+      "jurisdiction": "CA",
+      "organization": "BAYADA Home Health Care, Inc.",
+      "reported_date": "2026-07-17",
+      "breach_dates": [
+        "2026-03-02"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "WA:BreachA41829",
+      "jurisdiction": "WA",
+      "organization": "DentaQuest, LLC",
+      "reported_date": "2026-07-16",
+      "breach_dates": [
+        "2026-05-17"
+      ],
+      "affected": 91700,
+      "data_types": "Name; Social Security Number; Full Date of Birth; Health Insurance Policy or ID Number; Medical Information; Protected Health Information owned or licensed by a HIPAA covered entity",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA41829.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-07-16:questo:2025-10-01",
+      "jurisdiction": "CA",
+      "organization": "Questo",
+      "reported_date": "2026-07-16",
+      "breach_dates": [
+        "2025-10-01"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-07-16:fox-rothschild-llp:2026-05-21",
+      "jurisdiction": "CA",
+      "organization": "Fox Rothschild LLP",
+      "reported_date": "2026-07-16",
+      "breach_dates": [
+        "2026-05-21"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-07-16:dentaquest-llc:2026-05-17",
+      "jurisdiction": "CA",
+      "organization": "DentaQuest LLC",
+      "reported_date": "2026-07-16",
+      "breach_dates": [
+        "2026-05-17"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "WA:BreachA41816",
+      "jurisdiction": "WA",
+      "organization": "Wilmer Cutler Pickering Hale and Dorr LLP",
+      "reported_date": "2026-07-15",
+      "breach_dates": [
+        "2026-05-08"
+      ],
+      "affected": 692,
+      "data_types": "Name; Social Security Number; Student ID Number",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA41816.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-07-15:youlend-us-llc:2026-06-05|2026-06-09",
+      "jurisdiction": "CA",
+      "organization": "YouLend US LLC",
+      "reported_date": "2026-07-15",
+      "breach_dates": [
+        "2026-06-05",
+        "2026-06-09"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-07-15:north-coast-opportunities-inc-redwood-caregiver-resource-center:2026-06-30",
+      "jurisdiction": "CA",
+      "organization": "North Coast Opportunities, Inc. / Redwood Caregiver Resource Center",
+      "reported_date": "2026-07-15",
+      "breach_dates": [
+        "2026-06-30"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-07-15:ernst-young-llp:2026-03-28|2026-04-23",
+      "jurisdiction": "CA",
+      "organization": "Ernst & Young LLP",
+      "reported_date": "2026-07-15",
+      "breach_dates": [
+        "2026-03-28",
+        "2026-04-23"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-07-14:madera-community-hospital:2025-05-28|2025-05-29",
+      "jurisdiction": "CA",
+      "organization": "Madera Community Hospital",
+      "reported_date": "2026-07-14",
+      "breach_dates": [
+        "2025-05-28",
+        "2025-05-29"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-07-13:the-washington-post:2025-07-10",
+      "jurisdiction": "CA",
+      "organization": "The Washington Post",
+      "reported_date": "2026-07-13",
+      "breach_dates": [
+        "2025-07-10"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-07-13:surplus-line-association-of-california:2026-04-04",
+      "jurisdiction": "CA",
+      "organization": "Surplus Line Association of California",
+      "reported_date": "2026-07-13",
+      "breach_dates": [
+        "2026-04-04"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-07-13:mcclarty-farms-llc:2026-06-05",
+      "jurisdiction": "CA",
+      "organization": "McClarty Farms LLC",
+      "reported_date": "2026-07-13",
+      "breach_dates": [
+        "2026-06-05"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-07-13:hmc-fresh-foods-llc:2026-06-05",
+      "jurisdiction": "CA",
+      "organization": "HMC Fresh Foods, LLC",
+      "reported_date": "2026-07-13",
+      "breach_dates": [
+        "2026-06-05"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-07-13:harbor-developmental-disabilities-foundation-d-b-a-harbor-regional-center:2026-03-06|2026-03-07",
+      "jurisdiction": "CA",
+      "organization": "Harbor Developmental Disabilities Foundation (d/b/a Harbor Regional Center)",
+      "reported_date": "2026-07-13",
+      "breach_dates": [
+        "2026-03-06",
+        "2026-03-07"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-07-13:fiesta-insurance-franchise-corporation:2025-06-09",
+      "jurisdiction": "CA",
+      "organization": "Fiesta Insurance Franchise Corporation",
+      "reported_date": "2026-07-13",
+      "breach_dates": [
+        "2025-06-09"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-07-13:city-of-foster-city:2026-02-28|2026-03-25",
+      "jurisdiction": "CA",
+      "organization": "City of Foster City",
+      "reported_date": "2026-07-13",
+      "breach_dates": [
+        "2026-02-28",
+        "2026-03-25"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-07-13:cabot-packing-llc:2026-06-05",
+      "jurisdiction": "CA",
+      "organization": "Cabot Packing LLC",
+      "reported_date": "2026-07-13",
+      "breach_dates": [
+        "2026-06-05"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-07-10:wilmer-cutler-pickering-hale-and-dorr-llp:2026-05-08",
+      "jurisdiction": "CA",
+      "organization": "Wilmer Cutler Pickering Hale and Dorr LLP",
+      "reported_date": "2026-07-10",
+      "breach_dates": [
+        "2026-05-08"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-07-09:lincoln-technical-institute:2026-04-29|2026-05-07",
+      "jurisdiction": "CA",
+      "organization": "Lincoln Technical Institute",
+      "reported_date": "2026-07-09",
+      "breach_dates": [
+        "2026-04-29",
+        "2026-05-07"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-07-08:alta-orthopaedics-medical-group-inc:2026-02-03|2026-02-06",
+      "jurisdiction": "CA",
+      "organization": "Alta Orthopaedics Medical Group, Inc.",
+      "reported_date": "2026-07-08",
+      "breach_dates": [
+        "2026-02-03",
+        "2026-02-06"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "WA:BreachA41592",
+      "jurisdiction": "WA",
+      "organization": "1Life Healthcare, Inc. (One Medical, Iora Health)",
+      "reported_date": "2026-07-03",
+      "breach_dates": [
+        "2026-06-08"
+      ],
+      "affected": 16884,
+      "data_types": "Name; Social Security Number; Full Date of Birth; Health Insurance Policy or ID Number; Medical Information; Protected Health Information owned or licensed by a HIPAA covered entity",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA41592.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-07-02:triwest-healthcare-alliance:2026-04-17",
+      "jurisdiction": "CA",
+      "organization": "TriWest Healthcare Alliance",
+      "reported_date": "2026-07-02",
+      "breach_dates": [
+        "2026-04-17"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-07-02:rodenburg-law-firm:2025-08-26",
+      "jurisdiction": "CA",
+      "organization": "Rodenburg Law Firm",
+      "reported_date": "2026-07-02",
+      "breach_dates": [
+        "2025-08-26"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-07-02:markel-insurance:2026-03-17|2026-03-18",
+      "jurisdiction": "CA",
+      "organization": "Markel Insurance",
+      "reported_date": "2026-07-02",
+      "breach_dates": [
+        "2026-03-17",
+        "2026-03-18"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-07-02:l-a-care-health-plan:2025-10-31",
+      "jurisdiction": "CA",
+      "organization": "L.A. Care Health Plan",
+      "reported_date": "2026-07-02",
+      "breach_dates": [
+        "2025-10-31"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-07-02:child-care-resource-center:2016-10-04|2025-10-15",
+      "jurisdiction": "CA",
+      "organization": "Child Care Resource Center",
+      "reported_date": "2026-07-02",
+      "breach_dates": [
+        "2016-10-04",
+        "2025-10-15"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "WA:BreachA41515",
+      "jurisdiction": "WA",
+      "organization": "Washington Department of Social Health Services",
+      "reported_date": "2026-06-30",
+      "breach_dates": [
+        "2023-09-23"
+      ],
+      "affected": 8600,
+      "data_types": "Name; Social Security Number; Full Date of Birth; Protected Health Information owned or licensed by a HIPAA covered entity",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA41515.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-06-30:north-los-angeles-county-regional-center:2024-11-20",
+      "jurisdiction": "CA",
+      "organization": "North Los Angeles County Regional Center",
+      "reported_date": "2026-06-30",
+      "breach_dates": [
+        "2024-11-20"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-06-30:monmouth-university:2026-02-05|2026-02-13",
+      "jurisdiction": "CA",
+      "organization": "Monmouth University",
+      "reported_date": "2026-06-30",
+      "breach_dates": [
+        "2026-02-05",
+        "2026-02-13"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-06-30:kubota-north-america-corporation:2026-03-16|2026-04-20",
+      "jurisdiction": "CA",
+      "organization": "Kubota North America Corporation",
+      "reported_date": "2026-06-30",
+      "breach_dates": [
+        "2026-03-16",
+        "2026-04-20"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-06-30:glucobit-inc:2026-05-01",
+      "jurisdiction": "CA",
+      "organization": "Glucobit Inc.",
+      "reported_date": "2026-06-30",
+      "breach_dates": [
+        "2026-05-01"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "WA:BreachA41509",
+      "jurisdiction": "WA",
+      "organization": "Medtronic Inc.",
+      "reported_date": "2026-06-29",
+      "breach_dates": [
+        "2026-04-13"
+      ],
+      "affected": 64035,
+      "data_types": "Name; Social Security Number; Full Date of Birth; Medical Information; Other",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA41509.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-06-29:sierra-management-group:",
+      "jurisdiction": "CA",
+      "organization": "Sierra Management Group",
+      "reported_date": "2026-06-29",
+      "breach_dates": [],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-06-29:medtronic-inc:2026-04-13",
+      "jurisdiction": "CA",
+      "organization": "Medtronic Inc.",
+      "reported_date": "2026-06-29",
+      "breach_dates": [
+        "2026-04-13"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "WA:BreachA41494",
+      "jurisdiction": "WA",
+      "organization": "Yellow Corporation and its affiliated debtors",
+      "reported_date": "2026-06-26",
+      "breach_dates": [
+        "2025-03-27"
+      ],
+      "affected": null,
+      "data_types": "Name; Social Security Number; Driver's License or Washington ID Card Number; Financial & Banking Information; Full Date of Birth; Passport Number; Health Insurance Policy or ID Number; Medical Information",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA41494.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-06-26:yellow-corporation-and-its-affiliated-debtors-and-debtors-in-possession-under-their-jointly-administered-chapter-11-cases-case-no-23-11069-bankr-d-del-ctg:2025-03-27",
+      "jurisdiction": "CA",
+      "organization": "Yellow Corporation and its affiliated debtors and debtors-in-possession under their jointly administered chapter 11 cases (Case No. 23-11069 (Bankr. D. Del. (CTG))",
+      "reported_date": "2026-06-26",
+      "breach_dates": [
+        "2025-03-27"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-06-26:nissan-north-america-inc:2026-05-27|2026-06-09",
+      "jurisdiction": "CA",
+      "organization": "Nissan North America Inc.",
+      "reported_date": "2026-06-26",
+      "breach_dates": [
+        "2026-05-27",
+        "2026-06-09"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-06-26:mcbs-llc:2025-09-22|2025-09-26",
+      "jurisdiction": "CA",
+      "organization": "MCBS, LLC",
+      "reported_date": "2026-06-26",
+      "breach_dates": [
+        "2025-09-22",
+        "2025-09-26"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-06-26:blank-rome-llp:2026-05-21",
+      "jurisdiction": "CA",
+      "organization": "Blank Rome LLP",
+      "reported_date": "2026-06-26",
+      "breach_dates": [
+        "2026-05-21"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-06-26:assetmark-inc:2026-05-15",
+      "jurisdiction": "CA",
+      "organization": "AssetMark, Inc.",
+      "reported_date": "2026-06-26",
+      "breach_dates": [
+        "2026-05-15"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-06-25:tower-administrative-services-inc:2026-02-03",
+      "jurisdiction": "CA",
+      "organization": "Tower Administrative Services, Inc",
+      "reported_date": "2026-06-25",
+      "breach_dates": [
+        "2026-02-03"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-06-25:santa-monica-community-college:2026-04-13|2026-05-21",
+      "jurisdiction": "CA",
+      "organization": "Santa Monica Community College",
+      "reported_date": "2026-06-25",
+      "breach_dates": [
+        "2026-04-13",
+        "2026-05-21"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-06-25:mercor-io-corporation:2026-03-24|2026-03-30",
+      "jurisdiction": "CA",
+      "organization": "Mercor.io Corporation",
+      "reported_date": "2026-06-25",
+      "breach_dates": [
+        "2026-03-24",
+        "2026-03-30"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-06-25:hausfeld-llp:2025-01-23",
+      "jurisdiction": "CA",
+      "organization": "Hausfeld LLP",
+      "reported_date": "2026-06-25",
+      "breach_dates": [
+        "2025-01-23"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-06-24:eisen-inc:2025-12-12",
+      "jurisdiction": "CA",
+      "organization": "Eisen, Inc.",
+      "reported_date": "2026-06-24",
+      "breach_dates": [
+        "2025-12-12"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-06-24:agelessrx:2026-04-17|2026-04-22",
+      "jurisdiction": "CA",
+      "organization": "AgelessRx",
+      "reported_date": "2026-06-24",
+      "breach_dates": [
+        "2026-04-17",
+        "2026-04-22"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-06-23:glendale-community-college:",
+      "jurisdiction": "CA",
+      "organization": "Glendale Community College",
+      "reported_date": "2026-06-23",
+      "breach_dates": [],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-06-23:first-advantage-corporation:2025-11-13",
+      "jurisdiction": "CA",
+      "organization": "First Advantage Corporation",
+      "reported_date": "2026-06-23",
+      "breach_dates": [
+        "2025-11-13"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "WA:BreachA41395",
+      "jurisdiction": "WA",
+      "organization": "Xsolis, Inc. (Alexian Brothers Health System, Banner Health, Hendrick Medical Center dba Hendrick Health, Infirmary Health, Legacy Health, Mayo Clinic, Rochester Regional Health, UW Medicine, Virginia Hospital Center)",
+      "reported_date": "2026-06-19",
+      "breach_dates": [
+        "2026-01-20"
+      ],
+      "affected": 26203,
+      "data_types": "Name; Social Security Number; Full Date of Birth; Health Insurance Policy or ID Number; Medical Information; Protected Health Information owned or licensed by a HIPAA covered entity",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA41395.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-06-19:xsolis-inc:2026-01-20",
+      "jurisdiction": "CA",
+      "organization": "Xsolis, Inc.",
+      "reported_date": "2026-06-19",
+      "breach_dates": [
+        "2026-01-20"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-06-18:richard-d-jones-a-professional-law-corporation:2024-08-22|2024-11-07",
+      "jurisdiction": "CA",
+      "organization": "Richard D. Jones, A Professional Law Corporation",
+      "reported_date": "2026-06-18",
+      "breach_dates": [
+        "2024-08-22",
+        "2024-11-07"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "WA:BreachA41355",
+      "jurisdiction": "WA",
+      "organization": "AssuranceAmerica Managing General Agency, LLC",
+      "reported_date": "2026-06-17",
+      "breach_dates": [
+        "2026-03-16"
+      ],
+      "affected": 8950,
+      "data_types": "Name; Driver's License or Washington ID Card Number; Other",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA41355.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-06-17:assuranceamerica-managing-general-agency-llc:2026-03-16|2026-03-17",
+      "jurisdiction": "CA",
+      "organization": "AssuranceAmerica Managing General Agency, LLC",
+      "reported_date": "2026-06-17",
+      "breach_dates": [
+        "2026-03-16",
+        "2026-03-17"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-06-17:alcott-hr:2025-02-12",
+      "jurisdiction": "CA",
+      "organization": "Alcott HR",
+      "reported_date": "2026-06-17",
+      "breach_dates": [
+        "2025-02-12"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "WA:BreachA41330",
+      "jurisdiction": "WA",
+      "organization": "Nelson University",
+      "reported_date": "2026-06-15",
+      "breach_dates": [
+        "2025-03-21"
+      ],
+      "affected": 508,
+      "data_types": "Name; Social Security Number; Driver's License or Washington ID Card Number; Full Date of Birth; Student ID Number; Health Insurance Policy or ID Number; Medical Information; Username and Password/Security Question Answers",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA41330.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "WA:BreachA41325",
+      "jurisdiction": "WA",
+      "organization": "Grandview School District",
+      "reported_date": "2026-06-15",
+      "breach_dates": [
+        "2024-09-28"
+      ],
+      "affected": 9414,
+      "data_types": "Name; Social Security Number; Driver's License or Washington ID Card Number; Financial & Banking Information; Full Date of Birth; Passport Number; Medical Information; Username and Password/Security Question Answers",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA41325.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-06-15:networking-technology-inc:2026-03-01|2026-03-03",
+      "jurisdiction": "CA",
+      "organization": "Networking Technology, Inc.",
+      "reported_date": "2026-06-15",
+      "breach_dates": [
+        "2026-03-01",
+        "2026-03-03"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-06-15:nelson-university:2025-03-21|2025-04-06",
+      "jurisdiction": "CA",
+      "organization": "Nelson University",
+      "reported_date": "2026-06-15",
+      "breach_dates": [
+        "2025-03-21",
+        "2025-04-06"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "WA:BreachA41314",
+      "jurisdiction": "WA",
+      "organization": "Lumexa Imaging",
+      "reported_date": "2026-06-12",
+      "breach_dates": [
+        "2026-03-31"
+      ],
+      "affected": 3632,
+      "data_types": "Name; Social Security Number; Full Date of Birth; Health Insurance Policy or ID Number; Medical Information",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA41314.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "WA:BreachA41309",
+      "jurisdiction": "WA",
+      "organization": "Columbia Pacific Advisors, LLC",
+      "reported_date": "2026-06-12",
+      "breach_dates": [
+        "2025-11-28"
+      ],
+      "affected": 1585,
+      "data_types": "Name; Social Security Number; Driver's License or Washington ID Card Number; Financial & Banking Information; Full Date of Birth; Passport Number; Health Insurance Policy or ID Number; Medical Information; Username and Password/Security Question Answers",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA41309.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-06-12:virta-medical-pc:2026-03-19",
+      "jurisdiction": "CA",
+      "organization": "Virta Medical PC",
+      "reported_date": "2026-06-12",
+      "breach_dates": [
+        "2026-03-19"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-06-12:the-west-series-of-lockton-companies-llc:2026-05-13",
+      "jurisdiction": "CA",
+      "organization": "the West Series of Lockton Companies, LLC",
+      "reported_date": "2026-06-12",
+      "breach_dates": [
+        "2026-05-13"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-06-12:los-angeles-county-department-of-public-social-services:2024-01-02",
+      "jurisdiction": "CA",
+      "organization": "Los Angeles County Department of Public Social Services",
+      "reported_date": "2026-06-12",
+      "breach_dates": [
+        "2024-01-02"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-06-12:bellflower-unified-school-district:2025-07-22",
+      "jurisdiction": "CA",
+      "organization": "Bellflower Unified School District",
+      "reported_date": "2026-06-12",
+      "breach_dates": [
+        "2025-07-22"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-06-12:american-future-technology-corporation-d-b-a-ibuypower:2025-06-21|2025-06-18",
+      "jurisdiction": "CA",
+      "organization": "American Future Technology Corporation d/b/a iBUYPOWER",
+      "reported_date": "2026-06-12",
+      "breach_dates": [
+        "2025-06-21",
+        "2025-06-18"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-06-11:clinical-registry-solutions:2026-04-09",
+      "jurisdiction": "CA",
+      "organization": "Clinical Registry Solutions",
+      "reported_date": "2026-06-11",
+      "breach_dates": [
+        "2026-04-09"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-06-10:casino-llc-dba-larry-flynt-s-lucky-lady-casino:2025-05-14",
+      "jurisdiction": "CA",
+      "organization": "Casino, LLC dba Larry Flynt's Lucky Lady Casino",
+      "reported_date": "2026-06-10",
+      "breach_dates": [
+        "2025-05-14"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-06-09:pearlman-brown-wax-llp:",
+      "jurisdiction": "CA",
+      "organization": "Pearlman, Brown & Wax LLP",
+      "reported_date": "2026-06-09",
+      "breach_dates": [],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "WA:BreachA41235",
+      "jurisdiction": "WA",
+      "organization": "Plaza Home Mortgage Inc.",
+      "reported_date": "2026-06-05",
+      "breach_dates": [
+        "2026-02-17"
+      ],
+      "affected": 9598,
+      "data_types": "Name; Social Security Number; Driver's License or Washington ID Card Number; Full Date of Birth; Username and Password/Security Question Answers",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA41235.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "WA:BreachA41222",
+      "jurisdiction": "WA",
+      "organization": "Gay & Lesbian Community Services Center of Orange County Inc",
+      "reported_date": "2026-06-05",
+      "breach_dates": [
+        "2025-12-25"
+      ],
+      "affected": 1249,
+      "data_types": "Name; Driver's License or Washington ID Card Number; Financial & Banking Information; Full Date of Birth",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA41222.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-06-05:ultrahuman-healthcare-private-limited:2026-03-27",
+      "jurisdiction": "CA",
+      "organization": "Ultrahuman Healthcare Private Limited",
+      "reported_date": "2026-06-05",
+      "breach_dates": [
+        "2026-03-27"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-06-05:towerpoint-wealth-llc:2026-04-24",
+      "jurisdiction": "CA",
+      "organization": "Towerpoint Wealth, LLC",
+      "reported_date": "2026-06-05",
+      "breach_dates": [
+        "2026-04-24"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-06-05:plaza-home-mortgage-inc:2026-02-17",
+      "jurisdiction": "CA",
+      "organization": "Plaza Home Mortgage, Inc.",
+      "reported_date": "2026-06-05",
+      "breach_dates": [
+        "2026-02-17"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-06-05:meta-platforms-inc:2026-04-17|2026-05-31",
+      "jurisdiction": "CA",
+      "organization": "Meta Platforms, Inc.",
+      "reported_date": "2026-06-05",
+      "breach_dates": [
+        "2026-04-17",
+        "2026-05-31"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-06-05:lansing-community-college:2025-02-12",
+      "jurisdiction": "CA",
+      "organization": "Lansing Community College",
+      "reported_date": "2026-06-05",
+      "breach_dates": [
+        "2025-02-12"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-06-05:gay-lesbian-community-services-center-of-orange-county-inc:2025-12-25|2025-12-26",
+      "jurisdiction": "CA",
+      "organization": "Gay & Lesbian Community Services Center of Orange County, Inc.",
+      "reported_date": "2026-06-05",
+      "breach_dates": [
+        "2025-12-25",
+        "2025-12-26"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "WA:BreachM24184",
+      "jurisdiction": "WA",
+      "organization": "WellPoint (Independent Clinics of Washington, Elevance Health)",
+      "reported_date": "2026-06-02",
+      "breach_dates": [
+        "2025-06-24"
+      ],
+      "affected": 12017,
+      "data_types": "Name; Social Security Number; Driver's License or Washington ID Card Number; Full Date of Birth; Health Insurance Policy or ID Number; Medical Information",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachM24184.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "WA:BreachA41155",
+      "jurisdiction": "WA",
+      "organization": "Strategic Education Inc.",
+      "reported_date": "2026-06-01",
+      "breach_dates": [
+        "2026-02-23"
+      ],
+      "affected": 14112,
+      "data_types": "Name; Social Security Number; Driver's License or Washington ID Card Number; Passport Number",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA41155.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "WA:BreachA41141",
+      "jurisdiction": "WA",
+      "organization": "Industrial Acceptance Corporation",
+      "reported_date": "2026-06-01",
+      "breach_dates": [
+        "2025-02-22"
+      ],
+      "affected": 679,
+      "data_types": "Name; Social Security Number; Full Date of Birth",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA41141.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-06-01:strategic-education-inc:2026-02-23|2026-02-25",
+      "jurisdiction": "CA",
+      "organization": "Strategic Education Inc.",
+      "reported_date": "2026-06-01",
+      "breach_dates": [
+        "2026-02-23",
+        "2026-02-25"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-06-01:mariner-wealth-advisors-llc:2025-11-21|2026-01-13",
+      "jurisdiction": "CA",
+      "organization": "Mariner Wealth Advisors, LLC",
+      "reported_date": "2026-06-01",
+      "breach_dates": [
+        "2025-11-21",
+        "2026-01-13"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-06-01:fong-ko-associates-llp:2025-06-02",
+      "jurisdiction": "CA",
+      "organization": "Fong, Ko & Associates LLP",
+      "reported_date": "2026-06-01",
+      "breach_dates": [
+        "2025-06-02"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-05-31:morning-star-tours:2026-04-22|2026-04-23",
+      "jurisdiction": "CA",
+      "organization": "Morning Star Tours",
+      "reported_date": "2026-05-31",
+      "breach_dates": [
+        "2026-04-22",
+        "2026-04-23"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "WA:BreachA41120",
+      "jurisdiction": "WA",
+      "organization": "Networking Technology, INC. (RXNT)",
+      "reported_date": "2026-05-29",
+      "breach_dates": [
+        "2026-05-01"
+      ],
+      "affected": 1215,
+      "data_types": "Name; Social Security Number; Full Date of Birth; Medical Information; Protected Health Information owned or licensed by a HIPAA covered entity",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA41120.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "WA:BreachA41114",
+      "jurisdiction": "WA",
+      "organization": "IMA Diligence Services, LLC",
+      "reported_date": "2026-05-29",
+      "breach_dates": [
+        "2025-12-08"
+      ],
+      "affected": 1977,
+      "data_types": "Name; Social Security Number; Driver's License or Washington ID Card Number; Financial & Banking Information; Full Date of Birth; Health Insurance Policy or ID Number; Medical Information",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA41114.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "WA:BreachA41108",
+      "jurisdiction": "WA",
+      "organization": "Networking Technology, Inc. (RXNT)",
+      "reported_date": "2026-05-29",
+      "breach_dates": [
+        "2026-03-01"
+      ],
+      "affected": 5671,
+      "data_types": "Name; Social Security Number; Full Date of Birth; Medical Information",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA41108.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "WA:BreachA41103",
+      "jurisdiction": "WA",
+      "organization": "Lakewood School District",
+      "reported_date": "2026-05-29",
+      "breach_dates": [
+        "2026-03-19"
+      ],
+      "affected": 1006,
+      "data_types": "Name; Social Security Number; Driver's License or Washington ID Card Number; Financial & Banking Information",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA41103.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-05-29:texollini-inc:2026-02-16|2026-02-18",
+      "jurisdiction": "CA",
+      "organization": "Texollini, Inc.",
+      "reported_date": "2026-05-29",
+      "breach_dates": [
+        "2026-02-16",
+        "2026-02-18"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-05-29:rci-internet-services:2026-03-23",
+      "jurisdiction": "CA",
+      "organization": "RCI Internet Services",
+      "reported_date": "2026-05-29",
+      "breach_dates": [
+        "2026-03-23"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-05-29:networking-technology-inc:2026-03-01|2026-03-03",
+      "jurisdiction": "CA",
+      "organization": "Networking Technology, Inc.",
+      "reported_date": "2026-05-29",
+      "breach_dates": [
+        "2026-03-01",
+        "2026-03-03"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-05-29:ima-diligence-services-llc:2025-12-08|2025-12-16",
+      "jurisdiction": "CA",
+      "organization": "IMA Diligence Services, LLC",
+      "reported_date": "2026-05-29",
+      "breach_dates": [
+        "2025-12-08",
+        "2025-12-16"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-05-29:educational-employees-credit-union:2025-12-15",
+      "jurisdiction": "CA",
+      "organization": "Educational Employees Credit Union",
+      "reported_date": "2026-05-29",
+      "breach_dates": [
+        "2025-12-15"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "WA:BreachA41097",
+      "jurisdiction": "WA",
+      "organization": "Texas Capital",
+      "reported_date": "2026-05-28",
+      "breach_dates": [
+        "2026-04-26"
+      ],
+      "affected": 5134,
+      "data_types": "Name; Social Security Number; Full Date of Birth",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA41097.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-05-28:texas-capital:2026-04-26|2026-04-27",
+      "jurisdiction": "CA",
+      "organization": "Texas Capital",
+      "reported_date": "2026-05-28",
+      "breach_dates": [
+        "2026-04-26",
+        "2026-04-27"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-05-28:smith-james-cpas:2026-03-05",
+      "jurisdiction": "CA",
+      "organization": "Smith & James, CPAs",
+      "reported_date": "2026-05-28",
+      "breach_dates": [
+        "2026-03-05"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-05-28:la-perouse-llc:2025-05-27|2025-07-09",
+      "jurisdiction": "CA",
+      "organization": "La Perouse LLC",
+      "reported_date": "2026-05-28",
+      "breach_dates": [
+        "2025-05-27",
+        "2025-07-09"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-05-28:johnson-peltier-electric-inc:2026-03-10",
+      "jurisdiction": "CA",
+      "organization": "Johnson-Peltier Electric, Inc.",
+      "reported_date": "2026-05-28",
+      "breach_dates": [
+        "2026-03-10"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-05-28:industrial-acceptance-corporation:2025-02-22",
+      "jurisdiction": "CA",
+      "organization": "Industrial Acceptance Corporation",
+      "reported_date": "2026-05-28",
+      "breach_dates": [
+        "2025-02-22"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-05-28:harbor-developmental-disabilities-foundation-d-b-a-harbor-regional-center:2026-03-06|2026-03-07",
+      "jurisdiction": "CA",
+      "organization": "Harbor Developmental Disabilities Foundation (d/b/a Harbor Regional Center)",
+      "reported_date": "2026-05-28",
+      "breach_dates": [
+        "2026-03-06",
+        "2026-03-07"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-05-28:blue-teal-holdings-llc:2025-10-13",
+      "jurisdiction": "CA",
+      "organization": "Blue Teal Holdings, LLC",
+      "reported_date": "2026-05-28",
+      "breach_dates": [
+        "2025-10-13"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "WA:BreachA41079",
+      "jurisdiction": "WA",
+      "organization": "Carnival Corporation",
+      "reported_date": "2026-05-27",
+      "breach_dates": [
+        "2026-04-10"
+      ],
+      "affected": 54960,
+      "data_types": "Name; Driver's License or Washington ID Card Number; Full Date of Birth; Passport Number",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA41079.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-05-27:carnival-corporation:2026-04-10",
+      "jurisdiction": "CA",
+      "organization": "Carnival Corporation",
+      "reported_date": "2026-05-27",
+      "breach_dates": [
+        "2026-04-10"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-05-27:ampex-data-systems-corporation:2026-03-21",
+      "jurisdiction": "CA",
+      "organization": "Ampex Data Systems Corporation",
+      "reported_date": "2026-05-27",
+      "breach_dates": [
+        "2026-03-21"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "WA:BreachA41058",
+      "jurisdiction": "WA",
+      "organization": "Spokane Digestive Disease Center, P.S.",
+      "reported_date": "2026-05-26",
+      "breach_dates": [
+        "2026-01-22"
+      ],
+      "affected": 2093,
+      "data_types": "Name; Social Security Number; Driver's License or Washington ID Card Number; Financial & Banking Information; Full Date of Birth; Medical Information",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA41058.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-05-26:interstate-management-company-llc:2025-11-19|2025-11-22",
+      "jurisdiction": "CA",
+      "organization": "Interstate Management Company, LLC",
+      "reported_date": "2026-05-26",
+      "breach_dates": [
+        "2025-11-19",
+        "2025-11-22"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-05-26:ermi-llc:2025-02-15|2025-08-14",
+      "jurisdiction": "CA",
+      "organization": "ERMI LLC",
+      "reported_date": "2026-05-26",
+      "breach_dates": [
+        "2025-02-15",
+        "2025-08-14"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "WA:BreachA41006",
+      "jurisdiction": "WA",
+      "organization": "Gastro Health",
+      "reported_date": "2026-05-22",
+      "breach_dates": [
+        "2026-02-24"
+      ],
+      "affected": 1813,
+      "data_types": "Name; Social Security Number; Driver's License or Washington ID Card Number; Full Date of Birth; Health Insurance Policy or ID Number; Medical Information; Protected Health Information owned or licensed by a HIPAA covered entity",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA41006.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-05-22:sacramento-county:2025-10-29",
+      "jurisdiction": "CA",
+      "organization": "Sacramento County",
+      "reported_date": "2026-05-22",
+      "breach_dates": [
+        "2025-10-29"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "WA:BreachA40987",
+      "jurisdiction": "WA",
+      "organization": "Barnhart Crane & Rigging Company, Inc.",
+      "reported_date": "2026-05-21",
+      "breach_dates": [
+        "2025-04-23"
+      ],
+      "affected": 1068,
+      "data_types": "Name; Social Security Number; Driver's License or Washington ID Card Number; Financial & Banking Information; Full Date of Birth; Passport Number; Health Insurance Policy or ID Number; Medical Information",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA40987.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "WA:BreachA40948",
+      "jurisdiction": "WA",
+      "organization": "VacPartsWarehouse.com LLC (PartsWarehouse.com)",
+      "reported_date": "2026-05-20",
+      "breach_dates": [
+        "2025-10-31"
+      ],
+      "affected": 695,
+      "data_types": "Name; Financial & Banking Information",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA40948.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "WA:BreachA40945",
+      "jurisdiction": "WA",
+      "organization": "Cardinal Services, Inc, Cardinal Employer Organization, and",
+      "reported_date": "2026-05-20",
+      "breach_dates": [
+        "2025-06-30"
+      ],
+      "affected": 2066,
+      "data_types": "Name; Social Security Number; Driver's License or Washington ID Card Number; Financial & Banking Information; Full Date of Birth; Passport Number; Medical Information",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA40945.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-05-20:vacpartswarehouse-com:2025-10-31|2025-12-12",
+      "jurisdiction": "CA",
+      "organization": "VacPartsWarehouse.com",
+      "reported_date": "2026-05-20",
+      "breach_dates": [
+        "2025-10-31",
+        "2025-12-12"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-05-20:frost-bank:2025-12-06",
+      "jurisdiction": "CA",
+      "organization": "Frost Bank",
+      "reported_date": "2026-05-20",
+      "breach_dates": [
+        "2025-12-06"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-05-20:cardinal-services-inc-cardinal-employer-organization-and-preferred-employer-solutions-collectively-cardinal:2025-06-25|2025-06-26|2025-08-08",
+      "jurisdiction": "CA",
+      "organization": "Cardinal Services, Inc, Cardinal Employer Organization, and Preferred Employer Solutions, collectively (“Cardinal”)",
+      "reported_date": "2026-05-20",
+      "breach_dates": [
+        "2025-06-25",
+        "2025-06-26",
+        "2025-08-08"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "WA:BreachA40910",
+      "jurisdiction": "WA",
+      "organization": "Caesars Entertainment, Inc.",
+      "reported_date": "2026-05-19",
+      "breach_dates": [
+        "2026-02-23"
+      ],
+      "affected": 44023,
+      "data_types": "Name; Social Security Number; Driver's License or Washington ID Card Number; Full Date of Birth; Passport Number",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA40910.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-05-19:southern-california-university-of-health-sciences:2026-03-23|2026-03-24",
+      "jurisdiction": "CA",
+      "organization": "Southern California University of Health Sciences",
+      "reported_date": "2026-05-19",
+      "breach_dates": [
+        "2026-03-23",
+        "2026-03-24"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "WA:BreachA40888",
+      "jurisdiction": "WA",
+      "organization": "Lusamerica Foods",
+      "reported_date": "2026-05-18",
+      "breach_dates": [
+        "2026-01-31"
+      ],
+      "affected": 1017,
+      "data_types": "Social Security Number; Full Date of Birth; Health Insurance Policy or ID Number",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA40888.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-05-18:the-beacon-mutual-insurance-company:2026-01-07|2026-01-14",
+      "jurisdiction": "CA",
+      "organization": "The Beacon Mutual Insurance Company",
+      "reported_date": "2026-05-18",
+      "breach_dates": [
+        "2026-01-07",
+        "2026-01-14"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-05-18:lusamerica-foods:2026-01-31",
+      "jurisdiction": "CA",
+      "organization": "Lusamerica Foods",
+      "reported_date": "2026-05-18",
+      "breach_dates": [
+        "2026-01-31"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-05-18:boston-capital-holdings-lp:2026-01-16|2026-01-22",
+      "jurisdiction": "CA",
+      "organization": "Boston Capital Holdings LP",
+      "reported_date": "2026-05-18",
+      "breach_dates": [
+        "2026-01-16",
+        "2026-01-22"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "WA:BreachA40850",
+      "jurisdiction": "WA",
+      "organization": "7-Eleven, Inc.",
+      "reported_date": "2026-05-15",
+      "breach_dates": [
+        "2026-04-08"
+      ],
+      "affected": 1940,
+      "data_types": "Social Security Number; Full Date of Birth; Passport Number",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA40850.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "WA:BreachA40765",
+      "jurisdiction": "WA",
+      "organization": "US Tiger Securities Inc. (“US Tiger”) (TradeUP Securities, Inc.)",
+      "reported_date": "2026-05-15",
+      "breach_dates": [
+        "2025-07-03"
+      ],
+      "affected": 885,
+      "data_types": "Name; Social Security Number; Driver's License or Washington ID Card Number; Full Date of Birth; Military ID Number; Passport Number",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA40765.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-05-15:us-tiger-securities-inc-us-tiger:2025-07-03|2025-07-15",
+      "jurisdiction": "CA",
+      "organization": "US Tiger Securities Inc. (“US Tiger”)",
+      "reported_date": "2026-05-15",
+      "breach_dates": [
+        "2025-07-03",
+        "2025-07-15"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-05-15:the-phia-group-llc:2024-07-08",
+      "jurisdiction": "CA",
+      "organization": "The Phia Group, LLC",
+      "reported_date": "2026-05-15",
+      "breach_dates": [
+        "2024-07-08"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-05-15:lumexa-imaging:2026-03-31|2026-04-09",
+      "jurisdiction": "CA",
+      "organization": "Lumexa Imaging",
+      "reported_date": "2026-05-15",
+      "breach_dates": [
+        "2026-03-31",
+        "2026-04-09"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-05-15:fluke-corporation:2025-08-10|2025-10-07",
+      "jurisdiction": "CA",
+      "organization": "Fluke Corporation",
+      "reported_date": "2026-05-15",
+      "breach_dates": [
+        "2025-08-10",
+        "2025-10-07"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-05-15:city-of-port-hueneme:",
+      "jurisdiction": "CA",
+      "organization": "City of Port Hueneme",
+      "reported_date": "2026-05-15",
+      "breach_dates": [],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-05-14:cresset-capital-management:2026-04-06",
+      "jurisdiction": "CA",
+      "organization": "Cresset Capital Management",
+      "reported_date": "2026-05-14",
+      "breach_dates": [
+        "2026-04-06"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "WA:BreachM24095",
+      "jurisdiction": "WA",
+      "organization": "Nursa",
+      "reported_date": "2026-05-13",
+      "breach_dates": [
+        "2026-02-27"
+      ],
+      "affected": 13168,
+      "data_types": "Name; Full Date of Birth",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachM24095.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "WA:BreachA40693",
+      "jurisdiction": "WA",
+      "organization": "American Lending Center",
+      "reported_date": "2026-05-13",
+      "breach_dates": [
+        "2025-07-24"
+      ],
+      "affected": 6049,
+      "data_types": "Name; Social Security Number; Full Date of Birth",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA40693.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-05-12:tulane-university:2025-08-10",
+      "jurisdiction": "CA",
+      "organization": "Tulane University",
+      "reported_date": "2026-05-12",
+      "breach_dates": [
+        "2025-08-10"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    },
+    {
+      "key": "CA:2026-05-12:family-health-centers-of-san-diego:2021-12-15|2026-02-27",
+      "jurisdiction": "CA",
+      "organization": "Family Health Centers of San Diego",
+      "reported_date": "2026-05-12",
+      "breach_dates": [
+        "2021-12-15",
+        "2026-02-27"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": null,
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-10"
+    }
+  ]
+}

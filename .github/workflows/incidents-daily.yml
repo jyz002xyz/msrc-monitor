@@ -1,7 +1,14 @@
 name: incidents-daily
 
-# Daily collection of SEC 8-K Item 1.05 disclosures into docs/incidents/.
+# Daily collection of the two automatic layers into docs/incidents/:
+#   - SEC 8-K Item 1.05 disclosures                    (rare: a few per month)
+#   - California and Washington AG breach registries   (~2.5 filings/day, measured 2026-08-10)
 # Data updates only — code/display changes stay behind normal PR review.
+#
+# Only the SEC layer opens a notice issue. Item 1.05 is rare and each filing is genuinely a
+# prompt to consider writing the incident up in the curated layer. Registry rows arrive every
+# day, so an issue per run would be noise that trains everyone to ignore the notice — for those
+# the PR diff is the record.
 #
 # Shaped after kev-daily.yml: main is protected, so the bot cannot push to main. It opens an
 # auto-PR from a deterministic branch and merges it. Branch protection is not weakened; the PR
@@ -17,9 +24,22 @@ on:
     inputs:
       since:
         description: >-
-          Collect from this date (YYYY-MM-DD) instead of the default two-day window.
-          Used to widen the record deliberately; a window large enough to reach EDGAR's
-          100-hit page limit halts rather than returning a truncated result.
+          SEC layer: collect from this date (YYYY-MM-DD) instead of the default two-day
+          window. Used to widen the record deliberately; a window large enough to reach
+          EDGAR's 100-hit page limit halts rather than returning a truncated result.
+        required: false
+        type: string
+      registry_since:
+        description: >-
+          State AG layer: collect from this date (YYYY-MM-DD) instead of the default 90 days.
+          A deliberate backfill; expect to raise wa_pages with it, and note the integrity gate
+          caps new rows per run unless INCIDENTS_REGISTRY_MAX_NEW_PER_RUN is raised too.
+        required: false
+        type: string
+      wa_pages:
+        description: >-
+          State AG layer: how many Washington pages to read, newest first. One page spans
+          about three months, so the daily default of 1 is ample. Raise only for a backfill.
         required: false
         type: string
   schedule:
@@ -55,19 +75,23 @@ jobs:
           python-version: "3.12"
         # No pip install: the collector is standard-library only.
 
-      - name: Collect SEC Item 1.05 disclosures (integrity-gated, append-only)
+      - name: Collect SEC Item 1.05 and state AG registries (integrity-gated, append-only)
         id: run
-        # run.py fail-halts (non-zero exit) on a degraded fetch, so a bad upstream response
-        # fails the job here and never appends to the permanent record. pipefail is essential:
-        # without it `python | tee` would mask a failure as success.
+        # run.py fail-halts (non-zero exit) on a degraded fetch from EITHER source, so a bad
+        # upstream response fails the job here and never appends to the permanent record.
+        # pipefail is essential: without it `python | tee` would mask a failure as success.
         env:
           # SEC requires a declared User-Agent with contact information (403 without one).
-          # Held as a secret so no contact address is committed to this public repo.
+          # Held as a secret so no contact address is committed to this public repo. The state
+          # registries need no secret: neither requires a declared UA, and the descriptive one
+          # the collector sends carries this repo's URL rather than a contact address.
           SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
           # Read through the environment, never interpolated into the script body: a
           # workflow_dispatch input is attacker-controllable text and `${{ }}` inside `run:`
           # would splice it into the shell. Validated below before it reaches a command.
           SINCE: ${{ inputs.since }}
+          REGISTRY_SINCE: ${{ inputs.registry_since }}
+          WA_PAGES: ${{ inputs.wa_pages }}
         run: |
           set -euo pipefail
           if [ -z "${SEC_USER_AGENT:-}" ]; then
@@ -81,15 +105,45 @@ jobs:
               [0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]) ;;
               *) echo "::error::since must be YYYY-MM-DD, got '$SINCE'"; exit 1 ;;
             esac
-            echo "collecting from $SINCE instead of the default two-day window"
-            args=(--since "$SINCE")
+            echo "SEC: collecting from $SINCE instead of the default two-day window"
+            args+=(--since "$SINCE")
+          fi
+          if [ -n "${REGISTRY_SINCE:-}" ]; then
+            case "$REGISTRY_SINCE" in
+              [0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]) ;;
+              *) echo "::error::registry_since must be YYYY-MM-DD, got '$REGISTRY_SINCE'"; exit 1 ;;
+            esac
+            echo "state AG: collecting from $REGISTRY_SINCE instead of the default 90 days"
+            args+=(--registry-since "$REGISTRY_SINCE")
+          fi
+          if [ -n "${WA_PAGES:-}" ]; then
+            case "$WA_PAGES" in
+              ''|*[!0-9]*) echo "::error::wa_pages must be a positive integer, got '$WA_PAGES'"; exit 1 ;;
+            esac
+            echo "state AG: reading $WA_PAGES Washington page(s)"
+            args+=(--wa-pages "$WA_PAGES")
           fi
           python -m incidents.run "${args[@]}" | tee "$RUNNER_TEMP/run.log"
           stats=$(grep -m1 'integrity stats' "$RUNNER_TEMP/run.log" | sed 's/^\[incidents\] //' || true)
           echo "stats=$stats" >> "$GITHUB_OUTPUT"
+          rstats=$(grep -m1 'registry integrity stats' "$RUNNER_TEMP/run.log" | sed 's/^\[incidents\] //' || true)
+          echo "rstats=$rstats" >> "$GITHUB_OUTPUT"
+          # Only SEC lines feed the notice issue. `NEW ` with the trailing space deliberately
+          # does not match `NEW-REG`: registry rows arrive daily and are not work items.
           {
             echo "new<<__EOF__"
             grep '^\[incidents\] NEW ' "$RUNNER_TEMP/run.log" | sed 's/^\[incidents\] NEW  //' || true
+            echo "__EOF__"
+          } >> "$GITHUB_OUTPUT"
+          echo "reg_new_count=$(grep -c '^\[incidents\] NEW-REG ' "$RUNNER_TEMP/run.log" || true)" \
+            >> "$GITHUB_OUTPUT"
+          # Filer names newly queued for a human decision. Emitted even when docs/incidents/ is
+          # unchanged: a withheld filing produces no page diff, so gating this on the no-op
+          # check would silently swallow the very case that needs a person.
+          {
+            echo "pending_filers<<__EOF__"
+            grep '^\[incidents\] PENDING-FILER ' "$RUNNER_TEMP/run.log" \
+              | sed 's/^\[incidents\] PENDING-FILER  //' || true
             echo "__EOF__"
           } >> "$GITHUB_OUTPUT"
 
@@ -142,6 +196,8 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           STATS: ${{ steps.run.outputs.stats }}
+          RSTATS: ${{ steps.run.outputs.rstats }}
+          REG_NEW: ${{ steps.run.outputs.reg_new_count }}
         run: |
           set -euo pipefail
 
@@ -171,12 +227,14 @@ jobs:
           git push origin "$BOT_BRANCH"
 
           body=$(cat <<EOF
-          Automated daily SEC Item 1.05 disclosure update (auto-PR + auto-merge).
+          Automated daily disclosure update (auto-PR + auto-merge).
 
-          - Integrity gate passed: ${STATS:-(stats unavailable)}
+          - SEC integrity gate passed: ${STATS:-(stats unavailable)}
+          - State AG integrity gate passed: ${RSTATS:-(stats unavailable)}
+          - New state AG filings this run: ${REG_NEW:-0}
           - Diff scope enforced: changes confined to docs/incidents/ and incidents/data/
           - docs/archive/, docs/kev/, docs/index.html and docs/report_*.html verified untouched
-          - Record is append-only; existing statements are never rewritten
+          - Both records are append-only; existing rows are never rewritten
           - Collector/guard logic unchanged; data only.
 
           Opened and merged by .github/workflows/incidents-daily.yml.
@@ -243,6 +301,54 @@ jobs:
           )
           gh issue create --repo "$GITHUB_REPOSITORY" \
             --title "incidents: new Item 1.05 disclosure(s)" --body "$body" || \
+            echo "::warning::could not open the notice issue (the data update itself succeeded)"
+
+      - name: Notice — ask about registry filer names that may be individuals
+        # A blocking decision, not an FYI: these filings are withheld from the page AND from
+        # incidents/data/state_ag.json until answered, so an unanswered issue means data is
+        # sitting out. Fires only for names newly queued this run — a name already waiting does
+        # not re-open a notice every day.
+        #
+        # The name appears here and in the run log because a person cannot decide otherwise.
+        # An issue is a decision prompt that gets closed; what it must never become is the
+        # published page or the permanent record, and it is neither.
+        if: steps.run.outputs.pending_filers != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PENDING: ${{ steps.run.outputs.pending_filers }}
+        run: |
+          set -euo pipefail
+          [ -z "${PENDING//[[:space:]]/}" ] && exit 0
+          body=$(cat <<EOF
+          These filer names from the state AG registries are shaped like a natural person, so
+          their filings are **withheld** — from \`docs/incidents/\` and from
+          \`incidents/data/state_ag.json\` alike — until someone decides.
+
+          \`\`\`
+          ${PENDING}
+          \`\`\`
+
+          Nothing has been concluded about anyone: \`incidents/filers.py\` matched the SHAPE of
+          the name. Most flagged names turn out to be companies.
+
+          To decide, edit \`incidents/data/filer_decisions.json\`:
+
+          - **an organisation** → add the name to \`organisations\`, exactly as the state
+            publishes it. Its filings appear on the next run and permanently after.
+          - **an individual** → add \`sha256(name)\` to \`individual_hashes\`. Do **not** write
+            the name into that file: recording the decision must not create the per-person
+            record the decision exists to prevent.
+
+          \`\`\`
+          python3 -c "from incidents.filers import name_hash; print(name_hash('NAME'))"
+          \`\`\`
+
+          Opened by .github/workflows/incidents-daily.yml.
+          EOF
+          )
+          gh issue create --repo "$GITHUB_REPOSITORY" \
+            --title "incidents: filer name(s) awaiting an organisation/individual decision" \
+            --body "$body" || \
             echo "::warning::could not open the notice issue (the data update itself succeeded)"
 
       - name: Dead-man's switch — ping on CONFIRMED success only
