@@ -917,6 +917,71 @@ def test_registry_layer_is_absent_when_nothing_is_recorded():
                 or "州への届出はまだ記録されていません" in page), lang
 
 
+# --- provenance: a record written by a rule is not the same claim as one written by a person
+def test_a_record_written_by_a_rule_is_marked_and_carries_no_prose():
+    doc = {"schema": 1, "records": [{
+        "id": "2026-08-01-acme", "organization": "Acme", "type": "unauthorized_access",
+        "recorded_by": "detector",
+        "statements": [{"date": "2026-08-01", "kind": "organization",
+                        "source": "Acme の発表", "url": "https://acme.example/notice"}]}]}
+    assert records.validate(doc) == []
+    assert records.recorded_by(doc["records"][0]) == "detector"
+
+
+def test_a_rule_written_record_may_not_carry_facts():
+    """`facts` is what the organisation stated. A machine filling it is paraphrasing them."""
+    doc = {"schema": 1, "records": [{
+        "id": "x", "organization": "Acme", "type": "other", "recorded_by": "detector",
+        "statements": [{"date": "2026-08-01", "kind": "organization", "source": "s",
+                        "url": "https://a.example/", "facts": "the organisation said..."}]}]}
+    assert any("paraphrasing" in e for e in records.validate(doc))
+
+
+def test_an_unmarked_record_is_an_editors_and_stays_that_way():
+    """The six written by hand predate the field; they are not rewritten to carry it."""
+    doc = records.load(Path(ROOT) / "incidents" / "data" / "records.json") \
+        if False else {"schema": 1, "records": [{
+            "id": "x", "organization": "Acme", "type": "other",
+            "statements": [{"date": "2026-08-01", "kind": "organization", "source": "s",
+                            "url": "https://a.example/"}]}]}
+    assert records.recorded_by(doc["records"][0]) == "editor"
+    assert records.validate(doc) == []
+
+
+def test_an_unknown_provenance_value_is_rejected():
+    doc = {"schema": 1, "records": [{
+        "id": "x", "organization": "Acme", "type": "other", "recorded_by": "robot",
+        "statements": [{"date": "2026-08-01", "kind": "organization", "source": "s",
+                        "url": "https://a.example/"}]}]}
+    assert any("recorded_by" in e for e in records.validate(doc))
+
+
+def test_the_page_tells_the_reader_which_rows_a_rule_wrote():
+    doc = {"schema": 1, "records": [
+        {"id": "a", "organization": "AutoCo", "type": "ransomware", "recorded_by": "detector",
+         "statements": [{"date": "2026-08-01", "kind": "organization", "source": "AutoCo",
+                         "url": "https://autoco.example/n"}]},
+        {"id": "b", "organization": "HandCo", "type": "ransomware",
+         "statements": [{"date": "2026-08-01", "kind": "organization", "source": "HandCo",
+                         "url": "https://handco.example/n"}]}]}
+    for lang, badge, phrase in (("en", "recorded automatically", "does not read the announcement"),
+                                ("ja", "自動記録", "発表の中身は読んでいません")):
+        page = publish.render(store.empty(), doc, lang)
+        assert badge in page, lang
+        assert phrase in page, lang
+        # the badge sits on the automatic row, and the human row does not get one
+        assert page.count(badge) >= 1
+
+
+def test_no_such_note_appears_when_every_row_was_written_by_a_person():
+    doc = {"schema": 1, "records": [{
+        "id": "b", "organization": "HandCo", "type": "ransomware",
+        "statements": [{"date": "2026-08-01", "kind": "organization", "source": "HandCo",
+                        "url": "https://handco.example/n"}]}]}
+    for lang, badge in (("en", "recorded automatically"), ("ja", "自動記録")):
+        assert badge not in publish.render(store.empty(), doc, lang), lang
+
+
 if __name__ == "__main__":
     import traceback
     tests = [v for k, v in sorted(globals().items()) if k.startswith("test_") and callable(v)]

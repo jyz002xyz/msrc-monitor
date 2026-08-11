@@ -36,6 +36,17 @@ DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 # earlier statement (which stays on the record).
 KINDS = {"organization", "regulator", "media", "retraction"}
 
+# Who put the record here. Absent means "editor" — the six records written by hand before this
+# field existed are not rewritten to carry it, because the record is append-only and their
+# meaning did not change.
+#
+# The distinction is published, not internal bookkeeping. A row written by a rule and a row
+# written by a person are not the same kind of claim: the automatic one asserts only that this
+# organisation published this announcement, with no reading of it. Marking it lets a reader
+# weigh it, and lets us find the automatic ones later when the conditions are revisited.
+RECORDED_BY = {"editor", "detector"}
+DEFAULT_RECORDED_BY = "editor"
+
 # Deliberately coarse. A fine-grained taxonomy invites judgement calls we said we would not make.
 TYPES = {"unauthorized_access", "ransomware", "data_exposure", "supply_chain",
          "credential_compromise", "other", "undisclosed"}
@@ -98,6 +109,18 @@ def validate(doc: dict) -> list[str]:
             errs.append(f"{at}: `organization` is required (organisations are named)")
         if r.get("type") not in TYPES:
             errs.append(f"{at}: `type` must be one of {sorted(TYPES)}")
+        if "recorded_by" in r and r["recorded_by"] not in RECORDED_BY:
+            errs.append(f"{at}: `recorded_by` must be one of {sorted(RECORDED_BY)} "
+                        f"(absent means {DEFAULT_RECORDED_BY!r})")
+        # A record written by a rule may not carry prose. `facts` is what the ORGANISATION
+        # stated; a machine filling it would be paraphrasing them, which is the retelling this
+        # layer refuses. Enforced here so the rule cannot be relaxed by accident upstream.
+        if r.get("recorded_by") == "detector":
+            for j, s_ in enumerate(r.get("statements") or []):
+                if str(s_.get("facts") or "").strip():
+                    errs.append(f"{at}.statements[{j}]: a record with recorded_by='detector' "
+                                f"must not carry `facts` — a machine filling it would be "
+                                f"paraphrasing the organisation")
 
         stmts = r.get("statements")
         if not isinstance(stmts, list) or not stmts:
@@ -136,10 +159,15 @@ def validate(doc: dict) -> list[str]:
     return errs
 
 
+def recorded_by(r: dict) -> str:
+    return r.get("recorded_by") or DEFAULT_RECORDED_BY
+
+
 def counts(doc: dict) -> dict:
     recs = doc.get("records") or []
     return {
         "records": len(recs),
+        "by_detector": sum(1 for r in recs if recorded_by(r) == "detector"),
         "statements": sum(len(r.get("statements") or []) for r in recs),
         "linked_to_sec": sum(1 for r in recs if r.get("sec")),
     }

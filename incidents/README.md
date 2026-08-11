@@ -9,7 +9,7 @@ press coverage.
 |---|---|---|---|
 | Automatic — SEC | SEC Form 8-K **Item 1.05** only | daily | the **company itself** — 1.05 is filed when the registrant has determined the incident is material |
 | Automatic — state AG | breach notifications filed with the **California** and **Washington** Attorneys General | daily | **state law** — the filing threshold is statutory, not editorial |
-| Curated | incidents an editor chose to record | when there is something to record | the editor |
+| Curated | incidents an editor chose to record, plus ones a rule recorded under stated conditions | when there is something to record | the editor, or a rule the editor set |
 
 No total and no per-region count is published. The layers are measured in different ways, and
 so are the jurisdictions inside each of them, so any sum would compare things that are not
@@ -63,6 +63,21 @@ Stated on the published page as the section's definition, not as a footnote:
 - **Healthcare has no federal source here.** The HHS OCR portal is still deferred (below), so
   healthcare appears only via California or Washington.
 - **The curated layer is not comprehensive.** Nothing follows from an absence.
+
+## Rows a rule wrote, and rows a person wrote
+
+`recorded_by` distinguishes them. Absent means `editor`; `detector` means the private detection
+layer wrote it unattended, having met every one of its published conditions.
+
+They are different claims and the page says so. An automatic row asserts **only** that this
+organisation published this announcement, on this date, of this coarse type. It does not read
+the announcement: `records.py` REFUSES a `detector` record that carries `facts`, because a
+machine filling that field would be paraphrasing the organisation — the same retelling this
+layer refuses for press coverage, pointed at the organisation's own words instead. The prose in
+an automatic row is therefore absent, not thin; a person adds it later if it is worth adding.
+
+The six records written by hand before this field existed are not rewritten to carry it. The
+record is append-only and their meaning did not change.
 
 ## The curated layer is not translated, and that is the rule not a gap
 

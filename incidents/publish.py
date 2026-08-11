@@ -166,6 +166,14 @@ L = {
         "th_affected": "Affected", "th_data": "Data involved (state's wording)",
         "th_notice": "Notice",
         "cur_h": "Editor-recorded incidents",
+        "cur_auto_badge": "recorded automatically",
+        "cur_auto_note": "A row marked “recorded automatically” was written by the detection "
+                         "layer when it met a set of stated conditions. It asserts only that "
+                         "this organisation published this announcement; it does not read the "
+                         "announcement, because a machine writing a summary would be "
+                         "paraphrasing the organisation rather than quoting it. Read the "
+                         "organisation's own page for the substance. Unmarked rows were "
+                         "written by a person.",
         "cur_note": "Added by hand, when there is something to record. Each entry lists who stated "
                     "what, and when. A correction is added as a further statement; the earlier one "
                     "stays. Attacker attribution, where present, is recorded as a claim by a named "
@@ -267,6 +275,12 @@ L = {
         "th_affected": "影響人数", "th_data": "関係したデータ（州の表現）",
         "th_notice": "通知",
         "cur_h": "編者が記録したインシデント",
+        "cur_auto_badge": "自動記録",
+        "cur_auto_note": "「自動記録」の印がある行は、検知の仕組みが条件を満たしたときに自動で"
+                         "書いたものです。主張しているのは「この組織がこの発表を出した」ことだけで、"
+                         "発表の中身は読んでいません — 本文の要約を機械が書くと、それは組織の言葉では"
+                         "なく言い換えになるためです。中身は組織の発表そのものをご覧ください。"
+                         "印の無い行は人が書いています。",
         "cur_note": "記録すべきことがあるときに手で追加します。各エントリは「誰が・いつ・何と述べたか」を"
                     "並べます。訂正は言明の追加として足し、元の言明は残します。攻撃者の帰属がある場合は"
                     "「誰が何を主張したか」として記録し、「誰がやったか」としては書きません。",
@@ -460,16 +474,25 @@ def _curated_table(doc: dict, lang: str) -> str:
     if not recs:
         return f'<div class="empty">{_h(t["empty_cur"])}</div>'
     rows = []
+    any_auto = False
     for r in recs:
         sec = r.get("sec") or {}
         xl = (f'<div class="xlink">SEC: CIK {_h(sec.get("cik"))}'
               f'{" · " + _h(sec.get("adsh")) if sec.get("adsh") else ""}</div>') if sec else ""
+        # A row written by a rule is a different kind of claim from one written by a person,
+        # so the reader is told which they are looking at rather than left to assume.
+        auto = ""
+        if records_mod.recorded_by(r) == "detector":
+            any_auto = True
+            auto = f'<div class="stmt amend">{_h(t["cur_auto_badge"])}</div>'
         rows.append(
-            f'<tr><td class="org">{_h(r.get("organization"))}{xl}</td>'
+            f'<tr><td class="org">{_h(r.get("organization"))}{xl}{auto}</td>'
             f'<td>{_h(r.get("type"))}</td>'
             f'<td>{_record_statements(r, lang)}</td></tr>')
+    note = (f'<div class="coverage">{_h(t["cur_auto_note"])}</div>') if any_auto else ""
     return (f'<table><thead><tr><th>{_h(t["th_org"])}</th><th>{_h(t["th_type"])}</th>'
-            f'<th>{_h(t["th_when"])}</th></tr></thead><tbody>{"".join(rows)}</tbody></table>')
+            f'<th>{_h(t["th_when"])}</th></tr></thead>'
+            f'<tbody>{"".join(rows)}</tbody></table>{note}')
 
 
 def render(store: dict, recs: dict, lang: str, reg: dict | None = None,
