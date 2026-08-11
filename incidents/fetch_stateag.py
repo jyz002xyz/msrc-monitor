@@ -30,8 +30,12 @@ ACCESS (measured 2026-08-10)
 - Neither site requires a declared User-Agent, and neither needs a browser: both are served as
   plain HTML/CSV. A descriptive User-Agent is sent anyway. It carries a repository URL and no
   contact address, so unlike SEC_USER_AGENT it does not have to be held as a secret.
-- California publishes its own CSV export of the whole list (~5,200 rows, one request). We use
-  that rather than scraping the paginated HTML: it is the publisher's own artifact.
+- California publishes its own CSV export of the whole list (~5,200 rows, one request). The
+  rows come from that: it is the publisher's own artifact. Its three columns carry no link,
+  though, so the first few pages of the HTML list are read as well, purely to pick up each
+  row's link to the notification document the organisation submitted. Without that the
+  California rows would have nothing behind them while every Washington row carries the
+  filer's own PDF.
 - Washington has no export. Its HTML table is paginated with `?page=N`, sorted by Date Reported
   descending, and one page of 50 rows spans roughly three months at the observed rate
   (~0.5 filings/day). A daily run therefore never needs more than the first page; `max_pages`
@@ -147,8 +151,8 @@ def parse_ca(text: str, *, since: str | None = None) -> tuple[list[dict], dict]:
     Columns are located by name, not by position, so a reordered export fails loudly in the
     integrity gate instead of silently swapping two fields.
 
-    California publishes no per-filing identifier and no link to the notice itself, so the key
-    has to be composed: jurisdiction + reported date + organisation + the breach dates. Two
+    California publishes no per-filing identifier, and the CSV carries no link (the HTML list
+    does — see parse_ca_links), so the key has to be composed: jurisdiction + reported date + organisation + the breach dates. Two
     filings by one organisation reported on the same day for the same breach dates therefore
     collapse into one.
 
@@ -201,8 +205,68 @@ def parse_ca(text: str, *, since: str | None = None) -> tuple[list[dict], dict]:
     return rows, stats
 
 
-def fetch_ca(*, since: str | None = None) -> tuple[list[dict], dict]:
-    return parse_ca(_get(CA_EXPORT_URL), since=since)
+_CA_REPORT_HREF = re.compile(r'href="([^"]*/databreach/reports/[^"]+)"')
+
+
+def parse_ca_links(page_html: str) -> dict[tuple[str, str], str]:
+    """(organisation, reported date) -> the state's record of that filing.
+
+    California's CSV export carries three columns and no link, but the HTML list links every
+    row to a page holding the notification document the organisation itself submitted. That
+    link is the whole reason to read the HTML at all: without it the California rows have
+    nothing behind them, while the Washington rows each carry the filer's own PDF.
+
+    Matching is on organisation + reported date because the CSV and the HTML are two renderings
+    of the same table; there is no shared id to join on. A row that does not match simply gets
+    no link, which is the honest outcome — a wrong link would put another organisation's
+    document under this one's name.
+    """
+    out: dict[tuple[str, str], str] = {}
+    for tr in _TR.findall(page_html):
+        cells = _TD.findall(tr)
+        if len(cells) < 3:
+            continue
+        org = _text(cells[0])
+        reported = _mdy(_text(cells[2]))
+        m = _CA_REPORT_HREF.search(tr)
+        if org and reported and m:
+            out[(org, reported)] = urllib.parse.urljoin(CA_LIST_URL, html.unescape(m.group(1)))
+    return out
+
+
+# The link map has to reach at least as far back as the collection window, or the oldest rows
+# in the window are recorded with no link and, because the record is append-only, stay that way.
+# Four pages is 200 rows, about 100 days at the observed ~2.0 filings/day, against a 90-day
+# window. Measured at three pages: 133 of 135 rows matched — the two misses were the two oldest.
+CA_LINK_PAGES = 4
+
+
+def fetch_ca_links(*, pages: int = CA_LINK_PAGES) -> tuple[dict[tuple[str, str], str], dict]:
+    """Link map for the newest `pages` pages of the list, newest first."""
+    links: dict[tuple[str, str], str] = {}
+    read = 0
+    for page in range(max(pages, 1)):
+        url = CA_LIST_URL if page == 0 else f"{CA_LIST_URL}?{urllib.parse.urlencode({'page': page})}"
+        got = parse_ca_links(_get(url))
+        read += 1
+        if not got:
+            break
+        links.update(got)
+    return links, {"ca_link_pages_read": read, "ca_links_found": len(links)}
+
+
+def fetch_ca(*, since: str | None = None, link_pages: int = CA_LINK_PAGES) -> tuple[list[dict], dict]:
+    rows, stats = parse_ca(_get(CA_EXPORT_URL), since=since)
+    links, lstats = fetch_ca_links(pages=link_pages)
+    stats.update(lstats)
+    matched = 0
+    for r in rows:
+        url = links.get((r["organization"], r["reported_date"]))
+        if url:
+            r["notice_url"] = url
+            matched += 1
+    stats["ca_rows_with_notice"] = matched
+    return rows, stats
 
 
 # ---------------------------------------------------------------- Washington
