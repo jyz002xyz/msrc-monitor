@@ -148,6 +148,20 @@
       "first_seen": "2026-08-10"
     },
     {
+      "key": "WA:BreachA42137",
+      "jurisdiction": "WA",
+      "organization": "CTS Journey Holdings, LLC, a Delaware limited liability comp",
+      "reported_date": "2026-08-03",
+      "breach_dates": [
+        "2025-12-03"
+      ],
+      "affected": 2226,
+      "data_types": "Name; Social Security Number; Driver's License or Washington ID Card Number; Financial & Banking Information; Full Date of Birth; Passport Number; Medical Information",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA42137.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-11"
+    },
+    {
       "key": "CA:2026-08-03:cts-journey-holdings-llc-a-delaware-limited-liability-company-dba-corporate-travel-service:2025-12-03|2025-12-11",
       "jurisdiction": "CA",
       "organization": "CTS Journey Holdings, LLC, a Delaware limited liability company (DBA Corporate Travel Service)",
@@ -191,6 +205,20 @@
       "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-627495",
       "source_url": "https://oag.ca.gov/privacy/databreach/list",
       "first_seen": "2026-08-10"
+    },
+    {
+      "key": "WA:BreachA42069",
+      "jurisdiction": "WA",
+      "organization": "Microcode, Inc. (CommonSpirit Health)",
+      "reported_date": "2026-07-30",
+      "breach_dates": [
+        "2026-01-19"
+      ],
+      "affected": 4096,
+      "data_types": "Name; Social Security Number; Driver's License or Washington ID Card Number; Financial & Banking Information; Full Date of Birth; Passport Number; Medical Information",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA42069.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-11"
     },
     {
       "key": "CA:2026-07-30:sm-energy-company:2026-05-15",
