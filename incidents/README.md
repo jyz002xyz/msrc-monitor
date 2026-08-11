@@ -64,6 +64,25 @@ Stated on the published page as the section's definition, not as a footnote:
   healthcare appears only via California or Washington.
 - **The curated layer is not comprehensive.** Nothing follows from an absence.
 
+## The curated layer is not translated, and that is the rule not a gap
+
+On the English page the curated rows carry Japanese organisation names, Japanese source titles
+and Japanese `facts`. Only the column headings are English. That is deliberate, decided
+2026-08-12 when the first six records were published.
+
+`facts` holds **what the organisation itself stated**. Translating it would make the entry a
+paraphrase of the organisation's words rather than the words — and this layer's whole discipline
+is that it does not retell, it records and links. A translated figure with a translated caveat
+is a retelling, however careful; the reader would be reading us, not them.
+
+The cost is real and is accepted: an English-only reader cannot read the substance of a
+Japanese entry. What they can still do is see that the incident is recorded, see its type and
+date, and follow the link to the organisation's own announcement — which is the same thing the
+Japanese reader does, and the only artifact either of them should be trusting.
+
+The alternative, if this is ever revisited, is a separate translated field alongside the
+original rather than in place of it — never an edit of `facts`.
+
 ## Why only Item 1.05
 
 An 8-K filed under Item 8.01 (Other Events) is one the company decided was *not* material.
@@ -197,6 +216,42 @@ Attorney General's office, and says so on the page.
   the observed window, so separating two concurrent incidents at one company is untested
   against a real case.
 - **OAIC / PPC licensing** was not established. Not needed while neither is used.
+- **Japan has no per-incident public registry.** Checked 2026-08-11 for a medical case: the
+  Personal Information Protection Commission publishes enforcement actions, sectoral alerts and
+  annual reports, but not the breach reports it receives — those became mandatory in April 2022
+  and are not published per incident. The regional health bureaus do not publish them either.
+  So for Japanese organisations the organisation's own site is the ONLY primary-source route,
+  which is why the curated layer is hand-written there and cannot be mechanised the way the
+  US state registries can.
+
+## Open: what a breach at a supplier is one record OF
+
+Recorded rather than settled, on the case that raised it (2026-08-11).
+
+A logistics provider was breached over 2026-07-29..08-01. The organisations that notified their
+own customers were its CLIENTS — a games platform, two retailers, a football club — each of
+which learned of it days later and sent its own notice. One intrusion, one set of compromised
+systems, several notifying organisations.
+
+Both readings are defensible and they give different tables:
+
+- **Record the breached party.** The systems, the data and the retention were the supplier's,
+  and the event is one event. Recording each client separately makes one intrusion appear as
+  four incidents — the same multiplication the state layer already has across jurisdictions,
+  arriving here along the supplier axis instead.
+- **Record the notifying party.** That is who discharged the duty to tell people, and who the
+  affected reader recognises. It is also the only party many readers can name.
+
+**The schema cannot express the relation either way.** `records.py` keys a record on
+`organization` and has a `supply_chain` type, but nowhere to say *whose* supply chain, or that
+two records describe one intrusion. The only cross-reference that exists is `sec`, which points
+at the SEC layer and nothing else.
+
+A second obstacle is separate and may bite first: **neither party had published anything.** The
+supplier's newsroom returned HTTP 403 and its confirmation reached customers privately; the
+client's notice was an email. `records.py` requires every statement to carry a checkable `http`
+URL, so with no public document there is nothing to record whichever party is chosen. That case
+is therefore held until a public document exists, and the question above stays open.
 
 ## Filer names that might be people
 
