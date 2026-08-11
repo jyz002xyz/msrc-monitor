@@ -42,11 +42,22 @@ on:
           about three months, so the daily default of 1 is ample. Raise only for a backfill.
         required: false
         type: string
-  schedule:
-    # 22:00 UTC == 07:00 JST. 8-K filings land during US business hours; a JST-morning run
-    # picks up the prior US day. Kept clear of kev-daily (23:30 UTC) so the two never race
-    # for the same base commit.
-    - cron: "0 22 * * *"
+  # THE SCHEDULE IS OFF while the state AG layer is verified by hand. Turned off deliberately
+  # on 2026-08-11, on owner instruction, so the first registry run is a watched one:
+  # workflow_dispatch, then check the diff scope, the protected sections, the healthcheck ping
+  # and the no-op path before anything runs unattended.
+  #
+  # NOTE, BECAUSE THIS ALSO STOPS THE SEC LAYER: this cron drives both collectors, and the SEC
+  # layer has been running unattended since 2026-08-08. Item 1.05 filings are rare and the
+  # default window is only two days, so WHEN RE-ENABLING, first run once with
+  # `since` set to the last date the schedule ran, to cover the gap. The record is append-only
+  # and dedupes on adsh, so an overlapping window costs nothing and a missed one is silent.
+  #
+  # schedule:
+  #   # 22:00 UTC == 07:00 JST. 8-K filings land during US business hours; a JST-morning run
+  #   # picks up the prior US day. Kept clear of kev-daily (23:30 UTC) so the two never race
+  #   # for the same base commit.
+  #   - cron: "0 22 * * *"
 
 # Least privilege: commit the regenerated section (contents) and open/merge its PR
 # (pull-requests). No PAT — the built-in GITHUB_TOKEN only.
