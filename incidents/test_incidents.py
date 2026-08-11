@@ -13,7 +13,39 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from incidents import fetch_sec, integrity, publish, records, store  # noqa: E402
+from incidents import (fetch_sec, fetch_stateag, filers, integrity,  # noqa: E402
+                       publish, records, stateag_store, store)
+
+# Real rows, trimmed. California's export header is reproduced exactly as published — the
+# double space inside "Date(s) of Breach  (if known)" is not a typo here, it is in the file,
+# and the parser has to survive it.
+CA_CSV = (
+    '"Organization Name","Date(s) of Breach  (if known)","Reported Date"\r\n'
+    '"American Addiction Centers","05/12/2026","08/07/2026"\r\n'
+    '"Cushman & Wakefield","04/21/2026, 04/29/2026","08/07/2026"\r\n'
+    '"Hamill & Kaplan","","08/06/2026"\r\n'
+    '"Old Filing, Inc.","01/02/2020","03/04/2020"\r\n'
+)
+
+# One Washington page, trimmed to three rows. The <time datetime> attributes, the notice link
+# on the organisation name and the &#039;/&amp; entities are all as served.
+WA_HTML = """
+<table><thead><tr><th>Date Reported</th><th>Organization Name</th><th>Date of Breach</th>
+<th>Number of Washingtonians Affected</th><th>Information Compromised</th></tr></thead><tbody>
+<tr><td><time datetime="2026-07-28T12:00:00Z">07/28/2026</time></td>
+<td><a href="https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA42014.pdf">ADT, Inc.</a></td>
+<td><time datetime="2026-04-20T12:00:00Z">04/20/2026</time></td>
+<td>5129</td><td>Name; Social Security Number; Full Date of Birth</td></tr>
+<tr><td><time datetime="2026-07-27T12:00:00Z">07/27/2026</time></td>
+<td><a href="https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA42008.pdf">JRK Property Holdings, Inc.</a></td>
+<td><time datetime="2026-03-26T12:00:00Z">03/26/2026</time></td>
+<td>5,667</td><td>Name; Driver&#039;s License; Financial &amp; Banking Information</td></tr>
+<tr><td><time datetime="2020-01-05T12:00:00Z">01/05/2020</time></td>
+<td><a href="https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA00001.pdf">Ancient Co.</a></td>
+<td><time datetime="2019-12-01T12:00:00Z">12/01/2019</time></td>
+<td></td><td>Name</td></tr>
+</tbody></table>
+"""
 
 # A reduced but REAL search payload: the River Financial 8-K/A chain (one incident, five
 # filings), one unrelated 1.05 filing, one hit whose items do not include 1.05 (an exhibit of
@@ -372,6 +404,440 @@ def test_render_only_needs_no_network():
         written = publish.build_site(store.empty(), records.empty(), out)
         assert len(written) == 3
         assert (out / "index.html").exists()
+
+
+# --- state AG registries: parsing --------------------------------------------
+def test_ca_parses_columns_by_name_not_position():
+    rows, stats = fetch_stateag.parse_ca(CA_CSV)
+    assert stats["ca_rows_in_export"] == 4
+    by = {r["organization"]: r for r in rows}
+    aac = by["American Addiction Centers"]
+    assert aac["reported_date"] == "2026-08-07", "m/d/Y must be stored as ISO"
+    assert aac["breach_dates"] == ["2026-05-12"]
+    assert aac["jurisdiction"] == "CA"
+
+
+def test_ca_reordered_or_renamed_columns_halt_rather_than_misfile():
+    """A silently reordered export would put breach dates in the reported-date field."""
+    bad = '"Org","When","Reported Date"\r\n"X","01/01/2026","01/02/2026"\r\n'
+    try:
+        fetch_stateag.parse_ca(bad)
+    except fetch_stateag.FetchError as e:
+        assert "missing an expected column" in str(e)
+    else:
+        raise AssertionError("a renamed column must halt the run, not be guessed at")
+
+
+def test_ca_handles_several_breach_dates_and_none_at_all():
+    rows, _ = fetch_stateag.parse_ca(CA_CSV)
+    by = {r["organization"]: r for r in rows}
+    assert by["Cushman & Wakefield"]["breach_dates"] == ["2026-04-21", "2026-04-29"]
+    assert by["Hamill & Kaplan"]["breach_dates"] == [], "an empty cell is not a date"
+
+
+def test_ca_records_absent_fields_as_absent_not_as_zero():
+    """California publishes no affected count. Storing 0 would assert nobody was affected."""
+    rows, _ = fetch_stateag.parse_ca(CA_CSV)
+    assert all(r["affected"] is None for r in rows)
+    assert all(r["data_types"] is None for r in rows)
+    assert all(r["notice_url"] is None for r in rows)
+
+
+def test_ca_since_window_drops_older_rows():
+    rows, stats = fetch_stateag.parse_ca(CA_CSV, since="2026-01-01")
+    assert stats["ca_rows_in_export"] == 4, "the floor must see the whole export"
+    assert stats["ca_rows_kept"] == 3
+    assert all(r["reported_date"] >= "2026-01-01" for r in rows)
+
+
+def test_wa_parses_five_columns_with_entities_and_thousands_separators():
+    rows, stats = fetch_stateag.parse_wa(WA_HTML)
+    assert stats["wa_rows"] == 3 and stats["wa_malformed_rows"] == 0
+    by = {r["organization"]: r for r in rows}
+    assert by["ADT, Inc."]["affected"] == 5129
+    assert by["JRK Property Holdings, Inc."]["affected"] == 5667, "5,667 must parse"
+    assert "Driver's License" in by["JRK Property Holdings, Inc."]["data_types"]
+    assert "&amp;" not in by["JRK Property Holdings, Inc."]["data_types"]
+
+
+def test_wa_prefers_the_machine_readable_time_attribute():
+    rows, _ = fetch_stateag.parse_wa(WA_HTML)
+    assert {r["reported_date"] for r in rows} >= {"2026-07-28", "2026-07-27"}
+    assert all(len(r["reported_date"]) == 10 for r in rows)
+
+
+def test_wa_keeps_the_notice_document_the_organisation_itself_filed():
+    """That link is the primary source, and its id is the row's identity."""
+    rows, _ = fetch_stateag.parse_wa(WA_HTML)
+    adt = [r for r in rows if r["organization"] == "ADT, Inc."][0]
+    assert adt["notice_url"].endswith("BreachA42014.pdf")
+    assert adt["key"] == "WA:BreachA42014", "the source's own id, not a composed one"
+
+
+def test_wa_blank_affected_stays_blank():
+    rows, _ = fetch_stateag.parse_wa(WA_HTML)
+    ancient = [r for r in rows if r["organization"] == "Ancient Co."][0]
+    assert ancient["affected"] is None
+
+
+def test_wa_a_changed_column_layout_is_counted_not_swallowed():
+    broken = "<table><tr><td>07/28/2026</td><td>Org</td><td>x</td></tr></table>"
+    _, stats = fetch_stateag.parse_wa(broken)
+    assert stats["wa_malformed_rows"] == 1
+
+
+def test_registry_guard_passes_through_a_page_boundary_duplicate():
+    """Measured live: one document straddled a page boundary. Benign, but it must be reported,
+    because the same instability could skip a row instead of repeating one."""
+    f, out = integrity.evaluate_registry([], _rstats(wa_duplicate_keys=1),
+                                         {"filings": 1}, {"filings": 1})
+    assert f == [], "a boundary duplicate is not a halt — the store dedupes on the document id"
+    assert out["wa_duplicate_keys"] == 1, "but it must reach the run log"
+
+
+# --- state AG registries: the store ------------------------------------------
+def _reg(rows=None, seen="2026-08-10"):
+    rows = rows if rows is not None else fetch_stateag.parse_wa(WA_HTML)[0]
+    return stateag_store.merge(stateag_store.empty(), rows, seen_date=seen)
+
+
+def test_registry_merge_is_idempotent_and_never_rewrites():
+    reg, added = _reg()
+    assert len(added) == 3
+    reg["filings"][0]["organization"] = "EDITED"
+    reg, added2 = stateag_store.merge(reg, fetch_stateag.parse_wa(WA_HTML)[0],
+                                      seen_date="2026-09-01")
+    assert added2 == [], "a second run must add nothing"
+    assert reg["filings"][0]["organization"] == "EDITED", "recorded rows are never rewritten"
+    assert reg["filings"][0]["first_seen"] == "2026-08-10", "first_seen is written once"
+
+
+def test_registry_output_carries_no_run_timestamp():
+    """A day with nothing new must produce a byte-identical file or no-op detection breaks."""
+    with tempfile.TemporaryDirectory() as tmp:
+        p = Path(tmp) / "state_ag.json"
+        reg, _ = _reg()
+        stateag_store.save(p, reg)
+        first = p.read_bytes()
+        again, added = stateag_store.merge(stateag_store.load(p),
+                                           fetch_stateag.parse_wa(WA_HTML)[0],
+                                           seen_date="2027-01-01")
+        stateag_store.save(p, again)
+        assert added == []
+        assert p.read_bytes() == first, "a no-op run rewrote the file"
+
+
+def test_registry_coverage_widens_but_never_narrows():
+    reg = stateag_store.note_coverage(stateag_store.empty(), "2026-05-01")
+    stateag_store.note_coverage(reg, "2026-07-01")
+    assert reg["coverage"]["since"] == "2026-05-01"
+    stateag_store.note_coverage(reg, "2026-01-01")
+    assert reg["coverage"]["since"] == "2026-01-01"
+
+
+def test_the_same_breach_filed_in_two_states_stays_two_rows():
+    """Merging them would be deciding they are the same event. This section does not decide."""
+    ca, _ = fetch_stateag.parse_ca(
+        '"Organization Name","Date(s) of Breach  (if known)","Reported Date"\r\n'
+        '"ADT, Inc.","04/20/2026","07/28/2026"\r\n')
+    wa, _ = fetch_stateag.parse_wa(WA_HTML)
+    reg, added = stateag_store.merge(stateag_store.empty(), ca + wa, seen_date="2026-08-10")
+    adt = [f for f in reg["filings"] if f["organization"] == "ADT, Inc."]
+    assert len(adt) == 2
+    assert {f["jurisdiction"] for f in adt} == {"CA", "WA"}
+
+
+def test_registry_store_records_only_declared_fields():
+    """An extra key in a parser must not leak into the permanent record."""
+    rows = fetch_stateag.parse_wa(WA_HTML)[0]
+    rows[0]["scratch_note"] = "an internal value that must not be stored"
+    reg, _ = stateag_store.merge(stateag_store.empty(), rows, seen_date="2026-08-10")
+    assert all("scratch_note" not in f for f in reg["filings"])
+
+
+# --- state AG registries: the integrity gate ---------------------------------
+def _rstats(**over):
+    s = {"ca_rows_in_export": 5000, "ca_rows_kept": 100, "wa_rows": 50,
+         "wa_malformed_rows": 0, "wa_pages_read": 1}
+    s.update(over)
+    return s
+
+
+def test_registry_guard_allows_a_day_with_nothing_new():
+    """Zero NEW rows is ordinary — the sources publish on business days, with a lag."""
+    f, _ = integrity.evaluate_registry([], _rstats(), {"filings": 10}, {"filings": 10})
+    assert f == []
+
+
+def test_registry_guard_halts_when_a_source_returns_nothing():
+    """The inversion of the SEC gate: these sources always return rows, so zero is a break."""
+    f, _ = integrity.evaluate_registry([], _rstats(ca_rows_in_export=0),
+                                       {"filings": 10}, {"filings": 10})
+    assert any("California export returned 0 rows" in x for x in f)
+    f, _ = integrity.evaluate_registry([], _rstats(wa_rows=0),
+                                       {"filings": 10}, {"filings": 10})
+    assert any("Washington returned 0 rows" in x for x in f)
+
+
+def test_registry_guard_halts_on_a_changed_table_layout():
+    f, _ = integrity.evaluate_registry([], _rstats(wa_malformed_rows=3),
+                                       {"filings": 1}, {"filings": 1})
+    assert any("5-column layout" in x for x in f)
+
+
+def test_registry_guard_halts_on_missing_fetch():
+    f, _ = integrity.evaluate_registry(None, None, None, None)
+    assert any("did not complete" in x for x in f)
+
+
+def test_registry_guard_halts_on_a_shrinking_record():
+    f, _ = integrity.evaluate_registry([], _rstats(), {"filings": 20}, {"filings": 19})
+    assert any("append-only" in x for x in f)
+
+
+def test_registry_guard_halts_on_a_flood():
+    f, _ = integrity.evaluate_registry([], _rstats(), {"filings": 0}, {"filings": 5000})
+    assert any("exceeds" in x for x in f)
+
+
+def test_registry_guard_rejects_a_jurisdiction_this_layer_does_not_collect():
+    row = dict(fetch_stateag.parse_wa(WA_HTML)[0][0], jurisdiction="ME")
+    f, _ = integrity.evaluate_registry([row], _rstats(), {"filings": 0}, {"filings": 1})
+    assert any("does not collect" in x for x in f)
+
+
+def test_registry_guard_halts_on_a_row_missing_its_organisation():
+    row = dict(fetch_stateag.parse_wa(WA_HTML)[0][0], organization="")
+    f, _ = integrity.evaluate_registry([row], _rstats(), {"filings": 0}, {"filings": 1})
+    assert any("organization" in x for x in f)
+
+
+# --- state AG registries: rendering ------------------------------------------
+def _reg_pages(reg=None, since="2026-05-01"):
+    reg = reg if reg is not None else _reg()[0]
+    if since:
+        stateag_store.note_coverage(reg, since)
+    return {lang: publish.render(store.empty(), records.empty(), lang, reg)
+            for lang in ("en", "ja")}
+
+
+def test_registry_section_renders_the_facts_the_source_publishes():
+    for lang, page in _reg_pages().items():
+        assert "ADT, Inc." in page, lang
+        assert "5,129" in page, f"{lang}: the affected count must be shown"
+        assert "BreachA42014.pdf" in page, f"{lang}: the notice link must be reachable"
+        assert "Social Security Number" in page, f"{lang}: the state's own wording"
+
+
+def test_registry_blank_cells_are_left_blank_not_filled_with_a_value():
+    """California publishes no count; a 0 or a dash would state something the source does not."""
+    ca, _ = fetch_stateag.parse_ca(CA_CSV)
+    reg, _ = stateag_store.merge(stateag_store.empty(), ca, seen_date="2026-08-10")
+    for lang, page in _reg_pages(reg).items():
+        assert "American Addiction Centers" in page, lang
+        assert ">0<" not in page, f"{lang}: an absent count was rendered as zero"
+
+
+def test_registry_says_a_blank_means_not_published_not_zero():
+    en, ja = _reg_pages()["en"], _reg_pages()["ja"]
+    assert "never that the value is zero" in en
+    assert "値が0という意味ではありません" in ja
+
+
+def test_registry_coverage_start_is_stated():
+    for lang, page in _reg_pages().items():
+        assert "2026-05-01" in page, f"{lang}: the collected-from date is not on the page"
+
+
+def test_registry_publication_lag_is_stated():
+    """An absent recent incident means "not published yet", and the page has to say so."""
+    en = _reg_pages()["en"]
+    # Asserted without the apostrophe: _h() escapes it, and the point is the measurement.
+    assert "newest entry was 3 days old" in en
+    assert "has not been published yet" in en
+    assert "まだ公開されていない" in _reg_pages()["ja"]
+
+
+def test_registry_display_limit_states_what_is_not_shown():
+    rows = []
+    for i in range(publish.REGISTRY_DISPLAY_LIMIT + 5):
+        rows.append({"key": f"WA:B{i}", "jurisdiction": "WA", "organization": f"Org {i}",
+                     "reported_date": "2026-07-01", "breach_dates": [], "affected": None,
+                     "data_types": None, "notice_url": None, "source_url": "x"})
+    reg, _ = stateag_store.merge(stateag_store.empty(), rows, seen_date="2026-08-10")
+    en = _reg_pages(reg)["en"]
+    assert f"{publish.REGISTRY_DISPLAY_LIMIT} most recent" in en
+    assert en.count("<tr>") <= publish.REGISTRY_DISPLAY_LIMIT + 4, "more rows rendered than stated"
+
+
+def test_registry_scope_denies_the_two_states_are_a_country():
+    en, ja = _reg_pages()["en"], _reg_pages()["ja"]
+    assert "two states, not a country" in en
+    assert "forty-eight states are absent" in en
+    assert "2州であって、米国全体ではありません" in ja
+
+
+def test_registry_states_are_never_added_together():
+    """Same commitment as the SEC layer: no totals, because the units are not comparable."""
+    en, ja = _reg_pages()["en"], _reg_pages()["ja"]
+    assert "never added together" in en
+    assert "足し合わせることはせず" in ja
+
+
+def test_registry_terms_are_stated_per_source_not_merged():
+    """California is public domain; Washington's terms were not found. Not the same footing."""
+    en = _reg_pages()["en"]
+    assert "public domain" in en
+    assert "No conditions-of-use or copyright page was found" in en
+    ja = _reg_pages()["ja"]
+    assert "パブリックドメイン" in ja
+    assert "利用条件・著作権のページが見当たらず" in ja
+
+
+def test_registry_organisation_names_are_escaped():
+    rows = [{"key": "WA:X", "jurisdiction": "WA",
+             "organization": '<script>alert("x")</script> & Co.',
+             "reported_date": "2026-07-01", "breach_dates": [], "affected": None,
+             "data_types": "a & b", "notice_url": None, "source_url": "x"}]
+    reg, _ = stateag_store.merge(stateag_store.empty(), rows, seen_date="2026-08-10")
+    en = _reg_pages(reg)["en"]
+    assert "<script>alert" not in en
+    assert "&lt;script&gt;" in en
+
+
+# --- state AG registries: filer names that might be people ---------------------
+def test_obvious_organisations_are_never_queued():
+    """The queue has to stay small or it stops being read. Corporate forms pass straight through."""
+    for n in ("ADT, Inc.", "Station Casinos, LLC", "UCLA Health", "Cushman & Wakefield",
+              "Fresno County Department of Social Services", "JRK Property Holdings, Inc.",
+              "American Addiction Centers", "Baylor Genetics", "Lumexa Imaging"):
+        assert not filers.looks_like_person(n), n
+
+
+def test_person_shaped_names_are_queued_for_a_human():
+    for n in ("Robert Arshagouni", "Amin Dean, CPA", "Andrea Yaley, DDS", "Bill Pollard CPA",
+              "Dr. Jane Smith", "John A. Doe", "Maria de Silva", "Sarah Chen, M.D."):
+        assert filers.looks_like_person(n), n
+
+
+def test_a_post_nominal_outweighs_a_corporate_word():
+    """`Andrew Lundholm CPA Inc` is still a practitioner's practice — ask about it."""
+    assert filers.looks_like_person("Andrew Lundholm CPA Inc")
+
+
+def test_the_heuristic_only_asks_and_never_concludes():
+    """A flagged name is undecided, not "an individual"."""
+    assert filers.decide("Brooks Brothers", filers.empty_decisions()) == "undecided"
+    approved = {"schema": 1, "organisations": ["Brooks Brothers"], "individual_hashes": []}
+    assert filers.decide("Brooks Brothers", approved) == "organisation"
+
+
+def test_a_decided_individual_is_recorded_as_a_hash_not_a_name():
+    d = {"schema": 1, "organisations": [],
+         "individual_hashes": [filers.name_hash("Robert Arshagouni")]}
+    assert filers.decide("Robert Arshagouni", d) == "individual"
+    assert "Robert Arshagouni" not in json.dumps(d), \
+        "deciding 'this is a person' must not write the person's name into a public file"
+
+
+def test_decisions_file_rejects_a_name_pasted_into_the_hash_list():
+    errs = filers.validate_decisions(
+        {"schema": 1, "organisations": [], "individual_hashes": ["Robert Arshagouni"]})
+    assert any("sha256" in e for e in errs)
+
+
+def test_withheld_rows_never_reach_the_record():
+    """The published page is not the only public surface — this repo is public too."""
+    rows = [
+        {"key": "CA:2026-08-05:robert-arshagouni:", "jurisdiction": "CA",
+         "organization": "Robert Arshagouni", "reported_date": "2026-08-05",
+         "breach_dates": [], "affected": None, "data_types": None, "notice_url": None,
+         "source_url": "x"},
+        {"key": "WA:B1", "jurisdiction": "WA", "organization": "ADT, Inc.",
+         "reported_date": "2026-07-28", "breach_dates": [], "affected": 5129,
+         "data_types": None, "notice_url": None, "source_url": "x"},
+    ]
+    keep, held = filers.split(rows, filers.empty_decisions())
+    assert [r["organization"] for r in keep] == ["ADT, Inc."]
+    assert [r["organization"] for r in held] == ["Robert Arshagouni"]
+    reg, _ = stateag_store.merge(stateag_store.empty(), keep, seen_date="2026-08-10")
+    assert "Arshagouni" not in json.dumps(reg, ensure_ascii=False)
+
+
+def test_the_queue_holds_no_names():
+    _, held = filers.split(
+        [{"key": "CA:x", "jurisdiction": "CA", "organization": "Robert Arshagouni",
+          "reported_date": "2026-08-05", "breach_dates": [], "affected": None,
+          "data_types": None, "notice_url": None, "source_url": "x"}],
+        filers.empty_decisions())
+    q, new = filers.update_queue(filers.empty_queue(), held, filers.empty_decisions(),
+                                 seen_date="2026-08-10")
+    assert len(q["pending"]) == 1 and len(new) == 1
+    assert "Arshagouni" not in json.dumps(q, ensure_ascii=False)
+    assert q["pending"][0]["hash"] == filers.name_hash("Robert Arshagouni")
+
+
+def test_a_name_already_waiting_does_not_re_notify_every_day():
+    """A notice that fires daily for the same name trains the reader to ignore it."""
+    held = [{"key": "CA:x", "jurisdiction": "CA", "organization": "Robert Arshagouni",
+             "reported_date": "2026-08-05", "breach_dates": [], "affected": None,
+             "data_types": None, "notice_url": None, "source_url": "x"}]
+    d = filers.empty_decisions()
+    q, new1 = filers.update_queue(filers.empty_queue(), held, d, seen_date="2026-08-10")
+    q, new2 = filers.update_queue(q, held, d, seen_date="2026-08-11")
+    assert len(new1) == 1 and new2 == []
+    assert len(q["pending"]) == 1
+
+
+def test_the_queue_empties_when_a_decision_lands():
+    """A queue that never shrinks is not a queue. This file is a work list, not a record."""
+    held = [{"key": "CA:x", "jurisdiction": "CA", "organization": "Nickey Kehoe",
+             "reported_date": "2026-05-26", "breach_dates": [], "affected": None,
+             "data_types": None, "notice_url": None, "source_url": "x"}]
+    q, _ = filers.update_queue(filers.empty_queue(), held, filers.empty_decisions(),
+                               seen_date="2026-08-10")
+    assert len(q["pending"]) == 1
+    approved = {"schema": 1, "organisations": ["Nickey Kehoe"], "individual_hashes": []}
+    assert filers.resolved_organisations(q, approved)["pending"] == []
+    q2, _ = filers.update_queue(filers.empty_queue(), held,
+                                {"schema": 1, "organisations": [],
+                                 "individual_hashes": [filers.name_hash("Nickey Kehoe")]},
+                                seen_date="2026-08-10")
+    assert q2["pending"] == []
+
+
+def test_an_approved_organisation_publishes_from_then_on():
+    rows = [{"key": "CA:x", "jurisdiction": "CA", "organization": "Brooks Brothers",
+             "reported_date": "2026-08-05", "breach_dates": [], "affected": None,
+             "data_types": None, "notice_url": None, "source_url": "x"}]
+    approved = {"schema": 1, "organisations": ["Brooks Brothers"], "individual_hashes": []}
+    keep, held = filers.split(rows, approved)
+    assert len(keep) == 1 and held == []
+
+
+def test_the_page_says_how_many_names_are_held_back():
+    """A table that quietly omits rows reads as complete. This one says what is missing."""
+    q = {"schema": 1, "pending": [{"hash": "a" * 64, "jurisdiction": "CA",
+                                   "reported_date": "2026-08-05", "first_seen": "2026-08-10"}]}
+    reg, _ = _reg()
+    en = publish.render(store.empty(), records.empty(), "en", reg, q)
+    ja = publish.render(store.empty(), records.empty(), "ja", reg, q)
+    assert "1 filer name(s) are held back" in en
+    assert "held back from this table, and from the record behind it" in en
+    assert "この表からも背後の記録からも保留しています" in ja
+
+
+def test_nothing_is_said_about_withholding_when_nothing_is_withheld():
+    reg, _ = _reg()
+    en = publish.render(store.empty(), records.empty(), "en", reg, filers.empty_queue())
+    assert "held back" not in en
+
+
+def test_registry_layer_is_absent_when_nothing_is_recorded():
+    for lang, page in {l: publish.render(store.empty(), records.empty(), l)
+                       for l in ("en", "ja")}.items():
+        assert ("No state filing has been recorded yet" in page
+                or "州への届出はまだ記録されていません" in page), lang
 
 
 if __name__ == "__main__":

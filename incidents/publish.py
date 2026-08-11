@@ -65,8 +65,24 @@ color:#555;font-size:13px;line-height:1.7;margin:10px 0}
 # approved by, the SEC.
 SOURCE = ("U.S. Securities and Exchange Commission — EDGAR",
           "https://www.sec.gov/edgar/search/")
+# The state registries, with their terms as published and checked on 2026-08-10. California
+# states its site content is "Considered in the public domain"; Washington publishes no
+# conditions-of-use or copyright page, and frames site information as a public record under
+# the Public Disclosure Law. Those two are not the same footing, so they are not described as
+# though they were.
+REGISTRY_SOURCES = (
+    ("California Attorney General — Data Security Breach reports",
+     "https://oag.ca.gov/privacy/databreach/list"),
+    ("Washington State Attorney General — Data Breach Notifications",
+     "https://www.atg.wa.gov/data-breach-notifications"),
+)
 MAIN_REPORT_SOURCE = ("Microsoft Security Response Center (MSRC) Security Update Guide (CVRF)",
                       "https://msrc.microsoft.com/update-guide")
+
+# The registry table grows by roughly 900 rows a year. Rendering every row would make the page
+# unreadable long before it made it large, so the newest rows are shown and the count of what
+# is held but not shown is stated next to the table rather than left for a reader to discover.
+REGISTRY_DISPLAY_LIMIT = 250
 
 L = {
     "en": {
@@ -90,11 +106,18 @@ L = {
             "per-incident record — a count of zero here would mean “cannot be retrieved”, never "
             "“did not happen”. For that reason this section shows no totals and no per-region "
             "counts.",
-            "<b>Within the United States, only SEC registrants appear.</b> Item 1.05 binds listed "
-            "companies. Private companies, government bodies, non-profits and most healthcare "
-            "providers are absent. Healthcare in particular is missing wholesale: the HHS breach "
-            "portal is not machine-readable without browser automation, and collecting it was "
-            "deferred, not attempted and abandoned.",
+            "<b>Item 1.05 binds listed companies only.</b> Private companies, government bodies, "
+            "non-profits and healthcare providers file no 8-K. They reach this page only through "
+            "the state registries below, and only if they filed in one of those two states.",
+            "<b>The state registries are two states, not a country.</b> California and Washington "
+            "publish every breach notification filed with them, whoever filed it. But a filing "
+            "appears only when residents of that state were affected, the two lists overlap where "
+            "an organisation notified both, and the other forty-eight states are absent. The two "
+            "are therefore never added together, and neither is added to the SEC layer.",
+            "<b>Healthcare has no federal source here.</b> The HHS breach portal is not "
+            "machine-readable without browser automation, and collecting it was deferred — not "
+            "attempted and abandoned. Healthcare organisations appear only when they filed in "
+            "California or Washington.",
             "<b>The curated layer is not comprehensive.</b> It holds incidents an editor chose "
             "to record, and nothing follows from an incident being absent from it.",
         ],
@@ -112,6 +135,34 @@ L = {
                           "either the company first filed under a different item and only later "
                           "switched to Item 1.05, or the original was filed before the date this "
                           "record begins.",
+        "reg_h": "Filed with a state Attorney General (California, Washington)",
+        "reg_note": "Breach notifications organisations were required by state law to file. "
+                    "Collected daily. One row is one filing to one state, so an organisation "
+                    "that notified both states appears twice — those rows are not merged, "
+                    "because deciding they describe the same event would be a judgement this "
+                    "section does not make. Nothing here is edited after it is recorded.",
+        "reg_lag": "Both lists publish after a delay: measured on 2026-08-10, California's "
+                   "newest entry was 3 days old and Washington's 13. A recent incident being "
+                   "absent means it has not been published yet, not that it was not filed.",
+        "reg_fields": "California publishes the organisation, the breach dates and the date it "
+                      "was reported — no count of people affected. Washington publishes those, "
+                      "plus the number of Washington residents affected, the categories of data "
+                      "involved in the state's own wording, and a link to the notification "
+                      "document the organisation itself filed. A blank cell means the state "
+                      "does not publish that field, never that the value is zero.",
+        "reg_coverage": "This record begins at {since}. Filings reported before that date were "
+                        "never collected and are absent.",
+        "reg_shown": "Showing the {shown} most recent of {total} filings on record.",
+        "reg_withheld": "{n} filer name(s) are held back from this table, and from the record "
+                        "behind it, until a person has checked whether the name is an "
+                        "organisation or an individual. State breach lists name sole "
+                        "practitioners alongside companies, and this section does not keep a "
+                        "per-person record. A name is checked once and then either appears "
+                        "here permanently or never does.",
+        "empty_reg": "No state filing has been recorded yet.",
+        "th_jur": "State", "th_reported": "Reported", "th_breach": "Breach date(s)",
+        "th_affected": "Affected", "th_data": "Data involved (state's wording)",
+        "th_notice": "Notice",
         "cur_h": "Editor-recorded incidents",
         "cur_note": "Added by hand, when there is something to record. Each entry lists who stated "
                     "what, and when. A correction is added as a further statement; the earlier one "
@@ -128,6 +179,13 @@ L = {
             "Information presented on sec.gov is public information and may be copied or further "
             "distributed; SEC is cited as the source. This section is not affiliated with, "
             "endorsed by, or approved by the SEC."),
+        "reg_terms": (
+            "The California Attorney General's site states its content is “considered in the "
+            "public domain” and may be distributed or copied as permitted by law. No "
+            "conditions-of-use or copyright page was found for the Washington Attorney "
+            "General's site; that office frames information on it as a public record open to "
+            "inspection and copying under the state Public Disclosure Law. This section is not "
+            "affiliated with, endorsed by, or approved by either office."),
         "main_h": "The main report's source",
         "foot": "Facts are machine-collected from public filings; the curated layer is written by "
                 "a human. No interpretation is offered here.",
@@ -152,10 +210,17 @@ L = {
             "たとえば豪州 OAIC は統計を公表しますが個別事案の記録は公開していません — "
             "ここでの0件は「取得できない」であって「起きていない」ではありません。"
             "したがって本セクションでは<b>合計件数も地域別件数も示しません</b>。",
-            "<b>米国内でも、対象は SEC 登録企業（上場企業）だけです。</b>Item 1.05 の義務を負うのは"
-            "上場企業です。非上場企業・政府機関・非営利団体・医療機関の大半は入りません。"
-            "とくに医療分野はまるごと欠けます — HHS の侵害ポータルはブラウザ自動化なしには"
-            "機械可読でなく、その収集は<b>見送った</b>ものです（試みて断念したのではありません）。",
+            "<b>Item 1.05 の義務を負うのは上場企業だけです。</b>非上場企業・政府機関・非営利団体・"
+            "医療機関は 8-K を提出しません。それらがこのページに現れるのは下の州登録簿を通じてのみで、"
+            "しかもその2州のいずれかに届け出た場合に限られます。",
+            "<b>州登録簿は2州であって、米国全体ではありません。</b>カリフォルニア州と"
+            "ワシントン州は、届け出られた侵害通知を提出者の別なく公開しています。ただし掲載されるのは"
+            "その州の住民が影響を受けた場合だけで、両州に届け出た組織は両方に現れ、残る48州は"
+            "入りません。したがって<b>2州を足し合わせることはせず</b>、SEC の層と足すこともしません。",
+            "<b>医療分野には連邦レベルの情報源がありません。</b>HHS の侵害ポータルは"
+            "ブラウザ自動化なしには機械可読でなく、その収集は<b>見送った</b>ものです"
+            "（試みて断念したのではありません）。医療機関が現れるのは、カリフォルニア州か"
+            "ワシントン州に届け出た場合だけです。",
             "<b>編者が記録する層は網羅的ではありません。</b>編者が選んで記録したものだけで、"
             "そこに無いことから何かが言えるわけではありません。",
         ],
@@ -170,6 +235,34 @@ L = {
         "amendment_note": "そのため、初報の 8-K が無く 8-K/A から始まって見える行がありえます — "
                           "企業が当初は別の項目で提出し、後から Item 1.05 に切り替えた場合か、"
                           "初報がこの記録の開始日より前に提出された場合です。",
+        "reg_h": "州司法長官への届出（カリフォルニア州・ワシントン州）",
+        "reg_note": "州法により組織が届け出を義務づけられた侵害通知です。日次で収集しています。"
+                    "1行は「1つの州への1件の届出」なので、両州に届け出た組織は2行に現れます。"
+                    "この2行は統合しません — 同一の事象だと判断することになり、"
+                    "本セクションはその判断を行わないためです。記録した内容は後から書き換えません。",
+        "reg_lag": "どちらの登録簿も公開までに遅れがあります。2026年8月10日時点で、"
+                   "カリフォルニア州の最新掲載は3日前、ワシントン州は13日前でした。"
+                   "最近の事案がここに無いのは「まだ公開されていない」であって、"
+                   "「届け出られていない」ではありません。",
+        "reg_fields": "カリフォルニア州が公開するのは組織名・侵害の日付・届出日で、"
+                      "影響人数はありません。ワシントン州はそれらに加えて、影響を受けた"
+                      "同州住民の人数、関係したデータの種別（州の表現のまま）、および"
+                      "組織自身が提出した通知文書へのリンクを公開しています。"
+                      "空欄はその州がその項目を公開していないという意味であり、"
+                      "値が0という意味ではありません。",
+        "reg_coverage": "この記録は {since} 以降を対象としています。それ以前に届け出られたものは"
+                        "収集しておらず、ここには入っていません。",
+        "reg_shown": "記録している {total} 件のうち、新しい順に {shown} 件を表示しています。",
+        "reg_withheld": "届出者名 {n} 件を、この表からも背後の記録からも保留しています。"
+                        "その名前が組織か個人かを人が確認するまで出しません。"
+                        "州の届出一覧には個人事業主が企業と並んで載り、"
+                        "本セクションは個人単位の記録を持たないためです。"
+                        "確認は名前ごとに一度だけ行い、以後は恒久的に掲載するか、"
+                        "恒久的に掲載しないかのどちらかになります。",
+        "empty_reg": "州への届出はまだ記録されていません。",
+        "th_jur": "州", "th_reported": "届出日", "th_breach": "侵害の日付",
+        "th_affected": "影響人数", "th_data": "関係したデータ（州の表現）",
+        "th_notice": "通知",
         "cur_h": "編者が記録したインシデント",
         "cur_note": "記録すべきことがあるときに手で追加します。各エントリは「誰が・いつ・何と述べたか」を"
                     "並べます。訂正は言明の追加として足し、元の言明は残します。攻撃者の帰属がある場合は"
@@ -184,6 +277,12 @@ L = {
             "sec.gov に掲載された情報は公開情報であり、複製・再配布が可能です。出典として SEC を"
             "明示しています。本セクションは SEC と提携しておらず、SEC の承認・公認を受けたものでは"
             "ありません。"),
+        "reg_terms": (
+            "カリフォルニア州司法長官のサイトは、掲載内容を「パブリックドメインとみなす」とし、"
+            "法の認める範囲で配布・複製できると表示しています。ワシントン州司法長官のサイトには"
+            "利用条件・著作権のページが見当たらず、同長官室はサイト上の情報を、州の情報公開法に"
+            "基づき閲覧・複写の対象となる公文書として位置づけています。本セクションは"
+            "いずれの機関とも提携しておらず、承認・公認を受けたものではありません。"),
         "main_h": "主レポートの出典",
         "foot": "事実は公開された提出書類から機械的に収集しています。編者が記録する層は人間が書いて"
                 "います。ここでは解釈を提示しません。",
@@ -224,9 +323,13 @@ def _sources(lang: str) -> str:
     t = L[lang]
     n, u = SOURCE
     mn, mu = MAIN_REPORT_SOURCE
+    regs = "".join(f'<p><a href="{ru}" rel="noopener">{_h(rn)}</a></p>'
+                   for rn, ru in REGISTRY_SOURCES)
     return (f'<div class="sources"><p class="srchead">{_h(t["sources_h"])}</p>'
             f'<p><a href="{u}" rel="noopener">{_h(n)}</a></p>'
             f'<p>{_h(t["terms"])}</p>'
+            f'{regs}'
+            f'<p>{_h(t["reg_terms"])}</p>'
             f'<p class="srchead">{_h(t["main_h"])}</p>'
             f'<p><a href="{mu}" rel="noopener">{_h(mn)}</a></p></div>')
 
@@ -270,6 +373,68 @@ def _auto_table(store: dict, lang: str, linked_keys: set[str]) -> str:
             f'<th>{_h(t["th_stmts"])}</th></tr></thead><tbody>{"".join(rows)}</tbody></table>')
 
 
+def _registry_coverage(reg: dict, lang: str) -> str:
+    t = L[lang]
+    since = ((reg.get("coverage") or {}).get("since"))
+    if not since:
+        return ""
+    return f'<div class="coverage">{_h(t["reg_coverage"].format(since=since))}</div>'
+
+
+def _registry_withheld(queue: dict, lang: str) -> str:
+    """State how many filer names are held back, so the absence is visible rather than silent.
+
+    A table that quietly omits rows is worse than one that omits them and says so: a reader
+    would take it as complete. The count comes from the queue file, so it is what is actually
+    being withheld and cannot drift away from it.
+    """
+    n = len((queue or {}).get("pending") or [])
+    if not n:
+        return ""
+    return f'<div class="coverage">{_h(L[lang]["reg_withheld"].format(n=n))}</div>'
+
+
+def _registry_table(reg: dict, lang: str, *, limit: int = REGISTRY_DISPLAY_LIMIT) -> str:
+    """The state AG table, newest first.
+
+    Blank cells are rendered blank on purpose. California publishes no affected count and no
+    notice link, so filling those with 0 or a dash that reads like a value would state
+    something the source does not. The column note next to the table says so in words.
+    """
+    t = L[lang]
+    filings = reg.get("filings") or []
+    if not filings:
+        return f'<div class="empty">{_h(t["empty_reg"])}</div>'
+    shown = filings[:limit]
+    rows = []
+    for f in shown:
+        org = _h(f.get("organization"))
+        notice = f.get("notice_url")
+        # The notice is the organisation's own filed document — the primary source. Linked
+        # from its own column rather than wrapped around the name, so a row without one does
+        # not look like a row whose name simply failed to link.
+        notice_cell = (f'<a href="{_h(notice)}" rel="noopener">PDF</a>' if notice else "")
+        affected = f.get("affected")
+        breach = ", ".join(_h(d) for d in (f.get("breach_dates") or []))
+        rows.append(
+            f'<tr><td class="org">{org}</td>'
+            f'<td>{_h(f.get("jurisdiction"))}</td>'
+            f'<td>{_h(f.get("reported_date"))}</td>'
+            f'<td>{breach}</td>'
+            f'<td>{"" if affected is None else _h(f"{affected:,}")}</td>'
+            f'<td>{_h(f.get("data_types") or "")}</td>'
+            f'<td>{notice_cell}</td></tr>')
+    note = ""
+    if len(filings) > len(shown):
+        note = (f'<div class="coverage">'
+                f'{_h(t["reg_shown"].format(shown=len(shown), total=len(filings)))}</div>')
+    return (f'<table><thead><tr><th>{_h(t["th_org"])}</th><th>{_h(t["th_jur"])}</th>'
+            f'<th>{_h(t["th_reported"])}</th><th>{_h(t["th_breach"])}</th>'
+            f'<th>{_h(t["th_affected"])}</th><th>{_h(t["th_data"])}</th>'
+            f'<th>{_h(t["th_notice"])}</th></tr></thead>'
+            f'<tbody>{"".join(rows)}</tbody></table>{note}')
+
+
 def _record_statements(r: dict, lang: str) -> str:
     out = []
     for s in r.get("statements") or []:
@@ -304,8 +469,11 @@ def _curated_table(doc: dict, lang: str) -> str:
             f'<th>{_h(t["th_when"])}</th></tr></thead><tbody>{"".join(rows)}</tbody></table>')
 
 
-def render(store: dict, recs: dict, lang: str) -> str:
+def render(store: dict, recs: dict, lang: str, reg: dict | None = None,
+           queue: dict | None = None) -> str:
     t = L[lang]
+    reg = reg or {"filings": []}
+    queue = queue or {"pending": []}
     linked = {k for k in ((r.get("sec") or {}).get("incident_key")
                           for r in (recs.get("records") or [])) if k}
     return f"""<!DOCTYPE html><html lang="{t['lang']}"><head><meta charset="utf-8">
@@ -322,6 +490,13 @@ def render(store: dict, recs: dict, lang: str) -> str:
   <div class="layer">{_h(t['auto_note'])}</div>
   {_coverage(store, lang)}
   {_auto_table(store, lang, linked)}
+  <h2>{_h(t['reg_h'])}</h2>
+  <div class="layer">{_h(t['reg_note'])}</div>
+  <div class="coverage">{_h(t['reg_fields'])}</div>
+  <div class="coverage">{_h(t['reg_lag'])}</div>
+  {_registry_coverage(reg, lang)}
+  {_registry_withheld(queue, lang)}
+  {_registry_table(reg, lang)}
   <h2>{_h(t['cur_h'])}</h2>
   <div class="layer">{_h(t['cur_note'])}</div>
   {_curated_table(recs, lang)}
@@ -355,12 +530,13 @@ def render_index() -> str:
 """
 
 
-def build_site(store: dict, recs: dict, out_dir: Path) -> list[Path]:
+def build_site(store: dict, recs: dict, out_dir: Path, reg: dict | None = None,
+               queue: dict | None = None) -> list[Path]:
     out_dir.mkdir(parents=True, exist_ok=True)
     written = []
     for lang in ("en", "ja"):
         p = out_dir / f"{lang}.html"
-        p.write_text(render(store, recs, lang), encoding="utf-8")
+        p.write_text(render(store, recs, lang, reg, queue), encoding="utf-8")
         written.append(p)
     p = out_dir / "index.html"
     p.write_text(render_index(), encoding="utf-8")
@@ -368,5 +544,5 @@ def build_site(store: dict, recs: dict, out_dir: Path) -> list[Path]:
     return written
 
 
-__all__ = ["build_site", "render", "render_index", "L", "SOURCE",
-           "store_mod", "records_mod"]
+__all__ = ["build_site", "render", "render_index", "L", "SOURCE", "REGISTRY_SOURCES",
+           "REGISTRY_DISPLAY_LIMIT", "store_mod", "records_mod"]

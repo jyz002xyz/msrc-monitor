@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "_how_to_use": [
+    "Human decisions about registry filer names that could be a natural person.",
+    "A name lands here because incidents/filers.py flagged its SHAPE, not because anything",
+    "was concluded about it. Until it is decided, its filings are withheld from the published",
+    "page AND from incidents/data/state_ag.json — this repository is public, so the record is",
+    "as public as the page.",
+    "",
+    "To decide, read the pending name from the notice issue or the workflow run log, then:",
+    "  organisation -> add the name to `organisations`, EXACTLY as the state publishes it.",
+    "  individual   -> add sha256(name) to `individual_hashes`. The NAME MUST NOT be written",
+    "                  into this file; recording the decision must not create the per-person",
+    "                  record the decision exists to prevent.",
+    "        python3 -c \"from incidents.filers import name_hash; print(name_hash('NAME'))\"",
+    "",
+    "Both lists are permanent: a name is decided once and behaves the same way forever."
+  ],
+  "organisations": [],
+  "individual_hashes": []
+}
