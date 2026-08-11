@@ -105,6 +105,44 @@ def merge(store: dict, rows: list[dict], *, seen_date: str) -> tuple[dict, list[
     return _sorted(store), added
 
 
+def fill_missing(store: dict, rows: list[dict], field: str) -> int:
+    """Fill a field on already-recorded rows ONLY where it is currently absent.
+
+    WHY THIS IS NOT A HOLE IN THE APPEND-ONLY RULE
+    ----------------------------------------------
+    The rule exists so that a value a reader was shown stays retrievable: if the state later
+    corrects a figure, the recorded row keeps the figure it was published with. That is about a
+    value CHANGING. This is about a value that was never collected in the first place.
+
+    The case it was written for: California's rows were recorded from the CSV export, which has
+    three columns and no link. The state's HTML list links every row to its notification
+    document — the collector simply was not reading it. Leaving 134 rows permanently blank
+    would not be preserving a published statement; it would be preserving a gap in our
+    collection and calling it a record.
+
+    So the guarantee is kept narrow rather than waived:
+
+    - a stored value that is NOT None is never touched, whatever the source now says;
+    - only the named field is considered;
+    - it is never called by the daily run. `--backfill-notice-urls` is a deliberate act.
+
+    Returns how many rows were filled.
+    """
+    if field not in FIELDS:
+        raise ValueError(f"{field} is not a stored field")
+    fresh = {r["key"]: r.get(field) for r in rows}
+    filled = 0
+    for row in store.get("filings", []):
+        if row.get(field) is not None:
+            continue                      # published value: untouchable
+        new = fresh.get(row["key"])
+        if new is None:
+            continue
+        row[field] = new
+        filled += 1
+    return filled
+
+
 def counts(store: dict) -> dict:
     f = store.get("filings") or []
     return {

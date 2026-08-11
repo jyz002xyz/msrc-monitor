@@ -1,17 +1,4 @@
 {
   "schema": 1,
-  "pending": [
-    {
-      "hash": "a487c9e13c79433af95781590e442ec02b5a910b6b1dc58283265e0ad16ec747",
-      "jurisdiction": "CA",
-      "reported_date": "2026-05-26",
-      "first_seen": "2026-08-10"
-    },
-    {
-      "hash": "c5d54085089999349b0fb01b4ac2e4e1f6e563cf7e8cc1c8822a90890c2185d0",
-      "jurisdiction": "CA",
-      "reported_date": "2026-08-05",
-      "first_seen": "2026-08-10"
-    }
-  ]
+  "pending": []
 }

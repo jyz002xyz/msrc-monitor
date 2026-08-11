@@ -146,10 +146,12 @@ L = {
                    "absent means it has not been published yet, not that it was not filed.",
         "reg_fields": "California publishes the organisation, the breach dates and the date it "
                       "was reported — no count of people affected. Washington publishes those, "
-                      "plus the number of Washington residents affected, the categories of data "
-                      "involved in the state's own wording, and a link to the notification "
-                      "document the organisation itself filed. A blank cell means the state "
-                      "does not publish that field, never that the value is zero.",
+                      "plus the number of Washington residents affected and the categories of "
+                      "data involved in the state's own wording. Both link the notice: for "
+                      "Washington it is the document the organisation filed; for California it "
+                      "is the state's record of the filing, with that document attached. A "
+                      "blank cell means the state does not publish that field, never that the "
+                      "value is zero.",
         "reg_coverage": "This record begins at {since}. Filings reported before that date were "
                         "never collected and are absent.",
         "reg_shown": "Showing the {shown} most recent of {total} filings on record.",
@@ -246,10 +248,11 @@ L = {
                    "「届け出られていない」ではありません。",
         "reg_fields": "カリフォルニア州が公開するのは組織名・侵害の日付・届出日で、"
                       "影響人数はありません。ワシントン州はそれらに加えて、影響を受けた"
-                      "同州住民の人数、関係したデータの種別（州の表現のまま）、および"
-                      "組織自身が提出した通知文書へのリンクを公開しています。"
-                      "空欄はその州がその項目を公開していないという意味であり、"
-                      "値が0という意味ではありません。",
+                      "同州住民の人数と、関係したデータの種別（州の表現のまま）を"
+                      "公開しています。通知へのリンクは両州にあります — ワシントン州は"
+                      "組織自身が提出した文書、カリフォルニア州はその文書を添えた"
+                      "州側の届出記録です。空欄はその州がその項目を公開していない"
+                      "という意味であり、値が0という意味ではありません。",
         "reg_coverage": "この記録は {since} 以降を対象としています。それ以前に届け出られたものは"
                         "収集しておらず、ここには入っていません。",
         "reg_shown": "記録している {total} 件のうち、新しい順に {shown} 件を表示しています。",

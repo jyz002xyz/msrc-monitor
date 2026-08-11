@@ -91,8 +91,14 @@ def _collect_registry(reg: dict, decisions: dict, queue: dict, args,
                       today: dt.date) -> tuple[dict, dict, int]:
     """Fetch, guard, filter and merge the state AG layer. Returns (store, queue, exit code)."""
     before = stateag_store.counts(reg)
-    since = args.registry_since or (
-        today - dt.timedelta(days=REGISTRY_DEFAULT_DAYS)).isoformat()
+    since = args.registry_since
+    if not since and args.backfill_notice_urls:
+        # A backfill has to reach everything already recorded, or the oldest rows — the ones
+        # that have been blank longest — are the ones it silently skips. The record knows how
+        # far back it goes; ask it rather than making the operator work the date out.
+        since = (reg.get("coverage") or {}).get("since")
+    if not since:
+        since = (today - dt.timedelta(days=REGISTRY_DEFAULT_DAYS)).isoformat()
     try:
         rows, rstats = fetch_stateag.fetch(since=since, wa_pages=args.wa_pages)
     except fetch_stateag.FetchError as e:
@@ -109,6 +115,10 @@ def _collect_registry(reg: dict, decisions: dict, queue: dict, args,
     rstats["filer_names_pending"] = len(queue.get("pending") or [])
 
     reg, added = stateag_store.merge(reg, rows, seen_date=today.isoformat())
+    if args.backfill_notice_urls:
+        n = stateag_store.fill_missing(reg, rows, "notice_url")
+        print(f"[incidents] backfilled notice_url on {n} already-recorded row(s) "
+              f"(blanks only; stored links untouched)")
     stateag_store.note_coverage(reg, since)
     failures, gstats = integrity.evaluate_registry(
         rows, rstats, before, stateag_store.counts(reg))
@@ -133,8 +143,21 @@ def _collect_registry(reg: dict, decisions: dict, queue: dict, args,
         print(f"[incidents] PENDING-FILER  {r['jurisdiction']}  {r['reported_date']}  "
               f"{r['organization']}")
     if withheld:
-        print(f"[incidents] withheld {len(withheld)} row(s) pending a filer check; "
-              f"{len(queue.get('pending') or [])} name(s) waiting on a decision")
+        # 「保留中」と「個人と確定済み」は別物。決着済みの行を pending と呼ぶと、
+        # キューが空でも件数が出続けて読み手が混乱する。
+        waiting = len(queue.get("pending") or [])
+        decided = len(withheld) - sum(
+            1 for r in withheld
+            if filers.name_hash((r.get("organization") or "").strip())
+            in {p["hash"] for p in queue.get("pending", [])})
+        parts = []
+        if waiting:
+            parts.append(f"{len(withheld) - decided} row(s) awaiting a filer decision "
+                         f"({waiting} name(s))")
+        if decided:
+            parts.append(f"{decided} row(s) withheld permanently (filer decided to be an "
+                         f"individual)")
+        print("[incidents] " + "; ".join(parts))
     stateag_store.save(REGISTRY, reg)
     filers.save_queue(QUEUE, queue)
     return reg, queue, 0
@@ -148,6 +171,11 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--registry-since",
                     help=f"state AG window start, YYYY-MM-DD "
                          f"(default: {REGISTRY_DEFAULT_DAYS} days ago)")
+    ap.add_argument("--backfill-notice-urls", action="store_true",
+                    help="fill notice_url on already-recorded rows that have none. Only fills "
+                         "blanks — a stored link is never replaced. Needed once, because the "
+                         "California rows were collected from the CSV export before the "
+                         "collector started reading the links off the state's HTML list.")
     ap.add_argument("--wa-pages", type=int, default=1,
                     help="Washington pages to read, newest first (default 1; one page spans "
                          "about three months). Raise only for a deliberate backfill.")

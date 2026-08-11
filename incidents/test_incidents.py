@@ -495,7 +495,84 @@ def test_registry_guard_passes_through_a_page_boundary_duplicate():
     assert out["wa_duplicate_keys"] == 1, "but it must reach the run log"
 
 
+# --- California: the notice link the CSV does not carry -----------------------
+CA_LIST_HTML = """
+<table><tbody>
+<tr><td><a href="/ecrime/databreach/reports/sb24-628082">USA DeBusk LLC</a></td>
+    <td>07/29/2026</td><td>08/10/2026</td></tr>
+<tr><td><a href="/ecrime/databreach/reports/sb24-627990">Boston Healthcare for the Homeless Program</a></td>
+    <td></td><td>08/07/2026</td></tr>
+<tr><td>No Link Co.</td><td></td><td>08/06/2026</td></tr>
+</tbody></table>
+"""
+
+
+def test_the_link_the_csv_export_leaves_out_is_read_off_the_list():
+    """California's export has three columns and no link; the HTML list links every row."""
+    links = fetch_stateag.parse_ca_links(CA_LIST_HTML)
+    assert links[("USA DeBusk LLC", "2026-08-10")].endswith("/reports/sb24-628082")
+    assert links[("Boston Healthcare for the Homeless Program", "2026-08-07")].endswith(
+        "/reports/sb24-627990")
+    assert ("No Link Co.", "2026-08-06") not in links, "a row with no link must not invent one"
+
+
+def test_a_row_that_does_not_match_the_link_map_gets_no_link():
+    """A wrong link would put another organisation's document under this one's name."""
+    rows, _ = fetch_stateag.parse_ca(CA_CSV)
+    links = fetch_stateag.parse_ca_links(CA_LIST_HTML)
+    for r in rows:
+        r["notice_url"] = links.get((r["organization"], r["reported_date"]))
+    assert all(r["notice_url"] is None for r in rows), "none of the CSV fixture is in the map"
+
+
 # --- state AG registries: the store ------------------------------------------
+def test_filling_a_blank_never_overwrites_a_recorded_value():
+    """The append-only rule protects values a reader was shown. A field never collected is
+    a gap in our collection, not a published statement — but the distinction only holds if
+    filling blanks cannot touch anything else."""
+    doc = stateag_store.empty()
+    stateag_store.merge(doc, [
+        {"key": "CA:a", "jurisdiction": "CA", "organization": "Has One",
+         "reported_date": "2026-08-01", "breach_dates": [], "affected": None,
+         "data_types": None, "notice_url": "https://recorded.example/old", "source_url": "x"},
+        {"key": "CA:b", "jurisdiction": "CA", "organization": "Has None",
+         "reported_date": "2026-08-01", "breach_dates": [], "affected": None,
+         "data_types": None, "notice_url": None, "source_url": "x"},
+    ], seen_date="2026-08-10")
+    fresh = [
+        {"key": "CA:a", "notice_url": "https://source.example/CHANGED"},
+        {"key": "CA:b", "notice_url": "https://source.example/new"},
+    ]
+    filled = stateag_store.fill_missing(doc, fresh, "notice_url")
+    by = {f["key"]: f for f in doc["filings"]}
+    assert filled == 1
+    assert by["CA:a"]["notice_url"] == "https://recorded.example/old", "a stored value was replaced"
+    assert by["CA:b"]["notice_url"] == "https://source.example/new"
+
+
+def test_filling_touches_only_the_named_field():
+    doc = stateag_store.empty()
+    stateag_store.merge(doc, [{"key": "CA:a", "jurisdiction": "CA", "organization": "Acme",
+                               "reported_date": "2026-08-01", "breach_dates": [],
+                               "affected": None, "data_types": None, "notice_url": None,
+                               "source_url": "x"}], seen_date="2026-08-10")
+    stateag_store.fill_missing(doc, [{"key": "CA:a", "notice_url": "https://x.example/n",
+                                      "affected": 999, "organization": "RENAMED"}], "notice_url")
+    row = doc["filings"][0]
+    assert row["notice_url"] == "https://x.example/n"
+    assert row["affected"] is None and row["organization"] == "Acme"
+
+
+def test_filling_an_undeclared_field_is_refused():
+    try:
+        stateag_store.fill_missing(stateag_store.empty(), [], "not_a_field")
+    except ValueError as e:
+        assert "not a stored field" in str(e)
+    else:
+        raise AssertionError("an arbitrary field name must be refused")
+
+
+
 def _reg(rows=None, seen="2026-08-10"):
     rows = rows if rows is not None else fetch_stateag.parse_wa(WA_HTML)[0]
     return stateag_store.merge(stateag_store.empty(), rows, seen_date=seen)

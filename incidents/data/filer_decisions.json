@@ -16,6 +16,10 @@
     "",
     "Both lists are permanent: a name is decided once and behaves the same way forever."
   ],
-  "organisations": [],
-  "individual_hashes": []
+  "organisations": [
+    "Nickey Kehoe"
+  ],
+  "individual_hashes": [
+    "c5d54085089999349b0fb01b4ac2e4e1f6e563cf7e8cc1c8822a90890c2185d0"
+  ]
 }
