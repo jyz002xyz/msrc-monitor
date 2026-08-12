@@ -5,6 +5,34 @@
   },
   "filings": [
     {
+      "key": "CA:2026-08-12:universal-plant-services-llc:2026-06-08",
+      "jurisdiction": "CA",
+      "organization": "Universal Plant Services, LLC",
+      "reported_date": "2026-08-12",
+      "breach_dates": [
+        "2026-06-08"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-628163",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-12"
+    },
+    {
+      "key": "CA:2026-08-11:lennar-corporation:2026-03-24",
+      "jurisdiction": "CA",
+      "organization": "Lennar Corporation",
+      "reported_date": "2026-08-11",
+      "breach_dates": [
+        "2026-03-24"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-628121",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-12"
+    },
+    {
       "key": "CA:2026-08-10:usa-debusk-llc:2025-08-14",
       "jurisdiction": "CA",
       "organization": "USA DeBusk LLC",
@@ -118,6 +146,20 @@
       "first_seen": "2026-08-10"
     },
     {
+      "key": "WA:BreachA42154",
+      "jurisdiction": "WA",
+      "organization": "Aesto, LLC (Grant County Public Hospital District #2)",
+      "reported_date": "2026-08-04",
+      "breach_dates": [
+        "2025-12-02"
+      ],
+      "affected": 37253,
+      "data_types": "Name; Social Security Number; Driver's License or Washington ID Card Number; Financial & Banking Information; Full Date of Birth; Medical Information; Protected Health Information owned or licensed by a HIPAA covered entity",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA42154.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-12"
+    },
+    {
       "key": "CA:2026-08-04:ucla-health:2024-12-27|2026-04-21",
       "jurisdiction": "CA",
       "organization": "UCLA Health",
@@ -175,6 +217,20 @@
       "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-627620",
       "source_url": "https://oag.ca.gov/privacy/databreach/list",
       "first_seen": "2026-08-10"
+    },
+    {
+      "key": "WA:BreachA42089",
+      "jurisdiction": "WA",
+      "organization": "Everside Health (Aesto, LLC)",
+      "reported_date": "2026-07-31",
+      "breach_dates": [
+        "2025-12-02"
+      ],
+      "affected": 21308,
+      "data_types": "Name; Social Security Number; Full Date of Birth; Medical Information",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA42089.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-12"
     },
     {
       "key": "CA:2026-07-31:stanislaus-county-health-services-agency:2025-12-02|2025-12-18",
