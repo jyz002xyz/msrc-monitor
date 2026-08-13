@@ -19,6 +19,20 @@
       "first_seen": "2026-08-12"
     },
     {
+      "key": "WA:BreachA42288",
+      "jurisdiction": "WA",
+      "organization": "Chelan County, WA",
+      "reported_date": "2026-08-11",
+      "breach_dates": [
+        "2026-05-20"
+      ],
+      "affected": null,
+      "data_types": "Name; Social Security Number; Driver's License or Washington ID Card Number; Financial & Banking Information; Full Date of Birth; Student ID Number; Military ID Number; Passport Number; Health Insurance Policy or ID Number; Medical Information; Username and Password/Security Question Answers; Email Address and Password/Security Question Answers",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA42288.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-13"
+    },
+    {
       "key": "CA:2026-08-11:lennar-corporation:2026-03-24",
       "jurisdiction": "CA",
       "organization": "Lennar Corporation",
@@ -31,6 +45,20 @@
       "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-628121",
       "source_url": "https://oag.ca.gov/privacy/databreach/list",
       "first_seen": "2026-08-12"
+    },
+    {
+      "key": "WA:BreachA42272",
+      "jurisdiction": "WA",
+      "organization": "Kovack Financial, LLC",
+      "reported_date": "2026-08-10",
+      "breach_dates": [
+        "2025-08-08"
+      ],
+      "affected": 657,
+      "data_types": "Name; Social Security Number; Driver's License or Washington ID Card Number; Financial & Banking Information; Passport Number; Medical Information",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA42272.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-13"
     },
     {
       "key": "CA:2026-08-10:usa-debusk-llc:2025-08-14",
@@ -60,6 +88,32 @@
       "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-628054",
       "source_url": "https://oag.ca.gov/privacy/databreach/list",
       "first_seen": "2026-08-11"
+    },
+    {
+      "key": "WA:BreachA42250",
+      "jurisdiction": "WA",
+      "organization": "American Addiction Centers",
+      "reported_date": "2026-08-07",
+      "breach_dates": [
+        "2026-05-12"
+      ],
+      "affected": 1155,
+      "data_types": "Name; Social Security Number; Health Insurance Policy or ID Number; Medical Information",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA42250.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-13"
+    },
+    {
+      "key": "WA:BreachA42237",
+      "jurisdiction": "WA",
+      "organization": "Golden Opportunities And Local Support, LLC",
+      "reported_date": "2026-08-07",
+      "breach_dates": [],
+      "affected": null,
+      "data_types": "Name; Full Date of Birth; Other; Protected Health Information owned or licensed by a HIPAA covered entity",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA42237.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-13"
     },
     {
       "key": "CA:2026-08-07:cushman-wakefield:2026-04-21|2026-04-29",
@@ -685,6 +739,20 @@
       "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-626658",
       "source_url": "https://oag.ca.gov/privacy/databreach/list",
       "first_seen": "2026-08-10"
+    },
+    {
+      "key": "WA:BreachA41834",
+      "jurisdiction": "WA",
+      "organization": "Fox Rothschild LLP",
+      "reported_date": "2026-07-16",
+      "breach_dates": [
+        "2026-05-21"
+      ],
+      "affected": 1891,
+      "data_types": "Name; Social Security Number; Full Date of Birth",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA41834.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-13"
     },
     {
       "key": "WA:BreachA41829",
@@ -1867,6 +1935,18 @@
       "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-624200",
       "source_url": "https://oag.ca.gov/privacy/databreach/list",
       "first_seen": "2026-08-10"
+    },
+    {
+      "key": "WA:BreachM24323",
+      "jurisdiction": "WA",
+      "organization": "Fulcrum Real Estate Services, Inc.",
+      "reported_date": "2026-05-29",
+      "breach_dates": [],
+      "affected": 1360,
+      "data_types": "Name; Social Security Number; Driver's License or Washington ID Card Number; Financial & Banking Information; Health Insurance Policy or ID Number; Medical Information",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachM24323.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-13"
     },
     {
       "key": "WA:BreachA41120",
