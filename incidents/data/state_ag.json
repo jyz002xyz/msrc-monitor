@@ -5,6 +5,32 @@
   },
   "filings": [
     {
+      "key": "CA:2026-08-13:terry-j-dubrow-md-a-medical-corporation:",
+      "jurisdiction": "CA",
+      "organization": "Terry J. Dubrow, MD, A Medical Corporation",
+      "reported_date": "2026-08-13",
+      "breach_dates": [],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-628219",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-14"
+    },
+    {
+      "key": "CA:2026-08-13:may-trucking-company:2026-06-21",
+      "jurisdiction": "CA",
+      "organization": "May Trucking Company",
+      "reported_date": "2026-08-13",
+      "breach_dates": [
+        "2026-06-21"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-628218",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-14"
+    },
+    {
       "key": "CA:2026-08-12:universal-plant-services-llc:2026-06-08",
       "jurisdiction": "CA",
       "organization": "Universal Plant Services, LLC",
@@ -17,6 +43,20 @@
       "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-628163",
       "source_url": "https://oag.ca.gov/privacy/databreach/list",
       "first_seen": "2026-08-12"
+    },
+    {
+      "key": "CA:2026-08-12:temple-adat-shalom-sisterhood:2026-01-26",
+      "jurisdiction": "CA",
+      "organization": "Temple Adat Shalom Sisterhood",
+      "reported_date": "2026-08-12",
+      "breach_dates": [
+        "2026-01-26"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-628187",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-14"
     },
     {
       "key": "WA:BreachA42288",
@@ -485,6 +525,20 @@
       "first_seen": "2026-08-10"
     },
     {
+      "key": "WA:BreachA41982",
+      "jurisdiction": "WA",
+      "organization": "Bridgeway Benefit Technologies LLC",
+      "reported_date": "2026-07-24",
+      "breach_dates": [
+        "2026-03-05"
+      ],
+      "affected": 640,
+      "data_types": "Name; Social Security Number; Full Date of Birth; Other; Protected Health Information owned or licensed by a HIPAA covered entity",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA41982.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-14"
+    },
+    {
       "key": "WA:BreachA41958",
       "jurisdiction": "WA",
       "organization": "Eyemart Express, LLC",
@@ -554,6 +608,20 @@
       "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA41947.pdf",
       "source_url": "https://www.atg.wa.gov/data-breach-notifications",
       "first_seen": "2026-08-10"
+    },
+    {
+      "key": "WA:BreachA41934",
+      "jurisdiction": "WA",
+      "organization": "Safetyfirst Systems, LLC",
+      "reported_date": "2026-07-23",
+      "breach_dates": [
+        "2026-01-16"
+      ],
+      "affected": 1157,
+      "data_types": "Name; Social Security Number; Driver's License or Washington ID Card Number; Full Date of Birth",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA41934.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-14"
     },
     {
       "key": "CA:2026-07-23:the-moody-bible-institute-of-chicago:2026-06-12",
@@ -1012,6 +1080,20 @@
       "first_seen": "2026-08-10"
     },
     {
+      "key": "WA:BreachA41690",
+      "jurisdiction": "WA",
+      "organization": "Columbia Machine, Inc.",
+      "reported_date": "2026-07-09",
+      "breach_dates": [
+        "2026-03-27"
+      ],
+      "affected": 1276,
+      "data_types": "Name; Social Security Number; Driver's License or Washington ID Card Number; Full Date of Birth; Passport Number",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA41690.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-14"
+    },
+    {
       "key": "CA:2026-07-09:lincoln-technical-institute:2026-04-29|2026-05-07",
       "jurisdiction": "CA",
       "organization": "Lincoln Technical Institute",
@@ -1126,6 +1208,18 @@
       "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-625925",
       "source_url": "https://oag.ca.gov/privacy/databreach/list",
       "first_seen": "2026-08-10"
+    },
+    {
+      "key": "WA:BreachM24496",
+      "jurisdiction": "WA",
+      "organization": "Glucobit, Inc. dba Reframe",
+      "reported_date": "2026-06-30",
+      "breach_dates": [],
+      "affected": 3181,
+      "data_types": "Name; Other",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachM24496.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-14"
     },
     {
       "key": "WA:BreachA41515",
