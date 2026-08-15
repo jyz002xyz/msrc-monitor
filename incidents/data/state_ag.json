@@ -5,6 +5,77 @@
   },
   "filings": [
     {
+      "key": "CA:2026-08-14:quantum-health-inc:2026-05-29|2026-06-01",
+      "jurisdiction": "CA",
+      "organization": "Quantum Health, Inc.",
+      "reported_date": "2026-08-14",
+      "breach_dates": [
+        "2026-05-29",
+        "2026-06-01"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-628342",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-15"
+    },
+    {
+      "key": "CA:2026-08-14:paylogix-llc:2025-11-13|2025-11-18",
+      "jurisdiction": "CA",
+      "organization": "Paylogix, LLC",
+      "reported_date": "2026-08-14",
+      "breach_dates": [
+        "2025-11-13",
+        "2025-11-18"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-628329",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-15"
+    },
+    {
+      "key": "CA:2026-08-14:lennar-mortgage-llc:2026-05-26",
+      "jurisdiction": "CA",
+      "organization": "Lennar Mortgage, LLC",
+      "reported_date": "2026-08-14",
+      "breach_dates": [
+        "2026-05-26"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-628320",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-15"
+    },
+    {
+      "key": "CA:2026-08-14:baylor-genetics:",
+      "jurisdiction": "CA",
+      "organization": "Baylor Genetics",
+      "reported_date": "2026-08-14",
+      "breach_dates": [],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-628324",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-15"
+    },
+    {
+      "key": "CA:2026-08-14:adapthealth-llc:2026-06-05|2026-06-15",
+      "jurisdiction": "CA",
+      "organization": "AdaptHealth, LLC",
+      "reported_date": "2026-08-14",
+      "breach_dates": [
+        "2026-06-05",
+        "2026-06-15"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-628241",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-15"
+    },
+    {
       "key": "CA:2026-08-13:terry-j-dubrow-md-a-medical-corporation:",
       "jurisdiction": "CA",
       "organization": "Terry J. Dubrow, MD, A Medical Corporation",
@@ -15,6 +86,21 @@
       "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-628219",
       "source_url": "https://oag.ca.gov/privacy/databreach/list",
       "first_seen": "2026-08-14"
+    },
+    {
+      "key": "CA:2026-08-13:see-s-candies-inc:2026-04-11|2026-04-13",
+      "jurisdiction": "CA",
+      "organization": "See’s Candies, Inc.",
+      "reported_date": "2026-08-13",
+      "breach_dates": [
+        "2026-04-11",
+        "2026-04-13"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-628237",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-15"
     },
     {
       "key": "CA:2026-08-13:may-trucking-company:2026-06-21",
@@ -29,6 +115,21 @@
       "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-628218",
       "source_url": "https://oag.ca.gov/privacy/databreach/list",
       "first_seen": "2026-08-14"
+    },
+    {
+      "key": "CA:2026-08-13:corporation-service-company:2025-08-10|2025-08-25",
+      "jurisdiction": "CA",
+      "organization": "Corporation Service Company",
+      "reported_date": "2026-08-13",
+      "breach_dates": [
+        "2025-08-10",
+        "2025-08-25"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-628224",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-15"
     },
     {
       "key": "CA:2026-08-12:universal-plant-services-llc:2026-06-08",
