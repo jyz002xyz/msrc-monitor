@@ -769,6 +769,18 @@
       "first_seen": "2026-08-10"
     },
     {
+      "key": "WA:BreachA41917",
+      "jurisdiction": "WA",
+      "organization": "Kootenai County, Idaho",
+      "reported_date": "2026-07-22",
+      "breach_dates": [],
+      "affected": 746,
+      "data_types": "Name; Social Security Number; Driver's License or Washington ID Card Number; Full Date of Birth; Health Insurance Policy or ID Number; Medical Information; Biometric Data",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA41917.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-17"
+    },
+    {
       "key": "CA:2026-07-22:the-lawson-roofing-co-inc:2026-04-23",
       "jurisdiction": "CA",
       "organization": "The Lawson Roofing Co Inc.",
@@ -796,6 +808,20 @@
       "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-626905",
       "source_url": "https://oag.ca.gov/privacy/databreach/list",
       "first_seen": "2026-08-10"
+    },
+    {
+      "key": "WA:BreachA41907",
+      "jurisdiction": "WA",
+      "organization": "Unlimited Technology Systems, LLC",
+      "reported_date": "2026-07-21",
+      "breach_dates": [
+        "2025-10-05"
+      ],
+      "affected": 724,
+      "data_types": "Name; Social Security Number; Driver's License or Washington ID Card Number; Full Date of Birth; Health Insurance Policy or ID Number; Medical Information; Other; Protected Health Information owned or licensed by a HIPAA covered entity",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA41907.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-17"
     },
     {
       "key": "CA:2026-07-21:xsolis-inc:2026-01-20",
@@ -1449,6 +1475,20 @@
       "first_seen": "2026-08-10"
     },
     {
+      "key": "WA:BreachA41489",
+      "jurisdiction": "WA",
+      "organization": "Tower Administrative Services, Inc",
+      "reported_date": "2026-06-26",
+      "breach_dates": [
+        "2026-02-03"
+      ],
+      "affected": 868,
+      "data_types": "Name; Social Security Number; Financial & Banking Information",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA41489.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-17"
+    },
+    {
       "key": "CA:2026-06-26:yellow-corporation-and-its-affiliated-debtors-and-debtors-in-possession-under-their-jointly-administered-chapter-11-cases-case-no-23-11069-bankr-d-del-ctg:2025-03-27",
       "jurisdiction": "CA",
       "organization": "Yellow Corporation and its affiliated debtors and debtors-in-possession under their jointly administered chapter 11 cases (Case No. 23-11069 (Bankr. D. Del. (CTG))",
@@ -2043,6 +2083,20 @@
       "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachM24184.pdf",
       "source_url": "https://www.atg.wa.gov/data-breach-notifications",
       "first_seen": "2026-08-10"
+    },
+    {
+      "key": "WA:BreachA41161",
+      "jurisdiction": "WA",
+      "organization": "Mariner Wealth Advisors, LLC",
+      "reported_date": "2026-06-01",
+      "breach_dates": [
+        "2025-11-21"
+      ],
+      "affected": 771,
+      "data_types": "Name; Social Security Number; Driver's License or Washington ID Card Number; Financial & Banking Information; Full Date of Birth",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA41161.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-17"
     },
     {
       "key": "WA:BreachA41155",
