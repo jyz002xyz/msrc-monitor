@@ -5,6 +5,49 @@
   },
   "filings": [
     {
+      "key": "CA:2026-08-17:langwasser-company-cpas:2026-05-05",
+      "jurisdiction": "CA",
+      "organization": "Langwasser & Company CPAs",
+      "reported_date": "2026-08-17",
+      "breach_dates": [
+        "2026-05-05"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-628389",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-18"
+    },
+    {
+      "key": "CA:2026-08-17:forrestall-cpas-llc:2025-12-22|2025-12-30",
+      "jurisdiction": "CA",
+      "organization": "Forrestall CPAs LLC",
+      "reported_date": "2026-08-17",
+      "breach_dates": [
+        "2025-12-22",
+        "2025-12-30"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-628368",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-18"
+    },
+    {
+      "key": "CA:2026-08-17:amgen-inc:2026-07-01",
+      "jurisdiction": "CA",
+      "organization": "Amgen Inc.",
+      "reported_date": "2026-08-17",
+      "breach_dates": [
+        "2026-07-01"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-628370",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-18"
+    },
+    {
       "key": "CA:2026-08-14:quantum-health-inc:2026-05-29|2026-06-01",
       "jurisdiction": "CA",
       "organization": "Quantum Health, Inc.",
@@ -2224,6 +2267,20 @@
       "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA41114.pdf",
       "source_url": "https://www.atg.wa.gov/data-breach-notifications",
       "first_seen": "2026-08-10"
+    },
+    {
+      "key": "WA:BreachA41113",
+      "jurisdiction": "WA",
+      "organization": "Zalaznik & Associates, PLLC",
+      "reported_date": "2026-05-29",
+      "breach_dates": [
+        "2025-09-22"
+      ],
+      "affected": 685,
+      "data_types": "Name; Social Security Number; Financial & Banking Information",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA41113.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-18"
     },
     {
       "key": "WA:BreachA41108",
