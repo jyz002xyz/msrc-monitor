@@ -5,6 +5,63 @@
   },
   "filings": [
     {
+      "key": "CA:2026-08-19:silver-summit-medical-corporation:2025-11-27",
+      "jurisdiction": "CA",
+      "organization": "Silver Summit Medical Corporation",
+      "reported_date": "2026-08-19",
+      "breach_dates": [
+        "2025-11-27"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-628483",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-19"
+    },
+    {
+      "key": "CA:2026-08-18:turner-construction-company:2026-07-02",
+      "jurisdiction": "CA",
+      "organization": "Turner Construction Company",
+      "reported_date": "2026-08-18",
+      "breach_dates": [
+        "2026-07-02"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-628438",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-19"
+    },
+    {
+      "key": "CA:2026-08-18:apple-american-group-llc-and-apple-american-group-ii-llc:2026-04-08|2026-04-09",
+      "jurisdiction": "CA",
+      "organization": "Apple American Group LLC and Apple American Group II, LLC",
+      "reported_date": "2026-08-18",
+      "breach_dates": [
+        "2026-04-08",
+        "2026-04-09"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-628449",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-19"
+    },
+    {
+      "key": "CA:2026-08-17:merced-union-high-school-district:2025-08-11",
+      "jurisdiction": "CA",
+      "organization": "Merced Union High School District",
+      "reported_date": "2026-08-17",
+      "breach_dates": [
+        "2025-08-11"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-628399",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-19"
+    },
+    {
       "key": "CA:2026-08-17:langwasser-company-cpas:2026-05-05",
       "jurisdiction": "CA",
       "organization": "Langwasser & Company CPAs",
@@ -909,6 +966,20 @@
       "first_seen": "2026-08-10"
     },
     {
+      "key": "WA:BreachA41853",
+      "jurisdiction": "WA",
+      "organization": "ZenPatient, Inc.",
+      "reported_date": "2026-07-17",
+      "breach_dates": [
+        "2025-12-05"
+      ],
+      "affected": 651,
+      "data_types": "Name; Full Date of Birth; Passport Number; Medical Information",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA41853.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-19"
+    },
+    {
       "key": "WA:BreachA41847",
       "jurisdiction": "WA",
       "organization": "The Estée Lauder Companies (Oracle)",
@@ -1120,6 +1191,20 @@
       "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-626464",
       "source_url": "https://oag.ca.gov/privacy/databreach/list",
       "first_seen": "2026-08-10"
+    },
+    {
+      "key": "WA:BreachA41741",
+      "jurisdiction": "WA",
+      "organization": "The Washington Post (Oracle)",
+      "reported_date": "2026-07-13",
+      "breach_dates": [
+        "2025-07-10"
+      ],
+      "affected": 514,
+      "data_types": "Name; Social Security Number; Financial & Banking Information; Passport Number; Health Insurance Policy or ID Number",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA41741.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-19"
     },
     {
       "key": "CA:2026-07-13:the-washington-post:2025-07-10",
