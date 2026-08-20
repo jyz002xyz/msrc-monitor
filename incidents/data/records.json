@@ -138,6 +138,20 @@
           "url": "https://ink-revolution.com/index.php/info-2026-07-15.html"
         }
       ]
+    },
+    {
+      "id": "2026-08-19-jp-5162b2a9c5",
+      "organization": "さくらインターネット",
+      "type": "unauthorized_access",
+      "recorded_by": "detector",
+      "statements": [
+        {
+          "date": "2026-08-19",
+          "kind": "organization",
+          "source": "さくらインターネット の発表",
+          "url": "https://www.sakura.ad.jp/corporate/information/newsreleases/2026/08/19/1968225633/"
+        }
+      ]
     }
   ]
 }
