@@ -5,6 +5,34 @@
   },
   "filings": [
     {
+      "key": "CA:2026-08-20:nebraska-orthopaedic-center-p-c:2025-12-02",
+      "jurisdiction": "CA",
+      "organization": "Nebraska Orthopaedic Center, P.C.",
+      "reported_date": "2026-08-20",
+      "breach_dates": [
+        "2025-12-02"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-628538",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-20"
+    },
+    {
+      "key": "CA:2026-08-20:apollo-management-holdings-l-p:2026-07-06",
+      "jurisdiction": "CA",
+      "organization": "Apollo Management Holdings, L.P.",
+      "reported_date": "2026-08-20",
+      "breach_dates": [
+        "2026-07-06"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-628551",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-20"
+    },
+    {
       "key": "CA:2026-08-19:silver-summit-medical-corporation:2025-11-27",
       "jurisdiction": "CA",
       "organization": "Silver Summit Medical Corporation",
