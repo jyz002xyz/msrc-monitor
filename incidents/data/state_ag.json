@@ -5,6 +5,63 @@
   },
   "filings": [
     {
+      "key": "CA:2026-08-21:kern-psychiatric-health-and-wellness-center-inc:2026-04-16",
+      "jurisdiction": "CA",
+      "organization": "Kern Psychiatric Health and Wellness Center, Inc",
+      "reported_date": "2026-08-21",
+      "breach_dates": [
+        "2026-04-16"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-628704",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-21"
+    },
+    {
+      "key": "CA:2026-08-21:asos-us-sales-llc:2026-07-28",
+      "jurisdiction": "CA",
+      "organization": "ASOS US Sales LLC",
+      "reported_date": "2026-08-21",
+      "breach_dates": [
+        "2026-07-28"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-628646",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-21"
+    },
+    {
+      "key": "CA:2026-08-20:southern-illinois-university:2025-09-29",
+      "jurisdiction": "CA",
+      "organization": "Southern Illinois University",
+      "reported_date": "2026-08-20",
+      "breach_dates": [
+        "2025-09-29"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-628638",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-21"
+    },
+    {
+      "key": "CA:2026-08-20:northern-inyo-healthcare-district-d-b-a-northern-inyo-hospital:2025-12-02|2025-12-18",
+      "jurisdiction": "CA",
+      "organization": "Northern Inyo Healthcare District d/b/a Northern Inyo Hospital",
+      "reported_date": "2026-08-20",
+      "breach_dates": [
+        "2025-12-02",
+        "2025-12-18"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-628598",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-21"
+    },
+    {
       "key": "CA:2026-08-20:nebraska-orthopaedic-center-p-c:2025-12-02",
       "jurisdiction": "CA",
       "organization": "Nebraska Orthopaedic Center, P.C.",
