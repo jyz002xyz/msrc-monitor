@@ -5,6 +5,35 @@
   },
   "filings": [
     {
+      "key": "CA:2026-08-21:the-health-trust-and-its-subsidiary-fass:2025-05-26|2025-06-11",
+      "jurisdiction": "CA",
+      "organization": "The Health Trust and its subsidiary, FASS",
+      "reported_date": "2026-08-21",
+      "breach_dates": [
+        "2025-05-26",
+        "2025-06-11"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-628727",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-23"
+    },
+    {
+      "key": "CA:2026-08-21:polam-federal-credit-union:2025-05-20",
+      "jurisdiction": "CA",
+      "organization": "POLAM Federal Credit Union",
+      "reported_date": "2026-08-21",
+      "breach_dates": [
+        "2025-05-20"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-628736",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-23"
+    },
+    {
       "key": "CA:2026-08-21:kern-psychiatric-health-and-wellness-center-inc:2026-04-16",
       "jurisdiction": "CA",
       "organization": "Kern Psychiatric Health and Wellness Center, Inc",
