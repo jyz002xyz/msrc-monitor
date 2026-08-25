@@ -152,6 +152,20 @@
           "url": "https://www.sakura.ad.jp/corporate/information/newsreleases/2026/08/19/1968225633/"
         }
       ]
+    },
+    {
+      "id": "2026-08-21-jp-69a7466812",
+      "organization": "楽天ブックスネットワーク株式会社",
+      "type": "unauthorized_access",
+      "recorded_by": "detector",
+      "statements": [
+        {
+          "date": "2026-08-21",
+          "kind": "organization",
+          "source": "楽天ブックスネットワーク株式会社 の発表",
+          "url": "https://www.rakuten-booksnetwork.co.jp/2026/08/21/unauthorized-access-notice/index.html"
+        }
+      ]
     }
   ]
 }
