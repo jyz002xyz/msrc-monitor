@@ -5,6 +5,50 @@
   },
   "filings": [
     {
+      "key": "CA:2026-08-25:livara-health-medical-group-dba-spinezone:2025-12-02|2025-12-18",
+      "jurisdiction": "CA",
+      "organization": "Livara Health Medical Group - dba SpineZone",
+      "reported_date": "2026-08-25",
+      "breach_dates": [
+        "2025-12-02",
+        "2025-12-18"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-628844",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-25"
+    },
+    {
+      "key": "CA:2026-08-24:pan-american-group-llc:2026-04-08|2026-04-09",
+      "jurisdiction": "CA",
+      "organization": "Pan American Group LLC",
+      "reported_date": "2026-08-24",
+      "breach_dates": [
+        "2026-04-08",
+        "2026-04-09"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-628794",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-25"
+    },
+    {
+      "key": "CA:2026-08-24:museum-associates-d-b-a-los-angeles-museum-of-art-lacma:2025-07-07",
+      "jurisdiction": "CA",
+      "organization": "Museum Associates d/b/a Los Angeles Museum of Art (LACMA)",
+      "reported_date": "2026-08-24",
+      "breach_dates": [
+        "2025-07-07"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-628808",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-25"
+    },
+    {
       "key": "CA:2026-08-21:the-health-trust-and-its-subsidiary-fass:2025-05-26|2025-06-11",
       "jurisdiction": "CA",
       "organization": "The Health Trust and its subsidiary, FASS",
@@ -119,6 +163,20 @@
       "first_seen": "2026-08-20"
     },
     {
+      "key": "WA:BreachA42412",
+      "jurisdiction": "WA",
+      "organization": "Nebraska Orthopaedic Center (Aesto, LLC)",
+      "reported_date": "2026-08-19",
+      "breach_dates": [
+        "2025-12-02"
+      ],
+      "affected": 992,
+      "data_types": "Name; Social Security Number; Full Date of Birth; Medical Information",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA42412.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-25"
+    },
+    {
       "key": "CA:2026-08-19:silver-summit-medical-corporation:2025-11-27",
       "jurisdiction": "CA",
       "organization": "Silver Summit Medical Corporation",
@@ -131,6 +189,34 @@
       "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-628483",
       "source_url": "https://oag.ca.gov/privacy/databreach/list",
       "first_seen": "2026-08-19"
+    },
+    {
+      "key": "WA:BreachA42400",
+      "jurisdiction": "WA",
+      "organization": "Apple American Group LLC and Apple American Group II, LLC",
+      "reported_date": "2026-08-18",
+      "breach_dates": [
+        "2026-04-08"
+      ],
+      "affected": 20653,
+      "data_types": "Name; Social Security Number; Driver's License or Washington ID Card Number; Financial & Banking Information; Full Date of Birth; Military ID Number; Passport Number; Health Insurance Policy or ID Number; Medical Information; Biometric Data; Username and Password/Security Question Answers; Email Address and Password/Security Question Answers",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA42400.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-25"
+    },
+    {
+      "key": "WA:BreachA42399",
+      "jurisdiction": "WA",
+      "organization": "Turner Construction Company",
+      "reported_date": "2026-08-18",
+      "breach_dates": [
+        "2026-07-02"
+      ],
+      "affected": 3401,
+      "data_types": "Name; Social Security Number; Financial & Banking Information; Full Date of Birth; Passport Number",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA42399.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-25"
     },
     {
       "key": "CA:2026-08-18:turner-construction-company:2026-07-02",
@@ -217,6 +303,34 @@
       "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-628370",
       "source_url": "https://oag.ca.gov/privacy/databreach/list",
       "first_seen": "2026-08-18"
+    },
+    {
+      "key": "WA:BreachA42352",
+      "jurisdiction": "WA",
+      "organization": "Baylor Genetics",
+      "reported_date": "2026-08-14",
+      "breach_dates": [
+        "2026-06-11"
+      ],
+      "affected": 27243,
+      "data_types": "Name; Full Date of Birth; Health Insurance Policy or ID Number; Medical Information",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA42352.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-25"
+    },
+    {
+      "key": "WA:BreachA42351",
+      "jurisdiction": "WA",
+      "organization": "Paylogix, LLC",
+      "reported_date": "2026-08-14",
+      "breach_dates": [
+        "2025-11-13"
+      ],
+      "affected": 28449,
+      "data_types": "Name; Social Security Number; Financial & Banking Information; Full Date of Birth; Health Insurance Policy or ID Number",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA42351.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-25"
     },
     {
       "key": "CA:2026-08-14:quantum-health-inc:2026-05-29|2026-06-01",
