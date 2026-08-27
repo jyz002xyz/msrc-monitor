@@ -5,6 +5,21 @@
   },
   "filings": [
     {
+      "key": "CA:2026-08-25:together-women-s-health-llc-aesto:2025-12-02|2025-12-18",
+      "jurisdiction": "CA",
+      "organization": "Together Women's Health LLC - Aesto",
+      "reported_date": "2026-08-25",
+      "breach_dates": [
+        "2025-12-02",
+        "2025-12-18"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-628856",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-08-27"
+    },
+    {
       "key": "CA:2026-08-25:livara-health-medical-group-dba-spinezone:2025-12-02|2025-12-18",
       "jurisdiction": "CA",
       "organization": "Livara Health Medical Group - dba SpineZone",
@@ -47,6 +62,20 @@
       "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-628808",
       "source_url": "https://oag.ca.gov/privacy/databreach/list",
       "first_seen": "2026-08-25"
+    },
+    {
+      "key": "WA:BreachA42451",
+      "jurisdiction": "WA",
+      "organization": "ASOS US Sales LLC",
+      "reported_date": "2026-08-21",
+      "breach_dates": [
+        "2026-07-28"
+      ],
+      "affected": 1929,
+      "data_types": "Name; Financial & Banking Information; Full Date of Birth; Email Address and Password/Security Question Answers",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA42451.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-27"
     },
     {
       "key": "CA:2026-08-21:the-health-trust-and-its-subsidiary-fass:2025-05-26|2025-06-11",
@@ -331,6 +360,34 @@
       "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA42351.pdf",
       "source_url": "https://www.atg.wa.gov/data-breach-notifications",
       "first_seen": "2026-08-25"
+    },
+    {
+      "key": "WA:BreachA42347",
+      "jurisdiction": "WA",
+      "organization": "Lennar Mortgage, LLC",
+      "reported_date": "2026-08-14",
+      "breach_dates": [
+        "2026-05-26"
+      ],
+      "affected": 11417,
+      "data_types": "Name; Social Security Number; Driver's License or Washington ID Card Number; Financial & Banking Information; Full Date of Birth; Military ID Number; Passport Number; Medical Information",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA42347.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-27"
+    },
+    {
+      "key": "WA:BreachA42340",
+      "jurisdiction": "WA",
+      "organization": "AdaptHealth, LLC",
+      "reported_date": "2026-08-14",
+      "breach_dates": [
+        "2026-06-05"
+      ],
+      "affected": 9214,
+      "data_types": "Name; Full Date of Birth; Health Insurance Policy or ID Number; Medical Information; Protected Health Information owned or licensed by a HIPAA covered entity",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA42340.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-27"
     },
     {
       "key": "CA:2026-08-14:quantum-health-inc:2026-05-29|2026-06-01",
@@ -952,6 +1009,20 @@
       "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-627090",
       "source_url": "https://oag.ca.gov/privacy/databreach/list",
       "first_seen": "2026-08-10"
+    },
+    {
+      "key": "WA:BreachM25126",
+      "jurisdiction": "WA",
+      "organization": "CareCloud, Inc.",
+      "reported_date": "2026-07-24",
+      "breach_dates": [
+        "2026-03-10"
+      ],
+      "affected": 20706,
+      "data_types": "Name; Social Security Number; Driver's License or Washington ID Card Number; Financial & Banking Information; Full Date of Birth; Health Insurance Policy or ID Number; Medical Information",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachM25126.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-08-27"
     },
     {
       "key": "WA:BreachA41982",
