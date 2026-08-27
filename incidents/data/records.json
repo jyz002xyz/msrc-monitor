@@ -166,6 +166,34 @@
           "url": "https://www.rakuten-booksnetwork.co.jp/2026/08/21/unauthorized-access-notice/index.html"
         }
       ]
+    },
+    {
+      "id": "2026-08-21-jp-3f2a08b7b0",
+      "organization": "株式会社フェース",
+      "type": "ransomware",
+      "recorded_by": "detector",
+      "statements": [
+        {
+          "date": "2026-08-21",
+          "kind": "organization",
+          "source": "株式会社フェース の発表",
+          "url": "https://www.faith-gr.co.jp/news/2026/system-failure_20260821.html"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-04-jp-2c55cf431b",
+      "organization": "名鉄協商株式会社",
+      "type": "ransomware",
+      "recorded_by": "detector",
+      "statements": [
+        {
+          "date": "2026-08-04",
+          "kind": "organization",
+          "source": "名鉄協商株式会社 の発表",
+          "url": "https://www.cariteco.com/news/2026_08_04_17289"
+        }
+      ]
     }
   ]
 }
