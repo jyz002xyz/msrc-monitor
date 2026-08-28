@@ -194,6 +194,20 @@
           "url": "https://www.cariteco.com/news/2026_08_04_17289"
         }
       ]
+    },
+    {
+      "id": "2026-08-25-jp-3df2f93cea",
+      "organization": "ハンズホールディングス株式会社",
+      "type": "ransomware",
+      "recorded_by": "detector",
+      "statements": [
+        {
+          "date": "2026-08-25",
+          "kind": "organization",
+          "source": "ハンズホールディングス株式会社 の発表",
+          "url": "https://www.hands-holdings.co.jp/news/news20260825/"
+        }
+      ]
     }
   ]
 }
