@@ -5,6 +5,49 @@
   },
   "filings": [
     {
+      "key": "CA:2026-09-01:kaniksu-community-health:2025-12-18",
+      "jurisdiction": "CA",
+      "organization": "Kaniksu Community Health",
+      "reported_date": "2026-09-01",
+      "breach_dates": [
+        "2025-12-18"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-629145",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-09-01"
+    },
+    {
+      "key": "CA:2026-08-31:virta-health-corp-and-virta-medical-pc:2026-03-19|2026-03-22",
+      "jurisdiction": "CA",
+      "organization": "Virta Health Corp. and Virta Medical, PC",
+      "reported_date": "2026-08-31",
+      "breach_dates": [
+        "2026-03-19",
+        "2026-03-22"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-629093",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-09-01"
+    },
+    {
+      "key": "CA:2026-08-31:berkeley-research-group-llc:2025-02-28",
+      "jurisdiction": "CA",
+      "organization": "Berkeley Research Group, LLC",
+      "reported_date": "2026-08-31",
+      "breach_dates": [
+        "2025-02-28"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-629096",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-09-01"
+    },
+    {
       "key": "CA:2026-08-28:bennett-college:",
       "jurisdiction": "CA",
       "organization": "Bennett College",
