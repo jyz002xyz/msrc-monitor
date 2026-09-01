@@ -1,0 +1,88 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cross-vendor KEV/EPSS 2026-09 — MSRC Vulnerability Trend Report</title>
+<style>
+:root{color-scheme:light}*{box-sizing:border-box}
+body{margin:0;background:#eef0f3;color:#1a1a1a;font-family:-apple-system,BlinkMacSystemFont,
+'Segoe UI','Hiragino Kaku Gothic ProN','Noto Sans JP',Arial,sans-serif}
+.topbar{position:sticky;top:0;z-index:10;background:#1f3864;color:#fff;display:flex;
+align-items:center;justify-content:space-between;padding:10px 18px;font-size:14px}
+.topbar a{color:#fff;text-decoration:none;opacity:.92}.topbar a:hover{opacity:1;text-decoration:underline}
+.topbar .nav a{margin-left:16px}
+.topbar .langpill{border:1px solid rgba(255,255,255,.6);border-radius:14px;padding:3px 13px;margin-left:22px;opacity:1}
+.topbar .langpill:hover{background:rgba(255,255,255,.16);text-decoration:none}
+.tablecaveat{font-size:12px;color:#7a4e00;background:#fff7e6;border:1px solid #f0d9a8;border-left:3px solid #d99b1c;border-radius:6px;padding:8px 12px;margin:2px 0 16px}
+.idxlinks a{margin-right:6px;color:#1f3864;font-weight:600;text-decoration:none}.idxlinks a:hover{text-decoration:underline}
+.banner{max-width:960px;margin:16px auto 0;padding:10px 16px;border-radius:6px;font-size:13px;line-height:1.6}
+.banner.open{background:#fff3cd;border:1px solid #ffe69c;color:#664d03}
+.banner.sealed{background:#e7f1e9;border:1px solid #b9d9c1;color:#20502f}
+.paper{max-width:960px;margin:18px auto 40px;background:#fff;padding:32px 40px;border-radius:8px;
+box-shadow:0 2px 12px rgba(0,0,0,.08);overflow-x:auto}
+h1{color:#1f3864;font-size:22px;margin:0 0 6px}h2{color:#1f3864;border-bottom:2px solid #e3e6ea;
+padding-bottom:4px;margin-top:26px;font-size:17px}h3{color:#33415c;font-size:15px}
+table{border-collapse:collapse;width:100%;font-size:13px;margin:10px 0}
+th,td{border-bottom:1px solid #eef0f3;padding:7px 10px;text-align:left}th{background:#f0f2f5}
+th.sortable{cursor:pointer;user-select:none;white-space:nowrap}th.sortable:hover{background:#e7ebf1}
+th .caret{opacity:.4;font-size:11px;margin-left:5px}
+th[aria-sort="ascending"] .caret::after{content:"\25B2"}
+th[aria-sort="descending"] .caret::after{content:"\25BC"}
+th[aria-sort="none"] .caret::after{content:"\2195"}
+th[aria-sort="ascending"] .caret,th[aria-sort="descending"] .caret{opacity:1}
+.notes{background:#eef3fb;border:1px solid #c9dcf5;border-left:4px solid #1f3864;border-radius:6px;
+padding:12px 16px;color:#26364d;font-size:13px;line-height:1.7;margin:16px 0}
+.sub{color:#666;font-size:13px}.footer{max-width:960px;margin:0 auto 40px;color:#888;font-size:12px;text-align:center}
+a.cvelink{color:#1f3864;text-decoration:none;border-bottom:1px dotted #9ab0d4}
+a.cvelink:hover{text-decoration:underline}
+dl.gloss{margin:8px 0 0}dl.gloss dt{font-weight:700;margin-top:8px}
+dl.gloss dd{margin:2px 0 0 14px}
+.sources{max-width:960px;margin:0 auto 10px;padding:0 20px;color:#666;font-size:12px;line-height:1.7}
+.sources a{color:#1f3864}.sources p{margin:6px 0}.sources .srchead{font-weight:700;color:#444}
+</style></head><body>
+<div class="topbar"><a href="../../index.html">MSRC Vulnerability Trend Report</a>
+<div class="nav"><a href="../index.html">Cross-vendor KEV/EPSS</a><a href="../../index.html">Home</a>
+<a class="langpill" href="ja.html">日本語</a></div></div>
+<div class="banner open"><b>in progress.</b> This window is in progress. Values are not final; more KEV entries may be added before month-end and updated in later publications.</div>
+<article class="paper">
+<h1>Cross-vendor KEV/EPSS — 2026-09</h1>
+<div class="notes">This is a cross-vendor KEV/EPSS section accompanying the MSRC Vulnerability Trend Report (Microsoft-focused). While the main report covers Microsoft&#x27;s monthly CVEs, this section records — across all vendors — the vulnerabilities listed in CISA KEV.</div>
+<div class='notes'><b>About this data</b><ul><li>This page records the vulnerabilities listed in CISA KEV (the catalog of vulnerabilities confirmed as exploited) for one calendar month. A row is included when its KEV listing date (dateAdded) falls in that month, regardless of vendor (not only Microsoft).</li><li>Update frequency: updated automatically every day (GitHub Actions, scheduled 08:30 JST). It is best-effort, so it can be delayed, and there is no update on a day with no new KEV listings. Only the in-progress (open) month grows; the data of a sealed month is never changed.</li><li>The data of a sealed month is immutable, but the rendered page may be regenerated when explanations are added or improved (that is separate from the immutability of the data).</li></ul></div>
+<p class="sub">Generated 2026-09-01T01:58:34. This section is a cross-vendor KEV/EPSS prototype.</p>
+
+<h2>Facts (machine-generated)</h2>
+<h3>KEV additions in the window (0)</h3>
+<table id="kevtable"><thead><tr><th class="sortable" data-type="text" aria-sort="none">CVE<span class="caret"></span></th><th class="sortable" data-type="text" aria-sort="none">Vendor<span class="caret"></span></th><th class="sortable" data-type="text" aria-sort="none">Product<span class="caret"></span></th><th class="sortable" data-type="date" aria-sort="descending">Added<span class="caret"></span></th><th class="sortable" data-type="date" aria-sort="none">Due<span class="caret"></span></th><th class="sortable" data-type="text" aria-sort="none">Ransomware<span class="caret"></span></th><th class="sortable" data-type="num" aria-sort="none">EPSS/pctl<span class="caret"></span></th><th class="sortable" data-type="date" aria-sort="none">NVD published<span class="caret"></span></th><th class="sortable" data-type="num" aria-sort="none">Pub→KEV (days)<span class="caret"></span></th></tr></thead><tbody></tbody></table>
+<div class="tablecaveat">Pub→KEV (days) = KEV listing date minus NVD publication; KEV listing is not when exploitation began, so this is NOT time-to-exploitation (large values are old CVEs listed recently).<br>In the “Ransomware” column, Unknown means CISA has not confirmed it — not that the vulnerability is unused by ransomware.</div>
+<p class="sub">Click a column header to sort (default: Added descending; this order also shows when JS is off). The EPSS column sorts by score (percentile shown alongside). Blanks always sort last.</p>
+<script>
+(function(){
+  var t=document.getElementById('kevtable'); if(!t||!t.tHead) return;
+  var ths=t.tHead.rows[0].cells, tb=t.tBodies[0];
+  for(var i=0;i<ths.length;i++){(function(idx){
+    var th=ths[idx]; if((th.className||'').indexOf('sortable')<0) return;
+    th.addEventListener('click',function(){
+      var dir=th.getAttribute('aria-sort')==='ascending'?'descending':'ascending';
+      for(var j=0;j<ths.length;j++) ths[j].setAttribute('aria-sort','none');
+      th.setAttribute('aria-sort',dir);
+      var type=th.getAttribute('data-type')||'text', sgn=dir==='ascending'?1:-1;
+      var rows=Array.prototype.slice.call(tb.rows);
+      rows.sort(function(ra,rb){
+        var a=ra.cells[idx].getAttribute('data-sort'), b=rb.cells[idx].getAttribute('data-sort');
+        var ea=(a===''||a==null), eb=(b===''||b==null);
+        if(ea||eb){ return ea&&eb?0:(ea?1:-1); }   /* blanks always last, both directions */
+        var r = type==='num' ? (parseFloat(a)-parseFloat(b)) : (a<b?-1:(a>b?1:0));
+        return sgn*r;
+      });
+      rows.forEach(function(r){tb.appendChild(r);});
+    });
+  })(i);}
+})();
+</script>
+<h3>Aggregates</h3>
+<p>Ransomware (knownRansomwareCampaignUse): <b>Known 0 / Unknown 0</b></p>
+<p>By vendor (not a ranking — reflects deployment/visibility):</p><ul></ul><p class='sub'>EPSS: this window was not observed (backfill). The EPSS column is blank.</p>
+<h2>Definitions / notes (what the data is)</h2>
+<div class="notes"><b>Terms</b><dl class='gloss'><dt>KEV</dt><dd>CISA Known Exploited Vulnerabilities Catalog — vulnerabilities CISA has confirmed as exploited, each with a remediation due date for federal agencies.</dd><dt>EPSS (score / percentile)</dt><dd>The score is the probability that exploitation activity will be observed in the next 30 days; it runs from 0 to 1 (0.21 is roughly 21%). The percentile (p) is a separate axis: where that score sits among all CVEs. p92 means the score is higher than 92% of all CVEs. Scores are heavily concentrated at the low end, so a small score can still land in a high percentile. Neither is severity.</dd><dt>NVD published</dt><dd>The date NVD published the CVE record — a proxy for disclosure, not the vendor&#x27;s original disclosure date.</dd><dt>Pub→KEV (days)</dt><dd>KEV listing date (dateAdded) minus NVD publication date. 0 means listed the same day; a negative value means listed before NVD published. It is not time-to-exploitation.</dd><dt>open / sealed</dt><dd>open is the current month&#x27;s window — more KEV entries may still be added before month-end. sealed is a window finalized after its calendar month closed; its data is never changed afterwards.</dd><dt>Known / Unknown</dt><dd>The value of CISA KEV&#x27;s knownRansomwareCampaignUse. Unknown means “CISA has not confirmed it”, not “it is not used” (see the note below).</dd></dl><ul><li>KEV is not a complete record of exploitation; it is what CISA confirmed and prioritized for federal agencies.</li><li>The “Ransomware” column comes from CISA KEV&#x27;s knownRansomwareCampaignUse. Known = CISA has confirmed use in a ransomware campaign. Unknown = CISA has NOT confirmed it; it does not mean the vulnerability is unused by ransomware. Unknown is the majority of the catalog, so reading Unknown as “safe” is a systematic error.</li><li>EPSS is the probability of exploitation activity within 30 days — not severity. It is presented as an attribute recorded at KEV-add time; its predictive correctness is not judged.</li><li>Vendor counts reflect federal deployment and CISA visibility, not security quality. Vendors are never ranked by count.</li><li>Backfilled past windows leave EPSS blank (only observed-time values are recorded; current values are not back-filled).</li><li>“NVD published” is the date NVD published the CVE record — a proxy for disclosure, NOT the vendor&#x27;s original disclosure date (it can lag).</li><li>“Pub→KEV (days)” = KEV listing date (dateAdded) minus NVD publication date. The KEV listing date is when CISA added it to KEV, NOT when exploitation began; so this is NOT time-to-exploitation.</li><li>No summary statistics (median/mean) are given: a decades-old CVE listed recently and a just-disclosed CVE listed promptly are qualitatively different, so a “typical” figure is not meaningful. Per-CVE values are shown as-is.</li></ul></div>
+</article>
+<div class='sources'><p><span class='srchead'>Data sources:</span> <a href='https://www.cisa.gov/known-exploited-vulnerabilities-catalog' rel='noopener'>CISA Known Exploited Vulnerabilities Catalog</a> · <a href='https://www.first.org/epss/' rel='noopener'>FIRST EPSS</a> · <a href='https://nvd.nist.gov/' rel='noopener'>NVD (NIST National Vulnerability Database)</a></p><p>The CISA KEV catalog is published under CC0 1.0. Use of the data does not imply endorsement by CISA or DHS. EPSS is maintained by the EPSS SIG at FIRST; the scores are generated by Empirical Security and published freely. Attribution is requested when the data is used. NVD data is public domain (NIST). This product uses data from the NVD API but is not endorsed or certified by the NVD. None of the organizations above are affiliated with this report, and none of them endorse its contents.</p><p>Source of the main report (Microsoft-focused): <a href='https://msrc.microsoft.com/update-guide' rel='noopener'>Microsoft Security Response Center (MSRC) Security Update Guide (CVRF)</a></p></div>
+<div class="footer">MSRC Vulnerability Trend Report · Cross-vendor KEV/EPSS</div>
+</body></html>
