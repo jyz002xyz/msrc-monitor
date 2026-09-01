@@ -2,6 +2,24 @@
   "schema": 1,
   "incidents": [
     {
+      "key": "0001479681:2026-08-31",
+      "cik": "0001479681",
+      "company": "Nutex Health Inc.",
+      "report_date": "2026-08-31",
+      "statements": [
+        {
+          "adsh": "0001628280-26-059602",
+          "filing_date": "2026-08-31",
+          "form": "8-K",
+          "items": [
+            "1.05"
+          ],
+          "url": "https://www.sec.gov/Archives/edgar/data/1479681/000162828026059602/0001628280-26-059602-index.htm",
+          "first_seen": "2026-09-01"
+        }
+      ]
+    },
+    {
       "key": "0000318154:2026-07-29",
       "cik": "0000318154",
       "company": "AMGEN INC",

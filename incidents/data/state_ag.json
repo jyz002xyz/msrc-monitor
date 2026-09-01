@@ -5,6 +5,62 @@
   },
   "filings": [
     {
+      "key": "CA:2026-08-28:bennett-college:",
+      "jurisdiction": "CA",
+      "organization": "Bennett College",
+      "reported_date": "2026-08-28",
+      "breach_dates": [],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-628990",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-09-01"
+    },
+    {
+      "key": "CA:2026-08-27:integrated-specialty-coverages-llc-isc:2026-06-08|2026-06-11",
+      "jurisdiction": "CA",
+      "organization": "Integrated Specialty Coverages, LLC (“ISC”)",
+      "reported_date": "2026-08-27",
+      "breach_dates": [
+        "2026-06-08",
+        "2026-06-11"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-628921",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-09-01"
+    },
+    {
+      "key": "CA:2026-08-27:indico-data-solutions:2026-05-05",
+      "jurisdiction": "CA",
+      "organization": "Indico Data Solutions",
+      "reported_date": "2026-08-27",
+      "breach_dates": [
+        "2026-05-05"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-628947",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-09-01"
+    },
+    {
+      "key": "CA:2026-08-26:murfreesboro-medical-clinic:2025-12-02|2025-12-18",
+      "jurisdiction": "CA",
+      "organization": "Murfreesboro Medical Clinic",
+      "reported_date": "2026-08-26",
+      "breach_dates": [
+        "2025-12-02",
+        "2025-12-18"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-628900",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-09-01"
+    },
+    {
       "key": "CA:2026-08-25:together-women-s-health-llc-aesto:2025-12-02|2025-12-18",
       "jurisdiction": "CA",
       "organization": "Together Women's Health LLC - Aesto",
@@ -62,6 +118,18 @@
       "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-628808",
       "source_url": "https://oag.ca.gov/privacy/databreach/list",
       "first_seen": "2026-08-25"
+    },
+    {
+      "key": "CA:2026-08-24:allied-health:",
+      "jurisdiction": "CA",
+      "organization": "Allied Health",
+      "reported_date": "2026-08-24",
+      "breach_dates": [],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-628809",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-09-01"
     },
     {
       "key": "WA:BreachA42451",
