@@ -208,6 +208,20 @@
           "url": "https://www.hands-holdings.co.jp/news/news20260825/"
         }
       ]
+    },
+    {
+      "id": "2026-08-12-jp-12f1c9c09c",
+      "organization": "ホワイトエッセンス株式会社",
+      "type": "unauthorized_access",
+      "recorded_by": "detector",
+      "statements": [
+        {
+          "date": "2026-08-12",
+          "kind": "organization",
+          "source": "ホワイトエッセンス株式会社 の発表",
+          "url": "https://www.whiteessence.com/news/news/20260812/"
+        }
+      ]
     }
   ]
 }
