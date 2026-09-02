@@ -5,6 +5,20 @@
   },
   "filings": [
     {
+      "key": "CA:2026-09-02:fishbrain-ab:2026-07-30",
+      "jurisdiction": "CA",
+      "organization": "Fishbrain AB",
+      "reported_date": "2026-09-02",
+      "breach_dates": [
+        "2026-07-30"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-629190",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-09-02"
+    },
+    {
       "key": "CA:2026-09-01:kaniksu-community-health:2025-12-18",
       "jurisdiction": "CA",
       "organization": "Kaniksu Community Health",
@@ -17,6 +31,20 @@
       "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-629145",
       "source_url": "https://oag.ca.gov/privacy/databreach/list",
       "first_seen": "2026-09-01"
+    },
+    {
+      "key": "CA:2026-09-01:demera-demera-cameron-llp:2026-03-27",
+      "jurisdiction": "CA",
+      "organization": "DeMera DeMera Cameron, LLP",
+      "reported_date": "2026-09-01",
+      "breach_dates": [
+        "2026-03-27"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-629160",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-09-02"
     },
     {
       "key": "CA:2026-08-31:virta-health-corp-and-virta-medical-pc:2026-03-19|2026-03-22",

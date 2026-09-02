@@ -20,6 +20,25 @@
       ]
     },
     {
+      "key": "0002069604:2026-08-28",
+      "cik": "0002069604",
+      "company": "Park Dental Partners, Inc.",
+      "report_date": "2026-08-28",
+      "statements": [
+        {
+          "adsh": "0001104659-26-104300",
+          "filing_date": "2026-09-01",
+          "form": "8-K",
+          "items": [
+            "1.05",
+            "9.01"
+          ],
+          "url": "https://www.sec.gov/Archives/edgar/data/2069604/000110465926104300/0001104659-26-104300-index.htm",
+          "first_seen": "2026-09-02"
+        }
+      ]
+    },
+    {
       "key": "0000318154:2026-07-29",
       "cik": "0000318154",
       "company": "AMGEN INC",
