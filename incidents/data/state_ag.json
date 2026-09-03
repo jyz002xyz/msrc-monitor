@@ -5,6 +5,65 @@
   },
   "filings": [
     {
+      "key": "CA:2026-09-02:youlend-us-llc:2026-06-05|2026-06-09",
+      "jurisdiction": "CA",
+      "organization": "YouLend US LLC",
+      "reported_date": "2026-09-02",
+      "breach_dates": [
+        "2026-06-05",
+        "2026-06-09"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-629202",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-09-03"
+    },
+    {
+      "key": "CA:2026-09-02:see-s-candies-inc:2026-04-11|2026-04-13",
+      "jurisdiction": "CA",
+      "organization": "See’s Candies, Inc.",
+      "reported_date": "2026-09-02",
+      "breach_dates": [
+        "2026-04-11",
+        "2026-04-13"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-629221",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-09-03"
+    },
+    {
+      "key": "CA:2026-09-02:knowledge-research-center:2026-07-08",
+      "jurisdiction": "CA",
+      "organization": "Knowledge Research Center",
+      "reported_date": "2026-09-02",
+      "breach_dates": [
+        "2026-07-08"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-629199",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-09-03"
+    },
+    {
+      "key": "CA:2026-09-02:humanedge-inc:2026-03-17|2026-03-18",
+      "jurisdiction": "CA",
+      "organization": "HumanEdge, Inc.",
+      "reported_date": "2026-09-02",
+      "breach_dates": [
+        "2026-03-17",
+        "2026-03-18"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-629213",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-09-03"
+    },
+    {
       "key": "CA:2026-09-02:fishbrain-ab:2026-07-30",
       "jurisdiction": "CA",
       "organization": "Fishbrain AB",
@@ -17,6 +76,20 @@
       "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-629190",
       "source_url": "https://oag.ca.gov/privacy/databreach/list",
       "first_seen": "2026-09-02"
+    },
+    {
+      "key": "CA:2026-09-02:fiesta-insurance-franchise-corporation:2026-05-25",
+      "jurisdiction": "CA",
+      "organization": "Fiesta Insurance Franchise Corporation",
+      "reported_date": "2026-09-02",
+      "breach_dates": [
+        "2026-05-25"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-629220",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-09-03"
     },
     {
       "key": "CA:2026-09-01:kaniksu-community-health:2025-12-18",
