@@ -5,6 +5,34 @@
   },
   "filings": [
     {
+      "key": "CA:2026-09-04:catalyst-brands-llc:2026-05-20",
+      "jurisdiction": "CA",
+      "organization": "Catalyst Brands LLC",
+      "reported_date": "2026-09-04",
+      "breach_dates": [
+        "2026-05-20"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-629314",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-09-04"
+    },
+    {
+      "key": "CA:2026-09-04:bimbo-bakeries-usa:2025-08-09",
+      "jurisdiction": "CA",
+      "organization": "Bimbo Bakeries USA",
+      "reported_date": "2026-09-04",
+      "breach_dates": [
+        "2025-08-09"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-629294",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-09-04"
+    },
+    {
       "key": "CA:2026-09-02:youlend-us-llc:2026-06-05|2026-06-09",
       "jurisdiction": "CA",
       "organization": "YouLend US LLC",
