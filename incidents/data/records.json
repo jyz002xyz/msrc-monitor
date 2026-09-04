@@ -222,6 +222,20 @@
           "url": "https://www.whiteessence.com/news/news/20260812/"
         }
       ]
+    },
+    {
+      "id": "2026-08-19-jp-203c91f3f2",
+      "organization": "日本交通株式会社",
+      "type": "unauthorized_access",
+      "recorded_by": "detector",
+      "statements": [
+        {
+          "date": "2026-08-19",
+          "kind": "organization",
+          "source": "日本交通株式会社 の発表",
+          "url": "https://www.nihon-kotsu.co.jp/news/20260819-3385/"
+        }
+      ]
     }
   ]
 }
