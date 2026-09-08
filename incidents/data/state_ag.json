@@ -5,6 +5,21 @@
   },
   "filings": [
     {
+      "key": "CA:2026-09-04:elixir-medical-corporation:2026-07-20|2026-07-21",
+      "jurisdiction": "CA",
+      "organization": "Elixir Medical Corporation",
+      "reported_date": "2026-09-04",
+      "breach_dates": [
+        "2026-07-20",
+        "2026-07-21"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-629325",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-09-08"
+    },
+    {
       "key": "CA:2026-09-04:catalyst-brands-llc:2026-05-20",
       "jurisdiction": "CA",
       "organization": "Catalyst Brands LLC",
@@ -177,6 +192,20 @@
       "first_seen": "2026-09-01"
     },
     {
+      "key": "WA:BreachA42591",
+      "jurisdiction": "WA",
+      "organization": "RB American Group LLC",
+      "reported_date": "2026-08-28",
+      "breach_dates": [
+        "2026-04-08"
+      ],
+      "affected": 974,
+      "data_types": "Name; Social Security Number; Driver's License or Washington ID Card Number; Financial & Banking Information; Full Date of Birth; Unique Private Key (e.g. used to authenticate or sign an electronic record); Student ID Number; Military ID Number; Passport Number; Health Insurance Policy or ID Number; Medical Information; Biometric Data; Username and Password/Security Question Answers; Email Address and Password/Security Question Answers; Protected Health Information owned or licensed by a HIPAA covered entity",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA42591.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-09-08"
+    },
+    {
       "key": "CA:2026-08-28:bennett-college:",
       "jurisdiction": "CA",
       "organization": "Bennett College",
@@ -261,6 +290,20 @@
       "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-628844",
       "source_url": "https://oag.ca.gov/privacy/databreach/list",
       "first_seen": "2026-08-25"
+    },
+    {
+      "key": "WA:BreachA42509",
+      "jurisdiction": "WA",
+      "organization": "Pan American Group LLC",
+      "reported_date": "2026-08-24",
+      "breach_dates": [
+        "2026-04-08"
+      ],
+      "affected": 12309,
+      "data_types": "Name; Social Security Number; Driver's License or Washington ID Card Number; Financial & Banking Information; Full Date of Birth; Unique Private Key (e.g. used to authenticate or sign an electronic record); Student ID Number; Military ID Number; Passport Number; Health Insurance Policy or ID Number; Medical Information; Biometric Data; Username and Password/Security Question Answers; Email Address and Password/Security Question Answers; Protected Health Information owned or licensed by a HIPAA covered entity",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA42509.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-09-08"
     },
     {
       "key": "CA:2026-08-24:pan-american-group-llc:2026-04-08|2026-04-09",
@@ -373,6 +416,20 @@
       "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-628646",
       "source_url": "https://oag.ca.gov/privacy/databreach/list",
       "first_seen": "2026-08-21"
+    },
+    {
+      "key": "WA:BreachA42441",
+      "jurisdiction": "WA",
+      "organization": "Rockwood Retirement Communities (Spokane United Methodist Homes)",
+      "reported_date": "2026-08-20",
+      "breach_dates": [
+        "2026-02-15"
+      ],
+      "affected": 7136,
+      "data_types": "Name; Social Security Number; Driver's License or Washington ID Card Number; Financial & Banking Information; Full Date of Birth; Passport Number; Health Insurance Policy or ID Number; Medical Information; Email Address and Password/Security Question Answers; Protected Health Information owned or licensed by a HIPAA covered entity",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA42441.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-09-08"
     },
     {
       "key": "CA:2026-08-20:southern-illinois-university:2025-09-29",
@@ -2313,6 +2370,20 @@
       "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-625334",
       "source_url": "https://oag.ca.gov/privacy/databreach/list",
       "first_seen": "2026-08-10"
+    },
+    {
+      "key": "WA:BreachA41440",
+      "jurisdiction": "WA",
+      "organization": "Schmiidt & Battaglino Tax & Accounitng Inc.",
+      "reported_date": "2026-06-23",
+      "breach_dates": [
+        "2026-05-28"
+      ],
+      "affected": null,
+      "data_types": "Name; Social Security Number; Financial & Banking Information; Full Date of Birth",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA41440.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-09-08"
     },
     {
       "key": "CA:2026-06-23:glendale-community-college:",
