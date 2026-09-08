@@ -2,6 +2,24 @@
   "schema": 1,
   "incidents": [
     {
+      "key": "0000885725:2026-09-07",
+      "cik": "0000885725",
+      "company": "BOSTON SCIENTIFIC CORP",
+      "report_date": "2026-09-07",
+      "statements": [
+        {
+          "adsh": "0000885725-26-000059",
+          "filing_date": "2026-09-08",
+          "form": "8-K",
+          "items": [
+            "1.05"
+          ],
+          "url": "https://www.sec.gov/Archives/edgar/data/885725/000088572526000059/0000885725-26-000059-index.htm",
+          "first_seen": "2026-09-08"
+        }
+      ]
+    },
+    {
       "key": "0001479681:2026-08-31",
       "cik": "0001479681",
       "company": "Nutex Health Inc.",
