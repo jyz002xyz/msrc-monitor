@@ -5,6 +5,49 @@
   },
   "filings": [
     {
+      "key": "WA:BreachA42734",
+      "jurisdiction": "WA",
+      "organization": "Hibbett Retail, Inc.",
+      "reported_date": "2026-09-08",
+      "breach_dates": [
+        "2026-04-22"
+      ],
+      "affected": 510,
+      "data_types": "Name; Social Security Number; Driver's License or Washington ID Card Number; Financial & Banking Information; Full Date of Birth; Student ID Number; Military ID Number; Passport Number; Health Insurance Policy or ID Number; Medical Information",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA42734.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-09-09"
+    },
+    {
+      "key": "CA:2026-09-08:hibbett-retail-inc:2026-04-22|2026-04-25",
+      "jurisdiction": "CA",
+      "organization": "Hibbett Retail, Inc.",
+      "reported_date": "2026-09-08",
+      "breach_dates": [
+        "2026-04-22",
+        "2026-04-25"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-629439",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-09-09"
+    },
+    {
+      "key": "WA:BreachA42695",
+      "jurisdiction": "WA",
+      "organization": "LHC Group, Inc.",
+      "reported_date": "2026-09-04",
+      "breach_dates": [
+        "2026-04-07"
+      ],
+      "affected": 6602,
+      "data_types": "Name; Social Security Number; Financial & Banking Information; Full Date of Birth; Health Insurance Policy or ID Number; Medical Information; Protected Health Information owned or licensed by a HIPAA covered entity",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA42695.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-09-09"
+    },
+    {
       "key": "CA:2026-09-04:elixir-medical-corporation:2026-07-20|2026-07-21",
       "jurisdiction": "CA",
       "organization": "Elixir Medical Corporation",
@@ -2183,6 +2226,20 @@
       "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-625652",
       "source_url": "https://oag.ca.gov/privacy/databreach/list",
       "first_seen": "2026-08-10"
+    },
+    {
+      "key": "WA:BreachM24486",
+      "jurisdiction": "WA",
+      "organization": "Mercor.io (LiteLLM)",
+      "reported_date": "2026-06-26",
+      "breach_dates": [
+        "2026-03-24"
+      ],
+      "affected": 633,
+      "data_types": "Social Security Number; Driver's License or Washington ID Card Number; Passport Number",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachM24486.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-09-09"
     },
     {
       "key": "WA:BreachA41494",
