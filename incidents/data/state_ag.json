@@ -5,6 +5,49 @@
   },
   "filings": [
     {
+      "key": "WA:BreachA42741",
+      "jurisdiction": "WA",
+      "organization": "Quatrro Business Support Services, Inc.",
+      "reported_date": "2026-09-09",
+      "breach_dates": [
+        "2025-11-11"
+      ],
+      "affected": 10008,
+      "data_types": "Name; Social Security Number; Driver's License or Washington ID Card Number; Financial & Banking Information; Passport Number; Health Insurance Policy or ID Number; Medical Information",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA42741.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-09-10"
+    },
+    {
+      "key": "CA:2026-09-09:quatrro-business-support-services-inc:2025-11-11|2025-11-19",
+      "jurisdiction": "CA",
+      "organization": "Quatrro Business Support Services, Inc.",
+      "reported_date": "2026-09-09",
+      "breach_dates": [
+        "2025-11-11",
+        "2025-11-19"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-629483",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-09-10"
+    },
+    {
+      "key": "CA:2026-09-09:greenberg-traurig-llp-gt:2026-08-26",
+      "jurisdiction": "CA",
+      "organization": "Greenberg Traurig, LLP (“GT”)",
+      "reported_date": "2026-09-09",
+      "breach_dates": [
+        "2026-08-26"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-629493",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-09-10"
+    },
+    {
       "key": "WA:BreachA42734",
       "jurisdiction": "WA",
       "organization": "Hibbett Retail, Inc.",
@@ -32,6 +75,34 @@
       "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-629439",
       "source_url": "https://oag.ca.gov/privacy/databreach/list",
       "first_seen": "2026-09-09"
+    },
+    {
+      "key": "WA:BreachA42702",
+      "jurisdiction": "WA",
+      "organization": "Catalyst Brands LLC",
+      "reported_date": "2026-09-04",
+      "breach_dates": [
+        "2026-05-20"
+      ],
+      "affected": 4015,
+      "data_types": "Name; Social Security Number; Driver's License or Washington ID Card Number; Financial & Banking Information; Full Date of Birth; Military ID Number; Passport Number; Email Address and Password/Security Question Answers; Other",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA42702.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-09-10"
+    },
+    {
+      "key": "WA:BreachA42696",
+      "jurisdiction": "WA",
+      "organization": "Bimbo Bakeries USA (Oracle)",
+      "reported_date": "2026-09-04",
+      "breach_dates": [
+        "2025-08-09"
+      ],
+      "affected": 786,
+      "data_types": "Name; Social Security Number; Financial & Banking Information",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA42696.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-09-10"
     },
     {
       "key": "WA:BreachA42695",
@@ -672,6 +743,20 @@
       "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-628370",
       "source_url": "https://oag.ca.gov/privacy/databreach/list",
       "first_seen": "2026-08-18"
+    },
+    {
+      "key": "WA:BreachA42356",
+      "jurisdiction": "WA",
+      "organization": "Quantum Health, Inc.",
+      "reported_date": "2026-08-14",
+      "breach_dates": [
+        "2026-05-26"
+      ],
+      "affected": 5909,
+      "data_types": "Name; Social Security Number; Full Date of Birth; Health Insurance Policy or ID Number; Medical Information",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA42356.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-09-10"
     },
     {
       "key": "WA:BreachA42352",
@@ -1988,6 +2073,20 @@
       "first_seen": "2026-08-14"
     },
     {
+      "key": "WA:BreachA41687",
+      "jurisdiction": "WA",
+      "organization": "Frederick Goldman, Inc",
+      "reported_date": "2026-07-09",
+      "breach_dates": [
+        "2026-06-11"
+      ],
+      "affected": 1,
+      "data_types": "Name; Social Security Number",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA41687.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-09-10"
+    },
+    {
       "key": "CA:2026-07-09:lincoln-technical-institute:2026-04-29|2026-05-07",
       "jurisdiction": "CA",
       "organization": "Lincoln Technical Institute",
@@ -2030,6 +2129,20 @@
       "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA41592.pdf",
       "source_url": "https://www.atg.wa.gov/data-breach-notifications",
       "first_seen": "2026-08-10"
+    },
+    {
+      "key": "WA:BreachA41560",
+      "jurisdiction": "WA",
+      "organization": "Evergreen Children’s Association, dba Kids Co.",
+      "reported_date": "2026-07-02",
+      "breach_dates": [
+        "2025-11-11"
+      ],
+      "affected": 511,
+      "data_types": "Name; Social Security Number; Driver's License or Washington ID Card Number; Financial & Banking Information; Passport Number; Health Insurance Policy or ID Number; Medical Information",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA41560.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-09-10"
     },
     {
       "key": "CA:2026-07-02:triwest-healthcare-alliance:2026-04-17",
