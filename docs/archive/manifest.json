@@ -1,6 +1,15 @@
 {
   "months": [
     {
+      "month": "2026-08",
+      "subject": "2026-08",
+      "snapshot": "2026-08-13",
+      "counts": {
+        "cvrf": 790,
+        "core": 420
+      }
+    },
+    {
       "month": "2026-07",
       "count": null,
       "subject": "2026-07",
