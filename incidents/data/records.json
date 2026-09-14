@@ -236,6 +236,20 @@
           "url": "https://www.nihon-kotsu.co.jp/news/20260819-3385/"
         }
       ]
+    },
+    {
+      "id": "2026-09-04-scat",
+      "organization": "SCAT株式会社",
+      "type": "credential_compromise",
+      "recorded_by": "detector",
+      "statements": [
+        {
+          "date": "2026-09-04",
+          "kind": "organization",
+          "source": "SCAT株式会社 の発表",
+          "url": "https://www.scat.inc/news/2026/09/04/537"
+        }
+      ]
     }
   ]
 }
