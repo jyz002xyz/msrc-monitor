@@ -5,6 +5,80 @@
   },
   "filings": [
     {
+      "key": "CA:2026-09-14:accela-inc:2025-12-11|2025-12-12",
+      "jurisdiction": "CA",
+      "organization": "Accela, Inc.",
+      "reported_date": "2026-09-14",
+      "breach_dates": [
+        "2025-12-11",
+        "2025-12-12"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-629676",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-09-15"
+    },
+    {
+      "key": "CA:2026-09-11:zhealth-inc:2026-01-20|2026-01-21",
+      "jurisdiction": "CA",
+      "organization": "zHealth, Inc.",
+      "reported_date": "2026-09-11",
+      "breach_dates": [
+        "2026-01-20",
+        "2026-01-21"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-629559",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-09-15"
+    },
+    {
+      "key": "CA:2026-09-11:suffolk-federal-credit-union:2025-09-17|2025-10-09",
+      "jurisdiction": "CA",
+      "organization": "Suffolk Federal Credit Union",
+      "reported_date": "2026-09-11",
+      "breach_dates": [
+        "2025-09-17",
+        "2025-10-09"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-629581",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-09-15"
+    },
+    {
+      "key": "CA:2026-09-11:cornerstone-staffing-solutions-inc:2025-11-06|2025-11-21",
+      "jurisdiction": "CA",
+      "organization": "Cornerstone Staffing Solutions, Inc.",
+      "reported_date": "2026-09-11",
+      "breach_dates": [
+        "2025-11-06",
+        "2025-11-21"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-629595",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-09-15"
+    },
+    {
+      "key": "CA:2026-09-11:catalyst-physician-group:2025-12-02",
+      "jurisdiction": "CA",
+      "organization": "Catalyst Physician Group",
+      "reported_date": "2026-09-11",
+      "breach_dates": [
+        "2025-12-02"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-629605",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-09-15"
+    },
+    {
       "key": "WA:BreachA42741",
       "jurisdiction": "WA",
       "organization": "Quatrro Business Support Services, Inc.",
