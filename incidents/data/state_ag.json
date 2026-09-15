@@ -236,6 +236,20 @@
       "first_seen": "2026-09-04"
     },
     {
+      "key": "WA:BreachA42682",
+      "jurisdiction": "WA",
+      "organization": "Virta Health Corp. and Virta Medical, PC (Department of Health And Human Services)",
+      "reported_date": "2026-09-03",
+      "breach_dates": [
+        "2026-03-19"
+      ],
+      "affected": 134,
+      "data_types": "Name; Social Security Number; Full Date of Birth; Health Insurance Policy or ID Number; Medical Information; Protected Health Information owned or licensed by a HIPAA covered entity",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA42682.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-09-15"
+    },
+    {
       "key": "CA:2026-09-02:youlend-us-llc:2026-06-05|2026-06-09",
       "jurisdiction": "CA",
       "organization": "YouLend US LLC",
