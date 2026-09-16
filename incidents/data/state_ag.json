@@ -20,6 +20,34 @@
       "first_seen": "2026-09-15"
     },
     {
+      "key": "WA:BreachA42777",
+      "jurisdiction": "WA",
+      "organization": "Cornerstone Staffing Solutions, Inc.",
+      "reported_date": "2026-09-11",
+      "breach_dates": [
+        "2025-11-06"
+      ],
+      "affected": 681,
+      "data_types": "Name; Social Security Number; Driver's License or Washington ID Card Number; Financial & Banking Information; Full Date of Birth; Military ID Number; Passport Number; Health Insurance Policy or ID Number; Medical Information; Username and Password/Security Question Answers; Other",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA42777.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-09-16"
+    },
+    {
+      "key": "WA:BreachA42768",
+      "jurisdiction": "WA",
+      "organization": "zHealth, Inc.",
+      "reported_date": "2026-09-11",
+      "breach_dates": [
+        "2026-01-20"
+      ],
+      "affected": 1332,
+      "data_types": "Name; Health Insurance Policy or ID Number; Medical Information",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA42768.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-09-16"
+    },
+    {
       "key": "CA:2026-09-11:zhealth-inc:2026-01-20|2026-01-21",
       "jurisdiction": "CA",
       "organization": "zHealth, Inc.",
@@ -250,6 +278,20 @@
       "first_seen": "2026-09-15"
     },
     {
+      "key": "WA:BreachA42672",
+      "jurisdiction": "WA",
+      "organization": "See’s Candies, Inc.",
+      "reported_date": "2026-09-02",
+      "breach_dates": [
+        "2026-04-11"
+      ],
+      "affected": 628,
+      "data_types": "Name; Social Security Number; Driver's License or Washington ID Card Number; Full Date of Birth; Passport Number; Medical Information",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA42672.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-09-16"
+    },
+    {
       "key": "CA:2026-09-02:youlend-us-llc:2026-06-05|2026-06-09",
       "jurisdiction": "CA",
       "organization": "YouLend US LLC",
@@ -449,6 +491,20 @@
       "first_seen": "2026-09-01"
     },
     {
+      "key": "WA:BreachA42560",
+      "jurisdiction": "WA",
+      "organization": "News Corp UK & Ireland Limited",
+      "reported_date": "2026-08-26",
+      "breach_dates": [
+        "2026-07-20"
+      ],
+      "affected": 3304,
+      "data_types": "Name; Full Date of Birth",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA42560.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-09-16"
+    },
+    {
       "key": "CA:2026-08-26:murfreesboro-medical-clinic:2025-12-02|2025-12-18",
       "jurisdiction": "CA",
       "organization": "Murfreesboro Medical Clinic",
@@ -618,6 +674,20 @@
       "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-628646",
       "source_url": "https://oag.ca.gov/privacy/databreach/list",
       "first_seen": "2026-08-21"
+    },
+    {
+      "key": "WA:BreachA42450",
+      "jurisdiction": "WA",
+      "organization": "Southern Illinois University",
+      "reported_date": "2026-08-20",
+      "breach_dates": [
+        "2025-07-10"
+      ],
+      "affected": 552,
+      "data_types": "Name; Social Security Number; Student ID Number",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA42450.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-09-16"
     },
     {
       "key": "WA:BreachA42441",
@@ -2159,6 +2229,20 @@
       "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA41690.pdf",
       "source_url": "https://www.atg.wa.gov/data-breach-notifications",
       "first_seen": "2026-08-14"
+    },
+    {
+      "key": "WA:BreachA41689",
+      "jurisdiction": "WA",
+      "organization": "Lincoln Technical Institute (Nashville Auto-Diesel College)",
+      "reported_date": "2026-07-09",
+      "breach_dates": [
+        "2026-04-29"
+      ],
+      "affected": 52,
+      "data_types": "Name; Student ID Number",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA41689.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-09-16"
     },
     {
       "key": "WA:BreachA41687",
