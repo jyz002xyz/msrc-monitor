@@ -5,6 +5,79 @@
   },
   "filings": [
     {
+      "key": "CA:2026-09-15:tarter-krinsky-drogin-llp:2025-09-09|2025-09-10",
+      "jurisdiction": "CA",
+      "organization": "Tarter Krinsky & Drogin LLP",
+      "reported_date": "2026-09-15",
+      "breach_dates": [
+        "2025-09-09",
+        "2025-09-10"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-629786",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-09-17"
+    },
+    {
+      "key": "CA:2026-09-15:leggett-platt-incorporated-employee-benefits-plan:2025-10-18",
+      "jurisdiction": "CA",
+      "organization": "Leggett & Platt, Incorporated Employee Benefits Plan",
+      "reported_date": "2026-09-15",
+      "breach_dates": [
+        "2025-10-18"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-629789",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-09-17"
+    },
+    {
+      "key": "CA:2026-09-15:alliance-environmental-group-llc:2026-04-24",
+      "jurisdiction": "CA",
+      "organization": "Alliance Environmental Group, LLC",
+      "reported_date": "2026-09-15",
+      "breach_dates": [
+        "2026-04-24"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-629776",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-09-17"
+    },
+    {
+      "key": "CA:2026-09-14:paradigm-healthcare-services:2025-10-08|2025-10-15",
+      "jurisdiction": "CA",
+      "organization": "Paradigm Healthcare Services",
+      "reported_date": "2026-09-14",
+      "breach_dates": [
+        "2025-10-08",
+        "2025-10-15"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-629754",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-09-17"
+    },
+    {
+      "key": "CA:2026-09-14:cambridge-mercantile-corp-u-s-a:2026-06-11|2026-06-12",
+      "jurisdiction": "CA",
+      "organization": "Cambridge Mercantile Corp. (U.S.A.)",
+      "reported_date": "2026-09-14",
+      "breach_dates": [
+        "2026-06-11",
+        "2026-06-12"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-629696",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-09-17"
+    },
+    {
       "key": "CA:2026-09-14:accela-inc:2025-12-11|2025-12-12",
       "jurisdiction": "CA",
       "organization": "Accela, Inc.",
@@ -278,6 +351,34 @@
       "first_seen": "2026-09-15"
     },
     {
+      "key": "WA:BreachA42680",
+      "jurisdiction": "WA",
+      "organization": "The Lighthouse for the Blind, Inc.",
+      "reported_date": "2026-09-03",
+      "breach_dates": [
+        "2026-04-09"
+      ],
+      "affected": 520,
+      "data_types": "Name; Social Security Number; Driver's License or Washington ID Card Number; Full Date of Birth; Health Insurance Policy or ID Number; Medical Information",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA42680.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-09-17"
+    },
+    {
+      "key": "WA:BreachA42675",
+      "jurisdiction": "WA",
+      "organization": "Mogren, Glessner & Ahrens, P.S.",
+      "reported_date": "2026-09-03",
+      "breach_dates": [
+        "2026-06-09"
+      ],
+      "affected": 1379,
+      "data_types": "Name; Social Security Number; Financial & Banking Information; Full Date of Birth; Medical Information; Username and Password/Security Question Answers; Email Address and Password/Security Question Answers; Protected Health Information owned or licensed by a HIPAA covered entity",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA42675.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-09-17"
+    },
+    {
       "key": "WA:BreachA42672",
       "jurisdiction": "WA",
       "organization": "See’s Candies, Inc.",
@@ -462,6 +563,20 @@
       "first_seen": "2026-09-01"
     },
     {
+      "key": "WA:BreachA42570",
+      "jurisdiction": "WA",
+      "organization": "Greystar Real Estate Partners, LLC",
+      "reported_date": "2026-08-27",
+      "breach_dates": [
+        "2026-05-01"
+      ],
+      "affected": 333,
+      "data_types": "Name; Social Security Number; Driver's License or Washington ID Card Number; Financial & Banking Information; Full Date of Birth; Other",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA42570.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-09-17"
+    },
+    {
       "key": "CA:2026-08-27:integrated-specialty-coverages-llc-isc:2026-06-08|2026-06-11",
       "jurisdiction": "CA",
       "organization": "Integrated Specialty Coverages, LLC (“ISC”)",
@@ -491,6 +606,20 @@
       "first_seen": "2026-09-01"
     },
     {
+      "key": "WA:BreachA42565",
+      "jurisdiction": "WA",
+      "organization": "Murfreesboro Medical Clinic (Aesto, LLC d/b/a Aesto Health)",
+      "reported_date": "2026-08-26",
+      "breach_dates": [
+        "2025-12-02"
+      ],
+      "affected": 845,
+      "data_types": "Name; Social Security Number; Full Date of Birth; Medical Information; Other",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA42565.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-09-17"
+    },
+    {
       "key": "WA:BreachA42560",
       "jurisdiction": "WA",
       "organization": "News Corp UK & Ireland Limited",
@@ -503,6 +632,20 @@
       "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA42560.pdf",
       "source_url": "https://www.atg.wa.gov/data-breach-notifications",
       "first_seen": "2026-09-16"
+    },
+    {
+      "key": "WA:BreachA42548",
+      "jurisdiction": "WA",
+      "organization": "Cascade Coffee, LLC",
+      "reported_date": "2026-08-26",
+      "breach_dates": [
+        "2026-07-30"
+      ],
+      "affected": 610,
+      "data_types": "Name; Social Security Number; Full Date of Birth",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA42548.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-09-17"
     },
     {
       "key": "CA:2026-08-26:murfreesboro-medical-clinic:2025-12-02|2025-12-18",
