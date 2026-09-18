@@ -5,6 +5,50 @@
   },
   "filings": [
     {
+      "key": "CA:2026-09-18:opportune-llp:2026-06-22",
+      "jurisdiction": "CA",
+      "organization": "Opportune LLP",
+      "reported_date": "2026-09-18",
+      "breach_dates": [
+        "2026-06-22"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-629948",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-09-18"
+    },
+    {
+      "key": "CA:2026-09-17:partnership-healthplan-of-california:2026-05-13|2026-07-07",
+      "jurisdiction": "CA",
+      "organization": "Partnership HealthPlan of California",
+      "reported_date": "2026-09-17",
+      "breach_dates": [
+        "2026-05-13",
+        "2026-07-07"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-629908",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-09-18"
+    },
+    {
+      "key": "CA:2026-09-17:callondoc-inc:2025-12-22|2026-01-03",
+      "jurisdiction": "CA",
+      "organization": "CallonDoc, Inc.",
+      "reported_date": "2026-09-17",
+      "breach_dates": [
+        "2025-12-22",
+        "2026-01-03"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-629887",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-09-18"
+    },
+    {
       "key": "CA:2026-09-15:tarter-krinsky-drogin-llp:2025-09-09|2025-09-10",
       "jurisdiction": "CA",
       "organization": "Tarter Krinsky & Drogin LLP",
