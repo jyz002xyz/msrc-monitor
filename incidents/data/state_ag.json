@@ -33,6 +33,34 @@
       "first_seen": "2026-09-22"
     },
     {
+      "key": "CA:2026-09-21:friesen-group:2025-05-15",
+      "jurisdiction": "CA",
+      "organization": "Friesen Group",
+      "reported_date": "2026-09-21",
+      "breach_dates": [
+        "2025-05-15"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-630087",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-09-22"
+    },
+    {
+      "key": "CA:2026-09-21:ethan-conrad-properties:2026-08-24",
+      "jurisdiction": "CA",
+      "organization": "Ethan Conrad Properties",
+      "reported_date": "2026-09-21",
+      "breach_dates": [
+        "2026-08-24"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-630085",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-09-22"
+    },
+    {
       "key": "CA:2026-09-18:the-office-of-the-los-angeles-city:2025-12-28|2026-01-22",
       "jurisdiction": "CA",
       "organization": "The Office of the Los Angeles City",
