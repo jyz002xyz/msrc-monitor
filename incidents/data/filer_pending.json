@@ -1,4 +1,11 @@
 {
   "schema": 1,
-  "pending": []
+  "pending": [
+    {
+      "hash": "a82bef61c713d101ecd463a9264024134d661f3a15c659e9954002db6724a02f",
+      "jurisdiction": "CA",
+      "reported_date": "2026-09-21",
+      "first_seen": "2026-09-22"
+    }
+  ]
 }

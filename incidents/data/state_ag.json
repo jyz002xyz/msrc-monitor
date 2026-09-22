@@ -5,6 +5,63 @@
   },
   "filings": [
     {
+      "key": "CA:2026-09-21:ridgeway-pharmacy-ltd:2026-06-07",
+      "jurisdiction": "CA",
+      "organization": "Ridgeway Pharmacy Ltd",
+      "reported_date": "2026-09-21",
+      "breach_dates": [
+        "2026-06-07"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-630056",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-09-22"
+    },
+    {
+      "key": "CA:2026-09-21:fun-for-less-tours-inc:2025-10-27",
+      "jurisdiction": "CA",
+      "organization": "Fun For Less Tours, Inc.",
+      "reported_date": "2026-09-21",
+      "breach_dates": [
+        "2025-10-27"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-630062",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-09-22"
+    },
+    {
+      "key": "CA:2026-09-18:the-office-of-the-los-angeles-city:2025-12-28|2026-01-22",
+      "jurisdiction": "CA",
+      "organization": "The Office of the Los Angeles City",
+      "reported_date": "2026-09-18",
+      "breach_dates": [
+        "2025-12-28",
+        "2026-01-22"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-629957",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-09-22"
+    },
+    {
+      "key": "CA:2026-09-18:seyfarth-shaw-llp:2026-08-18",
+      "jurisdiction": "CA",
+      "organization": "Seyfarth Shaw LLP",
+      "reported_date": "2026-09-18",
+      "breach_dates": [
+        "2026-08-18"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-629966",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-09-22"
+    },
+    {
       "key": "CA:2026-09-18:opportune-llp:2026-06-22",
       "jurisdiction": "CA",
       "organization": "Opportune LLP",
