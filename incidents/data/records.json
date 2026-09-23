@@ -250,6 +250,20 @@
           "url": "https://www.scat.inc/news/2026/09/04/537"
         }
       ]
+    },
+    {
+      "id": "2026-09-15-jp-78a20426c4",
+      "organization": "ロート製薬株式会社",
+      "type": "unauthorized_access",
+      "recorded_by": "detector",
+      "statements": [
+        {
+          "date": "2026-09-15",
+          "kind": "organization",
+          "source": "ロート製薬株式会社 の発表",
+          "url": "https://www.rohto.co.jp/news/whatsnew/2026/0915_01"
+        }
+      ]
     }
   ]
 }
