@@ -5,6 +5,64 @@
   },
   "filings": [
     {
+      "key": "CA:2026-09-24:nse-insurance-agencies:2025-11-06",
+      "jurisdiction": "CA",
+      "organization": "NSE Insurance Agencies",
+      "reported_date": "2026-09-24",
+      "breach_dates": [
+        "2025-11-06"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-630194",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-09-25"
+    },
+    {
+      "key": "CA:2026-09-24:hilt-trust-2020-a-and-its-underlying-trusts-and-affiliates-hilt:2026-07-23",
+      "jurisdiction": "CA",
+      "organization": "HILT-Trust 2020-A and its underlying trusts and affiliates (\"HILT\")",
+      "reported_date": "2026-09-24",
+      "breach_dates": [
+        "2026-07-23"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-630200",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-09-25"
+    },
+    {
+      "key": "CA:2026-09-23:fairwinds-credit-union:2025-09-07|2025-11-07",
+      "jurisdiction": "CA",
+      "organization": "Fairwinds Credit Union",
+      "reported_date": "2026-09-23",
+      "breach_dates": [
+        "2025-09-07",
+        "2025-11-07"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-630165",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-09-25"
+    },
+    {
+      "key": "CA:2026-09-22:modoc-medical-center:2026-01-19|2026-01-27",
+      "jurisdiction": "CA",
+      "organization": "Modoc Medical Center",
+      "reported_date": "2026-09-22",
+      "breach_dates": [
+        "2026-01-19",
+        "2026-01-27"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-630126",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-09-25"
+    },
+    {
       "key": "CA:2026-09-21:ridgeway-pharmacy-ltd:2026-06-07",
       "jurisdiction": "CA",
       "organization": "Ridgeway Pharmacy Ltd",
