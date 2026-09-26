@@ -5,6 +5,20 @@
   },
   "filings": [
     {
+      "key": "CA:2026-09-24:pe-a-and-bromberg:2026-05-07",
+      "jurisdiction": "CA",
+      "organization": "Peña and Bromberg",
+      "reported_date": "2026-09-24",
+      "breach_dates": [
+        "2026-05-07"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-630232",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-09-26"
+    },
+    {
       "key": "CA:2026-09-24:nse-insurance-agencies:2025-11-06",
       "jurisdiction": "CA",
       "organization": "NSE Insurance Agencies",
@@ -31,6 +45,35 @@
       "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-630200",
       "source_url": "https://oag.ca.gov/privacy/databreach/list",
       "first_seen": "2026-09-25"
+    },
+    {
+      "key": "CA:2026-09-24:blanchard-training-development-inc:2026-03-03|2026-03-04",
+      "jurisdiction": "CA",
+      "organization": "Blanchard Training & Development, Inc.",
+      "reported_date": "2026-09-24",
+      "breach_dates": [
+        "2026-03-03",
+        "2026-03-04"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-630239",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-09-26"
+    },
+    {
+      "key": "CA:2026-09-24:5star-life-insurance-company:2025-11-13",
+      "jurisdiction": "CA",
+      "organization": "5Star Life Insurance Company",
+      "reported_date": "2026-09-24",
+      "breach_dates": [
+        "2025-11-13"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-630231",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-09-26"
     },
     {
       "key": "CA:2026-09-23:fairwinds-credit-union:2025-09-07|2025-11-07",
