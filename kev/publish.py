@@ -309,8 +309,25 @@ def _h(x) -> str:
     return html.escape("" if x is None else str(x))
 
 
-def _epss_cell(r) -> str:
-    return "—" if r["epss"] is None else f"{r['epss']:.3f} / p{r['percentile']*100:.0f}"
+EPSS_AFTER_SEAL = {"ja": "—（封印後に追加・未観測）", "en": "— (added after seal; not observed)"}
+RESEAL_HEAD = {"ja": "訂正", "en": "Correction"}
+
+
+def _epss_cell(r, lang: str = "en") -> str:
+    if r["epss"] is None:
+        # a row added to a sealed month later: say why it is blank (never fill a later value)
+        return EPSS_AFTER_SEAL[lang] if r.get("epss_note") == _k.ADDED_AFTER_SEAL else "—"
+    return f"{r['epss']:.3f} / p{r['percentile']*100:.0f}"
+
+
+def _reseal_html(snap: dict, lang: str) -> str:
+    """Correction notice for a sealed month that was re-sealed by hand (kevtrack.
+    reseal_add_entries). The wording is the record's own bilingual note — the cause is
+    specific to each re-seal, so it is not templated here."""
+    items = "".join(f"<li>{_h(r['at'][:10])}: {_h(r['note'][lang])}</li>"
+                    for r in snap.get("reseals") or [])
+    return (f"<div class='notes'><b>{_h(RESEAL_HEAD[lang])}</b><ul>{items}</ul></div>"
+            if items else "")
 
 
 def _cve_cell(cve) -> str:
@@ -382,7 +399,7 @@ def render_month(snap: dict, lang: str) -> str:
             + _c(r.get("date_added") or "", r.get("date_added") or "")
             + _c(r.get("due_date") or "", r.get("due_date") or "")
             + _c(rw, rw)
-            + _c(_epss_cell(r), "" if r.get("epss") is None else r["epss"])   # sort by EPSS score
+            + _c(_epss_cell(r, lang), "" if r.get("epss") is None else r["epss"])   # sort by EPSS score
             + _c(pub or "—", pub)
             + _c("—" if d is None else str(d), "" if d is None else d)        # numeric, negatives ok
             + "</tr>")
@@ -418,7 +435,7 @@ def render_month(snap: dict, lang: str) -> str:
 <div class="notes">{_h(L['positioning'])}</div>
 {_about_html(lang, index=False)}
 <p class="sub">{_h(L['generated'])} {_h(snap['generated_at'])}. {_h(L['prototype'])}</p>
-{corr}
+{corr}{_reseal_html(snap, lang)}
 <h2>{_h(L['facts'])}</h2>
 <h3>{_h(L['adds'])} ({agg['n']})</h3>
 <table id="kevtable"><thead><tr>{th}</tr></thead><tbody>{rows}</tbody></table>

@@ -433,6 +433,112 @@ def test_sources_are_linked_and_disclaim_endorsement():
     assert idx.index("Data sources") < idx.index("出典データ")   # English first on the index
 
 
+# --- recorded re-seal (kevtrack.reseal_add_entries, kev/manual/reseal_2026_08.py) -------
+# The 29 rows 2026-08 was sealed with (origin/main 7b5262e, before the re-seal): sha256 of
+# each row's canonical JSON, first 16 hex. The re-seal must leave every one of them as-is.
+AUG_ORIGINAL_29 = {
+    "CVE-2026-18577": "a7858bc498b16eab", "CVE-2026-18556": "9685b75ba7b6d47f",
+    "CVE-2026-34486": "b1faf900c89f6c47", "CVE-2026-9198": "e6f80f35170d5ff0",
+    "CVE-2026-63077": "98ba5cfd1468ff71", "CVE-2026-8037": "01994d27fd095aca",
+    "CVE-2026-20349": "0fb58a83e679d3c9", "CVE-2026-68820": "d8b9ec896bdcd128",
+    "CVE-2026-72898": "daa0ad292ea034af", "CVE-2025-62593": "61ad271e247b3a15",
+    "CVE-2026-33824": "f52cdae36fc85671", "CVE-2026-55040": "df7ab35ee56fe23b",
+    "CVE-2026-59310": "95deccd7cc52387a", "CVE-2026-65400": "c70147d68fd9e165",
+    "CVE-2026-64849": "3b6ea4488e13673b", "CVE-2026-72529": "535e6e214d5274b4",
+    "CVE-2026-72530": "163779a756700cbd", "CVE-2026-73570": "d4a018dbd324c09c",
+    "CVE-2026-21962": "d27c67bd4083428f", "CVE-2026-60004": "8e55976339b242fc",
+    "CVE-2015-3246": "1cfd111ff183fe22", "CVE-2015-5287": "b602993b78840b15",
+    "CVE-2019-1068": "8c7503b8c19cfff5", "CVE-2021-23758": "c97e57eadb51f79d",
+    "CVE-2022-0995": "c30360341ad3f6e1", "CVE-2026-8452": "249fae4719913cb9",
+    "CVE-2023-49105": "1282f3ca4afa06df", "CVE-2026-53362": "2b102e1a2d4a02cd",
+    "CVE-2026-66384": "aaeb2f67b46b0702",
+}
+
+
+def _row_hash(r):
+    import hashlib, json
+    return hashlib.sha256(json.dumps(r, ensure_ascii=False, sort_keys=True)
+                          .encode()).hexdigest()[:16]
+
+
+def test_committed_2026_08_reseal_keeps_the_original_29_rows():
+    snap = kevtrack.load_sealed("2026-08")
+    rows = snap["kev_added"]
+    assert snap["count"] == len(rows) == 31
+    old = [r for r in rows if r["cve"] in AUG_ORIGINAL_29]
+    assert [r["cve"] for r in old] == list(AUG_ORIGINAL_29), "original order kept"
+    for r in old:
+        assert _row_hash(r) == AUG_ORIGINAL_29[r["cve"]], f"{r['cve']} changed"
+    new = [r for r in rows if r["cve"] not in AUG_ORIGINAL_29]
+    assert [r["cve"] for r in new] == ["CVE-2026-81578", "CVE-2026-82078"]
+    for r in new:
+        assert r["epss"] is None and r["percentile"] is None and r["epss_asof"] is None
+        assert r["epss_note"] == kevtrack.ADDED_AFTER_SEAL and "cwes" not in r
+    # seal-time facts untouched; the re-seal is recorded, not silent
+    assert snap["state"] == "sealed" and snap["generated_at"] == "2026-08-28T07:01:18"
+    assert snap["corrections"] == [] and snap["epss_observed"] is True
+    assert len(snap["reseals"]) == 1 and snap["reseals"][0]["count_before"] == 29
+    assert "#124" in snap["reseals"][0]["note"]["ja"] and "#124" in snap["reseals"][0]["note"]["en"]
+    assert any(m.startswith("re-sealed at ") for m in snap["migrations"])
+
+
+def _sealed_in(d, rows_entries, month="2026-07"):
+    s = kevtrack.build_open(month, rows_entries, None, fetch_epss_fn=_epss(
+        {e["cveID"]: {"epss": 0.1, "percentile": 0.5} for e in rows_entries}), now_iso="seal")
+    kevtrack.seal(s, d)
+    return kevtrack.load_sealed(month, d)
+
+
+def test_reseal_adds_rows_without_touching_existing_ones():
+    with tempfile.TemporaryDirectory() as tmp:
+        d = Path(tmp)
+        before = _sealed_in(d, [A])
+        for r in before["kev_added"]:                  # a pre-CWE seal
+            r.pop("cwes", None)
+        kevtrack._write(kevtrack.sealed_path("2026-07", d), before)
+        before = kevtrack.load_sealed("2026-07", d)
+        out = kevtrack.reseal_add_entries(
+            "2026-07", [A, B, OLD], ["CVE-B"], note={"ja": "注記", "en": "note"},
+            fetch_nvd_fn=_nvd({"CVE-B": "2026-07-01T00:00:00"}), snap_dir=d, now_iso="later")
+        assert [r["cve"] for r in out["kev_added"]] == ["CVE-A", "CVE-B"] and out["count"] == 2
+        assert out["kev_added"][0] == before["kev_added"][0], "existing row untouched"
+        b = out["kev_added"][1]
+        assert b["epss"] is None and b["epss_note"] == kevtrack.ADDED_AFTER_SEAL
+        assert b["nvd_published"] == "2026-07-01T00:00:00"
+        assert "cwes" not in b, "window without cwes must not gain a mixed row"
+        assert out["generated_at"] == "seal" and out["reseals"][0]["added"] == ["CVE-B"]
+        assert kevtrack.load_sealed("2026-07", d)["count"] == 2        # written to disk
+
+
+def test_reseal_keeps_cwes_when_the_window_has_them_and_refuses_bad_input():
+    with tempfile.TemporaryDirectory() as tmp:
+        d = Path(tmp)
+        s = _sealed_in(d, [A])
+        s["kev_added"][0]["cwes"] = ["CWE-79"]        # a window that records cwes
+        kevtrack._write(kevtrack.sealed_path("2026-07", d), s)
+        out = kevtrack.reseal_add_entries("2026-07", [A, dict(B, cwes=[])], ["CVE-B"],
+                                          note={"ja": "x", "en": "x"}, snap_dir=d, now_iso="t")
+        assert out["kev_added"][1]["cwes"] == []
+        for bad in (["CVE-OLD"], ["CVE-A"], ["CVE-NOPE"]):   # other month / already in / unknown
+            try:
+                kevtrack.reseal_add_entries("2026-07", [A, B, OLD], bad,
+                                            note={"ja": "x", "en": "x"}, snap_dir=d)
+            except ValueError:
+                continue
+            raise AssertionError(f"reseal accepted {bad}")
+
+
+def test_resealed_page_shows_the_correction_and_why_epss_is_blank():
+    import publish
+    snap = kevtrack.load_sealed("2026-08")
+    ja, en = publish.render_month(snap, "ja"), publish.render_month(snap, "en")
+    assert "<b>訂正</b>" in ja and "#124" in ja and "—（封印後に追加・未観測）" in ja
+    assert "<b>Correction</b>" in en and "#124" in en and "— (added after seal; not observed)" in en
+    # other months: no notice, EPSS blanks unchanged
+    jul = publish.render_month(kevtrack.load_sealed("2026-07"), "ja")
+    assert "<b>訂正</b>" not in jul and "封印後に追加" not in jul
+
+
 if __name__ == "__main__":
     import traceback
     tests = [v for k, v in sorted(globals().items()) if k.startswith("test_") and callable(v)]
