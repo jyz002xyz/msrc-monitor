@@ -202,6 +202,31 @@ def build_open(month: str, kev_full: list[dict], prev_rows: list[dict] | None = 
     return fill_nvd(snap, fetch_nvd_fn, prev_rows)   # nvd_published (stable) — preserve prev
 
 
+def build_final(month: str, kev_full: list[dict], open_snap: dict, *,
+                fetch_epss_fn=fetch_epss, fetch_nvd_fn=None, now_iso: str | None = None) -> dict:
+    """The snapshot to SEAL for a month that has just closed: the window re-read from the
+    catalog as it stands at close, on top of the last stored open snapshot.
+
+    Sealing the stored open snapshot as-is loses whatever CISA listed after the last run that
+    still falls inside the month. That is how 2026-08 was sealed with 29 of its 31 entries: the
+    last August run (08-31 01:30 UTC) came before two PaperCut CVEs were listed (08-31 16:45
+    UTC), and the next run (09-01 01:58 UTC) was already in September and froze the stale open
+    file — while its own integrity stats counted `window_2026-08: 31`.
+
+    First-observed EPSS and nvd_published carry over from the open rows; an entry seen for the
+    first time here gets its EPSS observed now (its first sighting), as in build_open.
+    Recorded corrections are kept.
+    """
+    prev_rows = open_snap.get("kev_added") or []
+    snap = build_open(month, kev_full, prev_rows, fetch_epss_fn=fetch_epss_fn,
+                      fetch_nvd_fn=fetch_nvd_fn, now_iso=now_iso,
+                      corrections=list(open_snap.get("corrections", [])))
+    known = {r["cve"]: r.get("nvd_published") for r in prev_rows if r.get("nvd_published")}
+    for r in snap["kev_added"]:                  # offline (fetch_nvd_fn=None) keeps them too
+        r["nvd_published"] = r.get("nvd_published") or known.get(r["cve"])
+    return snap
+
+
 def build_backfill(month: str, kev_full: list[dict], *, fetch_nvd_fn=None,
                    now_iso: str | None = None) -> dict:
     """A past window rebuilt from the catalog with EPSS BLANK (never observed live). NVD

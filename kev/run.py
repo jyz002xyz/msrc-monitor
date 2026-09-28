@@ -225,8 +225,13 @@ def main() -> int:
             continue
         openm = kevtrack.load_open(m)
         if openm is not None:
-            kevtrack.seal(openm)
-            print(f"[run] {m}: month closed -> SEALED ({openm['count']} items)")
+            # Re-read the window from the catalog before freezing it: the stored open file is
+            # only as fresh as the last run inside the month (see kevtrack.build_final).
+            final = kevtrack.build_final(m, kev, openm,
+                                         fetch_nvd_fn=kevtrack.fetch_nvd_published)
+            kevtrack.seal(final)
+            print(f"[run] {m}: month closed -> SEALED ({final['count']} items; "
+                  f"last open run had {openm['count']})")
         else:
             kevtrack.seal(kevtrack.build_backfill(m, kev, fetch_nvd_fn=kevtrack.fetch_nvd_published))
             print(f"[run] {m}: backfilled -> SEALED (EPSS blank, nvd_published filled)")
