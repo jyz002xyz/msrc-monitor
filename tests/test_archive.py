@@ -245,6 +245,93 @@ def test_index_explains_immutability_and_when_entries_appear():
             assert "凍結スナップショットは不変です" not in snap
 
 
+# --- same-month re-publication guard (--incoming-month) -----------------------------
+def _git(cwd: Path, *args):
+    env = dict(os.environ, GIT_CONFIG_GLOBAL="/dev/null", GIT_CONFIG_NOSYSTEM="1",
+               GIT_AUTHOR_NAME="t", GIT_AUTHOR_EMAIL="t@example.invalid",
+               GIT_COMMITTER_NAME="t", GIT_COMMITTER_EMAIL="t@example.invalid")
+    return subprocess.run(["git", *args], cwd=cwd, env=env, capture_output=True, text=True,
+                          check=True).stdout
+
+
+def _tracked(docs: Path):
+    """Put docs/ under git so 'no diff' can be asserted literally (git status)."""
+    _git(docs, "init", "-q"); _git(docs, "add", "-A"); _git(docs, "commit", "-q", "-m", "base")
+
+
+def test_same_month_republication_archives_nothing():
+    with tempfile.TemporaryDirectory() as tmp:
+        docs = Path(tmp) / "docs"; docs.mkdir()
+        _fake_site(docs)
+        _run(docs, "--month", "2026-08", "--subject", "2026-08")      # an older archived month
+        _tracked(docs)
+        r = _run(docs, "--month", "2026-09", "--subject", "2026-09", "--incoming-month", "2026-09")
+        assert "SKIP" in r.stdout and "same-month re-publication" in r.stdout
+        assert "::notice" in r.stdout, "the skip is visible in the Actions log, not silent"
+        assert not (docs / "archive" / "2026-09").exists()
+        # the regenerated live pages are identical -> rewriting them changes nothing either
+        for lang in ("ja", "en"):
+            p = docs / f"report_{lang}.html"; p.write_bytes(p.read_bytes())
+        assert _git(docs, "status", "--porcelain") == "", "no diff at all: archive, manifest, index, pages"
+
+
+def test_new_month_publication_still_archives_the_outgoing_issue():
+    # October publishes; September (outgoing) moves into the archive as before
+    with tempfile.TemporaryDirectory() as tmp:
+        docs = Path(tmp) / "docs"; docs.mkdir()
+        _fake_site(docs)
+        r = _run(docs, "--month", "2026-09", "--subject", "2026-09", "--incoming-month", "2026-10")
+        assert "SKIP" not in r.stdout
+        assert (docs / "archive" / "2026-09" / "ja.html").exists()
+        assert (docs / "archive" / "2026-09" / "en.html").exists()
+        import json as _json
+        man = _json.loads((docs / "archive" / "manifest.json").read_text(encoding="utf-8"))
+        assert [m["month"] for m in man["months"]] == ["2026-09"]
+
+
+def test_an_archived_month_is_never_overwritten():
+    with tempfile.TemporaryDirectory() as tmp:
+        docs = Path(tmp) / "docs"; docs.mkdir()
+        _fake_site(docs)
+        _run(docs, "--month", "2026-08", "--subject", "2026-08", "--incoming-month", "2026-09")
+        snap = {p.relative_to(docs): p.read_bytes()
+                for p in (docs / "archive" / "2026-08").rglob("*") if p.is_file()}
+        # the live pages change (a later issue), then Phase B is re-run for the same slot
+        for lang in ("ja", "en"):
+            (docs / f"report_{lang}.html").write_text("<html>later issue</html>", encoding="utf-8")
+        r = _run_nocheck(docs, "--month", "2026-08", "--subject", "2026-08",
+                         "--incoming-month", "2026-09")
+        assert r.returncode == 0 and "skipping copy" in (r.stdout + r.stderr)
+        snap2 = {p.relative_to(docs): p.read_bytes()
+                 for p in (docs / "archive" / "2026-08").rglob("*") if p.is_file()}
+        assert snap == snap2, "the frozen slot must keep its original bytes"
+
+
+def test_the_pr_132_situation_produces_no_archive_diff():
+    """Real public docs/ as of this commit (September current; July/August archived), and
+    the exact Phase B call of the 2026-09-28 re-run: outgoing 2026-09, incoming 2026-09."""
+    real = ROOT / "docs"
+    import json as _json
+    meta = _json.loads((real / "report_meta.json").read_text(encoding="utf-8"))
+    subj = meta["subject_month"]
+    with tempfile.TemporaryDirectory() as tmp:
+        docs = Path(tmp) / "docs"
+        shutil.copytree(real, docs, ignore=shutil.ignore_patterns("kev", "incidents"))
+        _tracked(docs)
+        r = _run(docs, "--month", subj, "--subject", subj, "--snapshot", meta.get("snapshot") or "",
+                 "--incoming-month", subj)
+        assert "SKIP" in r.stdout
+        assert not (docs / "archive" / subj).exists()
+        assert _git(docs, "status", "--porcelain") == "", "PR 132's archive diff must not appear"
+    # negative control: without the guard (the old call), the same inputs DO create the diff
+    with tempfile.TemporaryDirectory() as tmp:
+        docs = Path(tmp) / "docs"
+        shutil.copytree(real, docs, ignore=shutil.ignore_patterns("kev", "incidents"))
+        _tracked(docs)
+        _run(docs, "--month", subj, "--subject", subj)
+        assert (docs / "archive" / subj).exists(), "the old call archives the current issue"
+
+
 if __name__ == "__main__":
     import traceback
     tests = [v for k, v in sorted(globals().items())
