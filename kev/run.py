@@ -214,14 +214,14 @@ def main() -> int:
           f"EPSS {'observed' if open_snap['epss_observed'] else 'none'}")
     built = [open_snap]
 
-    # (2) SEAL past months. Existing seals get a one-time nvd_published schema migration
-    #     (recorded); a just-closed open month is sealed; an unseen past window is backfilled.
+    # (2) SEAL past months. An existing seal is reused as-is — the daily run never rewrites
+    #     it (kev/check_diff_scope.sh refuses that diff). Schema migrations of sealed months,
+    #     like migrate_sealed_add_nvd, are run by hand in a reviewed PR. A just-closed open
+    #     month is sealed; an unseen past window is backfilled.
     for m in prev_months(today_m, args.months):
         sealed = kevtrack.load_sealed(m)
         if sealed is not None:
-            if kevtrack.migrate_sealed_add_nvd(m, kevtrack.fetch_nvd_published):
-                print(f"[run] {m}: sealed — added nvd_published (recorded schema migration)")
-            built.append(kevtrack.load_sealed(m))
+            built.append(sealed)
             continue
         openm = kevtrack.load_open(m)
         if openm is not None:
