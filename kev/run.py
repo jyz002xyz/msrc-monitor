@@ -26,6 +26,7 @@ import integrity
 import kevtrack
 import post_seal
 import report
+import seal_check
 import publish
 
 HERE = Path(__file__).resolve().parent
@@ -228,11 +229,13 @@ def main() -> int:
     #     it (kev/check_diff_scope.sh refuses that diff). Schema migrations of sealed months,
     #     like migrate_sealed_add_nvd, are run by hand in a reviewed PR. A just-closed open
     #     month is sealed; an unseen past window is backfilled.
+    sealed_now: list[str] = []
     for m in prev_months(today_m, args.months):
         sealed = kevtrack.load_sealed(m)
         if sealed is not None:
             built.append(sealed)
             continue
+        sealed_now.append(m)
         openm = kevtrack.load_open(m)
         if openm is not None:
             # Re-read the window from the catalog before freezing it: the stored open file is
@@ -246,6 +249,24 @@ def main() -> int:
             kevtrack.seal(kevtrack.build_backfill(m, kev, fetch_nvd_fn=kevtrack.fetch_nvd_published))
             print(f"[run] {m}: backfilled -> SEALED (EPSS blank, nvd_published filled)")
         built.append(kevtrack.load_sealed(m))
+
+    # (2b) SEAL-TIME CHECK on each month sealed in THIS run (kev/seal_check.py): row count =
+    #      the catalog window, and every row carries `cwes` (from 2026-09 on). A failure exits
+    #      4 before anything is rendered: the job fails, no PR is opened, the seal is not
+    #      committed and nothing is repaired; the workflow files one issue. The outcome is in
+    #      the run log (and ::error:: annotations), so no local session is needed to read it.
+    results = [seal_check.check(m, kev) for m in sealed_now]
+    seal_check.write_results(results)
+    for res in results:
+        print(f"[run] {seal_check.summary(res)}")
+    failed = [r for r in results if r["problems"]]
+    if failed:
+        for r in failed:
+            for p in r["problems"]:
+                print(f"::error title=seal check failed ({r['month']})::{p}")
+        print("[run] fail-halt: a month sealed in this run failed the seal-time check; nothing "
+              "rendered or committed (see kev/out/seal_check.json).", file=sys.stderr)
+        return 4
 
     # (3) POST-SEAL CHECK (detection only): does the previous month's seal still match the
     #     catalog's window for it? Written to kev/out/ (git-ignored); the workflow files one
