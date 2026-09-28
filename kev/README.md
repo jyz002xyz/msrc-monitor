@@ -54,7 +54,7 @@ The last successful catalog size is recorded in `snapshots/catalog_meta.json` (g
 
 ## Daily workflow (`.github/workflows/kev-daily.yml`)
 `workflow_dispatch` + `schedule` (schedule **disabled until explicit owner go**). Runs
-`python kev/run.py`, then: enforces the diff is confined to `docs/kev/` and `kev/snapshots/`;
+`python kev/run.py`, then: enforces the diff scope (`kev/check_diff_scope.sh`, below);
 skips everything when `docs/kev/` is unchanged (no-op — `generated_at` is held stable so
 identical data produces no diff); otherwise, because `main` is a protected branch (PR
 required), it opens an **auto-PR** from `bot/kev-daily` and **auto-merges** it (`contents` +
@@ -67,6 +67,16 @@ control** confirms the data commit actually landed on `origin/main` (state, not 
 codes). The dead-man's switch pings `KEV_HEALTHCHECK_URL` (a secret, never committed) **only on
 confirmed success** — a no-op, or a PR merged and verified on main — and pings `/fail`
 otherwise, so the monitor fires on both "silently stopped" and "failed".
+
+**Sealed snapshots change only through a migration PR that a person opens.** The daily
+PR is merged automatically, so `kev/check_diff_scope.sh` lets it touch only `docs/kev/`,
+the open month (`YYYY-MM.open.json.gz`), `catalog_meta.json`, and a *newly created* sealed
+file for the month being closed. If the diff modifies or deletes an existing
+`YYYY-MM.json.gz`, the job fails before a PR is opened. That includes the mid-month-seal
+correction in `run.py`, which now stops for a human instead of passing silently. Schema
+migrations of sealed months (the precedent is `migrate_sealed_add_nvd`) and any re-seal
+are therefore run by hand, recorded in the snapshot's `migrations` / `corrections`, and
+reviewed as an ordinary PR. `run.py` does not call them.
 
 ## Dependencies
 Python 3.10+ (uses `X | None` runtime types). **Standard library only** — no third-party

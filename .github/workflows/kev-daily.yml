@@ -54,21 +54,13 @@ jobs:
           stats=$(grep -m1 'integrity stats' "$RUNNER_TEMP/run.log" | sed 's/^\[run\] //' || true)
           echo "stats=$stats" >> "$GITHUB_OUTPUT"
 
-      - name: Enforce diff scope (only docs/kev/ and kev/snapshots/)
+      - name: Enforce diff scope (docs/kev/, open snapshot, new seals — never an existing seal)
         # Contain the "no direct commits to main" exception: the automated change may only touch
-        # these paths. Any change outside them fails the job before a PR is opened.
-        run: |
-          set -euo pipefail
-          bad=0
-          while IFS= read -r line; do
-            [ -z "$line" ] && continue
-            path=${line:3}
-            case "$path" in
-              docs/kev/*|kev/snapshots/*) ;;
-              *) echo "::error::out-of-scope change not allowed for auto-update: $path"; bad=1 ;;
-            esac
-          done < <(git status --porcelain)
-          if [ "$bad" -ne 0 ]; then exit 1; fi
+        # docs/kev/, the open month, catalog_meta.json, and a NEWLY sealed month. Modifying or
+        # deleting an existing sealed snapshot fails the job before a PR is opened — this PR is
+        # auto-merged, so a sealed month rewritten here would land unreviewed. The rules live in
+        # kev/check_diff_scope.sh so they can be exercised outside the workflow.
+        run: bash kev/check_diff_scope.sh
 
       - name: Detect no-op (skip PR if docs/kev/ is unchanged)
         id: noop
