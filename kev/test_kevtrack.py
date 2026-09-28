@@ -84,6 +84,32 @@ def test_month_boundary_open_to_sealed_transition():
         assert next(r for r in sealed["kev_added"] if r["cve"] == "CVE-A")["epss"] == 0.02
 
 
+def test_seal_rereads_the_window_at_close_not_the_last_open_file():
+    # 2026-08: the last in-month run stored {A}; B was listed afterwards but still dated inside
+    # the month; the first run of the next month must seal {A, B}, not the stale {A}.
+    stale = kevtrack.build_open("2026-07", [A], None,
+                                fetch_epss_fn=_epss({"CVE-A": {"epss": 0.02, "percentile": 0.1}}),
+                                now_iso="last-in-month")
+    stale["kev_added"][0]["nvd_published"] = "2026-06-30T00:00:00"
+    stale["corrections"] = ["kept"]
+    fn = _epss({"CVE-A": {"epss": 0.99, "percentile": 0.99},     # must not replace A's value
+                "CVE-B": {"epss": 0.50, "percentile": 0.80}})
+    final = kevtrack.build_final("2026-07", [A, B, OLD], stale, fetch_epss_fn=fn, now_iso="close")
+    assert [r["cve"] for r in final["kev_added"]] == ["CVE-A", "CVE-B"] and final["count"] == 2
+    a = next(r for r in final["kev_added"] if r["cve"] == "CVE-A")
+    b = next(r for r in final["kev_added"] if r["cve"] == "CVE-B")
+    assert a["epss"] == 0.02 and a["nvd_published"] == "2026-06-30T00:00:00", "first-observed kept"
+    assert b["epss"] == 0.50 and fn.seen == ["CVE-B"], "late entry observed at close, only it queried"
+    assert final["corrections"] == ["kept"]
+    with tempfile.TemporaryDirectory() as tmp:
+        d = Path(tmp)
+        kevtrack.write_open(stale, d)
+        kevtrack.seal(final, d)
+        sealed = kevtrack.load_sealed("2026-07", d)
+        assert sealed["state"] == "sealed" and sealed["count"] == 2
+        assert not kevtrack.open_path("2026-07", d).exists()
+
+
 def test_old_schema_file_loads_as_sealed():
     # a pre-lifecycle snapshot (no 'state') must read back as sealed, per-row epss_asof filled
     import gzip, json
