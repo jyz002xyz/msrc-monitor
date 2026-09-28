@@ -175,6 +175,18 @@ jobs:
           GH_REPO: ${{ github.repository }}
         run: python kev/post_seal.py notify kev/out/post_seal_gap.json
 
+      - name: Seal-time check failed — file one issue (no repair)
+        # run.py exits 4 when a month sealed in this run fails kev/seal_check.py (row count vs
+        # the catalog window; `cwes` on every row, from 2026-09). That fails the Regenerate
+        # step, so nothing is committed. This step files one issue per distinct failure
+        # ([seal-check:<sig>] in the title, any state) so the failure is visible without a
+        # local session. Other failures (no result file, or no failed month) file nothing here.
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: python kev/seal_check.py notify kev/out/seal_check.json
+
       - name: Dead-man's switch — ping on CONFIRMED success only
         if: success()
         # Reached only if every prior step succeeded: integrity passed AND (no-op OR
