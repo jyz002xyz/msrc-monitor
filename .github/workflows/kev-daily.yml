@@ -16,11 +16,13 @@ on:
     # picks up the prior US day.
     - cron: "30 23 * * *"
 
-# Least privilege: commit the regenerated site (contents) and open/merge its PR
-# (pull-requests). No PAT — the built-in GITHUB_TOKEN only.
+# Least privilege: commit the regenerated site (contents), open/merge its PR
+# (pull-requests), and file a post-seal gap issue (issues). No PAT — the built-in
+# GITHUB_TOKEN only.
 permissions:
   contents: write
   pull-requests: write
+  issues: write
 
 # Never run two regenerations at once (avoids racing PRs against main).
 concurrency:
@@ -160,6 +162,18 @@ jobs:
             echo "::error::merge reported success but $COMMIT is NOT on origin/main"; exit 1
           fi
           echo "positive control OK: $COMMIT is on origin/main (now ${head})"
+
+      - name: Post-seal gap — file one issue per distinct gap (detection only)
+        # run.py compared the previous month's seal with the catalog's window for it and wrote
+        # kev/out/post_seal_gap.json. A gap means CISA listed entries dated into a sealed month
+        # after the sealing run. The seal is never changed here; a person repairs it via a
+        # recorded re-seal PR. The same gap is filed once (signature in the issue title, any
+        # state), so a known gap does not ring daily. Runs on no-op days too. A failure to
+        # file fails the job, so the dead-man's switch reports it instead of a silent pass.
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: python kev/post_seal.py notify kev/out/post_seal_gap.json
 
       - name: Dead-man's switch — ping on CONFIRMED success only
         if: success()
