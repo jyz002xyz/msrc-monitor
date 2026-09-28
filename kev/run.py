@@ -24,6 +24,7 @@ from pathlib import Path
 
 import integrity
 import kevtrack
+import post_seal
 import report
 import publish
 
@@ -236,6 +237,20 @@ def main() -> int:
             kevtrack.seal(kevtrack.build_backfill(m, kev, fetch_nvd_fn=kevtrack.fetch_nvd_published))
             print(f"[run] {m}: backfilled -> SEALED (EPSS blank, nvd_published filled)")
         built.append(kevtrack.load_sealed(m))
+
+    # (3) POST-SEAL CHECK (detection only): does the previous month's seal still match the
+    #     catalog's window for it? Written to kev/out/ (git-ignored); the workflow files one
+    #     issue per distinct gap (kev/post_seal.py). Never touches the seal.
+    last = prev_months(today_m, 1)[0]
+    g = post_seal.gap(last, kev)
+    post_seal.write_gap(g)
+    if post_seal.has_gap(g):
+        print(f"[run] POST-SEAL GAP {last}: sealed {g['sealed_count']} vs catalog window "
+              f"{g['window_count']} — missing {g['missing']}, extra {g['extra']} "
+              f"(seal unchanged; see kev/post_seal.py)")
+    else:
+        print(f"[run] post-seal check {last}: "
+              f"{'seal matches the catalog window' if g else 'not sealed'}")
 
     published = _for_display(built)
     _render_all(published)
