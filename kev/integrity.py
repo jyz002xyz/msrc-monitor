@@ -18,6 +18,12 @@ import os
 
 REQUIRED_FIELDS = ("cveID", "vendorProject", "product", "dateAdded")
 
+# `cwes` is deliberately NOT in REQUIRED_FIELDS: that check treats a falsy value as missing,
+# and an empty list is a normal value here (~10% of the catalog has no CWE from CISA, every
+# version 2025-06 .. 2026-09). What signals an upstream schema change is the field being
+# ABSENT (None after fetch_kev_full) or not a list — checked separately below.
+LIST_FIELDS = ("cwes",)
+
 
 def _envi(name: str, default: int) -> int:
     try:
@@ -89,6 +95,15 @@ def evaluate(kev_full: list[dict] | None, *, prev_count: int | None = None,
             failures.append(
                 f"required field {field} missing in {missing}/{n} "
                 f"({missing / n:.1%} > {max_missing_frac:.0%})")
+
+    for field in LIST_FIELDS:
+        absent = sum(1 for e in kev_full if not isinstance(e.get(field), list))
+        stats[f"absent_{field}"] = absent
+        stats[f"empty_{field}"] = sum(1 for e in kev_full if e.get(field) == [])
+        if absent / n > max_missing_frac:
+            failures.append(
+                f"list field {field} absent or not a list in {absent}/{n} "
+                f"({absent / n:.1%} > {max_missing_frac:.0%}); an empty list is fine")
 
     for m in seal_months:
         wc = sum(1 for e in kev_full if str(e.get("dateAdded") or "").startswith(m + "-"))

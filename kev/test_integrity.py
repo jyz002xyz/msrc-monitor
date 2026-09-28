@@ -34,6 +34,29 @@ def test_healthy_catalog_passes():
     assert stats["count"] == 1500 and stats["window_2026-06"] == 1500
 
 
+def test_empty_cwes_list_is_normal():
+    # every entry has cwes == [] (CISA gave none): not a failure, and not reported as absent
+    kev = _catalog(1500)
+    failures, stats = integrity.evaluate(kev, seal_months=["2026-06"], min_catalog=1200)
+    assert failures == [], failures
+    assert stats["absent_cwes"] == 0 and stats["empty_cwes"] == 1500
+
+
+def test_absent_cwes_field_fails_but_within_tolerance_passes():
+    # the field disappearing upstream (None after fetch_kev_full) IS the anomaly
+    kev = _catalog(1500)
+    for e in kev[:100]:
+        e["cwes"] = None
+    failures, stats = integrity.evaluate(kev, seal_months=["2026-06"], min_catalog=1200)
+    assert any("cwes" in f and "absent" in f for f in failures), failures
+    assert stats["absent_cwes"] == 100
+    kev2 = _catalog(1500)
+    kev2[0]["cwes"] = None                       # 1/1500, under the 1% noise tolerance
+    kev2[1]["cwes"] = "CWE-79"                   # wrong type counts as absent too
+    failures2, stats2 = integrity.evaluate(kev2, seal_months=["2026-06"], min_catalog=1200)
+    assert failures2 == [] and stats2["absent_cwes"] == 2, failures2
+
+
 def test_none_catalog_fails():
     failures, _ = integrity.evaluate(None)
     assert failures and "fetch failed" in failures[0]

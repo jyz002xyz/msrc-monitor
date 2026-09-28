@@ -153,6 +153,9 @@ def _base_row(e: dict) -> dict:
             "date_added": e.get("dateAdded"), "due_date": e.get("dueDate"),
             "ransomware": _ransom(e.get("knownRansomwareCampaignUse")),
             "short": e.get("shortDescription"),
+            # CISA's CWE list, in CISA's order. [] = CISA gave none; None = the field was
+            # absent from the entry (kept distinct: the page shows the two differently).
+            "cwes": list(e["cwes"]) if isinstance(e.get("cwes"), list) else None,
             "epss": None, "percentile": None, "epss_asof": None,
             "nvd_published": None}
 
