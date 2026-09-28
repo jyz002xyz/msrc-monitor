@@ -255,6 +255,70 @@ def migrate_sealed_add_nvd(month: str, fetch_nvd_fn, *, snap_dir: Path = SNAP_DI
     return True
 
 
+# Row marker for an entry added to a sealed month after the seal: its EPSS was never observed
+# at KEV-add time, so it stays blank and the page says why (not "backfill", not "missing").
+ADDED_AFTER_SEAL = "added_after_seal"
+
+
+def reseal_add_entries(month: str, kev_full: list[dict], cves: list[str], *, note: dict,
+                       fetch_nvd_fn=None, snap_dir: Path = SNAP_DIR,
+                       now_iso: str | None = None) -> dict:
+    """Add entries a seal missed to an already-sealed month (a recorded re-seal — the
+    authorized exception to immutability, like migrate_sealed_add_nvd). Run BY HAND, once,
+    in a reviewed PR; run.py never calls this, and the daily job's diff-scope check refuses
+    any change to an existing seal.
+
+    - Existing rows are not touched (same dicts, same order); new rows are merged in the
+      window's own order (dateAdded, cveID).
+    - New rows get EPSS blank + `epss_note = ADDED_AFTER_SEAL`; nvd_published is filled (a
+      stable past fact, as for backfill).
+    - If the window's rows do not carry `cwes`, the new rows do not either, so one window
+      never mixes rows with and without the field.
+    - Recorded twice, like the precedent: a line in `migrations`, and a structured entry in
+      `reseals` whose `note` ({ja, en}) the page shows as the correction notice.
+    Refuses (ValueError) a CVE outside the month's catalog window or already in the seal.
+    """
+    snap = load_sealed(month, snap_dir)
+    if snap is None:
+        raise ValueError(f"{month} is not sealed")
+    existing = {r["cve"] for r in snap["kev_added"]}
+    window = {e.get("cveID"): e for e in window_of(kev_full, month)}
+    for c in cves:
+        if c not in window:
+            raise ValueError(f"{c} is not in the {month} catalog window")
+        if c in existing:
+            raise ValueError(f"{c} is already in the {month} seal")
+    now_iso = now_iso or dt.datetime.now().isoformat(timespec="seconds")
+    keep_cwes = any("cwes" in r for r in snap["kev_added"])
+    new_rows = []
+    for c in cves:
+        row = _base_row(window[c])
+        if keep_cwes:                    # match the window, whichever _base_row is in place
+            cw = window[c].get("cwes")
+            row["cwes"] = list(cw) if isinstance(cw, list) else None
+        else:
+            row.pop("cwes", None)
+        row["epss_note"] = ADDED_AFTER_SEAL
+        new_rows.append(row)
+    fill_nvd({"kev_added": new_rows}, fetch_nvd_fn)
+    before = len(snap["kev_added"])
+    old = snap["kev_added"]
+    rows = sorted(old + new_rows, key=lambda r: (r.get("date_added") or "", r.get("cve") or ""))
+    if [r for r in rows if r["cve"] in existing] != old:
+        raise ValueError(f"{month}: merging would reorder existing rows — refusing")
+    snap["kev_added"] = rows
+    snap["count"] = len(rows)
+    snap.setdefault("reseals", []).append({
+        "at": now_iso, "added": list(cves), "count_before": before, "count_after": len(rows),
+        "note": note})
+    snap.setdefault("migrations", []).append(
+        f"re-sealed at {now_iso}: added {', '.join(cves)} ({before} -> {len(rows)} rows; "
+        f"recorded re-seal — existing rows unchanged, EPSS of the added rows blank because not "
+        f"observed at KEV-add time; cause in reseals[{len(snap['reseals']) - 1}].note)")
+    _write(sealed_path(month, snap_dir), snap)
+    return snap
+
+
 # --- storage: open (mutable) + sealed (immutable) ----------------------------
 def all_windows(snap_dir: Path = SNAP_DIR) -> list[str]:
     """Every window that has a snapshot on disk, newest first.
