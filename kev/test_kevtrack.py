@@ -171,6 +171,16 @@ def test_cwe_column_hidden_for_windows_without_the_field():
         assert publish.ABOUT[lang]["cwe"] not in h
 
 
+def test_cwe_row_without_the_key_in_a_mixed_window_is_not_called_absent_in_kev():
+    import publish
+    snap = _cwe_snap(["CWE-502"], ["CWE-306"])
+    snap["kev_added"][1].pop("cwes")             # e.g. an old row next to a re-sealed new one
+    ja, en = publish.render_month(snap, "ja"), publish.render_month(snap, "en")
+    assert "未記録（この月の記録に含まれていない）" in ja
+    assert "Not recorded (not kept in this snapshot)" in en
+    assert "KEV に欄なし" not in ja and "field absent in KEV" not in en
+
+
 def test_cwe_name_tables_cover_the_same_ids_in_both_languages():
     import publish
     assert set(publish.CWE_NAMES["ja"]) == set(publish.CWE_NAMES["en"])

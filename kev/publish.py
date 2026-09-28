@@ -40,9 +40,11 @@ CWE_NAMES = {lang: json.loads((Path(__file__).resolve().parent / "cwe_names" / f
                               .read_text(encoding="utf-8"))["names"] for lang in ("ja", "en")}
 CWE_LABELS = {
     "ja": {"col": "原因の類型（CWE）", "none": "未分類（KEV に記載なし）",
-           "absent": "記録なし（KEV に欄なし）"},
+           "absent": "記録なし（KEV に欄なし）",
+           "unrecorded": "未記録（この月の記録に含まれていない）"},
     "en": {"col": "Weakness (CWE)", "none": "Not classified (none in KEV)",
-           "absent": "Not recorded (field absent in KEV)"},
+           "absent": "Not recorded (field absent in KEV)",
+           "unrecorded": "Not recorded (not kept in this snapshot)"},
 }
 
 # Site CSS reused from the existing public pages (gen_public_html look: dark topbar,
@@ -368,8 +370,14 @@ def _cwe_item(x: str, lang: str) -> tuple[str, str]:
 
 def _cwe_cell(r: dict, lang: str) -> str:
     """CWE cell: every CWE in CISA's order (no primary is inferred). [] and a missing field
-    are labelled, not left blank, and sort last."""
-    cwes = r.get("cwes")
+    are labelled, not left blank, and sort last.
+
+    A row WITHOUT the `cwes` key (kept before the field was recorded, sharing a window with
+    rows that have it — e.g. a re-seal adding entries to an old month) is not "absent in
+    KEV": KEV had values, this record did not keep them. It gets its own label."""
+    if "cwes" not in r:
+        return f'<td data-sort="">{_h(CWE_LABELS[lang]["unrecorded"])}</td>'
+    cwes = r["cwes"]
     if cwes is None:
         return f'<td data-sort="">{_h(CWE_LABELS[lang]["absent"])}</td>'
     if not cwes:
