@@ -322,6 +322,41 @@ def reseal_add_entries(month: str, kev_full: list[dict], cves: list[str], *, not
     return snap
 
 
+def migrate_sealed_add_cwes(month: str, catalog_by_cve: dict, *, source: dict,
+                            snap_dir: Path = SNAP_DIR, now_iso: str | None = None) -> int:
+    """Add `cwes` to the rows of an already-sealed month that lack it (a recorded schema
+    migration — the authorized exception to immutability, like migrate_sealed_add_nvd). Run BY
+    HAND in a reviewed PR (kev/manual/backfill_cwes_2026_02_08.py); run.py never calls it.
+
+    Only the `cwes` key is added, at the end of each row; every existing field keeps its value
+    and order. The value is the catalog entry's list in CISA's order, or None if the entry has
+    no such field. `source` (catalogVersion, dateReleased, fetched_at) is recorded, because the
+    values come from the catalog on the day this runs, not from seal time.
+    Raises ValueError if a row's CVE is not in the catalog. Returns the number of rows changed
+    (0 = already migrated, file untouched)."""
+    snap = load_sealed(month, snap_dir)
+    if snap is None:
+        raise ValueError(f"{month} is not sealed")
+    todo = [r for r in snap["kev_added"] if "cwes" not in r]
+    if not todo:
+        return 0
+    missing = [r["cve"] for r in todo if r["cve"] not in catalog_by_cve]
+    if missing:
+        raise ValueError(f"{month}: {missing} not in the catalog")
+    for r in todo:
+        cw = catalog_by_cve[r["cve"]].get("cwes")
+        r["cwes"] = list(cw) if isinstance(cw, list) else None
+    now_iso = now_iso or dt.datetime.now().isoformat(timespec="seconds")
+    snap.setdefault("migrations", []).append(
+        f"added cwes to sealed window at {now_iso} from the KEV catalog "
+        f"{source.get('catalogVersion')} (dateReleased {source.get('dateReleased')}, fetched "
+        f"{source.get('fetched_at')}) — values as of that catalog, not seal time (schema "
+        f"migration; existing facts — CVE/vendor/product/dateAdded/dueDate/ransomware/EPSS/"
+        f"nvd_published — unchanged)")
+    _write(sealed_path(month, snap_dir), snap)
+    return len(todo)
+
+
 # --- storage: open (mutable) + sealed (immutable) ----------------------------
 def all_windows(snap_dir: Path = SNAP_DIR) -> list[str]:
     """Every window that has a snapshot on disk, newest first.
