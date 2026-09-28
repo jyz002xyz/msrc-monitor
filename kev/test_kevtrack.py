@@ -110,6 +110,85 @@ def test_seal_rereads_the_window_at_close_not_the_last_open_file():
         assert not kevtrack.open_path("2026-07", d).exists()
 
 
+def test_base_row_keeps_cwes_in_cisa_order_and_absent_as_none():
+    rows = kevtrack.build_open("2026-07", [dict(A, cwes=["CWE-94", "CWE-20"]), dict(B, cwes=[])],
+                               None, fetch_epss_fn=_epss({}), now_iso="t")["kev_added"]
+    assert rows[0]["cwes"] == ["CWE-94", "CWE-20"] and rows[1]["cwes"] == []
+    no_field = {k: v for k, v in A.items() if k != "cwes"}
+    r = kevtrack.build_open("2026-07", [no_field], None, fetch_epss_fn=_epss({}), now_iso="t")
+    assert r["kev_added"][0]["cwes"] is None, "absent field must not become []"
+
+
+def _cwe_snap(*cwe_lists, drop_field=False):
+    ents = [dict(A, cveID=f"CVE-2026-{1000 + i}", cwes=c) for i, c in enumerate(cwe_lists)]
+    snap = kevtrack.build_open("2026-07", ents, None, fetch_epss_fn=_epss({}), now_iso="t")
+    if drop_field:                               # a window sealed before cwes was recorded
+        for r in snap["kev_added"]:
+            r.pop("cwes")
+    return snap
+
+
+def test_cwe_cell_named_unnamed_multiple_empty():
+    import publish
+    snap = _cwe_snap(["CWE-502"], ["CWE-99999"], ["CWE-94", "CWE-95", "CWE-306"], [])
+    for lang, named, empty in (("ja", "信頼できないデータのデシリアライゼーション",
+                                "未分類（KEV に記載なし）"),
+                               ("en", "Deserialization of untrusted data",
+                                "Not classified (none in KEV)")):
+        h = publish.render_month(snap, lang)
+        assert publish.CWE_LABELS[lang]["col"] in h
+        # named: short name, linked to the MITRE definition
+        assert 'href="https://cwe.mitre.org/data/definitions/502.html"' in h and named in h
+        # no short name: bare ID, still linked, never blank
+        assert ('href="https://cwe.mitre.org/data/definitions/99999.html" title="CWE-99999" '
+                'rel="noopener">CWE-99999</a>') in h
+        # multiple: all of them, in CISA's order
+        n94, n95, n306 = (publish.CWE_NAMES[lang][k] for k in ("CWE-94", "CWE-95", "CWE-306"))
+        assert h.index(n94) < h.index(n95) < h.index(n306)
+        # empty: labelled, sorts last
+        assert f'<td data-sort="">{empty}</td>' in h
+        assert publish.ABOUT[lang]["cwe"] in h
+    assert publish.missing_cwe_names([snap]) == {"CWE-99999": 1}
+
+
+def test_cwe_special_value_and_absent_field_are_not_unclassified():
+    import publish
+    snap = _cwe_snap(["NVD-CWE-noinfo"], None)
+    ja, en = publish.render_month(snap, "ja"), publish.render_month(snap, "en")
+    assert "（NVD-CWE-noinfo）" in ja and "(NVD-CWE-noinfo)" in en
+    assert "記録なし（KEV に欄なし）" in ja and "Not recorded (field absent in KEV)" in en
+    assert "未分類" not in ja and "Not classified" not in en
+    assert publish.missing_cwe_names([snap]) == {}     # not an ID -> not a missing name
+
+
+def test_cwe_column_hidden_for_windows_without_the_field():
+    import publish
+    snap = _cwe_snap(["CWE-502"], [], drop_field=True)
+    for lang in ("ja", "en"):
+        h = publish.render_month(snap, lang)
+        assert publish.CWE_LABELS[lang]["col"] not in h, "no column for a pre-CWE seal"
+        assert publish.CWE_LABELS[lang]["none"] not in h, "must not claim 'none in KEV'"
+        assert publish.ABOUT[lang]["cwe"] not in h
+
+
+def test_cwe_row_without_the_key_in_a_mixed_window_is_not_called_absent_in_kev():
+    import publish
+    snap = _cwe_snap(["CWE-502"], ["CWE-306"])
+    snap["kev_added"][1].pop("cwes")             # e.g. an old row next to a re-sealed new one
+    ja, en = publish.render_month(snap, "ja"), publish.render_month(snap, "en")
+    assert "未記録（この月の記録に含まれていない）" in ja
+    assert "Not recorded (not kept in this snapshot)" in en
+    assert "KEV に欄なし" not in ja and "field absent in KEV" not in en
+
+
+def test_cwe_name_tables_cover_the_same_ids_in_both_languages():
+    import publish
+    assert set(publish.CWE_NAMES["ja"]) == set(publish.CWE_NAMES["en"])
+    assert len(publish.CWE_NAMES["en"]) == 81
+    assert all(publish.CWE_ID_RE.match(k) and v.strip()
+               for lang in ("ja", "en") for k, v in publish.CWE_NAMES[lang].items())
+
+
 def test_old_schema_file_loads_as_sealed():
     # a pre-lifecycle snapshot (no 'state') must read back as sealed, per-row epss_asof filled
     import gzip, json

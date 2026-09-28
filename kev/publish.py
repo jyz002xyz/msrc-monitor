@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import datetime as dt
 import html
+import json
 import re
 from collections import Counter
 from pathlib import Path
@@ -28,6 +29,23 @@ NVD_CVE_BASE = "https://nvd.nist.gov/vuln/detail/"
 # Only a well-formed CVE id becomes a link; anything else is rendered as plain text, so a
 # malformed/unexpected id can never be interpolated into an href.
 CVE_ID_RE = re.compile(r"^CVE-\d{4}-\d{4,}$")
+
+# CWE column. Short display names live in kev/cwe_names/{ja,en}.json (data, reviewed by a
+# person). An ID missing there is shown as the bare ID linking to its MITRE definition —
+# never blank — and run.py logs it. A non-ID value (NVD-CWE-noinfo, NVD-CWE-Other, ...) is
+# shown raw in brackets, kept apart from "not classified".
+CWE_ID_RE = re.compile(r"^CWE-(\d+)$")
+CWE_DEF_BASE = "https://cwe.mitre.org/data/definitions/"
+CWE_NAMES = {lang: json.loads((Path(__file__).resolve().parent / "cwe_names" / f"{lang}.json")
+                              .read_text(encoding="utf-8"))["names"] for lang in ("ja", "en")}
+CWE_LABELS = {
+    "ja": {"col": "原因の類型（CWE）", "none": "未分類（KEV に記載なし）",
+           "absent": "記録なし（KEV に欄なし）",
+           "unrecorded": "未記録（この月の記録に含まれていない）"},
+    "en": {"col": "Weakness (CWE)", "none": "Not classified (none in KEV)",
+           "absent": "Not recorded (field absent in KEV)",
+           "unrecorded": "Not recorded (not kept in this snapshot)"},
+}
 
 # Site CSS reused from the existing public pages (gen_public_html look: dark topbar,
 # paper card, amber note). Kept inline so each page is self-contained like the archive.
@@ -151,6 +169,7 @@ ABOUT = {
                   "再生成されることがあります（データの不変性とは別のことです）。",
         "ransom_caveat": "「ランサムウェア」列の Unknown は CISA が未確認という意味であり、"
                          "「使われていない」という意味ではない。",
+        "cwe": "CWE は CISA が付けた値で、粒度の粗い分類（例: CWE-287）を含む。",
         "gloss_h": "用語",
     },
     "en": {
@@ -171,6 +190,8 @@ ABOUT = {
                   "the immutability of the data).",
         "ransom_caveat": "In the “Ransomware” column, Unknown means CISA has not confirmed it — "
                          "not that the vulnerability is unused by ransomware.",
+        "cwe": "CWE values are as assigned by CISA and include coarse-grained categories "
+               "(e.g. CWE-287).",
         "gloss_h": "Terms",
     },
 }
@@ -341,13 +362,70 @@ def _cve_cell(cve) -> str:
     return f'<td data-sort="{key}">{inner}</td>'
 
 
-def _about_html(lang: str, *, index: bool) -> str:
+def has_cwe_column(snap: dict) -> bool:
+    """Show the CWE column only for a window whose rows carry the `cwes` field.
+
+    Windows sealed before the field was recorded have no such key. Their rows must not read
+    "Not classified (none in KEV)" — KEV did have values; this snapshot simply never kept
+    them. Hiding the column is the only display that says nothing false about them.
+    """
+    return any("cwes" in r for r in snap.get("kev_added", []))
+
+
+def _cwe_item(x: str, lang: str) -> tuple[str, str]:
+    """(html, plain text) for one entry of a row's CWE list."""
+    m = CWE_ID_RE.match(x or "")
+    if not m:                                   # NVD-CWE-noinfo etc.: raw value, in brackets
+        t = f"（{x}）" if lang == "ja" else f"({x})"
+        return _h(t), t
+    name = CWE_NAMES[lang].get(x)
+    text = name or x                            # no short name -> bare ID, never blank
+    href = f"{CWE_DEF_BASE}{m.group(1)}.html"
+    return (f'<a class="cvelink" href="{href}" title="{_h(x)}" rel="noopener">{_h(text)}</a>',
+            text)
+
+
+def _cwe_cell(r: dict, lang: str) -> str:
+    """CWE cell: every CWE in CISA's order (no primary is inferred). [] and a missing field
+    are labelled, not left blank, and sort last.
+
+    A row WITHOUT the `cwes` key (kept before the field was recorded, sharing a window with
+    rows that have it — e.g. a re-seal adding entries to an old month) is not "absent in
+    KEV": KEV had values, this record did not keep them. It gets its own label."""
+    if "cwes" not in r:
+        return f'<td data-sort="">{_h(CWE_LABELS[lang]["unrecorded"])}</td>'
+    cwes = r["cwes"]
+    if cwes is None:
+        return f'<td data-sort="">{_h(CWE_LABELS[lang]["absent"])}</td>'
+    if not cwes:
+        return f'<td data-sort="">{_h(CWE_LABELS[lang]["none"])}</td>'
+    items = [_cwe_item(x, lang) for x in cwes]
+    return (f'<td data-sort="{_h(items[0][1])}">'
+            + " / ".join(h for h, _ in items) + "</td>")
+
+
+def missing_cwe_names(snaps: list[dict]) -> dict[str, int]:
+    """CWE IDs (well-formed) that the name tables lack, with row counts — for the run log.
+    Both languages are checked, so a key added to one file only is reported too."""
+    miss: Counter = Counter()
+    for s in snaps:
+        for r in s.get("kev_added", []):
+            for x in r.get("cwes") or []:
+                if CWE_ID_RE.match(x or "") and any(x not in CWE_NAMES[l] for l in CWE_NAMES):
+                    miss[x] += 1
+    return dict(sorted(miss.items(), key=lambda kv: int(kv[0][4:])))
+
+
+def _about_html(lang: str, *, index: bool, cwe: bool = False) -> str:
     """"About this data" block: what the page is, how often it updates, and the fact that a
-    sealed month's DATA is fixed even though the page may be re-rendered."""
+    sealed month's DATA is fixed even though the page may be re-rendered. The CWE sentence
+    appears only where the CWE column does."""
     a = ABOUT[lang]
     what = a["what_index"] if index else a["what_month"]
+    extra = f"<li>{_h(a['cwe'])}</li>" if cwe else ""
     return (f"<div class='notes'><b>{_h(a['h'])}</b>"
-            f"<ul><li>{_h(what)}</li><li>{_h(a['update'])}</li><li>{_h(a['render'])}</li></ul></div>")
+            f"<ul><li>{_h(what)}</li><li>{_h(a['update'])}</li><li>{_h(a['render'])}</li>"
+            f"{extra}</ul></div>")
 
 
 def _glossary_html(lang: str) -> str:
@@ -387,6 +465,7 @@ def render_month(snap: dict, lang: str) -> str:
 
     def _c(display, key):   # td with an explicit data-sort key ("" -> sorts last)
         return f'<td data-sort="{_h("" if key is None else str(key))}">{_h(display)}</td>'
+    cwe_col = has_cwe_column(snap)
     trs = []
     for r in disp:
         pub = (r.get("nvd_published") or "")[:10]
@@ -402,6 +481,7 @@ def render_month(snap: dict, lang: str) -> str:
             + _c(_epss_cell(r, lang), "" if r.get("epss") is None else r["epss"])   # sort by EPSS score
             + _c(pub or "—", pub)
             + _c("—" if d is None else str(d), "" if d is None else d)        # numeric, negatives ok
+            + (_cwe_cell(r, lang) if cwe_col else "")
             + "</tr>")
     rows = "\n".join(trs)
     vend = "".join(f"<li>{_h(v)}: {c}</li>" for v, c in agg["vendors"].most_common())
@@ -414,14 +494,16 @@ def render_month(snap: dict, lang: str) -> str:
         corr = f"<div class='notes'><b>corrections:</b><ul>{items}</ul></div>"
     notes = "".join(f"<li>{_h(n)}</li>" for n in N)
     # sortable headers. Types: CVE/Vendor/Product/Ransomware=text, Added/Due/NVD=date,
-    # EPSS/Days=num. Default sort = Added (index 3) descending, matching the row order above.
-    col_types = ["text", "text", "text", "date", "date", "text", "num", "date", "num"]
+    # EPSS/Days=num, CWE=text (appended last, so existing indexes do not move).
+    # Default sort = Added (index 3) descending, matching the row order above.
+    cols = L["cols"] + ([CWE_LABELS[lang]["col"]] if cwe_col else [])
+    col_types = ["text", "text", "text", "date", "date", "text", "num", "date", "num", "text"]
     default_col = 3
     th = "".join(
         f'<th class="sortable" data-type="{col_types[i]}" '
         f'aria-sort="{"descending" if i == default_col else "none"}">'
         f'{_h(c)}<span class="caret"></span></th>'
-        for i, c in enumerate(L["cols"]))
+        for i, c in enumerate(cols))
     return f"""<!DOCTYPE html><html lang="{L['lang']}"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{_h(L['section'])} {_h(snap['window'])} — {_h(L['site'])}</title>
@@ -433,7 +515,7 @@ def render_month(snap: dict, lang: str) -> str:
 <article class="paper">
 <h1>{_h(L['section'])} — {_h(snap['window'])}</h1>
 <div class="notes">{_h(L['positioning'])}</div>
-{_about_html(lang, index=False)}
+{_about_html(lang, index=False, cwe=cwe_col)}
 <p class="sub">{_h(L['generated'])} {_h(snap['generated_at'])}. {_h(L['prototype'])}</p>
 {corr}{_reseal_html(snap, lang)}
 <h2>{_h(L['facts'])}</h2>

@@ -105,6 +105,15 @@ def _render_all(snaps: list[dict]) -> None:
     publish.build_site(snaps, SITE_KEV)
     print(f"[run] public site -> {SITE_KEV}/  ({len(snaps)} window(s); "
           f"commit is a separate, gated step)")
+    # CWE IDs shown as a bare ID because kev/cwe_names/{ja,en}.json has no short name for
+    # them. Not an error — the page stays correct — but the name tables need a person to add
+    # them, and nothing else would surface it.
+    missing = publish.missing_cwe_names(snaps)
+    if missing:
+        print("[run] CWE IDs without a short name (shown as bare ID): "
+              + ", ".join(f"{k} ({n} row{'s' if n > 1 else ''})" for k, n in missing.items()))
+    else:
+        print("[run] CWE IDs without a short name: none")
 
 
 def _build_index(snaps: list[dict]) -> None:
