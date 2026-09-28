@@ -15,9 +15,17 @@ Design principles:
     the latest assets change.
   - No fabricated data. The per-month "count" is optional; if unknown it is shown as
     "—" rather than invented.
+  - Never archive the issue that is about to be published (--incoming-month). Phase B
+    freezes the OUTGOING report before the swap. When the same month is published again
+    (outgoing subject == incoming month), there is nothing outgoing: archiving would file
+    the current issue as if it had been replaced. That happened on 2026-09-28 (public
+    PR 132, closed unmerged): merging the September source into the private main re-ran
+    public-html, and 2026-09 was about to be frozen into docs/archive/2026-09/ while still
+    the current issue. Such a run now does nothing at all (no snapshot, no manifest or
+    index change) and says so in the log.
 
 Usage:
-    python report/gen_archive.py --month 2026-07 [--count 1281]
+    python report/gen_archive.py --month 2026-09 --subject 2026-09 --incoming-month 2026-10
     python report/gen_archive.py --rebuild-index-only
 """
 from __future__ import annotations
@@ -304,6 +312,9 @@ def main() -> int:
     ap.add_argument("--docs", default=str(ROOT / "docs"), help="site docs dir")
     ap.add_argument("--rebuild-index-only", action="store_true",
                     help="only regenerate archive/index.html from the manifest")
+    ap.add_argument("--incoming-month", default=None,
+                    help="YYYY-MM subject of the report ABOUT TO BE PUBLISHED. If it equals the "
+                         "outgoing subject, nothing is archived (same-month re-publication)")
     args = ap.parse_args()
     docs = Path(args.docs)
     archive_dir = docs / "archive"
@@ -317,6 +328,22 @@ def main() -> int:
         # a different/absent subject halts). The manifest is the nav layer, so its
         # display metadata is (re)set here without touching the snapshot.
         subject = args.subject or args.month
+        if args.incoming_month is not None and not MONTH_RE.match(args.incoming_month):
+            print(f"[archive] ERROR: --incoming-month must be YYYY-MM, got "
+                  f"{args.incoming_month!r}", file=sys.stderr)
+            return 2
+        if args.incoming_month is not None and args.incoming_month == subject:
+            # Same-month re-publication: the outgoing report IS the incoming one. Do nothing
+            # — not the snapshot, not the manifest, not the index — and say so, loudly.
+            msg = (f"outgoing report subject {subject} == incoming {args.incoming_month} "
+                   f"(same-month re-publication): the current issue is NOT archived; "
+                   f"docs/archive/ is left untouched")
+            print(f"[archive] SKIP: {msg}")
+            print(f"::notice title=archive skipped (same month)::{msg}")
+            return 0
+        if args.incoming_month is None:
+            print("[archive] note: --incoming-month not given; the same-month guard cannot "
+                  "run (manual backfill?). Phase B must always pass it.", file=sys.stderr)
         archive_month(args.month, docs, args.count, subject)
         meta = {"month": args.month,
                 "subject": subject,
