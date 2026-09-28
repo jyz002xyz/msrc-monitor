@@ -184,7 +184,7 @@ def test_cwe_row_without_the_key_in_a_mixed_window_is_not_called_absent_in_kev()
 def test_cwe_name_tables_cover_the_same_ids_in_both_languages():
     import publish
     assert set(publish.CWE_NAMES["ja"]) == set(publish.CWE_NAMES["en"])
-    assert len(publish.CWE_NAMES["en"]) == 81
+    assert len(publish.CWE_NAMES["en"]) == 82          # 81 reviewed + CWE-470 (2026-08 re-seal)
     assert all(publish.CWE_ID_RE.match(k) and v.strip()
                for lang in ("ja", "en") for k, v in publish.CWE_NAMES[lang].items())
 
@@ -546,13 +546,14 @@ def test_committed_2026_08_reseal_keeps_the_original_29_rows():
     assert snap["count"] == len(rows) == 31
     old = [r for r in rows if r["cve"] in AUG_ORIGINAL_29]
     assert [r["cve"] for r in old] == list(AUG_ORIGINAL_29), "original order kept"
-    for r in old:
-        assert _row_hash(r) == AUG_ORIGINAL_29[r["cve"]], f"{r['cve']} changed"
+    for r in old:   # the later cwes backfill adds only the cwes key; everything else is as sealed
+        assert _row_hash({k: v for k, v in r.items() if k != "cwes"}) == AUG_ORIGINAL_29[r["cve"]], \
+            f"{r['cve']} changed"
     new = [r for r in rows if r["cve"] not in AUG_ORIGINAL_29]
     assert [r["cve"] for r in new] == ["CVE-2026-81578", "CVE-2026-82078"]
     for r in new:
         assert r["epss"] is None and r["percentile"] is None and r["epss_asof"] is None
-        assert r["epss_note"] == kevtrack.ADDED_AFTER_SEAL and "cwes" not in r
+        assert r["epss_note"] == kevtrack.ADDED_AFTER_SEAL
     # seal-time facts untouched; the re-seal is recorded, not silent
     assert snap["state"] == "sealed" and snap["generated_at"] == "2026-08-28T07:01:18"
     assert snap["corrections"] == [] and snap["epss_observed"] is True
@@ -616,6 +617,65 @@ def test_resealed_page_shows_the_correction_and_why_epss_is_blank():
     # other months: no notice, EPSS blanks unchanged
     jul = publish.render_month(kevtrack.load_sealed("2026-07"), "ja")
     assert "<b>訂正</b>" not in jul and "封印後に追加" not in jul
+
+
+# --- cwes backfill of 2026-02..08 (kevtrack.migrate_sealed_add_cwes) -------------------
+def test_committed_cwes_backfill_changes_nothing_but_cwes():
+    import json
+    pre = json.loads((Path(__file__).resolve().parent / "manual" /
+                      "cwes_backfill_pre_hashes.json").read_text(encoding="utf-8"))["months"]
+    assert sorted(pre) == ["2026-02", "2026-03", "2026-04", "2026-05", "2026-06", "2026-07",
+                           "2026-08"] and sum(len(v) for v in pre.values()) == 186
+    for month, want in pre.items():
+        snap = kevtrack.load_sealed(month)
+        rows = snap["kev_added"]
+        assert [r["cve"] for r in rows] == [c for c, _ in want], f"{month}: rows/order changed"
+        for r, (cve, h) in zip(rows, want):
+            assert "cwes" in r and (r["cwes"] is None or isinstance(r["cwes"], list)), cve
+            assert _row_hash({k: v for k, v in r.items() if k != "cwes"}) == h, \
+                f"{month} {cve}: a field other than cwes changed"
+        rec = [m for m in snap["migrations"] if m.startswith("added cwes to sealed window")]
+        assert len(rec) == 1 and "KEV catalog 2026.09.27" in rec[0] and "fetched" in rec[0], month
+
+
+def test_migrate_sealed_add_cwes_adds_only_cwes_and_is_idempotent():
+    with tempfile.TemporaryDirectory() as tmp:
+        d = Path(tmp)
+        s = kevtrack.build_open("2026-07", [A, B], None, fetch_epss_fn=_epss({}), now_iso="seal")
+        for r in s["kev_added"]:
+            r.pop("cwes")                                   # a pre-CWE seal
+        kevtrack.seal(s, d)
+        before = kevtrack.load_sealed("2026-07", d)
+        cat = {"CVE-A": dict(A, cwes=["CWE-94", "CWE-20"]), "CVE-B": {"cveID": "CVE-B"}}
+        src = {"catalogVersion": "9.9", "dateReleased": "x", "fetched_at": "y"}
+        n = kevtrack.migrate_sealed_add_cwes("2026-07", cat, source=src, snap_dir=d, now_iso="t")
+        after = kevtrack.load_sealed("2026-07", d)
+        assert n == 2
+        assert after["kev_added"][0]["cwes"] == ["CWE-94", "CWE-20"]    # CISA's order
+        assert after["kev_added"][1]["cwes"] is None                    # field absent in KEV
+        for b, a in zip(before["kev_added"], after["kev_added"]):
+            assert {k: v for k, v in a.items() if k != "cwes"} == b
+            assert list(a)[:-1] == list(b) and list(a)[-1] == "cwes", "cwes appended last"
+        assert "KEV catalog 9.9" in after["migrations"][-1]
+        raw = kevtrack.sealed_path("2026-07", d).read_bytes()
+        assert kevtrack.migrate_sealed_add_cwes("2026-07", cat, source=src, snap_dir=d) == 0
+        assert kevtrack.sealed_path("2026-07", d).read_bytes() == raw, "second run writes nothing"
+
+
+def test_migrate_sealed_add_cwes_refuses_a_cve_missing_from_the_catalog():
+    with tempfile.TemporaryDirectory() as tmp:
+        d = Path(tmp)
+        s = kevtrack.build_open("2026-07", [A], None, fetch_epss_fn=_epss({}), now_iso="seal")
+        s["kev_added"][0].pop("cwes")
+        kevtrack.seal(s, d)
+        raw = kevtrack.sealed_path("2026-07", d).read_bytes()
+        try:
+            kevtrack.migrate_sealed_add_cwes("2026-07", {}, source={}, snap_dir=d)
+        except ValueError:
+            pass
+        else:
+            raise AssertionError("accepted a CVE missing from the catalog")
+        assert kevtrack.sealed_path("2026-07", d).read_bytes() == raw, "nothing written"
 
 
 if __name__ == "__main__":

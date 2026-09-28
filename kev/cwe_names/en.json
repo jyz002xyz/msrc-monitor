@@ -53,6 +53,7 @@
     "CWE-436": "Interpretation conflict",
     "CWE-441": "Confused deputy",
     "CWE-444": "HTTP request smuggling",
+    "CWE-470": "Unsafe reflection",
     "CWE-476": "NULL pointer dereference",
     "CWE-494": "Download without integrity check",
     "CWE-502": "Deserialization of untrusted data",
