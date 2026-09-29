@@ -5,6 +5,93 @@
   },
   "filings": [
     {
+      "key": "CA:2026-09-27:upbound-group-inc:2026-07-03|2026-07-06",
+      "jurisdiction": "CA",
+      "organization": "Upbound Group, Inc.",
+      "reported_date": "2026-09-27",
+      "breach_dates": [
+        "2026-07-03",
+        "2026-07-06"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-630390",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-09-29"
+    },
+    {
+      "key": "CA:2026-09-25:onemain-financial-group-llc:2026-05-05|2026-05-08",
+      "jurisdiction": "CA",
+      "organization": "OneMain Financial Group, LLC",
+      "reported_date": "2026-09-25",
+      "breach_dates": [
+        "2026-05-05",
+        "2026-05-08"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-630345",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-09-29"
+    },
+    {
+      "key": "CA:2026-09-25:medimpact-healthcare-systems-inc:2025-10-18",
+      "jurisdiction": "CA",
+      "organization": "MedImpact Healthcare Systems, Inc.",
+      "reported_date": "2026-09-25",
+      "breach_dates": [
+        "2025-10-18"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-630343",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-09-29"
+    },
+    {
+      "key": "CA:2026-09-25:kings-united-way:2026-08-26",
+      "jurisdiction": "CA",
+      "organization": "Kings United Way",
+      "reported_date": "2026-09-25",
+      "breach_dates": [
+        "2026-08-26"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-630314",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-09-29"
+    },
+    {
+      "key": "CA:2026-09-25:gallagher-transport-international-inc:2026-01-11",
+      "jurisdiction": "CA",
+      "organization": "Gallagher Transport International Inc.",
+      "reported_date": "2026-09-25",
+      "breach_dates": [
+        "2026-01-11"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-630300",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-09-29"
+    },
+    {
+      "key": "CA:2026-09-25:financial-administrative-support-services:2025-05-26|2025-06-11",
+      "jurisdiction": "CA",
+      "organization": "Financial Administrative Support Services",
+      "reported_date": "2026-09-25",
+      "breach_dates": [
+        "2025-05-26",
+        "2025-06-11"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-630351",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-09-29"
+    },
+    {
       "key": "CA:2026-09-24:pe-a-and-bromberg:2026-05-07",
       "jurisdiction": "CA",
       "organization": "Peña and Bromberg",
