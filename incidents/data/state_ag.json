@@ -5,6 +5,20 @@
   },
   "filings": [
     {
+      "key": "CA:2026-09-28:san-bernardino-county-on-behalf-of-arrowhead-regional-medical-center:2026-08-28",
+      "jurisdiction": "CA",
+      "organization": "San Bernardino County on behalf of Arrowhead Regional Medical Center",
+      "reported_date": "2026-09-28",
+      "breach_dates": [
+        "2026-08-28"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-630484",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-09-30"
+    },
+    {
       "key": "CA:2026-09-27:upbound-group-inc:2026-07-03|2026-07-06",
       "jurisdiction": "CA",
       "organization": "Upbound Group, Inc.",
