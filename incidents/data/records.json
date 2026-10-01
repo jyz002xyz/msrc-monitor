@@ -264,6 +264,20 @@
           "url": "https://www.rohto.co.jp/news/whatsnew/2026/0915_01"
         }
       ]
+    },
+    {
+      "id": "2026-09-27-jp-9ba0e73f9d",
+      "organization": "スターツ出版株式会社",
+      "type": "unauthorized_access",
+      "recorded_by": "detector",
+      "statements": [
+        {
+          "date": "2026-09-27",
+          "kind": "organization",
+          "source": "スターツ出版株式会社 の発表",
+          "url": "https://starts-pub.jp/info20260927"
+        }
+      ]
     }
   ]
 }
