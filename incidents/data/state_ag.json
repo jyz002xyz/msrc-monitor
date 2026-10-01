@@ -5,6 +5,49 @@
   },
   "filings": [
     {
+      "key": "CA:2026-09-29:poppins-payroll-company:2026-09-03",
+      "jurisdiction": "CA",
+      "organization": "Poppins Payroll Company",
+      "reported_date": "2026-09-29",
+      "breach_dates": [
+        "2026-09-03"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-630541",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-10-01"
+    },
+    {
+      "key": "CA:2026-09-29:city-of-mcminnville:2026-06-01",
+      "jurisdiction": "CA",
+      "organization": "City of McMinnville",
+      "reported_date": "2026-09-29",
+      "breach_dates": [
+        "2026-06-01"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-630525",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-10-01"
+    },
+    {
+      "key": "CA:2026-09-29:challenge-financial-services-inc:2026-08-17|2026-08-18",
+      "jurisdiction": "CA",
+      "organization": "Challenge Financial Services, Inc.",
+      "reported_date": "2026-09-29",
+      "breach_dates": [
+        "2026-08-17",
+        "2026-08-18"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-630536",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-10-01"
+    },
+    {
       "key": "CA:2026-09-28:san-bernardino-county-on-behalf-of-arrowhead-regional-medical-center:2026-08-28",
       "jurisdiction": "CA",
       "organization": "San Bernardino County on behalf of Arrowhead Regional Medical Center",
