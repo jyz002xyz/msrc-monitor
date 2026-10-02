@@ -5,6 +5,64 @@
   },
   "filings": [
     {
+      "key": "CA:2026-09-30:procamps:2026-03-17",
+      "jurisdiction": "CA",
+      "organization": "ProCamps",
+      "reported_date": "2026-09-30",
+      "breach_dates": [
+        "2026-03-17"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-630604",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-10-02"
+    },
+    {
+      "key": "CA:2026-09-30:nishiyamato-academy:2026-03-25|2026-03-28",
+      "jurisdiction": "CA",
+      "organization": "Nishiyamato Academy",
+      "reported_date": "2026-09-30",
+      "breach_dates": [
+        "2026-03-25",
+        "2026-03-28"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-630609",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-10-02"
+    },
+    {
+      "key": "CA:2026-09-30:drivewealth:2026-09-04",
+      "jurisdiction": "CA",
+      "organization": "DriveWealth",
+      "reported_date": "2026-09-30",
+      "breach_dates": [
+        "2026-09-04"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-630619",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-10-02"
+    },
+    {
+      "key": "CA:2026-09-30:american-family-connect-insurance-company:2026-06-30|2026-08-20",
+      "jurisdiction": "CA",
+      "organization": "American Family Connect Insurance Company",
+      "reported_date": "2026-09-30",
+      "breach_dates": [
+        "2026-06-30",
+        "2026-08-20"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-630618",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-10-02"
+    },
+    {
       "key": "CA:2026-09-29:poppins-payroll-company:2026-09-03",
       "jurisdiction": "CA",
       "organization": "Poppins Payroll Company",
