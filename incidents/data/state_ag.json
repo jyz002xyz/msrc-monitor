@@ -5,6 +5,92 @@
   },
   "filings": [
     {
+      "key": "CA:2026-10-02:sheppard-mullin-richter-hampton-llp:2026-08-31",
+      "jurisdiction": "CA",
+      "organization": "Sheppard, Mullin, Richter & Hampton LLP",
+      "reported_date": "2026-10-02",
+      "breach_dates": [
+        "2026-08-31"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-630779",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-10-03"
+    },
+    {
+      "key": "CA:2026-10-02:fragomen-del-rey-bernsen-loewy-llp:2026-05-04|2026-05-05",
+      "jurisdiction": "CA",
+      "organization": "Fragomen, Del Rey, Bernsen & Loewy, LLP",
+      "reported_date": "2026-10-02",
+      "breach_dates": [
+        "2026-05-04",
+        "2026-05-05"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-630760",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-10-03"
+    },
+    {
+      "key": "CA:2026-10-01:marana-health-center:2025-12-18",
+      "jurisdiction": "CA",
+      "organization": "Marana Health Center",
+      "reported_date": "2026-10-01",
+      "breach_dates": [
+        "2025-12-18"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-630668",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-10-03"
+    },
+    {
+      "key": "CA:2026-10-01:lincoln-property-company-commercial-llc:2026-03-24",
+      "jurisdiction": "CA",
+      "organization": "Lincoln Property Company Commercial LLC",
+      "reported_date": "2026-10-01",
+      "breach_dates": [
+        "2026-03-24"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-630678",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-10-03"
+    },
+    {
+      "key": "CA:2026-10-01:greenberg-traurig-llp-gt:2026-08-26",
+      "jurisdiction": "CA",
+      "organization": "Greenberg Traurig, LLP (“GT”)",
+      "reported_date": "2026-10-01",
+      "breach_dates": [
+        "2026-08-26"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-630659",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-10-03"
+    },
+    {
+      "key": "CA:2026-10-01:aldrich-services-llp:2026-08-22|2026-08-23",
+      "jurisdiction": "CA",
+      "organization": "Aldrich Services LLP",
+      "reported_date": "2026-10-01",
+      "breach_dates": [
+        "2026-08-22",
+        "2026-08-23"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-630682",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-10-03"
+    },
+    {
       "key": "CA:2026-09-30:procamps:2026-03-17",
       "jurisdiction": "CA",
       "organization": "ProCamps",
