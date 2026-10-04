@@ -278,6 +278,20 @@
           "url": "https://starts-pub.jp/info20260927"
         }
       ]
+    },
+    {
+      "id": "2026-09-08-jp-d6e14fc4b8",
+      "organization": "株式会社東産業",
+      "type": "unauthorized_access",
+      "recorded_by": "detector",
+      "statements": [
+        {
+          "date": "2026-09-08",
+          "kind": "organization",
+          "source": "株式会社東産業 の発表",
+          "url": "https://www.azuma-mie.co.jp/info/important/unauthorized-access-20260908/"
+        }
+      ]
     }
   ]
 }
