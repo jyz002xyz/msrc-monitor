@@ -5,6 +5,20 @@
   },
   "filings": [
     {
+      "key": "CA:2026-10-05:advantest-america-inc:2026-01-23",
+      "jurisdiction": "CA",
+      "organization": "Advantest America, Inc.",
+      "reported_date": "2026-10-05",
+      "breach_dates": [
+        "2026-01-23"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-630848",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-10-06"
+    },
+    {
       "key": "CA:2026-10-02:sheppard-mullin-richter-hampton-llp:2026-08-31",
       "jurisdiction": "CA",
       "organization": "Sheppard, Mullin, Richter & Hampton LLP",
