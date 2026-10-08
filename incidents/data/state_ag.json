@@ -5,6 +5,21 @@
   },
   "filings": [
     {
+      "key": "CA:2026-10-06:irhythm-technologies-inc:2026-06-03|2026-06-08",
+      "jurisdiction": "CA",
+      "organization": "iRhythm Technologies Inc.",
+      "reported_date": "2026-10-06",
+      "breach_dates": [
+        "2026-06-03",
+        "2026-06-08"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-630879",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-10-08"
+    },
+    {
       "key": "CA:2026-10-05:advantest-america-inc:2026-01-23",
       "jurisdiction": "CA",
       "organization": "Advantest America, Inc.",
