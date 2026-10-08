@@ -6,6 +6,12 @@
       "jurisdiction": "CA",
       "reported_date": "2026-09-21",
       "first_seen": "2026-09-22"
+    },
+    {
+      "hash": "f4000de4ba1173ed17218bc50c294fc833fb023839ac43397446856efc0c67af",
+      "jurisdiction": "CA",
+      "reported_date": "2026-10-06",
+      "first_seen": "2026-10-08"
     }
   ]
 }
