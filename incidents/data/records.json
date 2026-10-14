@@ -292,6 +292,34 @@
           "url": "https://www.azuma-mie.co.jp/info/important/unauthorized-access-20260908/"
         }
       ]
+    },
+    {
+      "id": "2026-09-25-japan",
+      "organization": "Japan合同会社",
+      "type": "unauthorized_access",
+      "recorded_by": "detector",
+      "statements": [
+        {
+          "date": "2026-09-25",
+          "kind": "organization",
+          "source": "Japan合同会社 の発表",
+          "url": "https://www.legoland.jp/operation/news/news-release/news20260925/"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-25-jp-94c823a580",
+      "organization": "株式会社キングプリンターズ",
+      "type": "unauthorized_access",
+      "recorded_by": "detector",
+      "statements": [
+        {
+          "date": "2026-09-25",
+          "kind": "organization",
+          "source": "株式会社キングプリンターズ の発表",
+          "url": "https://kingprinters.com/news/2026/oshirase_20260925"
+        }
+      ]
     }
   ]
 }
