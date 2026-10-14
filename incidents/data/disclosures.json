@@ -2,6 +2,24 @@
   "schema": 1,
   "incidents": [
     {
+      "key": "0002069604:2026-10-07",
+      "cik": "0002069604",
+      "company": "Park Dental Partners, Inc.",
+      "report_date": "2026-10-07",
+      "statements": [
+        {
+          "adsh": "0001104659-26-115541",
+          "filing_date": "2026-10-13",
+          "form": "8-K",
+          "items": [
+            "1.05"
+          ],
+          "url": "https://www.sec.gov/Archives/edgar/data/2069604/000110465926115541/0001104659-26-115541-index.htm",
+          "first_seen": "2026-10-14"
+        }
+      ]
+    },
+    {
       "key": "0001083446:2026-09-22",
       "cik": "0001083446",
       "company": "Astrana Health, Inc.",
