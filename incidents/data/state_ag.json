@@ -5,6 +5,100 @@
   },
   "filings": [
     {
+      "key": "CA:2026-10-14:kern-county-superintendent-of-schools:2026-08-14",
+      "jurisdiction": "CA",
+      "organization": "Kern County Superintendent of Schools",
+      "reported_date": "2026-10-14",
+      "breach_dates": [
+        "2026-08-14"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-631271",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-10-15"
+    },
+    {
+      "key": "CA:2026-10-13:tulare-joint-union-high-school-district:",
+      "jurisdiction": "CA",
+      "organization": "Tulare Joint Union High School District",
+      "reported_date": "2026-10-13",
+      "breach_dates": [],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-631234",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-10-15"
+    },
+    {
+      "key": "CA:2026-10-13:porter-and-company:2026-08-30",
+      "jurisdiction": "CA",
+      "organization": "Porter and Company",
+      "reported_date": "2026-10-13",
+      "breach_dates": [
+        "2026-08-30"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-631249",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-10-15"
+    },
+    {
+      "key": "CA:2026-10-13:magna-hospitality-group:2025-05-22",
+      "jurisdiction": "CA",
+      "organization": "Magna Hospitality Group",
+      "reported_date": "2026-10-13",
+      "breach_dates": [
+        "2025-05-22"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-631245",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-10-15"
+    },
+    {
+      "key": "CA:2026-10-13:jm-bullion-inc:2026-04-12",
+      "jurisdiction": "CA",
+      "organization": "JM Bullion, Inc.",
+      "reported_date": "2026-10-13",
+      "breach_dates": [
+        "2026-04-12"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-631226",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-10-15"
+    },
+    {
+      "key": "CA:2026-10-13:american-board-of-preventive-medicine:2026-03-08",
+      "jurisdiction": "CA",
+      "organization": "American Board of Preventive Medicine",
+      "reported_date": "2026-10-13",
+      "breach_dates": [
+        "2026-03-08"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-631233",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-10-15"
+    },
+    {
+      "key": "CA:2026-10-12:mercadien-p-c-cpas:",
+      "jurisdiction": "CA",
+      "organization": "Mercadien, P.C. CPAs",
+      "reported_date": "2026-10-12",
+      "breach_dates": [],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-631182",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-10-15"
+    },
+    {
       "key": "CA:2026-10-07:alisal-union-schol-district:2026-05-20",
       "jurisdiction": "CA",
       "organization": "Alisal Union Schol District",
