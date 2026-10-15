@@ -5,6 +5,21 @@
   },
   "filings": [
     {
+      "key": "CA:2026-10-15:city-of-foster-city:2026-02-28|2026-03-25",
+      "jurisdiction": "CA",
+      "organization": "City of Foster City",
+      "reported_date": "2026-10-15",
+      "breach_dates": [
+        "2026-02-28",
+        "2026-03-25"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-631363",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-10-15"
+    },
+    {
       "key": "CA:2026-10-14:kern-county-superintendent-of-schools:2026-08-14",
       "jurisdiction": "CA",
       "organization": "Kern County Superintendent of Schools",
@@ -15,6 +30,20 @@
       "affected": null,
       "data_types": null,
       "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-631271",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-10-15"
+    },
+    {
+      "key": "CA:2026-10-14:bdg-law-group:2025-09-11",
+      "jurisdiction": "CA",
+      "organization": "BDG Law Group",
+      "reported_date": "2026-10-14",
+      "breach_dates": [
+        "2025-09-11"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-631323",
       "source_url": "https://oag.ca.gov/privacy/databreach/list",
       "first_seen": "2026-10-15"
     },
