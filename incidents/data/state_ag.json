@@ -5,6 +5,76 @@
   },
   "filings": [
     {
+      "key": "CA:2026-10-16:neuro-wellness-spa:2026-08-24",
+      "jurisdiction": "CA",
+      "organization": "Neuro Wellness Spa",
+      "reported_date": "2026-10-16",
+      "breach_dates": [
+        "2026-08-24"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-631463",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-10-17"
+    },
+    {
+      "key": "CA:2026-10-16:john-g-yphantides-a-professional-law-corporation:",
+      "jurisdiction": "CA",
+      "organization": "John G. Yphantides, a Professional Law Corporation",
+      "reported_date": "2026-10-16",
+      "breach_dates": [],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-631484",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-10-17"
+    },
+    {
+      "key": "CA:2026-10-16:inner-city-education-foundation:2024-08-04|2024-09-29",
+      "jurisdiction": "CA",
+      "organization": "Inner City Education Foundation",
+      "reported_date": "2026-10-16",
+      "breach_dates": [
+        "2024-08-04",
+        "2024-09-29"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-631486",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-10-17"
+    },
+    {
+      "key": "CA:2026-10-16:cde:2026-05-22",
+      "jurisdiction": "CA",
+      "organization": "CDE",
+      "reported_date": "2026-10-16",
+      "breach_dates": [
+        "2026-05-22"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-631485",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-10-17"
+    },
+    {
+      "key": "CA:2026-10-15:mld-mortgage-inc-dba-the-money-store:2026-09-08|2026-09-09",
+      "jurisdiction": "CA",
+      "organization": "MLD Mortgage Inc. dba The Money Store",
+      "reported_date": "2026-10-15",
+      "breach_dates": [
+        "2026-09-08",
+        "2026-09-09"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-631398",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-10-17"
+    },
+    {
       "key": "CA:2026-10-15:city-of-foster-city:2026-02-28|2026-03-25",
       "jurisdiction": "CA",
       "organization": "City of Foster City",
