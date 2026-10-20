@@ -5,6 +5,48 @@
   },
   "filings": [
     {
+      "key": "CA:2026-10-19:sts-aviation-group:2025-08-05",
+      "jurisdiction": "CA",
+      "organization": "STS Aviation Group",
+      "reported_date": "2026-10-19",
+      "breach_dates": [
+        "2025-08-05"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-631565",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-10-20"
+    },
+    {
+      "key": "CA:2026-10-19:citizens-bank:2026-09-10",
+      "jurisdiction": "CA",
+      "organization": "Citizens Bank",
+      "reported_date": "2026-10-19",
+      "breach_dates": [
+        "2026-09-10"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-631520",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-10-20"
+    },
+    {
+      "key": "CA:2026-10-18:stitch-connect-inc:2026-09-18",
+      "jurisdiction": "CA",
+      "organization": "Stitch Connect Inc",
+      "reported_date": "2026-10-18",
+      "breach_dates": [
+        "2026-09-18"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-631514",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-10-20"
+    },
+    {
       "key": "CA:2026-10-16:neuro-wellness-spa:2026-08-24",
       "jurisdiction": "CA",
       "organization": "Neuro Wellness Spa",
@@ -44,6 +86,20 @@
       "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-631486",
       "source_url": "https://oag.ca.gov/privacy/databreach/list",
       "first_seen": "2026-10-17"
+    },
+    {
+      "key": "CA:2026-10-16:frazer-llp:2025-03-25",
+      "jurisdiction": "CA",
+      "organization": "Frazer LLP",
+      "reported_date": "2026-10-16",
+      "breach_dates": [
+        "2025-03-25"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-631503",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-10-20"
     },
     {
       "key": "CA:2026-10-16:cde:2026-05-22",
