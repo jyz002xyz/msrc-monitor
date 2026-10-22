@@ -268,6 +268,20 @@
       "first_seen": "2026-10-10"
     },
     {
+      "key": "WA:BreachA43155",
+      "jurisdiction": "WA",
+      "organization": "iRhythm Technologies Inc.",
+      "reported_date": "2026-10-06",
+      "breach_dates": [
+        "2026-06-03"
+      ],
+      "affected": 220745,
+      "data_types": "Name; Full Date of Birth; Health Insurance Policy or ID Number; Medical Information; Protected Health Information owned or licensed by a HIPAA covered entity",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA43155.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-10-22"
+    },
+    {
       "key": "CA:2026-10-06:irhythm-technologies-inc:2026-06-03|2026-06-08",
       "jurisdiction": "CA",
       "organization": "iRhythm Technologies Inc.",
@@ -439,6 +453,20 @@
       "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-630618",
       "source_url": "https://oag.ca.gov/privacy/databreach/list",
       "first_seen": "2026-10-02"
+    },
+    {
+      "key": "WA:BreachA43076",
+      "jurisdiction": "WA",
+      "organization": "Poppins Payroll Company",
+      "reported_date": "2026-09-29",
+      "breach_dates": [
+        "2026-09-03"
+      ],
+      "affected": 17954,
+      "data_types": "Name; Social Security Number; Financial & Banking Information; Full Date of Birth",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA43076.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-10-22"
     },
     {
       "key": "CA:2026-09-29:poppins-payroll-company:2026-09-03",
