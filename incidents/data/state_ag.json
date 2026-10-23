@@ -5,6 +5,78 @@
   },
   "filings": [
     {
+      "key": "CA:2026-10-22:opportune-llp:2026-06-22",
+      "jurisdiction": "CA",
+      "organization": "Opportune LLP",
+      "reported_date": "2026-10-22",
+      "breach_dates": [
+        "2026-06-22"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-631707",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-10-23"
+    },
+    {
+      "key": "CA:2026-10-22:deposition-solutions-llc-d-b-a-lexitas:2019-09-01",
+      "jurisdiction": "CA",
+      "organization": "Deposition Solutions, LLC (d/b/a Lexitas)",
+      "reported_date": "2026-10-22",
+      "breach_dates": [
+        "2019-09-01"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-631701",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-10-23"
+    },
+    {
+      "key": "CA:2026-10-21:dorsata-inc:2026-08-10|2026-08-12",
+      "jurisdiction": "CA",
+      "organization": "Dorsata, Inc.",
+      "reported_date": "2026-10-21",
+      "breach_dates": [
+        "2026-08-10",
+        "2026-08-12"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-631691",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-10-23"
+    },
+    {
+      "key": "CA:2026-10-20:toyo-tire-holdings-of-americas-inc:2026-01-06|2026-02-04",
+      "jurisdiction": "CA",
+      "organization": "Toyo Tire Holdings of Americas Inc.",
+      "reported_date": "2026-10-20",
+      "breach_dates": [
+        "2026-01-06",
+        "2026-02-04"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-631594",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-10-23"
+    },
+    {
+      "key": "CA:2026-10-20:mercadien-p-c-cpas:2025-09-17",
+      "jurisdiction": "CA",
+      "organization": "Mercadien, P.C. CPAs",
+      "reported_date": "2026-10-20",
+      "breach_dates": [
+        "2025-09-17"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-631642",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-10-23"
+    },
+    {
       "key": "CA:2026-10-19:sts-aviation-group:2025-08-05",
       "jurisdiction": "CA",
       "organization": "STS Aviation Group",
@@ -31,6 +103,20 @@
       "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-631520",
       "source_url": "https://oag.ca.gov/privacy/databreach/list",
       "first_seen": "2026-10-20"
+    },
+    {
+      "key": "CA:2026-10-19:alma-family-services:2026-07-09",
+      "jurisdiction": "CA",
+      "organization": "Alma Family Services",
+      "reported_date": "2026-10-19",
+      "breach_dates": [
+        "2026-07-09"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-631591",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-10-23"
     },
     {
       "key": "CA:2026-10-18:stitch-connect-inc:2026-09-18",
