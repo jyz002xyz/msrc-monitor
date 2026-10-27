@@ -288,6 +288,34 @@
       "first_seen": "2026-10-15"
     },
     {
+      "key": "WA:BreachM25855",
+      "jurisdiction": "WA",
+      "organization": "DriveWealth, LLC",
+      "reported_date": "2026-10-13",
+      "breach_dates": [
+        "2026-09-04"
+      ],
+      "affected": 358104,
+      "data_types": "Name; Social Security Number; Financial & Banking Information; Full Date of Birth",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachM25855.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-10-27"
+    },
+    {
+      "key": "WA:BreachA43274",
+      "jurisdiction": "WA",
+      "organization": "JM Bullion, Inc. (Silver.com, ProvidentMetals.com)",
+      "reported_date": "2026-10-13",
+      "breach_dates": [
+        "2026-04-12"
+      ],
+      "affected": 2366,
+      "data_types": "Name; Social Security Number; Driver's License or Washington ID Card Number; Financial & Banking Information; Full Date of Birth",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA43274.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-10-27"
+    },
+    {
       "key": "CA:2026-10-13:tulare-joint-union-high-school-district:",
       "jurisdiction": "CA",
       "organization": "Tulare Joint Union High School District",
@@ -925,6 +953,34 @@
       "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-629948",
       "source_url": "https://oag.ca.gov/privacy/databreach/list",
       "first_seen": "2026-09-18"
+    },
+    {
+      "key": "WA:BreachA42871",
+      "jurisdiction": "WA",
+      "organization": "CallonDoc, Inc.",
+      "reported_date": "2026-09-17",
+      "breach_dates": [
+        "2025-12-22"
+      ],
+      "affected": 12186,
+      "data_types": "Name; Medical Information; Protected Health Information owned or licensed by a HIPAA covered entity",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA42871.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-10-27"
+    },
+    {
+      "key": "WA:BreachA42865",
+      "jurisdiction": "WA",
+      "organization": "Boston Capital Holdings LP",
+      "reported_date": "2026-09-17",
+      "breach_dates": [
+        "2026-01-16"
+      ],
+      "affected": 1355,
+      "data_types": "Name; Social Security Number; Driver's License or Washington ID Card Number",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA42865.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-10-27"
     },
     {
       "key": "CA:2026-09-17:partnership-healthplan-of-california:2026-05-13|2026-07-07",
