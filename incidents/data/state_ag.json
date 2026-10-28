@@ -5,6 +5,48 @@
   },
   "filings": [
     {
+      "key": "CA:2026-10-26:usforex-inc:2026-09-28",
+      "jurisdiction": "CA",
+      "organization": "USForex Inc.",
+      "reported_date": "2026-10-26",
+      "breach_dates": [
+        "2026-09-28"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-631909",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-10-28"
+    },
+    {
+      "key": "CA:2026-10-23:navigate-360-llc:2025-11-21",
+      "jurisdiction": "CA",
+      "organization": "Navigate 360, LLC",
+      "reported_date": "2026-10-23",
+      "breach_dates": [
+        "2025-11-21"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-631813",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-10-28"
+    },
+    {
+      "key": "CA:2026-10-23:apollo-management-holdings-l-p:2026-07-06",
+      "jurisdiction": "CA",
+      "organization": "Apollo Management Holdings, L.P.",
+      "reported_date": "2026-10-23",
+      "breach_dates": [
+        "2026-07-06"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-631823",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-10-28"
+    },
+    {
       "key": "CA:2026-10-22:opportune-llp:2026-06-22",
       "jurisdiction": "CA",
       "organization": "Opportune LLP",
