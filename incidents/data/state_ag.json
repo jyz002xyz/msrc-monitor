@@ -5,6 +5,150 @@
   },
   "filings": [
     {
+      "key": "CA:2026-10-29:del-monte-foods-corporation-ii-inc:2026-02-07",
+      "jurisdiction": "CA",
+      "organization": "Del Monte Foods Corporation II Inc.",
+      "reported_date": "2026-10-29",
+      "breach_dates": [
+        "2026-02-07"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-632046",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-10-30"
+    },
+    {
+      "key": "CA:2026-10-29:bangkok-bank-pcl-new-york-branch:2025-09-17",
+      "jurisdiction": "CA",
+      "organization": "Bangkok Bank PCL - New York Branch",
+      "reported_date": "2026-10-29",
+      "breach_dates": [
+        "2025-09-17"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-632047",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-10-30"
+    },
+    {
+      "key": "CA:2026-10-28:troutman-pepper-locke-llp:2026-08-07",
+      "jurisdiction": "CA",
+      "organization": "Troutman Pepper Locke LLP",
+      "reported_date": "2026-10-28",
+      "breach_dates": [
+        "2026-08-07"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-632020",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-10-30"
+    },
+    {
+      "key": "CA:2026-10-28:photon-health:2026-08-10|2026-08-10",
+      "jurisdiction": "CA",
+      "organization": "Photon Health",
+      "reported_date": "2026-10-28",
+      "breach_dates": [
+        "2026-08-10",
+        "2026-08-10"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-632026",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-10-30"
+    },
+    {
+      "key": "CA:2026-10-27:tradier-brokerage-inc:2026-08-28",
+      "jurisdiction": "CA",
+      "organization": "Tradier Brokerage Inc.",
+      "reported_date": "2026-10-27",
+      "breach_dates": [
+        "2026-08-28"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-631975",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-10-30"
+    },
+    {
+      "key": "CA:2026-10-27:sarasota-us-topco-inc-d-b-a-sarku-japan-sarku:2026-09-07",
+      "jurisdiction": "CA",
+      "organization": "Sarasota US Topco, Inc. d/b/a Sarku Japan (“Sarku”)",
+      "reported_date": "2026-10-27",
+      "breach_dates": [
+        "2026-09-07"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-631954",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-10-30"
+    },
+    {
+      "key": "CA:2026-10-27:indico-data-solutions:2026-05-05",
+      "jurisdiction": "CA",
+      "organization": "Indico Data Solutions",
+      "reported_date": "2026-10-27",
+      "breach_dates": [
+        "2026-05-05"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-631972",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-10-30"
+    },
+    {
+      "key": "CA:2026-10-27:hitec-group-usa:2026-09-13|2026-09-17",
+      "jurisdiction": "CA",
+      "organization": "Hitec Group USA",
+      "reported_date": "2026-10-27",
+      "breach_dates": [
+        "2026-09-13",
+        "2026-09-17"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-631984",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-10-30"
+    },
+    {
+      "key": "CA:2026-10-27:directed-trust-company:2026-07-04|2026-07-07",
+      "jurisdiction": "CA",
+      "organization": "Directed Trust Company",
+      "reported_date": "2026-10-27",
+      "breach_dates": [
+        "2026-07-04",
+        "2026-07-07"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-631968",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-10-30"
+    },
+    {
+      "key": "CA:2026-10-27:baker-mckenzie-llp:2026-08-14|2026-08-17",
+      "jurisdiction": "CA",
+      "organization": "Baker & McKenzie LLP",
+      "reported_date": "2026-10-27",
+      "breach_dates": [
+        "2026-08-14",
+        "2026-08-17"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-631961",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-10-30"
+    },
+    {
       "key": "CA:2026-10-26:usforex-inc:2026-09-28",
       "jurisdiction": "CA",
       "organization": "USForex Inc.",
