@@ -5,6 +5,150 @@
   },
   "filings": [
     {
+      "key": "CA:2026-10-30:the-nueva-school:2026-06-13",
+      "jurisdiction": "CA",
+      "organization": "The Nueva School",
+      "reported_date": "2026-10-30",
+      "breach_dates": [
+        "2026-06-13"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-632155",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-03"
+    },
+    {
+      "key": "CA:2026-10-30:nch-corporation:2026-01-21|2026-02-25",
+      "jurisdiction": "CA",
+      "organization": "NCH Corporation",
+      "reported_date": "2026-10-30",
+      "breach_dates": [
+        "2026-01-21",
+        "2026-02-25"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-632143",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-03"
+    },
+    {
+      "key": "CA:2026-10-30:eyemed-vision-care-llc:2026-09-22",
+      "jurisdiction": "CA",
+      "organization": "EyeMed Vision Care, LLC",
+      "reported_date": "2026-10-30",
+      "breach_dates": [
+        "2026-09-22"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-632203",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-03"
+    },
+    {
+      "key": "CA:2026-10-30:el-camino-health:2026-08-26|2026-09-02",
+      "jurisdiction": "CA",
+      "organization": "El Camino Health",
+      "reported_date": "2026-10-30",
+      "breach_dates": [
+        "2026-08-26",
+        "2026-09-02"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-632177",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-03"
+    },
+    {
+      "key": "CA:2026-10-30:central-ohio-primary-care-physicians-inc-copc:2026-08-17|2026-08-25",
+      "jurisdiction": "CA",
+      "organization": "Central Ohio Primary Care Physicians, Inc. (COPC)",
+      "reported_date": "2026-10-30",
+      "breach_dates": [
+        "2026-08-17",
+        "2026-08-25"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-632142",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-03"
+    },
+    {
+      "key": "CA:2026-10-30:baanx-us-corp:2026-09-23",
+      "jurisdiction": "CA",
+      "organization": "Baanx US Corp.",
+      "reported_date": "2026-10-30",
+      "breach_dates": [
+        "2026-09-23"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-632197",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-03"
+    },
+    {
+      "key": "CA:2026-10-30:aesto-llc:2025-12-02|2025-12-18",
+      "jurisdiction": "CA",
+      "organization": "Aesto, LLC",
+      "reported_date": "2026-10-30",
+      "breach_dates": [
+        "2025-12-02",
+        "2025-12-18"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-632148",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-03"
+    },
+    {
+      "key": "CA:2026-10-29:revolve-group-inc:2026-09-11",
+      "jurisdiction": "CA",
+      "organization": "Revolve Group, Inc.",
+      "reported_date": "2026-10-29",
+      "breach_dates": [
+        "2026-09-11"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-632070",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-03"
+    },
+    {
+      "key": "CA:2026-10-29:marathon-health:2026-08-24",
+      "jurisdiction": "CA",
+      "organization": "Marathon Health",
+      "reported_date": "2026-10-29",
+      "breach_dates": [
+        "2026-08-24"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-632110",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-03"
+    },
+    {
+      "key": "CA:2026-10-29:hca-healthcare-inc:2026-08-12",
+      "jurisdiction": "CA",
+      "organization": "HCA Healthcare, Inc.",
+      "reported_date": "2026-10-29",
+      "breach_dates": [
+        "2026-08-12"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-632064",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-03"
+    },
+    {
       "key": "CA:2026-10-29:del-monte-foods-corporation-ii-inc:2026-02-07",
       "jurisdiction": "CA",
       "organization": "Del Monte Foods Corporation II Inc.",
@@ -17,6 +161,18 @@
       "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-632046",
       "source_url": "https://oag.ca.gov/privacy/databreach/list",
       "first_seen": "2026-10-30"
+    },
+    {
+      "key": "CA:2026-10-29:blossom-bh-opco-inc:",
+      "jurisdiction": "CA",
+      "organization": "Blossom BH Opco Inc.",
+      "reported_date": "2026-10-29",
+      "breach_dates": [],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-632068",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-03"
     },
     {
       "key": "CA:2026-10-29:bangkok-bank-pcl-new-york-branch:2025-09-17",
