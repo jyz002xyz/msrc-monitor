@@ -320,6 +320,48 @@
           "url": "https://kingprinters.com/news/2026/oshirase_20260925"
         }
       ]
+    },
+    {
+      "id": "2026-10-26-jp-f85a70a716",
+      "organization": "楽天グループ株式会社",
+      "type": "unauthorized_access",
+      "recorded_by": "detector",
+      "statements": [
+        {
+          "date": "2026-10-26",
+          "kind": "organization",
+          "source": "楽天グループ株式会社 の発表",
+          "url": "https://travel.rakuten.co.jp/info/announce/20261026.html"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-27-jp-42fdcda766",
+      "organization": "ユミルリンク株式会社",
+      "type": "unauthorized_access",
+      "recorded_by": "detector",
+      "statements": [
+        {
+          "date": "2026-10-27",
+          "kind": "organization",
+          "source": "ユミルリンク株式会社 の発表",
+          "url": "https://www.ymir.co.jp/info/ymir-information20261027.html"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-16-ds",
+      "organization": "三井住友DSアセットマネジメント株式会社",
+      "type": "unauthorized_access",
+      "recorded_by": "detector",
+      "statements": [
+        {
+          "date": "2026-10-16",
+          "kind": "organization",
+          "source": "三井住友DSアセットマネジメント株式会社 の発表",
+          "url": "https://www.smd-am.co.jp/news/news/2026/news_20261016/"
+        }
+      ]
     }
   ]
 }
