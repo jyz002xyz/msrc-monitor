@@ -362,6 +362,20 @@
           "url": "https://www.smd-am.co.jp/news/news/2026/news_20261016/"
         }
       ]
+    },
+    {
+      "id": "2026-10-29-elestyle",
+      "organization": "ELESTYLE株式会社",
+      "type": "unauthorized_access",
+      "recorded_by": "detector",
+      "statements": [
+        {
+          "date": "2026-10-29",
+          "kind": "organization",
+          "source": "ELESTYLE株式会社 の発表",
+          "url": "https://elestyle.jp/20261029-report"
+        }
+      ]
     }
   ]
 }
