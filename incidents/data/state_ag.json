@@ -5,6 +5,50 @@
   },
   "filings": [
     {
+      "key": "CA:2026-11-02:university-of-mississippi-medical-center-ummc:2026-02-11|2026-02-19",
+      "jurisdiction": "CA",
+      "organization": "University of Mississippi Medical Center (“UMMC”)",
+      "reported_date": "2026-11-02",
+      "breach_dates": [
+        "2026-02-11",
+        "2026-02-19"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-632265",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-04"
+    },
+    {
+      "key": "CA:2026-11-02:dreamhost-llc:2026-08-15",
+      "jurisdiction": "CA",
+      "organization": "DreamHost, LLC",
+      "reported_date": "2026-11-02",
+      "breach_dates": [
+        "2026-08-15"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-632268",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-04"
+    },
+    {
+      "key": "CA:2026-11-02:cotton-incorporated:2026-09-18|2026-10-15",
+      "jurisdiction": "CA",
+      "organization": "Cotton Incorporated",
+      "reported_date": "2026-11-02",
+      "breach_dates": [
+        "2026-09-18",
+        "2026-10-15"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-632247",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-04"
+    },
+    {
       "key": "CA:2026-10-30:the-nueva-school:2026-06-13",
       "jurisdiction": "CA",
       "organization": "The Nueva School",
