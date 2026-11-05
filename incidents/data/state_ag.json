@@ -5,6 +5,60 @@
   },
   "filings": [
     {
+      "key": "CA:2026-11-03:upland-unified-school-district:2026-07-02",
+      "jurisdiction": "CA",
+      "organization": "Upland Unified School District",
+      "reported_date": "2026-11-03",
+      "breach_dates": [
+        "2026-07-02"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-632351",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-05"
+    },
+    {
+      "key": "CA:2026-11-03:peninsula-corridor-joint-powers-board-caltrain:",
+      "jurisdiction": "CA",
+      "organization": "Peninsula Corridor Joint Powers Board (Caltrain)",
+      "reported_date": "2026-11-03",
+      "breach_dates": [],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-632297",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-05"
+    },
+    {
+      "key": "CA:2026-11-03:hippo-analytics-inc:2025-01-30",
+      "jurisdiction": "CA",
+      "organization": "Hippo Analytics Inc.",
+      "reported_date": "2026-11-03",
+      "breach_dates": [
+        "2025-01-30"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-632296",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-05"
+    },
+    {
+      "key": "CA:2026-11-03:center-theatre-group-of-los-angeles:2026-07-27",
+      "jurisdiction": "CA",
+      "organization": "Center Theatre Group of Los Angeles",
+      "reported_date": "2026-11-03",
+      "breach_dates": [
+        "2026-07-27"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-632320",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-05"
+    },
+    {
       "key": "CA:2026-11-02:university-of-mississippi-medical-center-ummc:2026-02-11|2026-02-19",
       "jurisdiction": "CA",
       "organization": "University of Mississippi Medical Center (“UMMC”)",
