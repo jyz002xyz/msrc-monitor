@@ -5,6 +5,49 @@
   },
   "filings": [
     {
+      "key": "CA:2026-11-04:yu-ming-charter-school:2026-05-22",
+      "jurisdiction": "CA",
+      "organization": "Yu Ming Charter School",
+      "reported_date": "2026-11-04",
+      "breach_dates": [
+        "2026-05-22"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-632412",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-06"
+    },
+    {
+      "key": "CA:2026-11-04:revspring-inc:2026-05-15|2026-06-01",
+      "jurisdiction": "CA",
+      "organization": "RevSpring, Inc.",
+      "reported_date": "2026-11-04",
+      "breach_dates": [
+        "2026-05-15",
+        "2026-06-01"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-632404",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-06"
+    },
+    {
+      "key": "CA:2026-11-04:hoag-memorial-hospital-presbyterian:2026-10-08",
+      "jurisdiction": "CA",
+      "organization": "Hoag Memorial Hospital Presbyterian",
+      "reported_date": "2026-11-04",
+      "breach_dates": [
+        "2026-10-08"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-632407",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-06"
+    },
+    {
       "key": "CA:2026-11-03:upland-unified-school-district:2026-07-02",
       "jurisdiction": "CA",
       "organization": "Upland Unified School District",
@@ -342,6 +385,21 @@
       "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-631954",
       "source_url": "https://oag.ca.gov/privacy/databreach/list",
       "first_seen": "2026-10-30"
+    },
+    {
+      "key": "CA:2026-10-27:quantum-health-inc:2026-05-29|2026-06-01",
+      "jurisdiction": "CA",
+      "organization": "Quantum Health, Inc.",
+      "reported_date": "2026-10-27",
+      "breach_dates": [
+        "2026-05-29",
+        "2026-06-01"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-631987",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-06"
     },
     {
       "key": "CA:2026-10-27:indico-data-solutions:2026-05-05",
