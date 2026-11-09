@@ -404,6 +404,34 @@
           "url": "https://www.club-tourism.co.jp/jpn/news/2026/1031/"
         }
       ]
+    },
+    {
+      "id": "2026-11-06-jp-e5fa785779",
+      "organization": "株式会社セレス",
+      "type": "unauthorized_access",
+      "recorded_by": "detector",
+      "statements": [
+        {
+          "date": "2026-11-06",
+          "kind": "organization",
+          "source": "株式会社セレス の発表",
+          "url": "https://ceres-inc.jp/news/detail/20261106-2/"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-28-jp-f9009b3c7b",
+      "organization": "花キューピット株式会社",
+      "type": "unauthorized_access",
+      "recorded_by": "detector",
+      "statements": [
+        {
+          "date": "2026-10-28",
+          "kind": "organization",
+          "source": "花キューピット株式会社 の発表",
+          "url": "https://www.hana-cupid.co.jp/news/news/20261028/"
+        }
+      ]
     }
   ]
 }
