@@ -5,6 +5,105 @@
   },
   "filings": [
     {
+      "key": "CA:2026-11-09:telecare-health:2026-01-25",
+      "jurisdiction": "CA",
+      "organization": "Telecare Health",
+      "reported_date": "2026-11-09",
+      "breach_dates": [
+        "2026-01-25"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-632613",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-10"
+    },
+    {
+      "key": "CA:2026-11-06:usa-waste-management-resources-llc:2026-06-17",
+      "jurisdiction": "CA",
+      "organization": "USA Waste-Management Resources, LLC",
+      "reported_date": "2026-11-06",
+      "breach_dates": [
+        "2026-06-17"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-632489",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-10"
+    },
+    {
+      "key": "CA:2026-11-06:santa-barbara-endodontics:2026-10-07",
+      "jurisdiction": "CA",
+      "organization": "Santa Barbara Endodontics",
+      "reported_date": "2026-11-06",
+      "breach_dates": [
+        "2026-10-07"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-632514",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-10"
+    },
+    {
+      "key": "CA:2026-11-06:premise-health-holding-corp:2026-03-26|2026-03-30",
+      "jurisdiction": "CA",
+      "organization": "Premise Health Holding Corp.",
+      "reported_date": "2026-11-06",
+      "breach_dates": [
+        "2026-03-26",
+        "2026-03-30"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-632548",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-10"
+    },
+    {
+      "key": "CA:2026-11-06:hollister-family-dental-implant-center:2026-02-12",
+      "jurisdiction": "CA",
+      "organization": "Hollister Family Dental & Implant Center",
+      "reported_date": "2026-11-06",
+      "breach_dates": [
+        "2026-02-12"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-632575",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-10"
+    },
+    {
+      "key": "CA:2026-11-06:eureka-city-schools:2026-09-25",
+      "jurisdiction": "CA",
+      "organization": "Eureka City Schools",
+      "reported_date": "2026-11-06",
+      "breach_dates": [
+        "2026-09-25"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-632552",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-10"
+    },
+    {
+      "key": "CA:2026-11-06:enara-health-inc:2026-09-10",
+      "jurisdiction": "CA",
+      "organization": "Enara Health, Inc.",
+      "reported_date": "2026-11-06",
+      "breach_dates": [
+        "2026-09-10"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-632519",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-10"
+    },
+    {
       "key": "WA:BreachA43651",
       "jurisdiction": "WA",
       "organization": "Hands On Children’s Museum",
@@ -17,6 +116,48 @@
       "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA43651.pdf",
       "source_url": "https://www.atg.wa.gov/data-breach-notifications",
       "first_seen": "2026-11-09"
+    },
+    {
+      "key": "CA:2026-11-05:ufp-technologies-inc:2026-02-11",
+      "jurisdiction": "CA",
+      "organization": "UFP Technologies Inc.",
+      "reported_date": "2026-11-05",
+      "breach_dates": [
+        "2026-02-11"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-632469",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-10"
+    },
+    {
+      "key": "CA:2026-11-05:park-dental-partners-inc:2026-08-26",
+      "jurisdiction": "CA",
+      "organization": "Park Dental Partners, Inc.",
+      "reported_date": "2026-11-05",
+      "breach_dates": [
+        "2026-08-26"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-632486",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-10"
+    },
+    {
+      "key": "CA:2026-11-05:amplifon-usa-inc:2026-01-18",
+      "jurisdiction": "CA",
+      "organization": "Amplifon (USA), Inc.",
+      "reported_date": "2026-11-05",
+      "breach_dates": [
+        "2026-01-18"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-632484",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-10"
     },
     {
       "key": "WA:BreachA43628",
@@ -276,6 +417,48 @@
       "first_seen": "2026-11-03"
     },
     {
+      "key": "WA:BreachA43565",
+      "jurisdiction": "WA",
+      "organization": "Revolve Group, Inc. (Revolve.com, FWRD.com)",
+      "reported_date": "2026-10-29",
+      "breach_dates": [
+        "2026-09-11"
+      ],
+      "affected": 24859,
+      "data_types": "Name; Financial & Banking Information",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA43565.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-11-10"
+    },
+    {
+      "key": "WA:BreachA43554",
+      "jurisdiction": "WA",
+      "organization": "Hippo Analytics Inc.",
+      "reported_date": "2026-10-29",
+      "breach_dates": [
+        "2025-01-30"
+      ],
+      "affected": 4053,
+      "data_types": "Name; Driver's License or Washington ID Card Number; Full Date of Birth",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA43554.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-11-10"
+    },
+    {
+      "key": "WA:BreachA43547",
+      "jurisdiction": "WA",
+      "organization": "Del Monte Foods Corporation II Inc.",
+      "reported_date": "2026-10-29",
+      "breach_dates": [
+        "2026-02-07"
+      ],
+      "affected": 4821,
+      "data_types": "Name; Social Security Number; Driver's License or Washington ID Card Number; Financial & Banking Information; Full Date of Birth; Passport Number; Health Insurance Policy or ID Number; Medical Information",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA43547.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-11-10"
+    },
+    {
       "key": "CA:2026-10-29:revolve-group-inc:2026-09-11",
       "jurisdiction": "CA",
       "organization": "Revolve Group, Inc.",
@@ -385,6 +568,20 @@
       "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-632026",
       "source_url": "https://oag.ca.gov/privacy/databreach/list",
       "first_seen": "2026-10-30"
+    },
+    {
+      "key": "WA:BreachA43518",
+      "jurisdiction": "WA",
+      "organization": "Quantum Health, Inc.",
+      "reported_date": "2026-10-27",
+      "breach_dates": [
+        "2026-05-29"
+      ],
+      "affected": 15321,
+      "data_types": "Name; Social Security Number; Health Insurance Policy or ID Number; Medical Information",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA43518.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-11-10"
     },
     {
       "key": "CA:2026-10-27:tradier-brokerage-inc:2026-08-28",
@@ -1209,6 +1406,20 @@
       "first_seen": "2026-09-29"
     },
     {
+      "key": "WA:BreachA43005",
+      "jurisdiction": "WA",
+      "organization": "Gallagher Transport International Inc.",
+      "reported_date": "2026-09-25",
+      "breach_dates": [
+        "2026-01-11"
+      ],
+      "affected": 1554,
+      "data_types": "Name; Social Security Number; Driver's License or Washington ID Card Number; Financial & Banking Information; Full Date of Birth; Passport Number; Biometric Data",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA43005.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-11-10"
+    },
+    {
       "key": "CA:2026-09-25:onemain-financial-group-llc:2026-05-05|2026-05-08",
       "jurisdiction": "CA",
       "organization": "OneMain Financial Group, LLC",
@@ -1380,6 +1591,18 @@
       "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-630126",
       "source_url": "https://oag.ca.gov/privacy/databreach/list",
       "first_seen": "2026-09-25"
+    },
+    {
+      "key": "WA:BreachM25854",
+      "jurisdiction": "WA",
+      "organization": "Friesen Group",
+      "reported_date": "2026-09-21",
+      "breach_dates": [],
+      "affected": 38,
+      "data_types": "Name; Health Insurance Policy or ID Number; Medical Information",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachM25854.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-11-10"
     },
     {
       "key": "WA:BreachA42913",
