@@ -432,6 +432,34 @@
           "url": "https://www.hana-cupid.co.jp/news/news/20261028/"
         }
       ]
+    },
+    {
+      "id": "2026-11-05-jp-aeb3da7985",
+      "organization": "東京海上ダイレクト損害保険株式会社",
+      "type": "unauthorized_access",
+      "recorded_by": "detector",
+      "statements": [
+        {
+          "date": "2026-11-05",
+          "kind": "organization",
+          "source": "東京海上ダイレクト損害保険株式会社 の発表",
+          "url": "https://www.e-design.net/company/news/2026/2026_11_05.html"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-29-mono",
+      "organization": "株式会社MONO",
+      "type": "unauthorized_access",
+      "recorded_by": "detector",
+      "statements": [
+        {
+          "date": "2026-10-29",
+          "kind": "organization",
+          "source": "株式会社MONO の発表",
+          "url": "https://monoinv.com/news/newsrelease-20261029/"
+        }
+      ]
     }
   ]
 }
