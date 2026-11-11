@@ -5,6 +5,20 @@
   },
   "filings": [
     {
+      "key": "WA:BreachA43699",
+      "jurisdiction": "WA",
+      "organization": "Telecare Health",
+      "reported_date": "2026-11-09",
+      "breach_dates": [
+        "2026-01-25"
+      ],
+      "affected": 19922,
+      "data_types": "Name; Social Security Number; Driver's License or Washington ID Card Number; Health Insurance Policy or ID Number; Medical Information",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA43699.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-11-11"
+    },
+    {
       "key": "CA:2026-11-09:telecare-health:2026-01-25",
       "jurisdiction": "CA",
       "organization": "Telecare Health",
@@ -17,6 +31,77 @@
       "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-632613",
       "source_url": "https://oag.ca.gov/privacy/databreach/list",
       "first_seen": "2026-11-10"
+    },
+    {
+      "key": "CA:2026-11-09:kalahari-management-co-llc:2026-10-09",
+      "jurisdiction": "CA",
+      "organization": "Kalahari Management Co. LLC",
+      "reported_date": "2026-11-09",
+      "breach_dates": [
+        "2026-10-09"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-632685",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-11"
+    },
+    {
+      "key": "CA:2026-11-09:dorsata-inc:2026-08-10",
+      "jurisdiction": "CA",
+      "organization": "Dorsata, Inc.",
+      "reported_date": "2026-11-09",
+      "breach_dates": [
+        "2026-08-10"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-632664",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-11"
+    },
+    {
+      "key": "CA:2026-11-09:cornick-garber-sandler-llp:2025-02-14|2025-03-26",
+      "jurisdiction": "CA",
+      "organization": "Cornick, Garber & Sandler, LLP",
+      "reported_date": "2026-11-09",
+      "breach_dates": [
+        "2025-02-14",
+        "2025-03-26"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-632678",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-11"
+    },
+    {
+      "key": "CA:2026-11-09:baker-tilly-advisory-group-lp:2026-09-02",
+      "jurisdiction": "CA",
+      "organization": "Baker Tilly Advisory Group, LP",
+      "reported_date": "2026-11-09",
+      "breach_dates": [
+        "2026-09-02"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-632686",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-11"
+    },
+    {
+      "key": "WA:BreachA43681",
+      "jurisdiction": "WA",
+      "organization": "Premise Health Holding Corp",
+      "reported_date": "2026-11-06",
+      "breach_dates": [
+        "2026-03-26"
+      ],
+      "affected": 49444,
+      "data_types": "Name; Social Security Number; Full Date of Birth; Health Insurance Policy or ID Number; Medical Information; Protected Health Information owned or licensed by a HIPAA covered entity",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA43681.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-11-11"
     },
     {
       "key": "CA:2026-11-06:usa-waste-management-resources-llc:2026-06-17",
@@ -102,6 +187,20 @@
       "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-632519",
       "source_url": "https://oag.ca.gov/privacy/databreach/list",
       "first_seen": "2026-11-10"
+    },
+    {
+      "key": "WA:BreachM26199",
+      "jurisdiction": "WA",
+      "organization": "Amplifon (USA), Inc.",
+      "reported_date": "2026-11-05",
+      "breach_dates": [
+        "2026-01-18"
+      ],
+      "affected": 8491,
+      "data_types": "Name; Social Security Number; Driver's License or Washington ID Card Number; Financial & Banking Information; Full Date of Birth; Health Insurance Policy or ID Number; Medical Information; Other",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachM26199.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-11-11"
     },
     {
       "key": "WA:BreachA43651",
@@ -698,6 +797,20 @@
       "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-631909",
       "source_url": "https://oag.ca.gov/privacy/databreach/list",
       "first_seen": "2026-10-28"
+    },
+    {
+      "key": "WA:BreachA43474",
+      "jurisdiction": "WA",
+      "organization": "Navigate360, LLC",
+      "reported_date": "2026-10-23",
+      "breach_dates": [
+        "2026-11-21"
+      ],
+      "affected": 7887,
+      "data_types": "Name; Social Security Number; Driver's License or Washington ID Card Number; Full Date of Birth; Passport Number; Medical Information",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA43474.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-11-11"
     },
     {
       "key": "CA:2026-10-23:navigate-360-llc:2025-11-21",
@@ -1404,6 +1517,34 @@
       "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-630390",
       "source_url": "https://oag.ca.gov/privacy/databreach/list",
       "first_seen": "2026-09-29"
+    },
+    {
+      "key": "WA:BreachA43017",
+      "jurisdiction": "WA",
+      "organization": "Greenberg Traurig, LLP (“GT”)",
+      "reported_date": "2026-09-26",
+      "breach_dates": [
+        "2026-08-26"
+      ],
+      "affected": 642,
+      "data_types": "Name; Social Security Number; Full Date of Birth; Other",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA43017.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-11-11"
+    },
+    {
+      "key": "WA:BreachA43016",
+      "jurisdiction": "WA",
+      "organization": "MedImpact Healthcare Systems, Inc.",
+      "reported_date": "2026-09-26",
+      "breach_dates": [
+        "2025-10-18"
+      ],
+      "affected": 3926,
+      "data_types": "Name; Social Security Number; Full Date of Birth; Health Insurance Policy or ID Number; Medical Information; Protected Health Information owned or licensed by a HIPAA covered entity",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA43016.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-11-11"
     },
     {
       "key": "WA:BreachA43005",
