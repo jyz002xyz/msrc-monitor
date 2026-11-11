@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>改訂ノート — 2026年9月レポート / Revision note — MSRC Vulnerability Trend Report</title>
+<meta name="description" content="2026年9月 MSRC 脆弱性トレンドレポートの公開後改訂ノート。">
+<style>
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Hiragino Kaku Gothic ProN','Noto Sans JP',Meiryo,sans-serif;margin:0;color:#222;background:#f5f6f8}
+.topbar{position:sticky;top:0;background:#1f3864;color:#fff;padding:12px 16px;display:flex;justify-content:space-between;align-items:center}
+.topbar a{color:#fff;text-decoration:none}.topbar a:hover{text-decoration:underline}
+.wrap{max-width:760px;margin:0 auto;padding:32px 20px}
+h1{color:#1f3864;font-size:22px;margin:0 0 6px}
+h2{color:#1f3864;font-size:16px;margin:26px 0 8px;border-bottom:1px solid #e3e6ea;padding-bottom:4px}
+.sub{color:#555;font-size:14px;margin:0 0 8px}
+.card{background:#fff;border-radius:10px;box-shadow:0 2px 12px rgba(0,0,0,.06);padding:20px 22px;margin:16px 0}
+.banner{background:#fff3cd;border:1px solid #ffe69c;color:#664d03;border-radius:8px;padding:10px 14px;font-size:13px;margin:0 0 16px}
+p{font-size:14px;line-height:1.8;margin:8px 0}
+li{font-size:14px;line-height:1.8}
+table{width:100%;border-collapse:collapse;margin:10px 0}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid #eef0f3;font-size:14px}
+th{background:#f0f2f5;color:#333;font-size:13px}
+.fact{color:#1f3864;font-weight:700}
+.caution{color:#8a5a00;font-weight:700}
+.footer{max-width:760px;margin:24px auto;padding:0 20px;color:#888;font-size:12px}
+code{background:#eef0f3;padding:1px 5px;border-radius:4px;font-size:13px}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a href="../index.html">MSRC Vulnerability Trend Report</a>
+  <div><a href="index.html">Archive / アーカイブ</a> · <a href="notes-2026-09.en.html">English</a></div>
+</div>
+<div class="wrap">
+  <h1>改訂ノート — 2026年9月レポート</h1>
+  <p class="sub">本レポート公開後に観測された元データの変動の記録。English version is <a href="notes-2026-09.en.html">here</a>。</p>
+
+  <div class="banner">公開済みの2026年9月レポートは <b>2026-09-10</b> 時点で凍結した時点スナップショットであり、<b>内容は一切変更していない</b>。本ノートは、そのスナップショット取得<b>後</b>に MSRC が元データに加えた変動を、<b>2026-11-12</b> に取得した MSRC の CVRF と CISA KEV で記録するもの。レポートはスナップショットとして正しく、その後にデータが動いた、という位置づけである。</div>
+
+  <div class="card">
+    <h2>このノートの位置づけ</h2>
+    <p>各月次レポートは、特定日に取得した MSRC 一次データの凍結スナップショットである。MSRC は過去月を事後改訂する — CVE の追加、深刻度の変更、悪用状況の更新など。レポート本文はこの性質を既に開示し、スナップショット値を変更せず保持している。本ノートは、公開後に観測された2026年9月データの変動を事実として記録する補助資料であり、レポートを訂正・置換するものではない。変動の意味の解釈は書かない。</p>
+  </div>
+
+  <div class="card">
+    <h2>観測された変動（2026-11-12 取得）</h2>
+    <p>凍結スナップショット（2026-09-10）と、2026-11-12 に取得した MSRC データを比較:</p>
+    <table>
+      <thead><tr><th>指標</th><th>凍結値（2026-09-10）</th><th>2026-11-12</th></tr></thead>
+      <tbody>
+        <tr><td>CVRF 全体</td><td>1,186</td><td class="fact">2,989</td></tr>
+        <tr><td>MS本体相当</td><td>975</td><td class="fact">1,189</td></tr>
+        <tr><td>Critical（全体）</td><td>119</td><td class="fact">184</td></tr>
+        <tr><td>Critical（MS本体相当）</td><td>114</td><td class="fact">133（+19）</td></tr>
+        <tr><td>ゼロデイ（悪用確認／公開済み）</td><td>2 / 0</td><td class="fact">2 / 0</td></tr>
+      </tbody>
+    </table>
+    <p>MS本体相当の Critical の +19 は、<span class="fact">すべて凍結後に初めて公開された CVE</span> である（クラウドサービス 15件・その他の Microsoft 製品 3件・Windows のカーネル 1件）。18件の初版は <b>2026-09-17</b>（凍結の約1週間後）、1件は 2026-09-14。初版が凍結の時刻以前の CVE だけで数え直すと、MS本体相当の Critical は 114 で凍結値と一致する（MS本体相当の件数は 974 で、凍結値 975 と1件合わない。凍結時の CVRF の写しが無いため、どの CVE かは特定できない）。</p>
+    <p>KEV: CVE-2026-87491（Chromium の V8、除外の側）は KEV の収載が 2026-09-09（凍結の前日）で、CVRF の初版は 2026-09-11（凍結の翌日）。凍結の時点では9月の CVRF に無かった。</p>
+    <p style="font-size:13px;color:#666">「凍結の後に初めて公開された CVE」は、CVE ごとの初版（CVRF の <code>RevisionHistory</code> の最も早い日付）が凍結の時刻より後のものとした。 出典: MSRC CVRF（2026-11-12 取得。文書の版 2026-11-10T14:49:18）と CISA KEV（catalogVersion 2026.11.10、2026-11-12 取得）を、凍結スナップショット（<code>state/2026-Sep.json</code>）と比べた。凍結値は公開レポートと一致する。</p>
+  </div>
+  <div class="card">
+    <h2>レポート内の記述への影響</h2>
+    <p>本文に明記した数のうち、2026-11-12 の上流のデータと合わなくなったもの（凍結の時点では正しい）。補遺は比べる相手として前の月の AI 関連のクレジットの数を書いている（「7月に0から39件へ不連続に出現し、8月に1件」）。その7月・8月の数:</p>
+    <ul>
+      <li>7月の Kugelblitz: 凍結値 <b>39</b> → 2026-11-12 は <span class="fact">58</span>（+19）。増えた19件はすべて Microsoft Edge (Chromium-based) の勧告（除外の側、Important）で、初版は 2026-07-16 が1件（CVE-2026-57980）、07-24 が3件（CVE-2026-57978・57989・57990）、07-31 が15件（CVE-2026-65802・65804・66310・66311・66312・66313・66314・66315・66316・66317・66318・66321・66322・66325・66326）。初版が7月号の凍結の日（2026-07-15）以前の CVE だけで数えると 39 で、凍結値と一致する。</li>
+      <li>8月の Kugelblitz: 凍結値 <b>1</b> → 2026-11-12 は <span class="fact">5</span>（+4）。増えた4件（CVE-2026-66323・66324・66798・70341）はすべて Edge の勧告（除外の側、Important）で、初版は 2026-08-28。初版が8月号の凍結の日（2026-08-13）以前の CVE だけで数えると 1 で、凍結値と一致する。</li>
+    </ul>
+    <p>9月自身の Kugelblitz は凍結値 0、2026-11-12 も 0 で変わらない。本ノートは、これらの数の変化に解釈を加えない。</p>
+  </div>
+
+  <p class="sub" style="margin-top:20px">日付 — データスナップショット: 2026-09-10 ／ 再取得: 2026-11-12 ／ 本ノート作成: 2026-11-12。</p>
+</div>
+<div class="footer">事実は機械生成、解釈は人間による。凍結スナップショットは不変。出典: Microsoft Security Response Center (MSRC) CVRF、CISA KEV、FIRST EPSS。</div>
+</body>
+</html>

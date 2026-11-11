@@ -37,6 +37,8 @@ code{background:#eef0f3;padding:1px 5px;border-radius:4px;font-size:13px}
 
   <div class="banner">The published July 2026 report is a point-in-time snapshot frozen on <b>2026-07-15</b>, and <b>its content has not been changed</b>. This note records changes MSRC made to the underlying data <b>after</b> that snapshot, detected on <b>2026-07-23</b>. The report was correct as a snapshot; the data has since moved.<br><br><b>Added 2026-08-05 — a correction.</b> Separately from the data movement above, we found a defect in how the figure labelled &ldquo;core Microsoft&rdquo; was defined. It reverses one of the report's statements. See <a href="#correction">Correction — a defect in how &ldquo;core Microsoft&rdquo; was defined</a>.</div>
 
+  <div class="banner"><b>Added 2026-11-12.</b> Movement in the MSRC data retrieved again on 2026-11-12 is recorded in the <a href="#addendum-2026-11-12">2026-11-12 addendum</a>. The text above is unchanged.</div>
+
   <div class="card">
     <h2>What this note is</h2>
     <p>Each monthly report is a frozen snapshot of MSRC primary data taken on a specific day. MSRC revises past months after the fact — adding CVEs, re-classifying products, and updating exploitation status. The report itself already discloses this and preserves its snapshot values unchanged. This note is the companion record for the movement observed for the July 2026 data after publication. It does not correct or replace the report.</p>
@@ -130,7 +132,40 @@ code{background:#eef0f3;padding:1px 5px;border-radius:4px;font-size:13px}
     <p style="font-size:13px;color:#666;margin-top:18px">The report itself, the frozen snapshot and its figures are unchanged. This note is the record; nothing has been regenerated or restated in the published edition.</p>
   </div>
 
+  <div class="card" id="addendum-2026-11-12">
+    <h2>Addendum 2026-11-12 — movement in the re-retrieved MSRC data</h2>
+    <p>On 2026-11-12 the MSRC CVRF (document release 2026-11-10T08:00:00) and CISA KEV (catalogVersion 2026.11.10) were retrieved again and compared against the frozen 2026-07-15 snapshot. The 2026-07-23 table and the 2026-08-05 correction above are unchanged.</p>
+    <table>
+      <thead><tr><th>Metric</th><th>Frozen (2026-07-15)</th><th>2026-07-23 (table above)</th><th>2026-11-12</th></tr></thead>
+      <tbody>
+        <tr><td>Full CVRF population</td><td>1,150</td><td>1,339</td><td class="fact">2,012</td></tr>
+        <tr><td>Critical (all)</td><td>67</td><td>102</td><td class="fact">108</td></tr>
+        <tr><td>Exploitation-confirmed CVEs (CVRF flag)</td><td>2</td><td>3</td><td class="fact">3 (CVE-2026-56155, 56164, 58644)</td></tr>
+        <tr><td>Critical (core)</td><td>62 (classifier v1)</td><td>—</td><td class="fact">77 (classifier v2)</td></tr>
+      </tbody>
+    </table>
+    <p><b>Core Critical.</b> The frozen 62 was counted with population classifier v1 (the rule in the correction above), so it cannot be compared directly with today&rsquo;s classifier v2. Comparing v2 with v2: counting only CVEs first published on or before the freeze time (2026-07-15 13:21) gives <b>62</b>; on 2026-11-12 it is <span class="fact">77</span> (+15).</p>
+    <p>All of the +15 are <span class="fact">CVEs first published after the freeze</span> (10 cloud services, 2 other Microsoft products, 1 Exchange Online, 1 Azure DNS, 1 other). Fourteen were first published on <b>2026-07-23</b> (about one week after the freeze) and one on 2026-07-30 — the same shape as the August and September issues, where cloud-service Critical CVEs were published together about one week after the freeze.</p>
+    <p><b>CVEs added to KEV after the freeze (4):</b></p>
+    <ul>
+      <li>CVE-2026-58644 (SharePoint remote code execution, core, Critical): added to KEV 2026-07-16. Its CVRF exploitation flag was corrected to Exploited:Yes in the 2026-07-15 revision (the &ldquo;3&rdquo; in the table above).</li>
+      <li>CVE-2026-50522 (SharePoint remote code execution, core, Critical): added to KEV 2026-07-22. CVRF exploitation flag <b>Exploited:No</b>. EPSS 0.0304 (2026-11-10).</li>
+      <li>CVE-2026-55040 (SharePoint security feature bypass, core, Critical): added to KEV 2026-08-18. CVRF exploitation flag <b>Exploited:No</b>. EPSS 0.6954 (2026-11-10).</li>
+      <li>CVE-2026-53362 (Azure Linux kernel, excluded side, Important): added to KEV 2026-08-27.</li>
+    </ul>
+    <p>50522 and 55040 are in KEV while their CVRF exploitation flag says No (the same shape as CVE-2026-65660 in the August issue). This note does not say which is right. The issue&rsquo;s zero-days CVE-2026-56155 and 56164 were added to KEV on 2026-07-14 (before the freeze) and are already covered by the issue.</p>
+    <p><b>Statements in the report that no longer match the upstream data as of 2026-11-12</b> (each was correct at the freeze):</p>
+    <ul>
+      <li>&ldquo;the two actually exploited this month&rdquo; and &ldquo;all three confirmed-exploited issues this month (AD FS / SharePoint / BitLocker)&rdquo;: at the freeze the CVRF had two exploitation-confirmed CVEs (56155, 56164) and one publicly disclosed (BitLocker, 50661). On 2026-11-12 the CVRF has three exploitation-confirmed (+58644), and KEV additionally lists 50522 and 55040 (SharePoint) and 53362 (Azure Linux).</li>
+      <li>&ldquo;the 67 Critical issues&rdquo;: on 2026-11-12 Critical (all) is <span class="fact">108</span>. The 2026-07-23 figures in the table above (Critical 102, full CVRF 1,339) also differ from the 2026-11-12 values (108, 2,012).</li>
+      <li>&ldquo;Kugelblitz&rdquo; (39 issues, all low-severity): <span class="fact">58</span> on 2026-11-12 (all Edge advisories, Important). The 19 added were first published 2026-07-16 (1: CVE-2026-57980), 07-24 (3: CVE-2026-57978, 57989, 57990) and 07-31 (15: CVE-2026-65802, 65804, 66310, 66311, 66312, 66313, 66314, 66315, 66316, 66317, 66318, 66321, 66322, 66325, 66326). Counting only CVEs first published on or before the freeze day (2026-07-15) gives 39, matching the frozen value.</li>
+    </ul>
+    <p><b>Limits of the recount.</b> No copy of the July CVRF as of the freeze exists. Counting only CVEs first published on or before the freeze time gives 1,144 CVEs (frozen 1,150) and 64 Critical (frozen 67); these do not match, and the CVEs behind the difference cannot be identified.</p>
+    <p style="font-size:13px;color:#666">This addendum records facts only and adds no interpretation. &ldquo;First published after the freeze&rdquo; means the CVE&rsquo;s earliest revision date in the CVRF <code>RevisionHistory</code> is later than the freeze time.</p>
+  </div>
+
   <p class="sub" style="margin-top:20px">Dates — data snapshot: 2026-07-15 · revision detected: 2026-07-23 · note prepared: 2026-07-23 · classification defect identified: 2026-08-05 · correction added: 2026-08-05.</p>
+  <p class="sub">Addendum 2026-11-12 — re-retrieved: 2026-11-12 · addendum prepared: 2026-11-12.</p>
 </div>
 <div class="footer">Facts are machine-generated; interpretation is human. The frozen snapshot is unchanged. Source: Microsoft Security Response Center (MSRC) CVRF.</div>
 </body>

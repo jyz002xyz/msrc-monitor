@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Revision note — October 2026 report / 改訂ノート — MSRC Vulnerability Trend Report</title>
+<meta name="description" content="Post-publication revision note for the October 2026 MSRC vulnerability trend report.">
+<style>
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Hiragino Kaku Gothic ProN','Noto Sans JP',Meiryo,sans-serif;margin:0;color:#222;background:#f5f6f8}
+.topbar{position:sticky;top:0;background:#1f3864;color:#fff;padding:12px 16px;display:flex;justify-content:space-between;align-items:center}
+.topbar a{color:#fff;text-decoration:none}.topbar a:hover{text-decoration:underline}
+.wrap{max-width:760px;margin:0 auto;padding:32px 20px}
+h1{color:#1f3864;font-size:22px;margin:0 0 6px}
+h2{color:#1f3864;font-size:16px;margin:26px 0 8px;border-bottom:1px solid #e3e6ea;padding-bottom:4px}
+.sub{color:#555;font-size:14px;margin:0 0 8px}
+.card{background:#fff;border-radius:10px;box-shadow:0 2px 12px rgba(0,0,0,.06);padding:20px 22px;margin:16px 0}
+.banner{background:#fff3cd;border:1px solid #ffe69c;color:#664d03;border-radius:8px;padding:10px 14px;font-size:13px;margin:0 0 16px}
+p{font-size:14px;line-height:1.7;margin:8px 0}
+li{font-size:14px;line-height:1.7}
+table{width:100%;border-collapse:collapse;margin:10px 0}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid #eef0f3;font-size:14px}
+th{background:#f0f2f5;color:#333;font-size:13px}
+.fact{color:#1f3864;font-weight:700}
+.caution{color:#8a5a00;font-weight:700}
+.footer{max-width:760px;margin:24px auto;padding:0 20px;color:#888;font-size:12px}
+code{background:#eef0f3;padding:1px 5px;border-radius:4px;font-size:13px}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a href="../index.html">MSRC Vulnerability Trend Report</a>
+  <div><a href="index.html">Archive / アーカイブ</a> · <a href="notes-2026-10.ja.html">日本語</a></div>
+</div>
+<div class="wrap">
+  <h1>Revision note — October 2026 report</h1>
+  <p class="sub">A record of source-data movement observed after this report was published. English first, then Japanese (site convention). 日本語版は <a href="notes-2026-10.ja.html">こちら</a>。</p>
+
+  <div class="banner">The published October 2026 report is a point-in-time snapshot frozen on <b>2026-10-15</b>, and <b>its content has not been changed</b>. This note records changes MSRC made to the underlying data <b>after</b> that snapshot, using the MSRC CVRF and CISA KEV retrieved on <b>2026-11-12</b>. The report was correct as a snapshot; the data has since moved.</div>
+
+  <div class="card">
+    <h2>What this note is</h2>
+    <p>Each monthly report is a frozen snapshot of MSRC primary data taken on a specific day. MSRC revises past months after the fact — adding CVEs, changing severities, and updating exploitation status. The report itself already discloses this and preserves its snapshot values unchanged. This note is the companion record of the movement observed for the October 2026 data after publication, stated as facts. It does not correct or replace the report, and it does not interpret the movement.</p>
+  </div>
+
+  <div class="card">
+    <h2>Observed changes (retrieved 2026-11-12)</h2>
+    <p>Comparing the frozen 2026-10-15 snapshot against MSRC&rsquo;s data as retrieved on 2026-11-12:</p>
+    <table>
+      <thead><tr><th>Metric</th><th>Frozen (2026-10-15)</th><th>2026-11-12</th></tr></thead>
+      <tbody>
+        <tr><td>Full CVRF population</td><td>1,760</td><td class="fact">3,491</td></tr>
+        <tr><td>Microsoft core-equivalent</td><td>1,419</td><td class="fact">1,593</td></tr>
+        <tr><td>Excluded</td><td>341</td><td class="fact">1,898</td></tr>
+        <tr><td>Critical (all)</td><td>174</td><td class="fact">238</td></tr>
+        <tr><td>Critical (core)</td><td>77</td><td class="fact">96 (+19)</td></tr>
+        <tr><td>Zero-days (exploitation confirmed / publicly disclosed)</td><td>1 / 2</td><td class="fact">1 / 3 (+CVE-2026-111497; see the KEV section below)</td></tr>
+      </tbody>
+    </table>
+    <p>For October a copy of the CVRF as of the freeze exists (retrieved 3 minutes 31 seconds after the freeze; recounted under the current rule it reproduces the frozen values exactly). Compared CVE by CVE:</p>
+    <ul>
+      <li><b>1,731</b> CVEs were added and none removed: 801 Azure Linux package advisories, 756 Edge/Chromium advisories and 174 core. No CVE moved between core and excluded.</li>
+      <li>The +19 in core Critical are 10 new CVEs and 9 existing CVEs raised from Important to Critical. None went down.</li>
+      <li>The 10 new: 3 Office (CVE-2026-108439 and 108440 Word, CVE-2026-108448 Outlook; first published 2026-10-15, after the freeze), 6 cloud services and others on 2026-10-22 (CVE-2026-105014 Azure Pipelines, 108456 Azure AI Foundry, 83938 Azure Kubernetes Configuration Service, 96185 Exchange Online, 110063 VM Inspector for Azure Virtual Machines, 97785 AAD App Proxy), and CVE-2026-111497 (Brotli; first published 2026-10-25).</li>
+      <li>The 9 raised to Critical: CVE-2026-70300 (Word) and CVE-2026-97741, 97742, 97753, 97756, 97758, 97761, 97767, 97776 (Excel).</li>
+      <li>All 19 carry the CVRF exploitation flag No.</li>
+      <li>Severity changed on 15 existing CVEs in all (the 9 above, one Low→Important, one unrated→Important, and 4 on the excluded side).</li>
+    </ul>
+    <p style="font-size:13px;color:#666">Source: MSRC CVRF retrieved 2026-11-12 (document release 2026-11-10T14:50:30) and CISA KEV (catalogVersion 2026.11.10, retrieved 2026-11-12), compared against the frozen snapshot (<code>state/2026-Oct.json</code>). The frozen values match the report as published.</p>
+  </div>
+  <div class="card">
+    <h2>Two CVEs added to KEV after the freeze</h2>
+    <ul>
+      <li><b>CVE-2026-111497</b> (buffer overflow in the Google Brotli decoder, used by .NET among others; core, Critical): first published in the CVRF 2026-10-25, added to CISA KEV 2026-10-27. CVRF exploitation flag Exploited:No, publicly disclosed Yes. EPSS 0.8264 (2026-11-10).</li>
+      <li><b>CVE-2026-97229</b> (integer overflow in the Azure Linux GitLab package; excluded side, Critical): first published in the CVRF 2026-10-25, added to CISA KEV 2026-10-29. EPSS 0.6522 (2026-11-10).</li>
+    </ul>
+    <p>Both entered the CVRF after the freeze and were added to KEV after the freeze. Neither is in the issue&rsquo;s KEV table (retrieved 2026-10-15).</p>
+  </div>
+  <div class="card">
+    <h2>Effect on statements in the report</h2>
+    <p>Facts and figures stated in the report that no longer match the upstream data as of 2026-11-12 (each was correct at the freeze):</p>
+    <ul>
+      <li>&ldquo;Core Critical fell from 114 to 77&rdquo; and its breakdown &ldquo;59 remote code execution&rdquo; → on 2026-11-12 core Critical is <span class="fact">96</span>, of which <span class="fact">73</span> are remote code execution.</li>
+      <li>&ldquo;There is not a single Edge/Chromium advisory in this month&rsquo;s CVRF&rdquo; → <span class="fact">756</span> on 2026-11-12.</li>
+      <li>&ldquo;All 341 excluded are Azure Linux&rdquo; → on 2026-11-12 the excluded side is 1,898 (1,142 Azure Linux, 756 Edge/Chromium).</li>
+      <li>&ldquo;Of the 174, 97 are on the excluded side&rdquo; → on 2026-11-12, 142 of the 238 Critical are on the excluded side (119 Azure Linux, 23 Edge/Chromium).</li>
+      <li>The earlier months&rsquo; AI-related credit counts quoted for comparison (&ldquo;39 times in July, once in August&rdquo;):</li>
+    </ul>
+    <ul>
+      <li>July Kugelblitz: frozen <b>39</b> → <span class="fact">58</span> on 2026-11-12 (+19). All 19 added are Microsoft Edge (Chromium-based) advisories (excluded side, Important), first published 2026-07-16 (1: CVE-2026-57980), 07-24 (3: CVE-2026-57978, 57989, 57990) and 07-31 (15: CVE-2026-65802, 65804, 66310, 66311, 66312, 66313, 66314, 66315, 66316, 66317, 66318, 66321, 66322, 66325, 66326). Counting only CVEs first published on or before the July freeze day (2026-07-15) gives 39, matching the frozen value.</li>
+      <li>August Kugelblitz: frozen <b>1</b> → <span class="fact">5</span> on 2026-11-12 (+4). The four added (CVE-2026-66323, 66324, 66798, 70341) are Edge advisories (excluded side, Important), first published 2026-08-28. Counting only CVEs first published on or before the August freeze day (2026-08-13) gives 1, matching the frozen value.</li>
+    </ul>
+    <p>October&rsquo;s own Kugelblitz count is 0 frozen and 0 on 2026-11-12. On &ldquo;none of the Critical is confirmed exploited&rdquo;: on 2026-11-12, none of the 238 Critical carries the CVRF exploitation flag Yes (CVE-2026-111497 and 97229 are in KEV; their flags are as stated above). This note adds no interpretation to these changes.</p>
+  </div>
+
+  <p class="sub" style="margin-top:20px">Dates — data snapshot: 2026-10-15 · re-retrieved: 2026-11-12 · note prepared: 2026-11-12.</p>
+</div>
+<div class="footer">Facts are machine-generated; interpretation is human. The frozen snapshot is unchanged. Source: Microsoft Security Response Center (MSRC) CVRF, CISA KEV, FIRST EPSS.</div>
+</body>
+</html>
