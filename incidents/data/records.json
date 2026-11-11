@@ -460,6 +460,20 @@
           "url": "https://monoinv.com/news/newsrelease-20261029/"
         }
       ]
+    },
+    {
+      "id": "2026-11-04-jp-bd342eae61",
+      "organization": "株式会社電通総研",
+      "type": "unauthorized_access",
+      "recorded_by": "detector",
+      "statements": [
+        {
+          "date": "2026-11-04",
+          "kind": "organization",
+          "source": "株式会社電通総研 の発表",
+          "url": "https://www.dentsusoken.com/news/topics/2026/1104_1.html"
+        }
+      ]
     }
   ]
 }
