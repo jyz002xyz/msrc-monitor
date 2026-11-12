@@ -474,6 +474,20 @@
           "url": "https://www.dentsusoken.com/news/topics/2026/1104_1.html"
         }
       ]
+    },
+    {
+      "id": "2026-11-11-maersk",
+      "organization": "Maersk",
+      "type": "ransomware",
+      "recorded_by": "detector",
+      "statements": [
+        {
+          "date": "2026-11-11",
+          "kind": "organization",
+          "source": "Maersk の発表",
+          "url": "https://www.maersk.com/news/articles/2026/11/11/it-security-incident"
+        }
+      ]
     }
   ]
 }
