@@ -55,18 +55,18 @@ code{background:#eef0f3;padding:1px 5px;border-radius:4px;font-size:13px}
         <tr><td>Zero-days (exploitation confirmed / publicly disclosed)</td><td>2 / 0</td><td class="fact">2 / 0</td></tr>
       </tbody>
     </table>
-    <p>All of the +19 in core Critical are <span class="fact">CVEs first published after the freeze</span> (15 cloud services, 3 other Microsoft products, 1 Windows kernel). Eighteen were first published on <b>2026-09-17</b> (about one week after the freeze) and one on 2026-09-14. Counting only CVEs first published on or before the freeze time gives core Critical 114, matching the frozen value (the core count itself comes to 974, one short of the frozen 975; which CVE cannot be identified without a freeze-time copy of the CVRF).</p>
-    <p>KEV: CVE-2026-87491 (Chromium V8, excluded side) was added to KEV on 2026-09-09 (the day before the freeze), and first published in the CVRF on 2026-09-11 (the day after). It was not in the September CVRF at the freeze.</p>
+    <p>All of the +19 in core Critical are <span class="fact">CVEs first published after the freeze</span> (15 cloud services, 3 other Microsoft products, 1 Windows kernel). Eighteen were first published on <b>2026-09-17</b> (about one week after the freeze) and one on 2026-09-14. Counting only CVEs first published on or before the freeze time gives core Critical 114, matching the frozen value (the core count itself comes to 974, one short of the frozen 975; without a freeze-time copy of the CVRF, the CVE behind the gap cannot be identified).</p>
+    <p>KEV: CVE-2026-87491 (Chromium V8, excluded side) was added to KEV on 2026-09-09 (the day before the freeze), and first published in the CVRF on 2026-09-11 (the day after). It was not yet in the September CVRF at the time of the freeze.</p>
     <p style="font-size:13px;color:#666">&ldquo;First published after the freeze&rdquo; means the CVE&rsquo;s earliest revision date in the CVRF <code>RevisionHistory</code> is later than the freeze time. Source: MSRC CVRF retrieved 2026-11-12 (document release 2026-11-10T14:49:18) and CISA KEV (catalogVersion 2026.11.10, retrieved 2026-11-12), compared against the frozen snapshot (<code>state/2026-Sep.json</code>). The frozen values match the report as published.</p>
   </div>
   <div class="card">
     <h2>Effect on statements in the report</h2>
-    <p>Figures stated in the report that no longer match the upstream data as of 2026-11-12 (each was correct at the freeze). The appendix quotes the earlier months&rsquo; AI-related credit counts for comparison (&ldquo;appeared discontinuously in July, from zero to 39, then once in August&rdquo;). Those July and August counts:</p>
+    <p>Figures stated in the report that no longer match the upstream data as of 2026-11-12 (each was correct at the freeze). For comparison, the appendix quotes the AI-related credit counts for earlier months (&ldquo;appeared discontinuously in July, from zero to 39, then once in August&rdquo;). The July and August counts now stand as follows:</p>
     <ul>
       <li>July Kugelblitz: frozen <b>39</b> → <span class="fact">58</span> on 2026-11-12 (+19). All 19 added are Microsoft Edge (Chromium-based) advisories (excluded side, Important), first published 2026-07-16 (1: CVE-2026-57980), 07-24 (3: CVE-2026-57978, 57989, 57990) and 07-31 (15: CVE-2026-65802, 65804, 66310, 66311, 66312, 66313, 66314, 66315, 66316, 66317, 66318, 66321, 66322, 66325, 66326). Counting only CVEs first published on or before the July freeze day (2026-07-15) gives 39, matching the frozen value.</li>
       <li>August Kugelblitz: frozen <b>1</b> → <span class="fact">5</span> on 2026-11-12 (+4). The four added (CVE-2026-66323, 66324, 66798, 70341) are Edge advisories (excluded side, Important), first published 2026-08-28. Counting only CVEs first published on or before the August freeze day (2026-08-13) gives 1, matching the frozen value.</li>
     </ul>
-    <p>September&rsquo;s own Kugelblitz count is 0 frozen and 0 on 2026-11-12. This note adds no interpretation to these changes.</p>
+    <p>September&rsquo;s own Kugelblitz count is unchanged: 0 frozen and 0 on 2026-11-12. This note adds no interpretation to these changes.</p>
   </div>
 
   <p class="sub" style="margin-top:20px">Dates — data snapshot: 2026-09-10 · re-retrieved: 2026-11-12 · note prepared: 2026-11-12.</p>

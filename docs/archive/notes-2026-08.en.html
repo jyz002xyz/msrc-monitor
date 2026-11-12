@@ -55,7 +55,7 @@ code{background:#eef0f3;padding:1px 5px;border-radius:4px;font-size:13px}
         <tr><td>Zero-days (exploitation confirmed / publicly disclosed)</td><td>1 / 2</td><td class="fact">1 / 3 (+CVE-2026-69414, Microsoft Defender elevation of privilege, publicly disclosed; first published 2026-08-14)</td></tr>
       </tbody>
     </table>
-    <p>Of the +22 in core Critical, <span class="fact">20 are CVEs first published after the freeze</span> (16 cloud services, 2 other Microsoft products, 1 Exchange Online, 1 Azure Virtual Machines). Nineteen of them were first published on <b>2026-08-20</b> (about one week after the freeze) and one on 2026-08-18. <span class="fact">The other 2 cannot be identified, because no copy of the CVRF as of the freeze exists</span> (counting only CVEs first published on or before the freeze time gives 64, not the frozen 62).</p>
+    <p>Of the +22 in core Critical, <span class="fact">20 are CVEs first published after the freeze</span> (16 cloud services, 2 other Microsoft products, 1 Exchange Online, 1 Azure Virtual Machines). Nineteen of them were first published on <b>2026-08-20</b> (about one week after the freeze) and one on 2026-08-18. <span class="fact">The other two cannot be identified, because no copy of the CVRF as of the freeze exists</span> (counting only CVEs first published on or before the freeze time gives 64, not the frozen 62).</p>
     <p style="font-size:13px;color:#666">&ldquo;First published after the freeze&rdquo; means the CVE&rsquo;s earliest revision date in the CVRF <code>RevisionHistory</code> is later than the freeze time. Source: MSRC CVRF retrieved 2026-11-12 (document release 2026-11-10T08:00:00) and CISA KEV (catalogVersion 2026.11.10, retrieved 2026-11-12), compared against the frozen snapshot (<code>state/2026-Aug.json</code>). The frozen values match the report as published.</p>
   </div>
   <div class="card">
@@ -66,17 +66,17 @@ code{background:#eef0f3;padding:1px 5px;border-radius:4px;font-size:13px}
       <li>CVRF exploitation flag: <b>Exploited:No</b> as of 2026-11-12 (Publicly Disclosed:No).</li>
       <li>EPSS: 0.0985 (2026-11-10).</li>
     </ul>
-    <p>The revision text and KEV both refer to exploitation; the flag still says No. This note does not say which is right. At the freeze (2026-08-13) the CVE was not in KEV and the revision text did not yet exist.</p>
+    <p>Both the revision text and KEV mention exploitation, while the flag still says No. This note does not judge which is right. At the freeze (2026-08-13) the CVE was not in KEV and the revision text did not yet exist.</p>
   </div>
   <div class="card">
     <h2>Effect on statements in the report</h2>
     <p>Facts and figures stated in the report that no longer match the upstream data as of 2026-11-12 (each was correct at the freeze):</p>
     <ul>
       <li>Appendix: &ldquo;This month Kugelblitz appears once.&rdquo; → <span class="fact">5</span> on 2026-11-12. The four added (CVE-2026-66323, 66324, 66798, 70341) are Edge advisories (excluded side, Important), first published 2026-08-28 (15 days after the freeze). They are advisories added after the freeze, not existing CVEs whose credit was rewritten. Counting only CVEs first published on or before the freeze day gives 1, matching the frozen value. None of the five is Critical.</li>
-      <li>Appendix: &ldquo;Edge advisories themselves are down to under a tenth this month&rdquo; → counting Edge advisories first published on or before each month&rsquo;s freeze day gives August 39 and July 475 (8.2%), so it was correct at the freeze. On 2026-11-12 it is August 362 and July 936 (<span class="fact">38.7%</span>). Edge advisories were added to both months after their freezes.</li>
+      <li>Appendix: &ldquo;Edge advisories themselves are down to under a tenth this month&rdquo; → counting Edge advisories first published on or before each month&rsquo;s freeze day gives 39 for August and 475 for July (8.2%), so the statement was correct at the freeze. On 2026-11-12 the figures are 362 for August and 936 for July (<span class="fact">38.7%</span>). Both months gained Edge advisories after their freezes.</li>
       <li>Figure 3 (Kugelblitz): the August point (1) and its reading &ldquo;After the July spike, back to one.&rdquo; → <span class="fact">5</span> on 2026-11-12. The July point (39) is 58 on 2026-11-12 (see the 2026-11-12 addendum to the July note).</li>
       <li>Appendix: the credit string &ldquo;AIフィジカルインターフェイス二号機&rdquo;, which &ldquo;appears 13 times&rdquo; → <span class="fact">16</span> on 2026-11-12. All 16 are CVEs first published on or before the freeze day; the credit was rewritten after the freeze. Which three cannot be identified without a freeze-time copy of the CVRF (five such CVEs have an acknowledgement update recorded after the freeze). The one &ldquo;AI&rsquo;s physical interface 001&rdquo; credit is unchanged.</li>
-      <li>Zero-days: publicly disclosed went from 2 to 3 (CVE-2026-69414, Microsoft Defender elevation of privilege, Important; first published 2026-08-14, the day after the freeze). Exploitation confirmed is still the one CVE-2026-68820.</li>
+      <li>Zero-days: publicly disclosed went from 2 to 3 (CVE-2026-69414, Microsoft Defender elevation of privilege, Important; first published 2026-08-14, the day after the freeze). Confirmed exploitation is still the single CVE, CVE-2026-68820.</li>
     </ul>
     <p>This note adds no interpretation to these changes, and nothing to the report&rsquo;s &ldquo;this decrease cannot be interpreted&rdquo;.</p>
   </div>

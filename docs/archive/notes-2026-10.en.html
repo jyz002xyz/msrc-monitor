@@ -56,13 +56,13 @@ code{background:#eef0f3;padding:1px 5px;border-radius:4px;font-size:13px}
         <tr><td>Zero-days (exploitation confirmed / publicly disclosed)</td><td>1 / 2</td><td class="fact">1 / 3 (+CVE-2026-111497; see the KEV section below)</td></tr>
       </tbody>
     </table>
-    <p>For October a copy of the CVRF as of the freeze exists (retrieved 3 minutes 31 seconds after the freeze; recounted under the current rule it reproduces the frozen values exactly). Compared CVE by CVE:</p>
+    <p>For October, a copy of the CVRF as of the freeze exists (retrieved 3 minutes 31 seconds after the freeze; recounting it under the current rules reproduces the frozen values exactly). Comparing it CVE by CVE:</p>
     <ul>
       <li><b>1,731</b> CVEs were added and none removed: 801 Azure Linux package advisories, 756 Edge/Chromium advisories and 174 core. No CVE moved between core and excluded.</li>
-      <li>The +19 in core Critical are 10 new CVEs and 9 existing CVEs raised from Important to Critical. None went down.</li>
-      <li>The 10 new: 3 Office (CVE-2026-108439 and 108440 Word, CVE-2026-108448 Outlook; first published 2026-10-15, after the freeze), 6 cloud services and others on 2026-10-22 (CVE-2026-105014 Azure Pipelines, 108456 Azure AI Foundry, 83938 Azure Kubernetes Configuration Service, 96185 Exchange Online, 110063 VM Inspector for Azure Virtual Machines, 97785 AAD App Proxy), and CVE-2026-111497 (Brotli; first published 2026-10-25).</li>
+      <li>The +19 in core Critical is made up of 10 new CVEs and 9 existing CVEs raised from Important to Critical. None dropped out.</li>
+      <li>The 10 new CVEs: 3 Office (CVE-2026-108439 and 108440 Word, CVE-2026-108448 Outlook; first published 2026-10-15, after the freeze), 6 cloud services and others first published 2026-10-22 (CVE-2026-105014 Azure Pipelines, 108456 Azure AI Foundry, 83938 Azure Kubernetes Configuration Service, 96185 Exchange Online, 110063 VM Inspector for Azure Virtual Machines, 97785 AAD App Proxy), and CVE-2026-111497 (Brotli; first published 2026-10-25).</li>
       <li>The 9 raised to Critical: CVE-2026-70300 (Word) and CVE-2026-97741, 97742, 97753, 97756, 97758, 97761, 97767, 97776 (Excel).</li>
-      <li>All 19 carry the CVRF exploitation flag No.</li>
+      <li>All 19 have the CVRF exploitation flag set to No.</li>
       <li>Severity changed on 15 existing CVEs in all (the 9 above, one Low→Important, one unrated→Important, and 4 on the excluded side).</li>
     </ul>
     <p style="font-size:13px;color:#666">Source: MSRC CVRF retrieved 2026-11-12 (document release 2026-11-10T14:50:30) and CISA KEV (catalogVersion 2026.11.10, retrieved 2026-11-12), compared against the frozen snapshot (<code>state/2026-Oct.json</code>). The frozen values match the report as published.</p>
@@ -70,10 +70,10 @@ code{background:#eef0f3;padding:1px 5px;border-radius:4px;font-size:13px}
   <div class="card">
     <h2>Two CVEs added to KEV after the freeze</h2>
     <ul>
-      <li><b>CVE-2026-111497</b> (buffer overflow in the Google Brotli decoder, used by .NET among others; core, Critical): first published in the CVRF 2026-10-25, added to CISA KEV 2026-10-27. CVRF exploitation flag Exploited:No, publicly disclosed Yes. EPSS 0.8264 (2026-11-10).</li>
-      <li><b>CVE-2026-97229</b> (integer overflow in the Azure Linux GitLab package; excluded side, Critical): first published in the CVRF 2026-10-25, added to CISA KEV 2026-10-29. EPSS 0.6522 (2026-11-10).</li>
+      <li><b>CVE-2026-111497</b> (buffer overflow in the Google Brotli decoder, used by .NET among others; core, Critical): first published in the CVRF on 2026-10-25; added to CISA KEV on 2026-10-27. CVRF flags: Exploited:No, Publicly Disclosed:Yes. EPSS 0.8264 (2026-11-10).</li>
+      <li><b>CVE-2026-97229</b> (integer overflow in the Azure Linux GitLab package; excluded side, Critical): first published in the CVRF on 2026-10-25; added to CISA KEV on 2026-10-29. EPSS 0.6522 (2026-11-10).</li>
     </ul>
-    <p>Both entered the CVRF after the freeze and were added to KEV after the freeze. Neither is in the issue&rsquo;s KEV table (retrieved 2026-10-15).</p>
+    <p>Both entered the CVRF, and were added to KEV, after the freeze, so neither is in the issue&rsquo;s KEV table (retrieved 2026-10-15).</p>
   </div>
   <div class="card">
     <h2>Effect on statements in the report</h2>
@@ -83,13 +83,13 @@ code{background:#eef0f3;padding:1px 5px;border-radius:4px;font-size:13px}
       <li>&ldquo;There is not a single Edge/Chromium advisory in this month&rsquo;s CVRF&rdquo; → <span class="fact">756</span> on 2026-11-12.</li>
       <li>&ldquo;All 341 excluded are Azure Linux&rdquo; → on 2026-11-12 the excluded side is 1,898 (1,142 Azure Linux, 756 Edge/Chromium).</li>
       <li>&ldquo;Of the 174, 97 are on the excluded side&rdquo; → on 2026-11-12, 142 of the 238 Critical are on the excluded side (119 Azure Linux, 23 Edge/Chromium).</li>
-      <li>The earlier months&rsquo; AI-related credit counts quoted for comparison (&ldquo;39 times in July, once in August&rdquo;):</li>
+      <li>The AI-related credit counts for earlier months, quoted for comparison (&ldquo;39 times in July, once in August&rdquo;):</li>
     </ul>
     <ul>
       <li>July Kugelblitz: frozen <b>39</b> → <span class="fact">58</span> on 2026-11-12 (+19). All 19 added are Microsoft Edge (Chromium-based) advisories (excluded side, Important), first published 2026-07-16 (1: CVE-2026-57980), 07-24 (3: CVE-2026-57978, 57989, 57990) and 07-31 (15: CVE-2026-65802, 65804, 66310, 66311, 66312, 66313, 66314, 66315, 66316, 66317, 66318, 66321, 66322, 66325, 66326). Counting only CVEs first published on or before the July freeze day (2026-07-15) gives 39, matching the frozen value.</li>
       <li>August Kugelblitz: frozen <b>1</b> → <span class="fact">5</span> on 2026-11-12 (+4). The four added (CVE-2026-66323, 66324, 66798, 70341) are Edge advisories (excluded side, Important), first published 2026-08-28. Counting only CVEs first published on or before the August freeze day (2026-08-13) gives 1, matching the frozen value.</li>
     </ul>
-    <p>October&rsquo;s own Kugelblitz count is 0 frozen and 0 on 2026-11-12. On &ldquo;none of the Critical is confirmed exploited&rdquo;: on 2026-11-12, none of the 238 Critical carries the CVRF exploitation flag Yes (CVE-2026-111497 and 97229 are in KEV; their flags are as stated above). This note adds no interpretation to these changes.</p>
+    <p>October&rsquo;s own Kugelblitz count is unchanged: 0 frozen and 0 on 2026-11-12. On &ldquo;none of the Critical is confirmed exploited&rdquo;: on 2026-11-12, none of the 238 Critical CVEs has the CVRF exploitation flag set to Yes (CVE-2026-111497 and 97229 are in KEV, but their flags are as stated above). This note adds no interpretation to these changes.</p>
   </div>
 
   <p class="sub" style="margin-top:20px">Dates — data snapshot: 2026-10-15 · re-retrieved: 2026-11-12 · note prepared: 2026-11-12.</p>
