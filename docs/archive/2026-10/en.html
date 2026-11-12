@@ -1,0 +1,2300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The surge in vulnerability discovery by frontier AI — MSRC Vulnerability Trend Report</title>
+<meta name="robots" content="index,follow">
+<style>
+:root { color-scheme: light; }
+* { box-sizing: border-box; }
+body { margin: 0; background: #eef0f3; color: #1a1a1a;
+  font-family: "Hiragino Sans", "Helvetica Neue", Arial, sans-serif; }
+.topbar { position: sticky; top: 0; z-index: 10; background: #1f3864; color: #fff;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 18px; font-size: 14px; box-shadow: 0 1px 4px rgba(0,0,0,.2); }
+.topbar a { color: #fff; text-decoration: none; opacity: .92; }
+.topbar a:hover { opacity: 1; text-decoration: underline; }
+.topbar .nav a { margin-left: 16px; }
+.disclaimer { max-width: 840px; margin: 18px auto 0; padding: 12px 16px;
+  background: #fff7e6; border: 1px solid #f0c36d; border-left: 4px solid #d99b1c;
+  border-radius: 6px; font-size: 13px; line-height: 1.6; color: #5a4600; }
+.paper { max-width: 840px; margin: 20px auto 48px; background: #fff; padding: 40px 48px;
+  border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,.08); overflow-x: auto; }
+.paper img { max-width: 100%; height: auto; }
+.paper table { max-width: 100%; border-collapse: collapse; }
+.footer { max-width: 840px; margin: 0 auto 40px; padding: 0 16px; font-size: 12px; color: #666;
+  text-align: center; line-height: 1.7; }
+@media (max-width: 640px) {
+  .paper { padding: 22px 16px; margin: 12px; }
+  .topbar { flex-direction: column; gap: 6px; align-items: flex-start; }
+}
+
+.topbar .nav { display: flex; flex-wrap: wrap; }
+.topbar .nav a { white-space: nowrap; }
+.about { max-width: 840px; margin: 0 auto 24px; padding: 14px 18px;
+  background: #eef3fb; border: 1px solid #c9dcf5; border-left: 4px solid #1f3864;
+  border-radius: 6px; color: #26364d; font-size: 13px; line-height: 1.7; }
+.about .h { font-weight: 700; }
+.about ul { margin: 8px 0 0; padding-left: 20px; }
+.about dl { margin: 10px 0 0; }
+.about dt { font-weight: 700; margin-top: 8px; }
+.about dd { margin: 2px 0 0 14px; }
+.about a { color: #1f3864; }
+@media (max-width: 640px) { .about { margin: 0 12px 20px; } }
+.correction { max-width: 840px; margin: 14px auto 0; padding: 12px 16px;
+  background: #fdf0ef; border: 1px solid #e9b7b2; border-left: 4px solid #b3453c;
+  border-radius: 6px; font-size: 13px; line-height: 1.7; color: #5c2b26; }
+.correction .h { font-weight: 700; }
+.correction a { color: #8f342d; }
+@media (max-width: 640px) { .correction { margin: 12px 12px 0; } }
+</style>
+</head>
+<body>
+<div style="background:#fff3cd;border-bottom:1px solid #ffe69c;color:#664d03;padding:8px 16px;font-size:13px;text-align:center">📄 アーカイブ版スナップショット（2026-10） / Archived snapshot (2026-10) — <a href="../../index.html" style="color:#664d03;font-weight:700">最新レポート / Latest</a> · <a href="../index.html" style="color:#664d03;font-weight:700">アーカイブ一覧 / All archives</a></div>
+<div class="topbar">
+  <a href="../../index.html">MSRC Vulnerability Trend Report</a>
+  <div class="nav"><a href="../../index.html">Home</a><a href="archive/index.html">Archive</a><a href="kev/index.html">Cross-vendor KEV/EPSS</a><a href="incidents/index.html">Disclosed incidents</a><a href="ja.html">日本語</a></div>
+</div>
+<div class="disclaimer">This report is for informational purposes only and does not constitute investment, legal, or security advice. Figures are machine-generated facts; interpretation is human analysis. Personal names are generalized to roles. See the Disclaimer section at the end.</div>
+
+<article class="paper">
+<p style="line-height: 100%; margin-top: 0.14in; margin-bottom: 0.04in">
+<font color="#595959"><font face="Arial, serif"><font size="2" style="font-size: 9pt">Technical
+report (machine-generated facts + human interpretation)</font></font></font></p>
+<p style="line-height: 100%; margin-bottom: 0.03in"><font color="#1f3864"><font face="Arial, serif"><font size="5" style="font-size: 17pt"><b>The
+surge in vulnerability discovery by frontier AI</b></font></font></font></p>
+<p style="line-height: 100%; margin-bottom: 0.11in; border-top: none; border-bottom: 1px solid #2e5496; border-left: none; border-right: none; padding: 0in">
+<font color="#2e5496"><font face="Arial, serif"><font size="2" style="font-size: 11pt">A
+situational analysis as of October 2026, with implications for
+practitioners</font></font></font></p>
+<p style="line-height: 100%; margin-bottom: 0.02in"><font color="#595959"><font face="Arial, serif"><font size="2" style="font-size: 9pt">Practitioners
+and decision-makers responsible for vulnerability and patch
+management</font></font></font></p>
+<table width="100%" cellpadding="7" cellspacing="0">
+	<col width="256*"/>
+	<tr>
+		<td width="100%" valign="top" bgcolor="#fbf3e2" style="background: #fbf3e2; border: 1px solid #bf9000; padding: 0.07in 0.11in"><p style="margin-bottom: 0.04in">
+			<font color="#1f3864"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>About
+			this report's structure and dates</b></font></font></font></p>
+			<p style="margin-bottom: 0.03in"><font face="Arial, serif"><font size="2" style="font-size: 9pt">This
+			report is composed by injecting human interpretation into a
+			factual record (figures, tables, charts) generated by an automated
+			monitoring script.</font></font></p>
+			<p style="margin-bottom: 0.03in"><font face="Arial, serif"><font size="2" style="font-size: 9pt">Fact
+			data acquired: 2026-10-15 (frozen as a snapshot)</font></font></p>
+			<p style="margin-bottom: 0.03in"><font face="Arial, serif"><font size="2" style="font-size: 9pt">Interpretation
+			(analysis) updated: 2026-10-14</font></font></p>
+			<p><font face="Arial, serif"><font size="2" style="font-size: 9pt">Note:
+			facts are automatic, interpretation is updated separately by a
+			human. If the two dates are far apart, the interpretation may not
+			reflect the latest facts.</font></font></p>
+		</td>
+	</tr>
+</table>
+<p style="line-height: 100%; margin-bottom: 0.06in"><br/>
+<br/>
+
+</p>
+<table width="100%" cellpadding="7" cellspacing="0">
+	<col width="256*"/>
+	<tr>
+		<td width="100%" valign="top" bgcolor="#fbf3e2" style="background: #fbf3e2; border: 1px solid #bf9000; padding: 0.07in 0.11in"><p style="margin-bottom: 0.04in">
+			<font color="#1f3864"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>On
+			MSRC's after-the-fact revisions</b></font></font></font></p>
+			<p><font face="Arial, serif"><font size="2" style="font-size: 9pt">This
+			report is based on values finalized on 2026-10-15. MSRC revises
+			past months after the fact (e.g., June CVE 1281→1205), so
+			post-revision data may appear to give different results. Revision
+			records are retained separately.</font></font></p>
+		</td>
+	</tr>
+</table>
+<p style="line-height: 100%; margin-bottom: 0.06in"><br/>
+<br/>
+
+</p>
+<table width="100%" cellpadding="7" cellspacing="0">
+	<col width="256*"/>
+	<tr>
+		<td width="100%" valign="top" bgcolor="#e6f0e6" style="background: #e6f0e6; border: 1px solid #4f7a4f; padding: 0.07in 0.11in"><p style="margin-bottom: 0.04in">
+			<font color="#1f3864"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>[Disclaimer
+			/ Sources]</b></font></font></font></p>
+			<p style="margin-bottom: 0.03in">• <font face="Arial, serif"><font size="2" style="font-size: 9pt">This
+			report is an informal analysis by a hypothetical author projecting
+			a practitioner responsible for vulnerability response; it is not
+			the view of any specific individual or organization.</font></font></p>
+			<p style="margin-bottom: 0.03in">• <font face="Arial, serif"><font size="2" style="font-size: 9pt">Fact
+			data sources: Microsoft MSRC CVRF, CISA KEV, and other public
+			information.</font></font></p>
+			<p style="margin-bottom: 0.03in">• <font face="Arial, serif"><font size="2" style="font-size: 9pt">The
+			analysis is generated with AI (a large language model). Facts are
+			verified where possible, but accuracy and completeness are not
+			guaranteed. Confirm important judgments against primary sources.</font></font></p>
+			<p style="margin-bottom: 0.03in">• <font face="Arial, serif"><font size="2" style="font-size: 9pt">Facts
+			are auto-updated but interpretation is updated as needed; the two
+			dates may be far apart (see header).</font></font></p>
+			<p>• <font face="Arial, serif"><font size="2" style="font-size: 9pt">Freshness:
+			the facts in this report are as of 2026-10-15. KEV and PoC status
+			change moment to moment; consult primary sources for the latest.</font></font></p>
+		</td>
+	</tr>
+</table>
+<p style="line-height: 100%; margin-bottom: 0.06in"><br/>
+<br/>
+
+</p>
+<table width="100%" cellpadding="7" cellspacing="0">
+	<col width="256*"/>
+	<tr>
+		<td width="100%" valign="top" bgcolor="#e6f0e6" style="background: #e6f0e6; border: 1px solid #4f7a4f; padding: 0.07in 0.11in"><p style="margin-bottom: 0.04in">
+			<font color="#1f3864"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>[Note
+			on neutrality]</b></font></font></font></p>
+			<p><font face="Arial, serif"><font size="2" style="font-size: 9pt">This
+			report's analysis is generated using Anthropic's AI (Claude). The
+			report refers to that company's Project Glasswing and the like,
+			but this is intended as neutral description based on public
+			information and does not endorse or advocate for any specific
+			company. Readers should consult primary sources and judge
+			independently.</font></font></p>
+		</td>
+	</tr>
+</table>
+<h1 class="western" style="margin-top: 0.18in; margin-bottom: 0.1in; border-top: none; border-bottom: 1px solid #2e5496; border-left: none; border-right: none; padding: 0in">
+<font color="#1f3864"><font face="Arial, serif"><font size="4" style="font-size: 14pt"><b>Executive
+summary</b></font></font></font></h1>
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">October
+2026's Patch Tuesday is the largest month in this report's
+observation window (from January 2026). All CVRF went from 1,186 to
+1,760, and core Microsoft from 975 to 1,419. Within core, CVEs
+assigned by Microsoft went from 973 to 1,417 — the same 444 as the
+rise in core — and 1,411 of the 1,419 were first published at the
+13 October release.</font></font></p>
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Some
+things did not move with the count. </font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>The
+tier requiring change control fell in core, from 93 to 79.</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+Critical rose across all CVRF from 119 to 174, but </font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>fell
+in core from 114 to 77.</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+Of the 174, 97 sit on the excluded side (Azure Linux package
+advisories).</font></font></p>
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>There
+are three zero-days (by Microsoft's definition: confirmed exploited,
+or publicly disclosed), and one is confirmed exploited.</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+That one is rated Important, not Critical.</font></font></p>
+<table width="100%" cellpadding="7" cellspacing="0">
+	<col width="256*"/>
+	<tr>
+		<td width="100%" valign="top" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #2e5496; border-bottom: none; border-left: 1px solid #2e5496; border-right: 1px solid #2e5496; padding-top: 0.07in; padding-bottom: 0in; padding-left: 0.11in; padding-right: 0.11in"><p style="margin-bottom: 0.04in">
+			<font color="#1f3864"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Conclusion
+			in one line</b></font></font></font></p>
+			<p><font face="Arial, serif"><font size="2" style="font-size: 10pt">The
+			total reached a high for the observation window, while the heavy
+			tier and core Critical both fell. How the count grows does not
+			track how heavy or how dangerous the month is.</font></font></p>
+		</td>
+	</tr>
+	<tr>
+		<td width="100%" valign="top" bgcolor="#eef2f8" style="background: #eef2f8; border-top: none; border-bottom: 1px solid #2e5496; border-left: 1px solid #2e5496; border-right: 1px solid #2e5496; padding-top: 0in; padding-bottom: 0.07in; padding-left: 0.11in; padding-right: 0.11in"><p style="margin-bottom: 0.04in">
+			<font color="#1f3864"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Terms:
+			&quot;all CVRF&quot; and &quot;core Microsoft&quot;</b></font></font></font></p>
+			<p style="margin-bottom: 0.03in"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>All
+			CVRF</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+			— every CVE in MSRC's monthly document, including Edge/Chromium,
+			Azure Linux package advisories, and Azure cloud advisories. Press
+			tallies disagree because they cut this population differently.</font></font></p>
+			<p><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Core
+			Microsoft</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+			— all CVRF with the CVEs whose affected products are </font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>all</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+			Azure Linux packages, or </font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>all</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+			Edge/Chromium, removed. </font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Azure
+			cloud advisories stay in core</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+			(this month's fourteen </font></font><font color="#1f3864"><font face="Consolas, serif"><font size="2" style="font-size: 9pt">azure_cloud</font></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+			CVEs). CVEs whose affected products mix in a Microsoft product
+			also stay in core. The split resolves product identifiers to
+			product names and does not read the CVE title. This month: 1,419
+			core against 341 excluded — </font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>all
+			341 excluded are Azure Linux. There is not a single Edge/Chromium
+			advisory in this month's CVRF.</b></font></font></p>
+		</td>
+	</tr>
+</table>
+<h1 class="western" style="margin-top: 0.18in; margin-bottom: 0.1in; border-top: none; border-bottom: 1px solid #2e5496; border-left: none; border-right: none; padding: 0in">
+<font color="#1f3864"><font face="Arial, serif"><font size="4" style="font-size: 14pt"><b>Analysis:
+the largest month, and the heavy tier fell</b></font></font></font></h1>
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">The
+total set a high this month. Beyond that, what core contains and
+which axes did not rise were both checked.</font></font></p>
+<table width="100%" cellpadding="3" cellspacing="0">
+	<col width="85*"/>
+	<col width="85*"/>
+	<col width="85*"/>
+	<thead>
+		<tr valign="top">
+			<td width="33%" bgcolor="#1f3864" style="background: #1f3864; border-top: 1px solid #2e5496; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.04in 0.06in"><p>
+				<br/>
+
+				</p>
+			</td>
+			<td width="33%" bgcolor="#1f3864" style="background: #1f3864; border-top: 1px solid #2e5496; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #bbbbbb; padding: 0.04in 0.06in"><p>
+				<font color="#ffffff"><font face="Arial, serif"><font size="2" style="font-size: 9pt"><b>September
+				2026</b></font></font></font></p>
+			</td>
+			<td width="33%" bgcolor="#1f3864" style="background: #1f3864; border-top: 1px solid #2e5496; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.04in 0.06in"><p>
+				<font color="#ffffff"><font face="Arial, serif"><font size="2" style="font-size: 9pt"><b>October
+				2026</b></font></font></font></p>
+			</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr valign="top">
+			<td width="33%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">All
+				CVE</font></font></font></p>
+			</td>
+			<td width="33%" bgcolor="#eef2f8" style="background: #eef2f8; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">1,186</font></font></font></p>
+			</td>
+			<td width="33%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">1,760</font></font></font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="33%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Core
+				Microsoft</font></font></font></p>
+			</td>
+			<td width="33%" bgcolor="#ffffff" style="background: #ffffff; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">975</font></font></font></p>
+			</td>
+			<td width="33%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">1,419</font></font></font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="33%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Credited</font></font></font></p>
+			</td>
+			<td width="33%" bgcolor="#eef2f8" style="background: #eef2f8; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">926</font></font></font></p>
+			</td>
+			<td width="33%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">1,334</font></font></font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="33%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Critical
+				(all / core)</font></font></font></p>
+			</td>
+			<td width="33%" bgcolor="#ffffff" style="background: #ffffff; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">119
+				/ 114</font></font></font></p>
+			</td>
+			<td width="33%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">174
+				/ 77</font></font></font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="33%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Heavy
+				tier (T2+T3, core)</font></font></font></p>
+			</td>
+			<td width="33%" bgcolor="#eef2f8" style="background: #eef2f8; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">93</font></font></font></p>
+			</td>
+			<td width="33%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">79</font></font></font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="33%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #2e5496; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Zero-days</font></font></font></p>
+			</td>
+			<td width="33%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #2e5496; border-left: 1px solid #bbbbbb; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">2
+				(both exploited)</font></font></font></p>
+			</td>
+			<td width="33%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #2e5496; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">3
+				(1 exploited, 2 publicly disclosed)</font></font></font></p>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<p style="line-height: 100%; margin-bottom: 0.06in"><br/>
+<br/>
+
+</p>
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Where
+the 444-item rise in core sits was checked before freezing. Of the
+1,419 core CVEs, 1,417 have Microsoft as CNA (the assigning
+organisation), and 1,411 had their first revision at the 13 October
+release. Eight came out before the release, all within October; none
+was published in an earlier month and revised in October.</font></font></p>
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">The
+rise is not concentrated in one product. By category, Windows
+services (314 → 478), kernel and drivers (147 → 271), Office (125
+→ 172), and .NET and developer tools (22 → 62) rose, while
+SQL/Dynamics fell from 64 to 27. By product, Excel (32 → 69), DNS
+Server (4 → 52), Windows Kernel (11 → 46), Windows Installer (5 →
+38) and Win32k (2 → 36) stand out. </font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Why
+it rose is not something this report can tell.</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+Only the fact of the rise is recorded.</font></font></p>
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">The
+excluded side rose too, from 211 to 341. Azure Linux advisories went
+from 187 to 341, with CNAs such as Linux (172) and apache (80).</font></font></p>
+<h3 class="western" style="margin-top: 0.1in; margin-bottom: 0.06in"><font color="#2e5496"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>What
+gets exploited is not Critical — four months running</b></font></font></font></h3>
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">This
+month's single confirmed-exploited item is </font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>CVE-2026-96951
+(a security feature bypass in Windows Shell)</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">,
+rated Important. </font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>None
+of the month's 174 Critical items is confirmed exploited.</b></font></font></p>
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Every
+month from July through October that had a confirmed-exploited item
+had none rated Critical — four months running. May, though, had a
+Critical one. </font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>This
+does not mean Critical items are not exploited.</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+It means a triage that reads Critical and stops would have missed
+every confirmed-exploited item across these four months.</font></font></p>
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">The
+other two are publicly disclosed and not confirmed exploited.</font></font></p>
+<ul>
+	<li value="1"><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>CVE-2026-108398
+	(.NET Framework security feature bypass, Important)</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+	— local, by an authenticated attacker.</font></font></p></li>
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>CVE-2026-92707
+	(MessagePack-CSharp denial of service, Moderate)</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+	— MessagePack-CSharp is an open-source component included in
+	Visual Studio, and it sits in core under the classification rule.
+	Its affected products list Visual Studio 2022 and 2026 as well as
+	.NET's MessagePack package for SignalR; because a Microsoft product
+	is in the mix, the rule (mixtures are core) counts it as core. The
+	CVE was assigned by GitHub, not Microsoft.</font></font></p></li>
+</ul>
+<h3 class="western" style="margin-top: 0.1in; margin-bottom: 0.06in"><font color="#2e5496"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Count
+and weight: what did not move together</b></font></font></font></h3>
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">In
+a month when the count rose, the axes that stand for response weight
+did not rise with it.</font></font></p>
+<ul>
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>The
+	heavy tier (T2+T3, core) fell from 93 to 79.</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+	As a share of core, from 9.5% to 5.6%.</font></font></p></li>
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Core
+	Critical fell from 114 to 77.</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+	That breaks down as 59 remote code execution, 14 elevation of
+	privilege, 3 spoofing and 1 information disclosure — 77 in total.</font></font></p></li>
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Critical
+	across all CVRF rose to 174 because Critical on the excluded side
+	went from 5 to 97.</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+	Of those 97, Linux is the CNA for 89, and all 97 are Azure Linux
+	package advisories.</font></font></p></li>
+</ul>
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Read
+only &quot;all-CVRF Critical&quot;, and this looks like a heavy
+month.</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+Restricted to core, both Critical and the heavy tier are lower than
+last month. Do not compare Critical counts without checking which
+population they come from.</font></font></p>
+<h1 class="western" style="margin-top: 0.18in; margin-bottom: 0.1in; border-top: none; border-bottom: 1px solid #2e5496; border-left: none; border-right: none; padding: 0in">
+<font color="#1f3864"><font face="Arial, serif"><font size="4" style="font-size: 14pt"><b>Implications
+and recommended actions</b></font></font></font></h1>
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">These
+are recommendations drawn from this report's analysis, not settled
+regulatory requirements. Specific supervisory expectations should be
+confirmed against primary sources.</font></font></p>
+<h3 class="western" style="margin-top: 0.1in; margin-bottom: 0.06in"><font color="#2e5496"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>1.
+What to monitor (continued)</b></font></font></font></h3>
+<ul>
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Do
+	not use CVE count as a threat indicator. This month it rose 48.4% on
+	last month, yet the heavy tier fell and so did core Critical. The
+	count moved in step with neither defensive load nor risk.</font></font></p></li>
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Track
+	the tier requiring change control instead. This month it went from
+	93 to 79 in core. </font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Even
+	the month with the largest total can carry a lighter deployment plan
+	than the month before.</b></font></font></p></li>
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>But
+	a count is not an amount of work.</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+	How far the scope spreads across products changes the effort, and
+	this report does not measure that distribution (the same limit as
+	last month).</font></font></p></li>
+</ul>
+<h3 class="western" style="margin-top: 0.1in; margin-bottom: 0.06in"><font color="#2e5496"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>2.
+Decouple triage from the severity label (continued)</b></font></font></font></h3>
+<ul>
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">None
+	of this month's 174 Critical items is confirmed exploited; the one
+	confirmed item is Important. </font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Across
+	July to October, no month's confirmed-exploited items included a
+	Critical one.</b></font></font></p></li>
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">May,
+	on the other hand, did have a confirmed-exploited Critical. What the
+	four-month record says is that ranking by severity label is
+	unreliable in itself.</font></font></p></li>
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">The
+	destination is unchanged: CISA KEV, EPSS, and asset reachability in
+	combination.</font></font></p></li>
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Check
+	the population before reading a Critical count.</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+	Of this month's 174 all-CVRF Critical items, 97 are Azure Linux
+	advisories.</font></font></p></li>
+</ul>
+<h3 class="western" style="margin-top: 0.1in; margin-bottom: 0.06in"><font color="#2e5496"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>3.
+Emergency patch SLA</b></font></font></font></h3>
+<ul>
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">This
+	month's confirmed-exploited item (CVE-2026-96951) was listed in CISA
+	KEV as of the 15 October retrieval. Treat it as an item to start
+	deploying the same day. </font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>This
+	report did not retrieve the remediation due date</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">;
+	read it from the KEV entry.</font></font></p></li>
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Per
+	the vendor's CVSS vector, the preconditions are:</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+	reachable over the network, no prior privileges required, attack
+	complexity low — </font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>but
+	user interaction is required.</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+	The impact is a security feature bypass, and the stated cause is
+	command injection. CVSS base score 8.8; 31 affected products.</font></font></p></li>
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">The
+	temporal metric is &quot;functional exploit exists&quot; (E:F),
+	agreeing with the CVRF's exploitation entry (exploitation detected).</font></font></p></li>
+</ul>
+<h3 class="western" style="margin-top: 0.1in; margin-bottom: 0.06in"><font color="#2e5496"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>4.
+Check your own filter (continued)</b></font></font></font></h3>
+<ul>
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Last
+	issue added &quot;confirmed exploited&quot; as a condition for the
+	KEV/EPSS matched set. This month that set is 1,164 (786 last month);
+	the confirmed-exploited item is in it and was detected as a new KEV
+	listing. That item also carries an external credit, so it would have
+	been in the set under the conditions before last issue as well.</font></font></p></li>
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>A
+	zero-day that is only publicly disclosed is not a condition for
+	matching.</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+	This month's CVE-2026-92707 is outside the set and has no EPSS
+	value. The other publicly disclosed item (CVE-2026-108398) is in the
+	set through a different condition. The conditions were not changed
+	in this issue.</font></font></p></li>
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">When
+	matching external threat intelligence against your estate, check
+	every month, with the month's numbers, </font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>what
+	has fallen outside the set being matched.</b></font></font></p></li>
+</ul>
+<h3 class="western" style="margin-top: 0.1in; margin-bottom: 0.06in"><font color="#2e5496"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>5.
+Edge/Chromium auto-update (continued)</b></font></font></font></h3>
+<ul>
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>This
+	month's CVRF contains no Edge/Chromium advisory at all</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+	(24 last month). Why is not something this report can tell. Absence
+	from the CVRF does not mean Edge shipped no fixes.</font></font></p></li>
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">The
+	point does not depend on the count. </font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Applications
+	that embed Electron/CEF (Teams, Slack, VS Code and others) do not
+	benefit from the browser's auto-update.</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+	Enumerating those dependencies in an SBOM matters just as much in a
+	month where the count is zero.</font></font></p></li>
+</ul>
+<h3 class="western" style="margin-top: 0.1in; margin-bottom: 0.06in"><font color="#2e5496"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>6.
+Business continuity for AI dependence (continued)</b></font></font></font></h3>
+<ul>
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Where
+	AI sits in a workflow, treat dependence on a top-tier model as a
+	continuity concern, and make model redundancy and fallback the
+	default.</font></font></p></li>
+</ul>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<h1 class="western" style="margin-top: 0in; margin-bottom: 0.1in; border-top: none; border-bottom: 1px solid #2e5496; border-left: none; border-right: none; padding: 0in; page-break-before: always">
+<font color="#1f3864"><font face="Arial, serif"><font size="4" style="font-size: 14pt"><b>Primary-data
+breakdown — October 2026 Patch Tuesday</b></font></font></font></h1>
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">The
+following is a tally of primary data acquired from MSRC CVRF v3.0
+(frozen snapshot 2026-10-15). The population is shown both as &quot;full
+CVRF&quot; and as &quot;core Microsoft&quot;, </font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>the
+latter excluding CVEs whose affected products are all Edge/Chromium
+or all Azure Linux</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">.
+</font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Azure
+cloud is not excluded</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+— this month's fourteen </font></font><font color="#1f3864"><font face="Consolas, serif"><font size="2" style="font-size: 9pt">azure_cloud</font></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+CVEs sit in core. Figures and tables are generated from the state;
+the following are fact-based key points attached to each table.</font></font></p>
+<p style="line-height: 100%; margin-bottom: 0.06in"><br/>
+<br/>
+
+</p>
+<h2 class="western" style="margin-top: 0.14in; margin-bottom: 0.07in">
+<font color="#2e5496"><font face="Arial, serif"><font size="3" style="font-size: 11pt"><b>Table
+1. By severity (two populations shown)</b></font></font></font></h2>
+<table width="100%" cellpadding="3" cellspacing="0">
+	<col width="65*"/>
+	<col width="54*"/>
+	<col width="36*"/>
+	<col width="65*"/>
+	<col width="36*"/>
+	<thead>
+		<tr valign="top">
+			<td width="25%" bgcolor="#1f3864" style="background: #1f3864; border-top: 1px solid #2e5496; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.04in 0.06in"><p>
+				<font color="#ffffff"><font face="Arial, serif"><font size="2" style="font-size: 9pt"><b>Severity</b></font></font></font></p>
+			</td>
+			<td width="21%" bgcolor="#1f3864" style="background: #1f3864; border-top: 1px solid #2e5496; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #bbbbbb; padding: 0.04in 0.06in"><p>
+				<font color="#ffffff"><font face="Arial, serif"><font size="2" style="font-size: 9pt"><b>Full
+				CVRF</b></font></font></font></p>
+			</td>
+			<td width="14%" bgcolor="#1f3864" style="background: #1f3864; border-top: 1px solid #2e5496; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #bbbbbb; padding: 0.04in 0.06in"><p>
+				<font color="#ffffff"><font face="Arial, serif"><font size="2" style="font-size: 9pt"><b>(%)</b></font></font></font></p>
+			</td>
+			<td width="25%" bgcolor="#1f3864" style="background: #1f3864; border-top: 1px solid #2e5496; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #bbbbbb; padding: 0.04in 0.06in"><p>
+				<font color="#ffffff"><font face="Arial, serif"><font size="2" style="font-size: 9pt"><b>Core
+				MS products</b></font></font></font></p>
+			</td>
+			<td width="14%" bgcolor="#1f3864" style="background: #1f3864; border-top: 1px solid #2e5496; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.04in 0.06in"><p>
+				<font color="#ffffff"><font face="Arial, serif"><font size="2" style="font-size: 9pt"><b>(%)</b></font></font></font></p>
+			</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr valign="top">
+			<td width="25%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Critical</font></font></font></p>
+			</td>
+			<td width="21%" bgcolor="#eef2f8" style="background: #eef2f8; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">174</font></font></font></p>
+			</td>
+			<td width="14%" bgcolor="#eef2f8" style="background: #eef2f8; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">10%</font></font></font></p>
+			</td>
+			<td width="25%" bgcolor="#eef2f8" style="background: #eef2f8; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">77</font></font></font></p>
+			</td>
+			<td width="14%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">5%</font></font></font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="25%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Important</font></font></font></p>
+			</td>
+			<td width="21%" bgcolor="#ffffff" style="background: #ffffff; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">1433</font></font></font></p>
+			</td>
+			<td width="14%" bgcolor="#ffffff" style="background: #ffffff; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">81%</font></font></font></p>
+			</td>
+			<td width="25%" bgcolor="#ffffff" style="background: #ffffff; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">1338</font></font></font></p>
+			</td>
+			<td width="14%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">94%</font></font></font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="25%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Moderate</font></font></font></p>
+			</td>
+			<td width="21%" bgcolor="#eef2f8" style="background: #eef2f8; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">128</font></font></font></p>
+			</td>
+			<td width="14%" bgcolor="#eef2f8" style="background: #eef2f8; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">7%</font></font></font></p>
+			</td>
+			<td width="25%" bgcolor="#eef2f8" style="background: #eef2f8; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">1</font></font></font></p>
+			</td>
+			<td width="14%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">0%</font></font></font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="25%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Low</font></font></font></p>
+			</td>
+			<td width="21%" bgcolor="#ffffff" style="background: #ffffff; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">23</font></font></font></p>
+			</td>
+			<td width="14%" bgcolor="#ffffff" style="background: #ffffff; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">1%</font></font></font></p>
+			</td>
+			<td width="25%" bgcolor="#ffffff" style="background: #ffffff; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">1</font></font></font></p>
+			</td>
+			<td width="14%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">0%</font></font></font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="25%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Unrated</font></font></font></p>
+			</td>
+			<td width="21%" bgcolor="#eef2f8" style="background: #eef2f8; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">2</font></font></font></p>
+			</td>
+			<td width="14%" bgcolor="#eef2f8" style="background: #eef2f8; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">0%</font></font></font></p>
+			</td>
+			<td width="25%" bgcolor="#eef2f8" style="background: #eef2f8; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">2</font></font></font></p>
+			</td>
+			<td width="14%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">0%</font></font></font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="25%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #2e5496; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Total</font></font></font></p>
+			</td>
+			<td width="21%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #2e5496; border-left: 1px solid #bbbbbb; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">1760</font></font></font></p>
+			</td>
+			<td width="14%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #2e5496; border-left: 1px solid #bbbbbb; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">100%</font></font></font></p>
+			</td>
+			<td width="25%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #2e5496; border-left: 1px solid #bbbbbb; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">1419</font></font></font></p>
+			</td>
+			<td width="14%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #2e5496; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">100%</font></font></font></p>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<h3 class="western" style="margin-top: 0.1in; margin-bottom: 0.06in"><font color="#2e5496"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Table
+1 (by severity) — key point</b></font></font></font></h3>
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Critical
+rose from 119 to 174, the highest in the observation window. As a
+share of all CVRF it went from 10.0% to 9.9% — essentially flat. </font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Of
+the 174, 97 are on the excluded side (Azure Linux package advisories,
+with Linux as CNA for 89); core Critical is 77.</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+Core Critical fell from 114, and its share of core from 11.7% to
+5.4%. The 77 break down as 59 remote code execution, 14 elevation of
+privilege, 3 spoofing and 1 information disclosure, and </font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>none
+of them is confirmed exploited.</b></font></font></p>
+<p style="line-height: 100%; margin-bottom: 0.06in"><br/>
+<br/>
+
+</p>
+<h2 class="western" style="margin-top: 0.14in; margin-bottom: 0.07in">
+<font color="#2e5496"><font face="Arial, serif"><font size="3" style="font-size: 11pt"><b>Table
+2. By reboot class (the operational-workload axis)</b></font></font></font></h2>
+<table width="100%" cellpadding="3" cellspacing="0">
+	<col width="36*"/>
+	<col width="119*"/>
+	<col width="50*"/>
+	<col width="50*"/>
+	<thead>
+		<tr valign="top">
+			<td width="14%" bgcolor="#1f3864" style="background: #1f3864; border-top: 1px solid #2e5496; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.04in 0.06in"><p>
+				<font color="#ffffff"><font face="Arial, serif"><font size="2" style="font-size: 9pt"><b>Class</b></font></font></font></p>
+			</td>
+			<td width="46%" bgcolor="#1f3864" style="background: #1f3864; border-top: 1px solid #2e5496; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #bbbbbb; padding: 0.04in 0.06in"><p>
+				<font color="#ffffff"><font face="Arial, serif"><font size="2" style="font-size: 9pt"><b>Description</b></font></font></font></p>
+			</td>
+			<td width="20%" bgcolor="#1f3864" style="background: #1f3864; border-top: 1px solid #2e5496; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #bbbbbb; padding: 0.04in 0.06in"><p>
+				<font color="#ffffff"><font face="Arial, serif"><font size="2" style="font-size: 9pt"><b>Full
+				CVRF</b></font></font></font></p>
+			</td>
+			<td width="20%" bgcolor="#1f3864" style="background: #1f3864; border-top: 1px solid #2e5496; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.04in 0.06in"><p>
+				<font color="#ffffff"><font face="Arial, serif"><font size="2" style="font-size: 9pt"><b>Core
+				MS products</b></font></font></font></p>
+			</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr valign="top">
+			<td width="14%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">T3</font></font></font></p>
+			</td>
+			<td width="46%" bgcolor="#eef2f8" style="background: #eef2f8; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Staged
+				rollout required (Boot/Crypto)</font></font></font></p>
+			</td>
+			<td width="20%" bgcolor="#eef2f8" style="background: #eef2f8; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">8</font></font></font></p>
+			</td>
+			<td width="20%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">7</font></font></font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="14%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">T2</font></font></font></p>
+			</td>
+			<td width="46%" bgcolor="#ffffff" style="background: #ffffff; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Requires
+				change management / maintenance window</font></font></font></p>
+			</td>
+			<td width="20%" bgcolor="#ffffff" style="background: #ffffff; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">72</font></font></font></p>
+			</td>
+			<td width="20%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">72</font></font></font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="14%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #2e5496; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">T0/T1</font></font></font></p>
+			</td>
+			<td width="46%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #2e5496; border-left: 1px solid #bbbbbb; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Auto-update
+				/ steady pipeline</font></font></font></p>
+			</td>
+			<td width="20%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #2e5496; border-left: 1px solid #bbbbbb; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">1680</font></font></font></p>
+			</td>
+			<td width="20%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #2e5496; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">1340</font></font></font></p>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<h3 class="western" style="margin-top: 0.1in; margin-bottom: 0.06in"><font color="#2e5496"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Table
+2 (by reboot class) — key point</b></font></font></font></h3>
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">T2
+and T3 together — the heavy tier — total 79 in core (72 T2, 7
+T3), down from 93 last month; the month before was 42. Core grew from
+975 to 1,419, so the share fell from 9.5% to 5.6%. </font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>In
+the month with the largest total, the heavy tier did not grow.</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+This report does not measure how those 79 are distributed across
+products; a lower count cannot be read as a lighter month.</font></font></p>
+<p style="line-height: 100%; margin-bottom: 0.06in"><br/>
+<br/>
+
+</p>
+<h2 class="western" style="margin-top: 0.14in; margin-bottom: 0.07in">
+<font color="#2e5496"><font face="Arial, serif"><font size="3" style="font-size: 11pt"><b>Table
+3. Finder major categories (full CVRF)</b></font></font></font></h2>
+<table width="100%" cellpadding="3" cellspacing="0">
+	<col width="82*"/>
+	<col width="33*"/>
+	<col width="30*"/>
+	<col width="112*"/>
+	<thead>
+		<tr valign="top">
+			<td width="32%" bgcolor="#1f3864" style="background: #1f3864; border-top: 1px solid #2e5496; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.04in 0.06in"><p>
+				<font color="#ffffff"><font face="Arial, serif"><font size="2" style="font-size: 9pt"><b>Category</b></font></font></font></p>
+			</td>
+			<td width="13%" bgcolor="#1f3864" style="background: #1f3864; border-top: 1px solid #2e5496; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #bbbbbb; padding: 0.04in 0.06in"><p>
+				<font color="#ffffff"><font face="Arial, serif"><font size="2" style="font-size: 9pt"><b>Count</b></font></font></font></p>
+			</td>
+			<td width="12%" bgcolor="#1f3864" style="background: #1f3864; border-top: 1px solid #2e5496; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #bbbbbb; padding: 0.04in 0.06in"><p>
+				<font color="#ffffff"><font face="Arial, serif"><font size="2" style="font-size: 9pt"><b>(%)</b></font></font></font></p>
+			</td>
+			<td width="44%" bgcolor="#1f3864" style="background: #1f3864; border-top: 1px solid #2e5496; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.04in 0.06in"><p>
+				<font color="#ffffff"><font face="Arial, serif"><font size="2" style="font-size: 9pt"><b>Note</b></font></font></font></p>
+			</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr valign="top">
+			<td width="32%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Uncredited</font></font></font></p>
+			</td>
+			<td width="13%" bgcolor="#eef2f8" style="background: #eef2f8; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">426</font></font></font></p>
+			</td>
+			<td width="12%" bgcolor="#eef2f8" style="background: #eef2f8; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">24%</font></font></font></p>
+			</td>
+			<td width="44%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">May
+				include automation (not asserted)</font></font></font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="32%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">External
+				researchers (named)</font></font></font></p>
+			</td>
+			<td width="13%" bgcolor="#ffffff" style="background: #ffffff; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">1000</font></font></font></p>
+			</td>
+			<td width="12%" bgcolor="#ffffff" style="background: #ffffff; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">57%</font></font></font></p>
+			</td>
+			<td width="44%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Named
+				external finders</font></font></font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="32%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Anonymous</font></font></font></p>
+			</td>
+			<td width="13%" bgcolor="#eef2f8" style="background: #eef2f8; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">167</font></font></font></p>
+			</td>
+			<td width="12%" bgcolor="#eef2f8" style="background: #eef2f8; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">9%</font></font></font></p>
+			</td>
+			<td width="44%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Self-identified
+				anonymous</font></font></font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="32%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Internal
+				(with Microsoft etc.)</font></font></font></p>
+			</td>
+			<td width="13%" bgcolor="#ffffff" style="background: #ffffff; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">98</font></font></font></p>
+			</td>
+			<td width="12%" bgcolor="#ffffff" style="background: #ffffff; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">6%</font></font></font></p>
+			</td>
+			<td width="44%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Includes
+				Kugelblitz/MORSE/WARP/ACS</font></font></font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="32%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #2e5496; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Hash
+				identifier</font></font></font></p>
+			</td>
+			<td width="13%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #2e5496; border-left: 1px solid #bbbbbb; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">69</font></font></font></p>
+			</td>
+			<td width="12%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #2e5496; border-left: 1px solid #bbbbbb; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">4%</font></font></font></p>
+			</td>
+			<td width="44%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #2e5496; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">MS-anonymized
+				identifier (identity unknown)</font></font></font></p>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<h3 class="western" style="margin-top: 0.1in; margin-bottom: 0.06in"><font color="#2e5496"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Table
+3 (by discoverer bucket) — key point</b></font></font></font></h3>
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">External
+credits went from 705 to 1,000, uncredited CVEs from 260 to 426, and
+anonymous from 92 to 167. Uncredited as a share of all CVRF went from
+21.9% to 24.2%. </font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Every
+bucket rose along with the total, and no change in who finds things
+can be read from this table.</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+The rise is recorded as a fact and nothing more.</font></font></p>
+<p style="line-height: 100%; margin-bottom: 0.06in"><br/>
+<br/>
+
+</p>
+<h2 class="western" style="margin-top: 0.14in; margin-bottom: 0.07in">
+<font color="#2e5496"><font face="Arial, serif"><font size="3" style="font-size: 11pt"><b>Table
+4. Finder breakdown of Critical vulnerabilities (aggregated, no
+names)</b></font></font></font></h2>
+<table width="100%" cellpadding="3" cellspacing="0">
+	<col width="98*"/>
+	<col width="49*"/>
+	<col width="108*"/>
+	<thead>
+		<tr valign="top">
+			<td width="38%" bgcolor="#1f3864" style="background: #1f3864; border-top: 1px solid #2e5496; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.04in 0.06in"><p>
+				<font color="#ffffff"><font face="Arial, serif"><font size="2" style="font-size: 9pt"><b>Discoverer</b></font></font></font></p>
+			</td>
+			<td width="19%" bgcolor="#1f3864" style="background: #1f3864; border-top: 1px solid #2e5496; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #bbbbbb; padding: 0.04in 0.06in"><p>
+				<font color="#ffffff"><font face="Arial, serif"><font size="2" style="font-size: 9pt"><b>Critical
+				count</b></font></font></font></p>
+			</td>
+			<td width="42%" bgcolor="#1f3864" style="background: #1f3864; border-top: 1px solid #2e5496; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.04in 0.06in"><p>
+				<font color="#ffffff"><font face="Arial, serif"><font size="2" style="font-size: 9pt"><b>Tendency</b></font></font></font></p>
+			</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr valign="top">
+			<td width="38%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Uncredited</font></font></font></p>
+			</td>
+			<td width="19%" bgcolor="#eef2f8" style="background: #eef2f8; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">98</font></font></font></p>
+			</td>
+			<td width="42%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Possibly
+				automation (not asserted)</font></font></font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="38%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">External
+				researchers (named)</font></font></font></p>
+			</td>
+			<td width="19%" bgcolor="#ffffff" style="background: #ffffff; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">48</font></font></font></p>
+			</td>
+			<td width="42%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Majority
+				of Critical</font></font></font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="38%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Anonymous</font></font></font></p>
+			</td>
+			<td width="19%" bgcolor="#eef2f8" style="background: #eef2f8; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">13</font></font></font></p>
+			</td>
+			<td width="42%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222">—</font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="38%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Internal
+				(ACS/WARP/MORSE)</font></font></font></p>
+			</td>
+			<td width="19%" bgcolor="#ffffff" style="background: #ffffff; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">8</font></font></font></p>
+			</td>
+			<td width="42%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Few
+				(mainly Networking/Hyper-V)</font></font></font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="38%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Hash
+				identifier</font></font></font></p>
+			</td>
+			<td width="19%" bgcolor="#eef2f8" style="background: #eef2f8; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">7</font></font></font></p>
+			</td>
+			<td width="42%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222">—</font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="38%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #2e5496; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Kugelblitz
+				(Edge, ref.)</font></font></font></p>
+			</td>
+			<td width="19%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #2e5496; border-left: 1px solid #bbbbbb; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">0</font></font></font></p>
+			</td>
+			<td width="42%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #2e5496; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Does
+				not appear in Critical (surface only)</font></font></font></p>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font color="#595959"><font face="Arial, serif"><font size="1" style="font-size: 8pt"><i>Counts
+only (no personal names stored in the fact data). The top rows are
+per-bucket and sum to the Critical total. The Kugelblitz row is a
+cross-cutting reference (not additive). Individual researcher names
+and CVE examples are given as prose in the interpretation.</i></font></font></font></p>
+<h3 class="western" style="margin-top: 0.1in; margin-bottom: 0.06in"><font color="#2e5496"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Table
+4 (discoverers of Critical) — key point</b></font></font></font></h3>
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Critical
+items without a credit went from 10 last month to 98. As a share of
+Critical, from 8.4% to 56.3%. </font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>But
+97 of the 98 are on the excluded side (Azure Linux package
+advisories); in core, one Critical item carries no credit.</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+This table counts all CVRF, so in a month when excluded-side Critical
+rises, the uncredited row swells with it. Following the discipline
+established earlier, no inference is drawn about who found something
+from the absence of a credit.</font></font></p>
+<p style="line-height: 100%; margin-bottom: 0.06in"><br/>
+<br/>
+
+</p>
+<h2 class="western" style="margin-top: 0.14in; margin-bottom: 0.07in">
+<font color="#2e5496"><font face="Arial, serif"><font size="3" style="font-size: 11pt"><b>Table
+5. By product category (full CVRF)</b></font></font></font></h2>
+<table width="100%" cellpadding="3" cellspacing="0">
+	<col width="156*"/>
+	<col width="50*"/>
+	<col width="50*"/>
+	<thead>
+		<tr valign="top">
+			<td width="61%" bgcolor="#1f3864" style="background: #1f3864; border-top: 1px solid #2e5496; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.04in 0.06in"><p>
+				<font color="#ffffff"><font face="Arial, serif"><font size="2" style="font-size: 9pt"><b>Category</b></font></font></font></p>
+			</td>
+			<td width="20%" bgcolor="#1f3864" style="background: #1f3864; border-top: 1px solid #2e5496; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #bbbbbb; padding: 0.04in 0.06in"><p>
+				<font color="#ffffff"><font face="Arial, serif"><font size="2" style="font-size: 9pt"><b>Count</b></font></font></font></p>
+			</td>
+			<td width="20%" bgcolor="#1f3864" style="background: #1f3864; border-top: 1px solid #2e5496; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.04in 0.06in"><p>
+				<font color="#ffffff"><font face="Arial, serif"><font size="2" style="font-size: 9pt"><b>(%)</b></font></font></font></p>
+			</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr valign="top">
+			<td width="61%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Win
+				Services/Components</font></font></font></p>
+			</td>
+			<td width="20%" bgcolor="#eef2f8" style="background: #eef2f8; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">478</font></font></font></p>
+			</td>
+			<td width="20%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">27%</font></font></font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="61%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Azure
+				Linux (re-listing)</font></font></font></p>
+			</td>
+			<td width="20%" bgcolor="#ffffff" style="background: #ffffff; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">341</font></font></font></p>
+			</td>
+			<td width="20%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">19%</font></font></font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="61%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Kernel/Driver</font></font></font></p>
+			</td>
+			<td width="20%" bgcolor="#eef2f8" style="background: #eef2f8; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">271</font></font></font></p>
+			</td>
+			<td width="20%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">15%</font></font></font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="61%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Office/Word/Excel/PPT</font></font></font></p>
+			</td>
+			<td width="20%" bgcolor="#ffffff" style="background: #ffffff; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">172</font></font></font></p>
+			</td>
+			<td width="20%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">10%</font></font></font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="61%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Networking</font></font></font></p>
+			</td>
+			<td width="20%" bgcolor="#eef2f8" style="background: #eef2f8; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">134</font></font></font></p>
+			</td>
+			<td width="20%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">8%</font></font></font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="61%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Other</font></font></font></p>
+			</td>
+			<td width="20%" bgcolor="#ffffff" style="background: #ffffff; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">62</font></font></font></p>
+			</td>
+			<td width="20%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">4%</font></font></font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="61%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">.NET/Dev</font></font></font></p>
+			</td>
+			<td width="20%" bgcolor="#eef2f8" style="background: #eef2f8; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">62</font></font></font></p>
+			</td>
+			<td width="20%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">4%</font></font></font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="61%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Graphics/Media</font></font></font></p>
+			</td>
+			<td width="20%" bgcolor="#ffffff" style="background: #ffffff; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">54</font></font></font></p>
+			</td>
+			<td width="20%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">3%</font></font></font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="61%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Microsoft
+				(other)</font></font></font></p>
+			</td>
+			<td width="20%" bgcolor="#eef2f8" style="background: #eef2f8; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">36</font></font></font></p>
+			</td>
+			<td width="20%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">2%</font></font></font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="61%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">RDP/Remote</font></font></font></p>
+			</td>
+			<td width="20%" bgcolor="#ffffff" style="background: #ffffff; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">34</font></font></font></p>
+			</td>
+			<td width="20%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">2%</font></font></font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="61%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Auth/Identity</font></font></font></p>
+			</td>
+			<td width="20%" bgcolor="#eef2f8" style="background: #eef2f8; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">31</font></font></font></p>
+			</td>
+			<td width="20%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">2%</font></font></font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="61%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">SQL/Dynamics</font></font></font></p>
+			</td>
+			<td width="20%" bgcolor="#ffffff" style="background: #ffffff; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">27</font></font></font></p>
+			</td>
+			<td width="20%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">2%</font></font></font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="61%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Hyper-V/Virtual</font></font></font></p>
+			</td>
+			<td width="20%" bgcolor="#eef2f8" style="background: #eef2f8; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">26</font></font></font></p>
+			</td>
+			<td width="20%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">1%</font></font></font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="61%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Azure/Cloud</font></font></font></p>
+			</td>
+			<td width="20%" bgcolor="#ffffff" style="background: #ffffff; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">14</font></font></font></p>
+			</td>
+			<td width="20%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">1%</font></font></font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="61%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Exchange</font></font></font></p>
+			</td>
+			<td width="20%" bgcolor="#eef2f8" style="background: #eef2f8; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">10</font></font></font></p>
+			</td>
+			<td width="20%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">1%</font></font></font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="61%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Boot/Crypto
+				(T3)</font></font></font></p>
+			</td>
+			<td width="20%" bgcolor="#ffffff" style="background: #ffffff; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">7</font></font></font></p>
+			</td>
+			<td width="20%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">0%</font></font></font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="61%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #2e5496; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">SharePoint</font></font></font></p>
+			</td>
+			<td width="20%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #2e5496; border-left: 1px solid #bbbbbb; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">1</font></font></font></p>
+			</td>
+			<td width="20%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #2e5496; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">0%</font></font></font></p>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<h3 class="western" style="margin-top: 0.1in; margin-bottom: 0.06in"><font color="#2e5496"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Table
+5 (by product category) — key point</b></font></font></font></h3>
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>This
+table has been generated from the product-identifier classification
+(v2) since last issue, and this month is its second point.</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+These two points are the only ones that can be placed side by side.
+Windows services (+164), Azure Linux (+154), kernel and drivers
+(+124), Office (+47), and .NET and developer tools (+40) rose;
+SQL/Dynamics (-37) and Edge/Chromium (-24) fell. &quot;Other&quot;
+went from 40 to 62. &quot;Other&quot; is the list of items in scope
+with no rule yet, and reads as the rules to add.</font></font></p>
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Do
+not place it beside Table 5 from August or earlier.</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+The classifier version differs.</font></font></p>
+<p style="line-height: 100%; margin-bottom: 0.06in"><br/>
+<br/>
+
+</p>
+<h3 class="western" style="margin-top: 0.1in; margin-bottom: 0.06in"><font color="#2e5496"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Appendix:
+an inventory of credits suggesting &quot;AI&quot;</b></font></font></font></h3>
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">The
+credit name &quot;Kugelblitz&quot; appears 39 times in July, once in
+August, and zero times in September and October. It has never
+appeared against a Critical item.</font></font></p>
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>That
+progression cannot be interpreted.</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+What can be said is that </font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>the
+name has not appeared for two months running</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">.
+This month, for what it is worth, the CVRF carries no Edge/Chromium
+advisory at all.</font></font></p>
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">The
+discipline is unchanged: nothing is inferred about what such a credit
+name is. </font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>What
+was counted is a match on a credit string, and nothing else.</b></font></font></p>
+<p style="line-height: 100%; margin-bottom: 0.06in"><br/>
+<br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<h1 class="western" style="margin-top: 0in; margin-bottom: 0.1in; border-top: none; border-bottom: 1px solid #2e5496; border-left: none; border-right: none; padding: 0in; page-break-before: always">
+<font color="#1f3864"><font face="Arial, serif"><font size="4" style="font-size: 14pt"><b>Comparison
+with historical data — the January–October 2026 trend</b></font></font></font></h1>
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">The
+conditions for month-on-month comparison hold across three months:
+August, September and October. All three are computed with the
+product-identifier classifier (v2) and frozen at the same distance
+from Patch Tuesday (two days after). July and earlier use a different
+classifier. That is why the &quot;core Microsoft&quot; column has
+been dropped from the trend table; every axis plotted below is
+independent of the classifier.</font></font></p>
+<h2 class="western" style="margin-top: 0.14in; margin-bottom: 0.07in">
+<font color="#2e5496"><font face="Arial, serif"><font size="3" style="font-size: 11pt"><b>Trend
+table (only real numbers robust to acquisition lag)</b></font></font></font></h2>
+<table width="100%" cellpadding="3" cellspacing="0">
+	<col width="26*"/>
+	<col width="43*"/>
+	<col width="43*"/>
+	<col width="57*"/>
+	<col width="43*"/>
+	<col width="45*"/>
+	<thead>
+		<tr valign="top">
+			<td width="10%" bgcolor="#1f3864" style="background: #1f3864; border-top: 1px solid #2e5496; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.04in 0.06in"><p>
+				<font color="#ffffff"><font face="Arial, serif"><font size="2" style="font-size: 9pt"><b>Month</b></font></font></font></p>
+			</td>
+			<td width="17%" bgcolor="#1f3864" style="background: #1f3864; border-top: 1px solid #2e5496; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #bbbbbb; padding: 0.04in 0.06in"><p>
+				<font color="#ffffff"><font face="Arial, serif"><font size="2" style="font-size: 9pt"><b>CVE
+				full</b></font></font></font></p>
+			</td>
+			<td width="17%" bgcolor="#1f3864" style="background: #1f3864; border-top: 1px solid #2e5496; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #bbbbbb; padding: 0.04in 0.06in"><p>
+				<font color="#ffffff"><font face="Arial, serif"><font size="2" style="font-size: 9pt"><b>Critical</b></font></font></font></p>
+			</td>
+			<td width="22%" bgcolor="#1f3864" style="background: #1f3864; border-top: 1px solid #2e5496; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #bbbbbb; padding: 0.04in 0.06in"><p>
+				<font color="#ffffff"><font face="Arial, serif"><font size="2" style="font-size: 9pt"><b>Heavy(T2+T3)</b></font></font></font></p>
+			</td>
+			<td width="17%" bgcolor="#1f3864" style="background: #1f3864; border-top: 1px solid #2e5496; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #bbbbbb; padding: 0.04in 0.06in"><p>
+				<font color="#ffffff"><font face="Arial, serif"><font size="2" style="font-size: 9pt"><b>Kugelblitz</b></font></font></font></p>
+			</td>
+			<td width="17%" bgcolor="#1f3864" style="background: #1f3864; border-top: 1px solid #2e5496; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.04in 0.06in"><p>
+				<font color="#ffffff"><font face="Arial, serif"><font size="2" style="font-size: 9pt"><b>Internal(MS)</b></font></font></font></p>
+			</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr valign="top">
+			<td width="10%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Jan</font></font></font></p>
+			</td>
+			<td width="17%" bgcolor="#eef2f8" style="background: #eef2f8; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">310</font></font></font></p>
+			</td>
+			<td width="17%" bgcolor="#eef2f8" style="background: #eef2f8; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">30</font></font></font></p>
+			</td>
+			<td width="22%" bgcolor="#eef2f8" style="background: #eef2f8; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">9</font></font></font></p>
+			</td>
+			<td width="17%" bgcolor="#eef2f8" style="background: #eef2f8; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">0</font></font></font></p>
+			</td>
+			<td width="17%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">19</font></font></font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="10%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Feb</font></font></font></p>
+			</td>
+			<td width="17%" bgcolor="#ffffff" style="background: #ffffff; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">169</font></font></font></p>
+			</td>
+			<td width="17%" bgcolor="#ffffff" style="background: #ffffff; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">12</font></font></font></p>
+			</td>
+			<td width="22%" bgcolor="#ffffff" style="background: #ffffff; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">1</font></font></font></p>
+			</td>
+			<td width="17%" bgcolor="#ffffff" style="background: #ffffff; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">0</font></font></font></p>
+			</td>
+			<td width="17%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">19</font></font></font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="10%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Mar</font></font></font></p>
+			</td>
+			<td width="17%" bgcolor="#eef2f8" style="background: #eef2f8; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">460</font></font></font></p>
+			</td>
+			<td width="17%" bgcolor="#eef2f8" style="background: #eef2f8; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">26</font></font></font></p>
+			</td>
+			<td width="22%" bgcolor="#eef2f8" style="background: #eef2f8; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">8</font></font></font></p>
+			</td>
+			<td width="17%" bgcolor="#eef2f8" style="background: #eef2f8; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">0</font></font></font></p>
+			</td>
+			<td width="17%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">15</font></font></font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="10%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Apr</font></font></font></p>
+			</td>
+			<td width="17%" bgcolor="#ffffff" style="background: #ffffff; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">737</font></font></font></p>
+			</td>
+			<td width="17%" bgcolor="#ffffff" style="background: #ffffff; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">41</font></font></font></p>
+			</td>
+			<td width="22%" bgcolor="#ffffff" style="background: #ffffff; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">34</font></font></font></p>
+			</td>
+			<td width="17%" bgcolor="#ffffff" style="background: #ffffff; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">0</font></font></font></p>
+			</td>
+			<td width="17%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">33</font></font></font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="10%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">May</font></font></font></p>
+			</td>
+			<td width="17%" bgcolor="#eef2f8" style="background: #eef2f8; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">991</font></font></font></p>
+			</td>
+			<td width="17%" bgcolor="#eef2f8" style="background: #eef2f8; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">52</font></font></font></p>
+			</td>
+			<td width="22%" bgcolor="#eef2f8" style="background: #eef2f8; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">19</font></font></font></p>
+			</td>
+			<td width="17%" bgcolor="#eef2f8" style="background: #eef2f8; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">0</font></font></font></p>
+			</td>
+			<td width="17%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">28</font></font></font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="10%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Jun</font></font></font></p>
+			</td>
+			<td width="17%" bgcolor="#ffffff" style="background: #ffffff; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">1281</font></font></font></p>
+			</td>
+			<td width="17%" bgcolor="#ffffff" style="background: #ffffff; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">89</font></font></font></p>
+			</td>
+			<td width="22%" bgcolor="#ffffff" style="background: #ffffff; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">45</font></font></font></p>
+			</td>
+			<td width="17%" bgcolor="#ffffff" style="background: #ffffff; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">0</font></font></font></p>
+			</td>
+			<td width="17%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">34</font></font></font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="10%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Jul</font></font></font></p>
+			</td>
+			<td width="17%" bgcolor="#eef2f8" style="background: #eef2f8; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">1150</font></font></font></p>
+			</td>
+			<td width="17%" bgcolor="#eef2f8" style="background: #eef2f8; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">67</font></font></font></p>
+			</td>
+			<td width="22%" bgcolor="#eef2f8" style="background: #eef2f8; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">34</font></font></font></p>
+			</td>
+			<td width="17%" bgcolor="#eef2f8" style="background: #eef2f8; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">39</font></font></font></p>
+			</td>
+			<td width="17%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">109</font></font></font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="10%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Aug</font></font></font></p>
+			</td>
+			<td width="17%" bgcolor="#ffffff" style="background: #ffffff; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">790</font></font></font></p>
+			</td>
+			<td width="17%" bgcolor="#ffffff" style="background: #ffffff; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">108</font></font></font></p>
+			</td>
+			<td width="22%" bgcolor="#ffffff" style="background: #ffffff; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">50</font></font></font></p>
+			</td>
+			<td width="17%" bgcolor="#ffffff" style="background: #ffffff; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">1</font></font></font></p>
+			</td>
+			<td width="17%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">47</font></font></font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="10%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Sep</font></font></font></p>
+			</td>
+			<td width="17%" bgcolor="#eef2f8" style="background: #eef2f8; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">1186</font></font></font></p>
+			</td>
+			<td width="17%" bgcolor="#eef2f8" style="background: #eef2f8; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">119</font></font></font></p>
+			</td>
+			<td width="22%" bgcolor="#eef2f8" style="background: #eef2f8; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">94</font></font></font></p>
+			</td>
+			<td width="17%" bgcolor="#eef2f8" style="background: #eef2f8; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">0</font></font></font></p>
+			</td>
+			<td width="17%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">61</font></font></font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="10%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #2e5496; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Oct</font></font></font></p>
+			</td>
+			<td width="17%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #2e5496; border-left: 1px solid #bbbbbb; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">1760</font></font></font></p>
+			</td>
+			<td width="17%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #2e5496; border-left: 1px solid #bbbbbb; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">174</font></font></font></p>
+			</td>
+			<td width="22%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #2e5496; border-left: 1px solid #bbbbbb; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">80</font></font></font></p>
+			</td>
+			<td width="17%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #2e5496; border-left: 1px solid #bbbbbb; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">0</font></font></font></p>
+			</td>
+			<td width="17%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #2e5496; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">98</font></font></font></p>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font color="#595959"><font face="Arial, serif"><font size="1" style="font-size: 8pt"><i>Note:
+the 'CVE core' (core Microsoft products) column is not shown. The
+population classifier changed to v2 (affected-product based) from
+2026-Aug, and placing v2 values in the same column as months frozen
+under v1 (title based) would render a change of classifier as a trend
+— an apparent collapse in core products. The current month's core
+breakdown is in the tables above, where only one classifier version
+is involved.</i></font></font></font></p>
+<p style="line-height: 100%; margin-bottom: 0.06in"><br/>
+<br/>
+
+</p>
+<p align="center" style="line-height: 100%; margin-top: 0.06in; margin-bottom: 0.04in">
+<img src="assets/en/report_en_html_1875a466.png" name="Image1" align="bottom" width="452" height="226" border="0"/>
+</p>
+<p align="center" style="line-height: 100%; margin-bottom: 0.11in"><font color="#595959"><font face="Arial, serif"><font size="1" style="font-size: 8pt"><i>Fig
+1: Total CVE count trend (full CVRF)</i></font></font></font></p>
+<h3 class="western" style="margin-top: 0.1in; margin-bottom: 0.06in"><font color="#2e5496"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Chart
+1 (total CVE count) — reading</b></font></font></font></h3>
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">This
+month's 1,760 is the highest in the observation window (next is
+June's 1,281). The curve corresponds neither to defensive load nor to
+risk: this month's rise came on both the core and the excluded side,
+and on the core side the heavy tier fell.</font></font></p>
+<p align="center" style="line-height: 100%; margin-top: 0.06in; margin-bottom: 0.04in">
+<img src="assets/en/report_en_html_c33004bd.png" name="Image2" align="bottom" width="452" height="226" border="0"/>
+</p>
+<p align="center" style="line-height: 100%; margin-bottom: 0.11in"><font color="#595959"><font face="Arial, serif"><font size="1" style="font-size: 8pt"><i>Fig
+2: Critical count and heavy tier (T2+T3) trend</i></font></font></font></p>
+<h3 class="western" style="margin-top: 0.1in; margin-bottom: 0.06in"><font color="#2e5496"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Chart
+2 (Critical and the heavy tier) — reading</b></font></font></font></h3>
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>This
+month the two lines moved in opposite directions.</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+Critical (all CVRF) is 174, the highest in the window; the heavy tier
+(all CVRF) fell from 94 in September to 80. The rise in Critical
+comes from the 97 on the excluded side, and core Critical fell. This
+chart plots all CVRF, so the movement in Azure Linux Critical shows
+up directly in the line.</font></font></p>
+<p align="center" style="line-height: 100%; margin-top: 0.06in; margin-bottom: 0.04in">
+<img src="assets/en/report_en_html_ebe7890.png" name="Image3" align="bottom" width="452" height="226" border="0"/>
+</p>
+<p align="center" style="line-height: 100%; margin-bottom: 0.11in"><font color="#595959"><font face="Arial, serif"><font size="1" style="font-size: 8pt"><i>Fig
+3: Monthly appearance of the credit &quot;Kugelblitz&quot;</i></font></font></font></p>
+<h3 class="western" style="margin-top: 0.1in; margin-bottom: 0.06in"><font color="#2e5496"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Chart
+3 (Kugelblitz) — reading</b></font></font></font></h3>
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">After
+the July spike, one in August and zero in September and October. This
+month the CVRF carries no Edge/Chromium advisory at all. The shape of
+the curve does not tell us about an actor's activity.</font></font></p>
+<p align="center" style="line-height: 100%; margin-top: 0.06in; margin-bottom: 0.04in">
+<img src="assets/en/report_en_html_3999a9d8.png" name="Image4" align="bottom" width="452" height="226" border="0"/>
+</p>
+<p align="center" style="line-height: 100%; margin-bottom: 0.11in"><font color="#595959"><font face="Arial, serif"><font size="1" style="font-size: 8pt"><i>Fig
+4: Internal (&quot;with Microsoft&quot;) credit count trend</i></font></font></font></p>
+<h3 class="western" style="margin-top: 0.1in; margin-bottom: 0.06in"><font color="#2e5496"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Chart
+4 (internal discovery) — reading</b></font></font></font></h3>
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Microsoft
+internal-discovery credits rose from 61 to 98. Their share of all
+credited CVEs also rose, from 6.6% to 7.3%. </font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Last
+month count and share went opposite ways; this month they move
+together.</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+This chart plots the count.</font></font></p>
+<table width="100%" cellpadding="7" cellspacing="0">
+	<col width="256*"/>
+	<tr>
+		<td width="100%" valign="top" bgcolor="#eef2f8" style="background: #eef2f8; border: 1px solid #2e5496; padding: 0.07in 0.11in"><p style="margin-bottom: 0.04in">
+			<font color="#1f3864"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>What
+			the trend shows (summary)</b></font></font></font></p>
+			<p style="margin-bottom: 0.03in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">The
+			total and Critical (all CVRF) reached highs for the observation
+			window. The heavy tier fell.</font></font></p>
+			<p style="margin-bottom: 0.03in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">The
+			rise in Critical happened on the excluded side (Azure Linux). Core
+			Critical fell.</font></font></p>
+			<p style="margin-bottom: 0.03in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">&quot;Core
+			Microsoft&quot; and Table 5 can be compared only across August to
+			October.</font></font></p>
+			<p><font face="Arial, serif"><font size="2" style="font-size: 10pt">Internal
+			discovery rose by count and by share together. The chart plots the
+			count.</font></font></p>
+		</td>
+	</tr>
+</table>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<h1 class="western" style="margin-top: 0in; margin-bottom: 0.1in; border-top: none; border-bottom: 1px solid #2e5496; border-left: none; border-right: none; padding: 0in; page-break-before: always">
+<font color="#1f3864"><font face="Arial, serif"><font size="4" style="font-size: 14pt"><b>KEV
+/ EPSS — prioritizing immediate response</b></font></font></font></h1>
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font color="#222222"><font face="Arial, serif"><font size="2" style="font-size: 10pt">The
+following cross-references the target CVEs (T2/T3 ∨ Critical ∨
+external-researcher credit ∨ confirmed exploitation) against CISA
+KEV and FIRST EPSS. KEV = a discrete fact of exploitation confirmed
+by CISA (the notification trigger; a separate source from Microsoft's
+own exploitation flag, which this report calls “confirmed
+exploitation”). EPSS = an estimate of exploitation probability (a
+point-in-time value, changes daily, for reference). No discoverer or
+causation is asserted from these numbers.</font></font></font></p>
+<h2 class="western" style="margin-top: 0.14in; margin-bottom: 0.07in">
+<font color="#2e5496"><font face="Arial, serif"><font size="3" style="font-size: 11pt"><b>Immediate-response
+targets — listed in CISA KEV (as of 2026-10-15)</b></font></font></font></h2>
+<table width="100%" cellpadding="3" cellspacing="0">
+	<col width="66*"/>
+	<col width="95*"/>
+	<col width="48*"/>
+	<col width="48*"/>
+	<thead>
+		<tr valign="top">
+			<td width="26%" bgcolor="#1f3864" style="background: #1f3864; border-top: 1px solid #2e5496; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.04in 0.06in"><p>
+				<font color="#ffffff"><font face="Arial, serif"><font size="2" style="font-size: 9pt"><b>CVE</b></font></font></font></p>
+			</td>
+			<td width="37%" bgcolor="#1f3864" style="background: #1f3864; border-top: 1px solid #2e5496; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #bbbbbb; padding: 0.04in 0.06in"><p>
+				<font color="#ffffff"><font face="Arial, serif"><font size="2" style="font-size: 9pt"><b>Product</b></font></font></font></p>
+			</td>
+			<td width="19%" bgcolor="#1f3864" style="background: #1f3864; border-top: 1px solid #2e5496; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #bbbbbb; padding: 0.04in 0.06in"><p>
+				<font color="#ffffff"><font face="Arial, serif"><font size="2" style="font-size: 9pt"><b>Severity</b></font></font></font></p>
+			</td>
+			<td width="19%" bgcolor="#1f3864" style="background: #1f3864; border-top: 1px solid #2e5496; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.04in 0.06in"><p>
+				<font color="#ffffff"><font face="Arial, serif"><font size="2" style="font-size: 9pt"><b>Reboot
+				class</b></font></font></font></p>
+			</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr valign="top">
+			<td width="26%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #2e5496; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">CVE-2026-96951</font></font></font></p>
+			</td>
+			<td width="37%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #2e5496; border-left: 1px solid #bbbbbb; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Windows
+				Shell</font></font></font></p>
+			</td>
+			<td width="19%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #2e5496; border-left: 1px solid #bbbbbb; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Important</font></font></font></p>
+			</td>
+			<td width="19%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #2e5496; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">T0/T1</font></font></font></p>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<p style="line-height: 100%; margin-bottom: 0.06in"><br/>
+<br/>
+
+</p>
+<h2 class="western" style="margin-top: 0.14in; margin-bottom: 0.07in">
+<font color="#2e5496"><font face="Arial, serif"><font size="3" style="font-size: 11pt"><b>Top
+EPSS — estimated exploitation probability (as of 2026-10-14)</b></font></font></font></h2>
+<table width="100%" cellpadding="3" cellspacing="0">
+	<col width="66*"/>
+	<col width="95*"/>
+	<col width="48*"/>
+	<col width="48*"/>
+	<thead>
+		<tr valign="top">
+			<td width="26%" bgcolor="#1f3864" style="background: #1f3864; border-top: 1px solid #2e5496; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.04in 0.06in"><p>
+				<font color="#ffffff"><font face="Arial, serif"><font size="2" style="font-size: 9pt"><b>CVE</b></font></font></font></p>
+			</td>
+			<td width="37%" bgcolor="#1f3864" style="background: #1f3864; border-top: 1px solid #2e5496; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #bbbbbb; padding: 0.04in 0.06in"><p>
+				<font color="#ffffff"><font face="Arial, serif"><font size="2" style="font-size: 9pt"><b>Product
+				category</b></font></font></font></p>
+			</td>
+			<td width="19%" bgcolor="#1f3864" style="background: #1f3864; border-top: 1px solid #2e5496; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #bbbbbb; padding: 0.04in 0.06in"><p>
+				<font color="#ffffff"><font face="Arial, serif"><font size="2" style="font-size: 9pt"><b>EPSS</b></font></font></font></p>
+			</td>
+			<td width="19%" bgcolor="#1f3864" style="background: #1f3864; border-top: 1px solid #2e5496; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.04in 0.06in"><p>
+				<font color="#ffffff"><font face="Arial, serif"><font size="2" style="font-size: 9pt"><b>Percentile</b></font></font></font></p>
+			</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr valign="top">
+			<td width="26%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">CVE-2026-70049</font></font></font></p>
+			</td>
+			<td width="37%" bgcolor="#eef2f8" style="background: #eef2f8; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Microsoft
+				(other)</font></font></font></p>
+			</td>
+			<td width="19%" bgcolor="#eef2f8" style="background: #eef2f8; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">0.0227</font></font></font></p>
+			</td>
+			<td width="19%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">82.7%</font></font></font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="26%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">CVE-2026-88091</font></font></font></p>
+			</td>
+			<td width="37%" bgcolor="#ffffff" style="background: #ffffff; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Win
+				Services/Components</font></font></font></p>
+			</td>
+			<td width="19%" bgcolor="#ffffff" style="background: #ffffff; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">0.0214</font></font></font></p>
+			</td>
+			<td width="19%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">81.6%</font></font></font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="26%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">CVE-2026-100214</font></font></font></p>
+			</td>
+			<td width="37%" bgcolor="#eef2f8" style="background: #eef2f8; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">SQL/Dynamics</font></font></font></p>
+			</td>
+			<td width="19%" bgcolor="#eef2f8" style="background: #eef2f8; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">0.0183</font></font></font></p>
+			</td>
+			<td width="19%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">78.4%</font></font></font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="26%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">CVE-2026-96186</font></font></font></p>
+			</td>
+			<td width="37%" bgcolor="#ffffff" style="background: #ffffff; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Graphics/Media</font></font></font></p>
+			</td>
+			<td width="19%" bgcolor="#ffffff" style="background: #ffffff; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">0.0165</font></font></font></p>
+			</td>
+			<td width="19%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">76.0%</font></font></font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="26%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">CVE-2026-87692</font></font></font></p>
+			</td>
+			<td width="37%" bgcolor="#eef2f8" style="background: #eef2f8; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Exchange</font></font></font></p>
+			</td>
+			<td width="19%" bgcolor="#eef2f8" style="background: #eef2f8; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">0.0159</font></font></font></p>
+			</td>
+			<td width="19%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">75.1%</font></font></font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="26%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">CVE-2026-85900</font></font></font></p>
+			</td>
+			<td width="37%" bgcolor="#ffffff" style="background: #ffffff; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Office/Word/Excel/PPT</font></font></font></p>
+			</td>
+			<td width="19%" bgcolor="#ffffff" style="background: #ffffff; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">0.0152</font></font></font></p>
+			</td>
+			<td width="19%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">74.0%</font></font></font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="26%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">CVE-2026-96951</font></font></font></p>
+			</td>
+			<td width="37%" bgcolor="#eef2f8" style="background: #eef2f8; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Win
+				Services/Components</font></font></font></p>
+			</td>
+			<td width="19%" bgcolor="#eef2f8" style="background: #eef2f8; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">0.0151</font></font></font></p>
+			</td>
+			<td width="19%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">73.8%</font></font></font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="26%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">CVE-2026-70035</font></font></font></p>
+			</td>
+			<td width="37%" bgcolor="#ffffff" style="background: #ffffff; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">.NET/Dev</font></font></font></p>
+			</td>
+			<td width="19%" bgcolor="#ffffff" style="background: #ffffff; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">0.0127</font></font></font></p>
+			</td>
+			<td width="19%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">69.2%</font></font></font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="26%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">CVE-2026-83520</font></font></font></p>
+			</td>
+			<td width="37%" bgcolor="#eef2f8" style="background: #eef2f8; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">.NET/Dev</font></font></font></p>
+			</td>
+			<td width="19%" bgcolor="#eef2f8" style="background: #eef2f8; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">0.0127</font></font></font></p>
+			</td>
+			<td width="19%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">69.2%</font></font></font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="26%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">CVE-2026-70082</font></font></font></p>
+			</td>
+			<td width="37%" bgcolor="#ffffff" style="background: #ffffff; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Networking</font></font></font></p>
+			</td>
+			<td width="19%" bgcolor="#ffffff" style="background: #ffffff; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">0.0120</font></font></font></p>
+			</td>
+			<td width="19%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">67.6%</font></font></font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="26%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">CVE-2026-83635</font></font></font></p>
+			</td>
+			<td width="37%" bgcolor="#eef2f8" style="background: #eef2f8; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Networking</font></font></font></p>
+			</td>
+			<td width="19%" bgcolor="#eef2f8" style="background: #eef2f8; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">0.0120</font></font></font></p>
+			</td>
+			<td width="19%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">67.6%</font></font></font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="26%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">CVE-2026-83665</font></font></font></p>
+			</td>
+			<td width="37%" bgcolor="#ffffff" style="background: #ffffff; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Networking</font></font></font></p>
+			</td>
+			<td width="19%" bgcolor="#ffffff" style="background: #ffffff; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">0.0120</font></font></font></p>
+			</td>
+			<td width="19%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">67.6%</font></font></font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="26%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">CVE-2026-83655</font></font></font></p>
+			</td>
+			<td width="37%" bgcolor="#eef2f8" style="background: #eef2f8; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Other</font></font></font></p>
+			</td>
+			<td width="19%" bgcolor="#eef2f8" style="background: #eef2f8; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">0.0120</font></font></font></p>
+			</td>
+			<td width="19%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">67.6%</font></font></font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="26%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">CVE-2026-83855</font></font></font></p>
+			</td>
+			<td width="37%" bgcolor="#ffffff" style="background: #ffffff; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Win
+				Services/Components</font></font></font></p>
+			</td>
+			<td width="19%" bgcolor="#ffffff" style="background: #ffffff; border: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">0.0120</font></font></font></p>
+			</td>
+			<td width="19%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">67.6%</font></font></font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="26%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #2e5496; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">CVE-2026-105723</font></font></font></p>
+			</td>
+			<td width="37%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #2e5496; border-left: 1px solid #bbbbbb; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Win
+				Services/Components</font></font></font></p>
+			</td>
+			<td width="19%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #2e5496; border-left: 1px solid #bbbbbb; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">0.0115</font></font></font></p>
+			</td>
+			<td width="19%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #2e5496; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">66.2%</font></font></font></p>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font color="#595959"><font face="Arial, serif"><font size="1" style="font-size: 8pt"><i>Note:
+EPSS is updated daily and its values change. The table above is a
+point-in-time snapshot (as of 2026-10-14) and is not used as a
+standalone trend metric. Only KEV is used as a notification trigger
+(EPSS is not).</i></font></font></font></p>
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font color="#595959"><font face="Arial, serif"><font size="1" style="font-size: 8pt"><i>Note:
+product names (KEV table) and product categories (EPSS table) are
+sourced from the CVRF (2026-10-15 frozen snapshot) — a separate
+source and point in time from KEV listing status and EPSS values.
+Categories use the same classification as Table 5. No discoverer or
+causation is asserted from these product names/categories.</i></font></font></font></p>
+<p style="line-height: 100%; margin-bottom: 0in"><br/>
+
+</p>
+<h1 class="western" style="margin-top: 0in; margin-bottom: 0.1in; border-top: none; border-bottom: 1px solid #2e5496; border-left: none; border-right: none; padding: 0in; page-break-before: always">
+<font color="#1f3864"><font face="Arial, serif"><font size="4" style="font-size: 14pt"><b>Appendix:
+method, sources, accountability record</b></font></font></font></h1>
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">This
+appendix records the process behind the conclusions, including
+hypotheses discarded or corrected along the way, for reproducibility
+and accountability.</font></font></p>
+<h3 class="western" style="margin-top: 0.1in; margin-bottom: 0.06in"><font color="#2e5496"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>1.
+Purpose and questions</b></font></font></font></h3>
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">The
+question carries over: what can be said about defensive load and
+actual risk from monthly vulnerability data. This issue additionally
+checked, before freezing, where in which population the rise came
+from in a month whose total set a high.</font></font></p>
+<h3 class="western" style="margin-top: 0.1in; margin-bottom: 0.06in"><font color="#2e5496"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>2.
+Sources</b></font></font></font></h3>
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">This
+issue rests on primary data only and cites no press or secondary
+analysis.</font></font></p>
+<ul>
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>MSRC
+	CVRF API v3.0</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+	— monthly security updates as per-CVE structured data, including
+	acknowledgements, severity, exploitation status, affected products,
+	CVSS vectors and FAQs.</font></font></p></li>
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>CISA
+	KEV catalog</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+	— the catalog of vulnerabilities known to be exploited.</font></font></p></li>
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>FIRST
+	EPSS</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+	— the estimated probability that exploitation activity will be
+	observed within 30 days.</font></font></p></li>
+</ul>
+<h3 class="western" style="margin-top: 0.1in; margin-bottom: 0.06in"><font color="#2e5496"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>3.
+How the data was acquired</b></font></font></font></h3>
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Primary
+data was fetched in the acquisition environment and frozen two days
+after Patch Tuesday (06:43 on 15 October), the same distance as
+August and September. Against the daily fetch of the day before
+(07:01 on 14 October), core (1,419), credited (1,334), Critical (174
+all / 77 core), the heavy tier and the three zero-days were
+unchanged. The total rose by one, from 1,759 (CVE-2026-95838 on the
+excluded side, first published 14 October). What moved was the
+severity of one core CVE (unrated → Important) and a few finder
+buckets (external 998 → 1,000, anonymous 169 → 167). The
+day-before fetch computed product categories with the old
+classification, so categories were not compared. KEV was retrieved on
+the day of the freeze (15 October). </font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>The
+EPSS date is 2026-10-14 (FIRST dates by UTC, and 14 October was the
+latest available at retrieval).</b></font></font></p>
+<h3 class="western" style="margin-top: 0.1in; margin-bottom: 0.06in"><font color="#2e5496"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>4.
+Method, in sequence</b></font></font></font></h3>
+<ol>
+	<li value="1"><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Primary
+	data fetched two days after Patch Tuesday.</font></font></p></li>
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Compared
+	with the previous day's daily fetch: core, credited, Critical, the
+	heavy tier and zero-days had not moved. The total rose by one on the
+	excluded side, and severity and finder buckets moved by a few
+	(section 3).</font></font></p></li>
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">With
+	the total up 48.4% on last month, the rise was checked before
+	freezing — core or excluded, by CNA, first-revision date, product
+	category and product (section 5, discarded 2).</font></font></p></li>
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Frozen.</font></font></p></li>
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">KEV
+	and EPSS retrieved for this month's matched set.</font></font></p></li>
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">For
+	the three zero-days, the exploitation entries, CVSS vectors and
+	descriptions were read in the original CVRF.</font></font></p></li>
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">The
+	recount behind last issue's Table 1 key point was re-run and gave
+	the same breakdown (section 5, correction 1).</font></font></p></li>
+</ol>
+<h3 class="western" style="margin-top: 0.1in; margin-bottom: 0.06in"><font color="#2e5496"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>5.
+Indicators discarded or corrected in the course of the work</b></font></font></font></h3>
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">For
+accountability, judgements adopted and then discarded or corrected,
+and corrections, are recorded.</font></font></p>
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Correction
+1: the &quot;breakdown of the 114 Critical&quot; in last issue's
+Table 1 key point.</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+Last issue said of the 114 core Critical CVEs: &quot;That breaks down
+as 82 remote code execution, 27 elevation of privilege and 2
+information disclosure.&quot; </font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Each
+of the three numbers is right, but they sum to 111 — three short of
+114.</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+The remaining three are one spoofing (Azure Cosmos DB), one security
+feature bypass (Windows Hello), and one with no impact stated (CMS
+AuthEnvelopedData processing, CNA OpenSSL). The correct breakdown:</font></font></p>
+<table width="100%" cellpadding="3" cellspacing="0">
+	<col width="128*"/>
+	<col width="128*"/>
+	<thead>
+		<tr valign="top">
+			<td width="50%" bgcolor="#1f3864" style="background: #1f3864; border-top: 1px solid #2e5496; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.04in 0.06in"><p>
+				<font color="#ffffff"><font face="Arial, serif"><font size="2" style="font-size: 9pt"><b>Impact</b></font></font></font></p>
+			</td>
+			<td width="50%" bgcolor="#1f3864" style="background: #1f3864; border-top: 1px solid #2e5496; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.04in 0.06in"><p>
+				<font color="#ffffff"><font face="Arial, serif"><font size="2" style="font-size: 9pt"><b>Count</b></font></font></font></p>
+			</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr valign="top">
+			<td width="50%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Remote
+				code execution</font></font></font></p>
+			</td>
+			<td width="50%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">82</font></font></font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="50%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Elevation
+				of privilege</font></font></font></p>
+			</td>
+			<td width="50%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">27</font></font></font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="50%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Information
+				disclosure</font></font></font></p>
+			</td>
+			<td width="50%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">2</font></font></font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="50%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Spoofing</font></font></font></p>
+			</td>
+			<td width="50%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">1</font></font></font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="50%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Security
+				feature bypass</font></font></font></p>
+			</td>
+			<td width="50%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">1</font></font></font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="50%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">No
+				impact stated</font></font></font></p>
+			</td>
+			<td width="50%" bgcolor="#ffffff" style="background: #ffffff; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #bbbbbb; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">1</font></font></font></p>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td width="50%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #2e5496; border-left: 1px solid #2e5496; border-right: 1px solid #bbbbbb; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">**Total**</font></font></font></p>
+			</td>
+			<td width="50%" bgcolor="#eef2f8" style="background: #eef2f8; border-top: 1px solid #bbbbbb; border-bottom: 1px solid #2e5496; border-left: 1px solid #bbbbbb; border-right: 1px solid #2e5496; padding: 0.03in 0.06in"><p>
+				<font color="#222222"><font face="Arial, serif"><font size="1" style="font-size: 8pt">**114**</font></font></font></p>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<p style="line-height: 100%; margin-bottom: 0.06in"><br/>
+<br/>
+
+</p>
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">The
+population is the same as last issue's Table 1 — the 114 core
+Critical CVEs in the September frozen snapshot — and each CVE is
+classified by the impact the CVRF states for it. The frozen snapshot
+does not record impact, so the impacts were read from the CVRF using
+the snapshot's own list of target CVEs, after confirming that the
+Critical count (119) and core Critical count (114) match the
+snapshot. No CVE states more than one impact. The recount was re-run
+on 15 October and gave the same breakdown.</font></font></p>
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>The
+cause: the draft counted and listed only three categories, and the
+total was never checked against 114.</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+The same paragraph's &quot;none of them is confirmed exploited&quot;
+still holds — the recount also finds zero.</font></font></p>
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Discarded
+2: the reading that &quot;October's rise is Azure Linux advisories
+piling up&quot;.</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+Seeing the total up 48.4% on last month, the first guess was that
+more Azure Linux advisories had accumulated before the freeze. </font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>On
+checking, that was not so.</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+Of the 574 added, 444 were on the core side. Within core, CVEs
+assigned by Microsoft went from 973 to 1,417, and 1,411 of the core
+CVEs had their first revision on the 13 October release day. The
+excluded side rose too (211 → 341), but it is not most of the rise.
+As a check on the classifier, the same classifier reproduces last
+month's 975 core CVEs down to the category level, and no Azure Linux
+or Edge/Chromium advisory is in core.</font></font></p>
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Record
+3: two CVEs on the population boundary.</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+Two CVEs are in core by the rule but cannot be called core Microsoft
+without qualification.</font></font></p>
+<ul>
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>CVE-2026-92707
+	(MessagePack-CSharp)</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+	— an advisory for an open-source component included in Visual
+	Studio, assigned by GitHub. Its affected products mix Visual Studio
+	and .NET packages, so the rule &quot;mixtures are core&quot; puts it
+	in core. It is also one of this month's zero-days (publicly
+	disclosed).</font></font></p></li>
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>CVE-2026-62840
+	(Linux Kernel elevation of privilege)</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+	— its affected products are third-party Linux distributions and
+	Microsoft's MANA network driver. It is not an Azure Linux package,
+	so it is in core.</font></font></p></li>
+</ul>
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Without
+the two, core is 1,417, and nothing in this issue reads differently.
+The no-impact item in correction 1 (CVE-2026-34182, OpenSSL) has the
+same shape: it mixes Visual Studio and Azure Linux packages and sits
+in core. </font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>The
+October issue was frozen under the same rule as last issue (v2).</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+The question of the rule is recorded as material for review; it is
+not reflected in this issue's figures.</font></font></p>
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Record
+4: a zero-day that is only publicly disclosed is not in the KEV/EPSS
+matched set.</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+The condition is &quot;heavy tier (T2/T3) or Critical or externally
+credited, or confirmed exploited&quot;; whether something is publicly
+disclosed is not part of it. This month's CVE-2026-92707 meets none
+of these, is outside the set, and has no EPSS value. The
+confirmed-exploited CVE-2026-96951 is in the set and was detected as
+a new KEV listing.</font></font></p>
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Continuation
+5: exploitation status within one document.</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+Last issue recorded that, among confirmed-exploited CVEs, the CVSS
+temporal metric agreed with Threats for some and not for others. This
+month's confirmed-exploited item (CVE-2026-96951) carries &quot;functional
+exploit exists&quot; (E:F), agreeing with Threats' &quot;exploitation
+detected&quot;. One agreeing item does not make the field usable.
+This report's exploited flag continues to derive from Threats.</font></font></p>
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Continuation
+6: do not attach circumstantial evidence to a named entity.</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+The July issue asserted that &quot;Kugelblitz&quot; was a particular
+in-house AI tool and withdrew it against primary sources. That
+discipline holds. Nothing is claimed about activity stopping or
+continuing now that the name has been at zero for two months.</font></font></p>
+<h3 class="western" style="margin-top: 0.1in; margin-bottom: 0.06in"><font color="#2e5496"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>6.
+What the conclusions rest on, and the limits</b></font></font></font></h3>
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Relied
+upon (high confidence)</b></font></font></p>
+<ul>
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">The
+	frozen figures are machine aggregations of primary data; against the
+	previous day's daily fetch, core, credited, Critical, the heavy tier
+	and zero-days did not move (severity and finder buckets moved by a
+	few).</font></font></p></li>
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">This
+	month too, the population split is product-identifier based and
+	every product identifier resolved (zero unresolved). All 341
+	excluded are Azure Linux; Edge/Chromium is zero.</font></font></p></li>
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Where
+	the rise in core sits (CNA, first-revision date, product category)
+	was checked against the CVRF of the same release as the frozen
+	figures.</font></font></p></li>
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">The
+	preconditions of the confirmed-exploited item (network, no prior
+	privileges, user interaction required, low attack complexity) come
+	from the CVSS vector in the CVRF.</font></font></p></li>
+</ul>
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Limits
+(undetermined; treat with care)</b></font></font></p>
+<ul>
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Why
+	core rose is unknown.</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+	Where it rose was checked; why cannot be read from the CVRF.</font></font></p></li>
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>The
+	heavy tier is counted; its distribution across products is not
+	measured.</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+	A lower count is not less work.</font></font></p></li>
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>The
+	two boundary CVEs are classified as the rule says.</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+	Whether the rule itself is right is not judged in this issue
+	(section 5, record 3).</font></font></p></li>
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>A
+	zero-day that is only publicly disclosed is outside the KEV/EPSS
+	matched set</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+	(section 5, record 4).</font></font></p></li>
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Why
+	the CVRF carries no Edge/Chromium advisory this month is unknown.</b></font></font></p></li>
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>KEV
+	remediation due dates were not retrieved for this issue.</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+	No actual intrusion or observed technique involving the
+	confirmed-exploited item has been examined either. The preconditions
+	are an assessment from the CVSS vector in the CVRF, not something
+	observed in the field.</font></font></p></li>
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>EPSS
+	values are dated 2026-10-14.</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+	They change daily.</font></font></p></li>
+</ul>
+<h3 class="western" style="margin-top: 0.1in; margin-bottom: 0.06in"><font color="#2e5496"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>7.
+Reproducing this</b></font></font></font></h3>
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">The
+figures can be reproduced with the collection and freezing tools in
+the </font></font><font color="#1f3864"><font face="Consolas, serif"><font size="2" style="font-size: 9pt">msrc_monitor</font></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+repository (Python 3.12; network reachability to the MSRC API). MSRC
+revises past months after the fact, so identical figures are not
+guaranteed; post-freeze revisions are recorded separately.</font></font></p>
+<ul>
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Fetch
+	the month: </font></font><font color="#1f3864"><font face="Consolas, serif"><font size="2" style="font-size: 9pt">python
+	collect.py 2026-Oct</font></font></font></p></li>
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Inspect
+	and freeze — freezing is performed by a human, and an
+	already-frozen month is refused: </font></font><font color="#1f3864"><font face="Consolas, serif"><font size="2" style="font-size: 9pt">python
+	freeze_month.py 2026-Oct --dry-run</font></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">,
+	then </font></font><font color="#1f3864"><font face="Consolas, serif"><font size="2" style="font-size: 9pt">python
+	freeze_month.py 2026-Oct</font></font></font></p></li>
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Match
+	KEV and EPSS: </font></font><font color="#1f3864"><font face="Consolas, serif"><font size="2" style="font-size: 9pt">python
+	enrich.py 2026-Oct</font></font></font></p></li>
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">Acknowledgement
+	tallies (per CVE, deduplicated): see </font></font><font color="#1f3864"><font face="Consolas, serif"><font size="2" style="font-size: 9pt">credit_counts</font></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+	and </font></font><font color="#1f3864"><font face="Consolas, serif"><font size="2" style="font-size: 9pt">finder_bucket</font></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+	in </font></font><font color="#1f3864"><font face="Consolas, serif"><font size="2" style="font-size: 9pt">state/2026-Oct.json</font></font></font></p></li>
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">The
+	recount behind last issue's Table 1 key point: </font></font><font color="#1f3864"><font face="Consolas, serif"><font size="2" style="font-size: 9pt">python
+	docs/measure/sep_critical_impact.py</font></font></font></p></li>
+	<li><p style="line-height: 0.19in; margin-bottom: 0.06in"><font face="Arial, serif"><font size="2" style="font-size: 10pt">The
+	interpretation prose is held per month under
+	</font></font><font color="#1f3864"><font face="Consolas, serif"><font size="2" style="font-size: 9pt">interpretation/&lt;year-month&gt;/</font></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">;
+	a build cannot mix one month's figures with another month's prose.</font></font></p></li>
+</ul>
+<table width="100%" cellpadding="7" cellspacing="0">
+	<col width="256*"/>
+	<tr>
+		<td width="100%" valign="top" bgcolor="#eef2f8" style="background: #eef2f8; border: 1px solid #2e5496; padding: 0.07in 0.11in"><p style="margin-bottom: 0.04in">
+			<font color="#1f3864"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Confidence
+			tiers for this issue's claims</b></font></font></font></p>
+			<p style="margin-bottom: 0.03in"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>High</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+			— the total and Critical (all CVRF) reached highs for the
+			observation window; within core, Microsoft-assigned CVEs went from
+			973 to 1,417 and 1,411 core CVEs were first published on the
+			release day; the heavy tier (core) fell from 93 to 79; core
+			Critical fell from 114 to 77, and 97 of all-CVRF Critical are
+			Azure Linux; one item is confirmed exploited, rated Important, and
+			none of the 174 Critical items is confirmed exploited; the
+			population split resolved every product identifier; </font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>last
+			issue's breakdown of 114 Critical listed only 111</b></font></font></p>
+			<p style="margin-bottom: 0.03in"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Medium</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+			— the observation that months with confirmed exploitation have
+			not included a Critical item for four months running (</font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>one
+			or two items a month, and May did have a confirmed-exploited
+			Critical</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">)</font></font></p>
+			<p style="margin-bottom: 0.03in"><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Undetermined</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+			— why core rose; how the heavy tier is distributed across
+			products; why the CVRF carries no Edge/Chromium advisory; why
+			Kugelblitz is at zero</font></font></p>
+			<p><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Treat
+			with care</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+			— </font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>Critical
+			counts move in opposite directions depending on the population</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+			(all CVRF up, core down) / </font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>the
+			two boundary CVEs are classified by the rule, and the rule itself
+			has not been judged</b></font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt">
+			/ </font></font><font face="Arial, serif"><font size="2" style="font-size: 10pt"><b>a
+			zero-day that is only publicly disclosed is outside the matched
+			set</b></font></font></p>
+		</td>
+	</tr>
+</table>
+<p style="line-height: 100%; margin-top: 0.08in; margin-bottom: 0.03in; border-top: 1px solid #2e5496; border-bottom: none; border-left: none; border-right: none; padding: 0in">
+<br/>
+<br/>
+
+</p>
+<p style="line-height: 0.2in; margin-bottom: 0.08in"><font color="#595959"><font face="Arial, serif"><font size="1" style="font-size: 8pt"><i>This
+report was produced through dialogue with an AI assistant (Claude).
+Primary data was acquired and executed in the acquisition
+environment, and the figures are based on those runs. The
+interpretation and analysis include AI contribution; independent
+verification against primary sources is recommended before relying on
+it for important decisions.</i></font></font></font></p>
+
+</article>
+<div class="about"><div class="h">About this data</div><ul><li>What this is: the monthly MSRC vulnerability trend report. The facts are compiled by machine from Microsoft's CVRF data; the interpretation is written by a human.</li><li>Update frequency: monthly, on the Patch Tuesday cycle. Each edition is frozen as a snapshot of the data as it was fetched and is not regenerated afterwards, so its figures stay as published. The month it covers and the date the data was fetched are stated in the report itself — they are two different dates.</li><li>Revisions: Microsoft sometimes revises a past month's data after publication. This edition is left exactly as published; earlier editions, and any note recording such a revision, are in the <a href="archive/index.html">archive</a>.</li></ul><div class="h" style="margin-top:12px">Terms</div><dl><dt>CVRF</dt><dd>The machine-readable vulnerability feed Microsoft publishes each month (MSRC CVRF v3.0) — this report's primary data.</dd><dt>Full CVRF / core Microsoft (re-listings)</dt><dd>“Full CVRF” is every CVE record the feed returns for a month, which mixes in Edge/Chromium (fixed by Google and re-listed by Microsoft), Mariner (Azure Linux) and Azure cloud services. “Core Microsoft” is the same month with those re-listings excluded. The two populations are reported side by side.</dd><dt>Zero-day</dt><dd>In this report, a CVE that Microsoft's data flags as exploited, or as publicly disclosed, or both.</dd><dt>Confirmed exploitation</dt><dd>Microsoft's own exploitation flag is set for that CVE. This is a separate source from CISA KEV, and the two can disagree in either direction.</dd><dt>KEV</dt><dd>CISA's Known Exploited Vulnerabilities Catalog — vulnerabilities CISA has confirmed as exploited. Cross-vendor listings are recorded in the Cross-vendor KEV/EPSS section of this site.</dd><dt>EPSS</dt><dd>The probability that exploitation activity will be observed within 30 days (0 to 1). It is not a severity score.</dd></dl></div>
+<div class="footer">
+  <a href="../../index.html">Home</a> ·
+  <a href="ja.html">日本語</a><br>
+  Generated from the approved report artifact. Facts are machine-generated; interpretation is human.
+</div>
+</body>
+</html>
