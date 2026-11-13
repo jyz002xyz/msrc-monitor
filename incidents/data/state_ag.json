@@ -5,6 +5,65 @@
   },
   "filings": [
     {
+      "key": "CA:2026-11-12:levin-sedran-berman-llp:2025-10-07",
+      "jurisdiction": "CA",
+      "organization": "Levin, Sedran & Berman, LLP",
+      "reported_date": "2026-11-12",
+      "breach_dates": [
+        "2025-10-07"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-632780",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-13"
+    },
+    {
+      "key": "CA:2026-11-11:vanguard-group-inc:2026-07-29|2026-07-30|2026-07-31",
+      "jurisdiction": "CA",
+      "organization": "Vanguard Group Inc.",
+      "reported_date": "2026-11-11",
+      "breach_dates": [
+        "2026-07-29",
+        "2026-07-30",
+        "2026-07-31"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-632773",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-13"
+    },
+    {
+      "key": "CA:2026-11-11:pch-digital-llc:2026-02-04|2026-02-18",
+      "jurisdiction": "CA",
+      "organization": "PCH Digital, LLC",
+      "reported_date": "2026-11-11",
+      "breach_dates": [
+        "2026-02-04",
+        "2026-02-18"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-632763",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-13"
+    },
+    {
+      "key": "CA:2026-11-10:uber-technologies-inc:2026-10-07",
+      "jurisdiction": "CA",
+      "organization": "Uber Technologies, Inc.",
+      "reported_date": "2026-11-10",
+      "breach_dates": [
+        "2026-10-07"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-632751",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-13"
+    },
+    {
       "key": "WA:BreachA43699",
       "jurisdiction": "WA",
       "organization": "Telecare Health",
