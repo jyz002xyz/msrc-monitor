@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>改訂ノート — 2026年8月レポート / Revision note — MSRC Vulnerability Trend Report</title>
+<meta name="description" content="2026年8月 MSRC 脆弱性トレンドレポートの公開後改訂ノート。">
+<style>
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Hiragino Kaku Gothic ProN','Noto Sans JP',Meiryo,sans-serif;margin:0;color:#222;background:#f5f6f8}
+.topbar{position:sticky;top:0;background:#1f3864;color:#fff;padding:12px 16px;display:flex;justify-content:space-between;align-items:center}
+.topbar a{color:#fff;text-decoration:none}.topbar a:hover{text-decoration:underline}
+.wrap{max-width:760px;margin:0 auto;padding:32px 20px}
+h1{color:#1f3864;font-size:22px;margin:0 0 6px}
+h2{color:#1f3864;font-size:16px;margin:26px 0 8px;border-bottom:1px solid #e3e6ea;padding-bottom:4px}
+.sub{color:#555;font-size:14px;margin:0 0 8px}
+.card{background:#fff;border-radius:10px;box-shadow:0 2px 12px rgba(0,0,0,.06);padding:20px 22px;margin:16px 0}
+.banner{background:#fff3cd;border:1px solid #ffe69c;color:#664d03;border-radius:8px;padding:10px 14px;font-size:13px;margin:0 0 16px}
+p{font-size:14px;line-height:1.8;margin:8px 0}
+li{font-size:14px;line-height:1.8}
+table{width:100%;border-collapse:collapse;margin:10px 0}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid #eef0f3;font-size:14px}
+th{background:#f0f2f5;color:#333;font-size:13px}
+.fact{color:#1f3864;font-weight:700}
+.caution{color:#8a5a00;font-weight:700}
+.footer{max-width:760px;margin:24px auto;padding:0 20px;color:#888;font-size:12px}
+code{background:#eef0f3;padding:1px 5px;border-radius:4px;font-size:13px}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a href="../index.html">MSRC Vulnerability Trend Report</a>
+  <div><a href="index.html">Archive / アーカイブ</a> · <a href="notes-2026-08.en.html">English</a></div>
+</div>
+<div class="wrap">
+  <h1>改訂ノート — 2026年8月レポート</h1>
+  <p class="sub">本レポート公開後に観測された元データの変動の記録。English version is <a href="notes-2026-08.en.html">here</a>。</p>
+
+  <div class="banner">公開済みの2026年8月レポートは <b>2026-08-13</b> 時点で凍結した時点スナップショットであり、<b>内容は一切変更していない</b>。本ノートは、そのスナップショット取得<b>後</b>に MSRC が元データに加えた変動を、<b>2026-11-12</b> に取得した MSRC の CVRF と CISA KEV をもとに記録するものである。レポートはスナップショットとして正しく、その後にデータが動いた、という位置づけである。</div>
+
+  <div class="card">
+    <h2>このノートの位置づけ</h2>
+    <p>各月次レポートは、特定日に取得した MSRC 一次データの凍結スナップショットである。MSRC は過去月を事後改訂する — CVE の追加、深刻度の変更、悪用状況の更新など。レポート本文はこの性質を既に開示し、スナップショット値を変更せず保持している。本ノートは、公開後に観測された2026年8月データの変動を事実として記録する補助資料であり、レポートを訂正・置換するものではない。変動の意味は解釈しない。</p>
+  </div>
+
+  <div class="card">
+    <h2>観測された変動（2026-11-12 取得）</h2>
+    <p>凍結スナップショット（2026-08-13）と、2026-11-12 に取得した MSRC データを比較:</p>
+    <table>
+      <thead><tr><th>指標</th><th>凍結値（2026-08-13）</th><th>2026-11-12</th></tr></thead>
+      <tbody>
+        <tr><td>CVRF 全体</td><td>790</td><td class="fact">1,681</td></tr>
+        <tr><td>MS本体相当</td><td>420</td><td class="fact">447</td></tr>
+        <tr><td>Critical（全体）</td><td>108</td><td class="fact">156</td></tr>
+        <tr><td>Critical（MS本体相当）</td><td>62</td><td class="fact">84（+22）</td></tr>
+        <tr><td>ゼロデイ（悪用確認／公開済み）</td><td>1 / 2</td><td class="fact">1 / 3（+CVE-2026-69414、Microsoft Defender の権限昇格、公開済み。初版 2026-08-14）</td></tr>
+      </tbody>
+    </table>
+    <p>MS本体相当の Critical の +22 のうち <span class="fact">20件は凍結後に初めて公開された CVE</span> である（クラウドサービス 16件・その他の Microsoft 製品 2件・Exchange Online 1件・Azure Virtual Machines 1件）。その初版は、19件が <b>2026-08-20</b>（凍結の約1週間後）、1件が 2026-08-18 である。<span class="fact">残りの2件は、凍結時の CVRF の写しが無いため特定できない</span>（初版が凍結の時刻以前の CVE だけで数え直すと 64 になり、凍結値の 62 と合わない）。</p>
+    <p style="font-size:13px;color:#666">「凍結の後に初めて公開された CVE」は、CVE ごとの初版（CVRF の <code>RevisionHistory</code> の最も早い日付）が凍結の時刻より後のものとした。 出典: MSRC CVRF（2026-11-12 取得。文書の版 2026-11-10T08:00:00）と CISA KEV（catalogVersion 2026.11.10、2026-11-12 取得）を、凍結スナップショット（<code>state/2026-Aug.json</code>）と比べた。凍結値は公開レポートと一致する。</p>
+  </div>
+  <div class="card">
+    <h2>CVE-2026-65660（SharePoint）— KEV と CVRF の悪用フラグの食い違い</h2>
+    <ul>
+      <li>MSRC の改訂文（CVRF の <code>RevisionHistory</code>、版 1.2、2026-09-25）: &ldquo;As of 9/25/2026, Microsoft had reliable evidence of observed attacks against exploitation of this vulnerability.&rdquo;</li>
+      <li>CISA KEV: 2026-09-25 に収載。</li>
+      <li>CVRF の悪用フラグ: 2026-11-12 の時点で <b>Exploited:No</b>（Publicly Disclosed:No）。</li>
+      <li>EPSS: 0.0985（2026-11-10）。</li>
+    </ul>
+    <p>改訂文と KEV は悪用に触れているが、悪用フラグは No のままである。どちらが正しいかは、本ノートでは判断しない。凍結の時点（2026-08-13）では KEV に載っておらず、改訂文もまだ無かった。</p>
+  </div>
+  <div class="card">
+    <h2>レポート内の記述への影響</h2>
+    <p>本文に書いた事実や数のうち、2026-11-12 時点の上流のデータと合わなくなったもの（いずれも凍結の時点では正しい）:</p>
+    <ul>
+      <li>補遺「今月の Kugelblitz は1件である」→ 2026-11-12 は <span class="fact">5件</span>。増えた4件（CVE-2026-66323・66324・66798・70341）はすべて Edge の勧告（除外の側、Important）で、初版は 2026-08-28（凍結の15日後）。凍結の後に加わった勧告で、既存の CVE の謝辞が書き換わったものではない。初版が凍結の日以前の CVE だけで数えると 1 になり、凍結値と一致する。5件とも Critical ではない。</li>
+      <li>補遺「その Edge 勧告自体が今月は前月の1割以下に減っている」→ 初版が各月の凍結の日以前の Edge の勧告で数えると、8月 39件・7月 475件（8.2%）で、凍結の時点では正しい。2026-11-12 は 8月 362件・7月 936件（<span class="fact">38.7%</span>）である。どちらの月も、凍結の後に Edge の勧告が加わった。</li>
+      <li>図3（Kugelblitz）の8月の点（1）と、その解釈「7月に突出した後、今月は1件へ戻った」→ 2026-11-12 は <span class="fact">5件</span>。7月の点（39）も、2026-11-12 では 58 である（7月号の改訂ノートの 2026-11-12 追記を参照）。</li>
+      <li>補遺「AIフィジカルインターフェイス二号機」13件 → 2026-11-12 は <span class="fact">16件</span>。16件とも初版が凍結の日以前の CVE で、凍結の後に謝辞が書き換わった形である。凍結時の CVRF の写しが無いため、どの3件かは特定できない（凍結の後に謝辞の更新が記録された該当 CVE は5件）。&ldquo;AI&rsquo;s physical interface 001&rdquo; の1件は変わらない。</li>
+      <li>ゼロデイ: 公開済みが2件から3件になった（CVE-2026-69414、Microsoft Defender の権限昇格、Important。初版 2026-08-14、凍結の翌日）。悪用確認は CVE-2026-68820 の1件のままである。</li>
+    </ul>
+    <p>本ノートは、これらの数の変化に解釈を加えない。本文の「この減少は解釈できない」にも何も足さない。</p>
+  </div>
+
+  <p class="sub" style="margin-top:20px">日付 — データスナップショット: 2026-08-13 ／ 再取得: 2026-11-12 ／ 本ノート作成: 2026-11-12。</p>
+</div>
+<div class="footer">事実は機械生成、解釈は人間による。凍結スナップショットは不変。出典: Microsoft Security Response Center (MSRC) CVRF、CISA KEV、FIRST EPSS。</div>
+</body>
+</html>
