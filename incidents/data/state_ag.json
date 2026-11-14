@@ -5,6 +5,92 @@
   },
   "filings": [
     {
+      "key": "CA:2026-11-13:plant-construction-company-l-p:2026-09-08",
+      "jurisdiction": "CA",
+      "organization": "Plant Construction Company, L.P.",
+      "reported_date": "2026-11-13",
+      "breach_dates": [
+        "2026-09-08"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-632875",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-14"
+    },
+    {
+      "key": "CA:2026-11-13:mpowerhealth-holdings-llc:2025-06-23|2025-06-26",
+      "jurisdiction": "CA",
+      "organization": "MPOWERHealth Holdings LLC",
+      "reported_date": "2026-11-13",
+      "breach_dates": [
+        "2025-06-23",
+        "2025-06-26"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-632869",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-14"
+    },
+    {
+      "key": "CA:2026-11-13:icw-group-holdings-inc:2026-05-01",
+      "jurisdiction": "CA",
+      "organization": "ICW Group Holdings, Inc.",
+      "reported_date": "2026-11-13",
+      "breach_dates": [
+        "2026-05-01"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-632846",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-14"
+    },
+    {
+      "key": "CA:2026-11-13:fandango-media-llc:2026-10-08",
+      "jurisdiction": "CA",
+      "organization": "Fandango Media, LLC",
+      "reported_date": "2026-11-13",
+      "breach_dates": [
+        "2026-10-08"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-632866",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-14"
+    },
+    {
+      "key": "CA:2026-11-13:dexcom-inc:2026-11-02",
+      "jurisdiction": "CA",
+      "organization": "Dexcom, Inc.",
+      "reported_date": "2026-11-13",
+      "breach_dates": [
+        "2026-11-02"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-632867",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-14"
+    },
+    {
+      "key": "CA:2026-11-13:acadia-healthcare-company-inc:2026-03-25|2026-07-13",
+      "jurisdiction": "CA",
+      "organization": "Acadia Healthcare Company, Inc.",
+      "reported_date": "2026-11-13",
+      "breach_dates": [
+        "2026-03-25",
+        "2026-07-13"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-632903",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-14"
+    },
+    {
       "key": "CA:2026-11-12:levin-sedran-berman-llp:2025-10-07",
       "jurisdiction": "CA",
       "organization": "Levin, Sedran & Berman, LLP",
@@ -17,6 +103,20 @@
       "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-632780",
       "source_url": "https://oag.ca.gov/privacy/databreach/list",
       "first_seen": "2026-11-13"
+    },
+    {
+      "key": "CA:2026-11-12:employer-solutions-staffing-group:2026-01-13",
+      "jurisdiction": "CA",
+      "organization": "Employer Solutions Staffing Group",
+      "reported_date": "2026-11-12",
+      "breach_dates": [
+        "2026-01-13"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-632787",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-14"
     },
     {
       "key": "CA:2026-11-11:vanguard-group-inc:2026-07-29|2026-07-30|2026-07-31",
