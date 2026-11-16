@@ -488,6 +488,20 @@
           "url": "https://www.maersk.com/news/articles/2026/11/11/it-security-incident"
         }
       ]
+    },
+    {
+      "id": "2026-11-05-shippio",
+      "organization": "株式会社Shippio",
+      "type": "unauthorized_access",
+      "recorded_by": "detector",
+      "statements": [
+        {
+          "date": "2026-11-05",
+          "kind": "organization",
+          "source": "株式会社Shippio の発表",
+          "url": "https://www.shippio.io/news/20261105/"
+        }
+      ]
     }
   ]
 }
