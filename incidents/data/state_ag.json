@@ -5,6 +5,102 @@
   },
   "filings": [
     {
+      "key": "CA:2026-11-17:photoworks-inc:2026-09-01",
+      "jurisdiction": "CA",
+      "organization": "Photoworks Inc.",
+      "reported_date": "2026-11-17",
+      "breach_dates": [
+        "2026-09-01"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-633042",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-18"
+    },
+    {
+      "key": "CA:2026-11-16:payrhealth:2026-08-18",
+      "jurisdiction": "CA",
+      "organization": "PayrHealth",
+      "reported_date": "2026-11-16",
+      "breach_dates": [
+        "2026-08-18"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-633009",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-18"
+    },
+    {
+      "key": "CA:2026-11-16:kern-medical-owned-and-operated-by-kern-county-hospital-authority-kern-medical:2026-09-16",
+      "jurisdiction": "CA",
+      "organization": "Kern Medical, owned and operated by Kern County Hospital Authority (\"Kern Medical\")",
+      "reported_date": "2026-11-16",
+      "breach_dates": [
+        "2026-09-16"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-633011",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-18"
+    },
+    {
+      "key": "CA:2026-11-16:department-of-health-care-access-and-information:",
+      "jurisdiction": "CA",
+      "organization": "Department of Health Care Access and Information",
+      "reported_date": "2026-11-16",
+      "breach_dates": [],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-632984",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-18"
+    },
+    {
+      "key": "CA:2026-11-16:colla-health-inc:2026-08-09",
+      "jurisdiction": "CA",
+      "organization": "Colla Health, Inc.",
+      "reported_date": "2026-11-16",
+      "breach_dates": [
+        "2026-08-09"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-632988",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-18"
+    },
+    {
+      "key": "CA:2026-11-16:apartment-income-reit-llc:2026-08-26",
+      "jurisdiction": "CA",
+      "organization": "Apartment Income REIT LLC",
+      "reported_date": "2026-11-16",
+      "breach_dates": [
+        "2026-08-26"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-633010",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-18"
+    },
+    {
+      "key": "WA:BreachA43860",
+      "jurisdiction": "WA",
+      "organization": "Prism Medical Products, LLC",
+      "reported_date": "2026-11-14",
+      "breach_dates": [
+        "2026-10-18"
+      ],
+      "affected": 16307,
+      "data_types": "Name; Social Security Number; Driver's License or Washington ID Card Number; Financial & Banking Information; Medical Information; Other; Protected Health Information owned or licensed by a HIPAA covered entity",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA43860.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-11-18"
+    },
+    {
       "key": "CA:2026-11-14:southwire-company-llc:2025-11-21",
       "jurisdiction": "CA",
       "organization": "Southwire Company, LLC",
@@ -17,6 +113,20 @@
       "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-632938",
       "source_url": "https://oag.ca.gov/privacy/databreach/list",
       "first_seen": "2026-11-17"
+    },
+    {
+      "key": "WA:BreachA43841",
+      "jurisdiction": "WA",
+      "organization": "Dexcom, Inc.",
+      "reported_date": "2026-11-13",
+      "breach_dates": [
+        "2026-11-02"
+      ],
+      "affected": 728,
+      "data_types": "Name; Social Security Number; Driver's License or Washington ID Card Number; Full Date of Birth; Medical Information; Protected Health Information owned or licensed by a HIPAA covered entity",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA43841.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-11-18"
     },
     {
       "key": "CA:2026-11-13:prism-medical-products-llc:2026-10-18",
@@ -147,6 +257,20 @@
       "first_seen": "2026-11-14"
     },
     {
+      "key": "WA:BreachA43770",
+      "jurisdiction": "WA",
+      "organization": "PCH Digital, LLC",
+      "reported_date": "2026-11-11",
+      "breach_dates": [
+        "2026-02-04"
+      ],
+      "affected": 4262,
+      "data_types": "Name; Social Security Number; Driver's License or Washington ID Card Number; Financial & Banking Information; Full Date of Birth; Passport Number; Health Insurance Policy or ID Number; Medical Information; Username and Password/Security Question Answers; Email Address and Password/Security Question Answers",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA43770.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-11-18"
+    },
+    {
       "key": "CA:2026-11-11:vanguard-group-inc:2026-07-29|2026-07-30|2026-07-31",
       "jurisdiction": "CA",
       "organization": "Vanguard Group Inc.",
@@ -176,6 +300,20 @@
       "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-632763",
       "source_url": "https://oag.ca.gov/privacy/databreach/list",
       "first_seen": "2026-11-13"
+    },
+    {
+      "key": "WA:BreachA43747",
+      "jurisdiction": "WA",
+      "organization": "Uber Technologies, Inc.",
+      "reported_date": "2026-11-10",
+      "breach_dates": [
+        "2026-10-07"
+      ],
+      "affected": 3797,
+      "data_types": "Name; Driver's License or Washington ID Card Number; Full Date of Birth",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA43747.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-11-18"
     },
     {
       "key": "CA:2026-11-10:uber-technologies-inc:2026-10-07",
@@ -275,6 +413,20 @@
       "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-632686",
       "source_url": "https://oag.ca.gov/privacy/databreach/list",
       "first_seen": "2026-11-11"
+    },
+    {
+      "key": "CA:2026-11-08:altamed-health-services-corporation:2026-09-09",
+      "jurisdiction": "CA",
+      "organization": "AltaMed Health Services Corporation",
+      "reported_date": "2026-11-08",
+      "breach_dates": [
+        "2026-09-09"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-632600",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-18"
     },
     {
       "key": "WA:BreachA43681",
@@ -1562,6 +1714,20 @@
       "first_seen": "2026-10-03"
     },
     {
+      "key": "WA:BreachA43086",
+      "jurisdiction": "WA",
+      "organization": "American Family Connect Insurance Company",
+      "reported_date": "2026-09-30",
+      "breach_dates": [
+        "2026-06-30"
+      ],
+      "affected": 1185,
+      "data_types": "Name; Driver's License or Washington ID Card Number",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA43086.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-11-18"
+    },
+    {
       "key": "CA:2026-09-30:procamps:2026-03-17",
       "jurisdiction": "CA",
       "organization": "ProCamps",
@@ -1632,6 +1798,20 @@
       "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA43076.pdf",
       "source_url": "https://www.atg.wa.gov/data-breach-notifications",
       "first_seen": "2026-10-22"
+    },
+    {
+      "key": "WA:BreachA43067",
+      "jurisdiction": "WA",
+      "organization": "City of McMinnville",
+      "reported_date": "2026-09-29",
+      "breach_dates": [
+        "2026-06-01"
+      ],
+      "affected": 3727,
+      "data_types": "Name; Social Security Number; Driver's License or Washington ID Card Number",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA43067.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-11-18"
     },
     {
       "key": "WA:BreachA43066",
