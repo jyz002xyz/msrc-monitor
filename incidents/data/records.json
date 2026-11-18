@@ -502,6 +502,48 @@
           "url": "https://www.shippio.io/news/20261105/"
         }
       ]
+    },
+    {
+      "id": "2026-11-12-jp-2c59a313da",
+      "organization": "株式会社マクロミル",
+      "type": "unauthorized_access",
+      "recorded_by": "detector",
+      "statements": [
+        {
+          "date": "2026-11-12",
+          "kind": "organization",
+          "source": "株式会社マクロミル の発表",
+          "url": "https://monitor.macromill.com/news/20261112-oshirase.html"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-11-jp-bbd79cc031",
+      "organization": "株式会社オープンロジ",
+      "type": "unauthorized_access",
+      "recorded_by": "detector",
+      "statements": [
+        {
+          "date": "2026-11-11",
+          "kind": "organization",
+          "source": "株式会社オープンロジ の発表",
+          "url": "https://corp.openlogi.com/news/notice/notice-20261111/"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-16-japansrikencenterforcomputationalscience",
+      "organization": "Japan's RIKEN Center for Computational Science",
+      "type": "unauthorized_access",
+      "recorded_by": "detector",
+      "statements": [
+        {
+          "date": "2026-11-16",
+          "kind": "organization",
+          "source": "Japan's RIKEN Center for Computational Science の発表",
+          "url": "https://www.riken.jp/pr/news/2026/20261116_2/index.html"
+        }
+      ]
     }
   ]
 }
