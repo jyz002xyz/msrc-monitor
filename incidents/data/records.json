@@ -544,6 +544,20 @@
           "url": "https://www.riken.jp/pr/news/2026/20261116_2/index.html"
         }
       ]
+    },
+    {
+      "id": "2026-11-12-jp-1ed178f82f",
+      "organization": "株式会社サイバーセキュリティクラウド",
+      "type": "unauthorized_access",
+      "recorded_by": "detector",
+      "statements": [
+        {
+          "date": "2026-11-12",
+          "kind": "organization",
+          "source": "株式会社サイバーセキュリティクラウド の発表",
+          "url": "https://www.cscloud.co.jp/news/info/20261112-2/"
+        }
+      ]
     }
   ]
 }
