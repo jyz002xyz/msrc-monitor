@@ -115,6 +115,20 @@
       "first_seen": "2026-11-17"
     },
     {
+      "key": "WA:BreachA43845",
+      "jurisdiction": "WA",
+      "organization": "Acadia Healthcare Company, Inc.",
+      "reported_date": "2026-11-13",
+      "breach_dates": [
+        "2026-03-21"
+      ],
+      "affected": 1093,
+      "data_types": "Name; Social Security Number; Driver's License or Washington ID Card Number; Health Insurance Policy or ID Number; Medical Information",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA43845.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-11-19"
+    },
+    {
       "key": "WA:BreachA43841",
       "jurisdiction": "WA",
       "organization": "Dexcom, Inc.",
@@ -227,6 +241,20 @@
       "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-632903",
       "source_url": "https://oag.ca.gov/privacy/databreach/list",
       "first_seen": "2026-11-14"
+    },
+    {
+      "key": "WA:BreachA43785",
+      "jurisdiction": "WA",
+      "organization": "Levin, Sedran & Berman, LLP",
+      "reported_date": "2026-11-12",
+      "breach_dates": [
+        "2025-10-07"
+      ],
+      "affected": 770,
+      "data_types": "Name; Social Security Number; Driver's License or Washington ID Card Number; Full Date of Birth; Health Insurance Policy or ID Number; Medical Information",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA43785.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-11-19"
     },
     {
       "key": "CA:2026-11-12:levin-sedran-berman-llp:2025-10-07",
@@ -1236,6 +1264,20 @@
       "first_seen": "2026-10-24"
     },
     {
+      "key": "WA:BreachA43427",
+      "jurisdiction": "WA",
+      "organization": "Dorsata, Inc. (Metabase)",
+      "reported_date": "2026-10-21",
+      "breach_dates": [
+        "2026-08-10"
+      ],
+      "affected": 3713,
+      "data_types": "Name; Health Insurance Policy or ID Number; Medical Information; Protected Health Information owned or licensed by a HIPAA covered entity",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA43427.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-11-19"
+    },
+    {
       "key": "CA:2026-10-21:dorsata-inc:2026-08-10|2026-08-12",
       "jurisdiction": "CA",
       "organization": "Dorsata, Inc.",
@@ -1655,6 +1697,34 @@
       "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-630760",
       "source_url": "https://oag.ca.gov/privacy/databreach/list",
       "first_seen": "2026-10-03"
+    },
+    {
+      "key": "WA:BreachA43110",
+      "jurisdiction": "WA",
+      "organization": "Aldrich Services LLP",
+      "reported_date": "2026-10-01",
+      "breach_dates": [
+        "2026-08-22"
+      ],
+      "affected": 767,
+      "data_types": "Name; Social Security Number; Driver's License or Washington ID Card Number; Financial & Banking Information; Unique Private Key (e.g. used to authenticate or sign an electronic record); Medical Information",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA43110.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-11-19"
+    },
+    {
+      "key": "WA:BreachA43093",
+      "jurisdiction": "WA",
+      "organization": "WellCare of Washington, Inc. (DentaQuest)",
+      "reported_date": "2026-10-01",
+      "breach_dates": [
+        "2026-05-17"
+      ],
+      "affected": 1619,
+      "data_types": "Name; Social Security Number; Full Date of Birth; Health Insurance Policy or ID Number; Medical Information; Other",
+      "notice_url": "https://agportal-s3bucket.s3.amazonaws.com/databreach/BreachA43093.pdf",
+      "source_url": "https://www.atg.wa.gov/data-breach-notifications",
+      "first_seen": "2026-11-19"
     },
     {
       "key": "CA:2026-10-01:marana-health-center:2025-12-18",
