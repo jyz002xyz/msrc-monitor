@@ -5,6 +5,34 @@
   },
   "filings": [
     {
+      "key": "CA:2026-11-18:valley-family-health-care-inc:2026-03-07",
+      "jurisdiction": "CA",
+      "organization": "Valley Family Health Care, Inc.",
+      "reported_date": "2026-11-18",
+      "breach_dates": [
+        "2026-03-07"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-633088",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-20"
+    },
+    {
+      "key": "CA:2026-11-18:successfulmatch-com-inc:2026-10-18",
+      "jurisdiction": "CA",
+      "organization": "SuccessfulMatch.com, Inc.",
+      "reported_date": "2026-11-18",
+      "breach_dates": [
+        "2026-10-18"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-633062",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-20"
+    },
+    {
       "key": "CA:2026-11-17:photoworks-inc:2026-09-01",
       "jurisdiction": "CA",
       "organization": "Photoworks Inc.",
@@ -17,6 +45,18 @@
       "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-633042",
       "source_url": "https://oag.ca.gov/privacy/databreach/list",
       "first_seen": "2026-11-18"
+    },
+    {
+      "key": "CA:2026-11-17:mercadien-p-c-cpas:",
+      "jurisdiction": "CA",
+      "organization": "Mercadien, P.C. CPAs",
+      "reported_date": "2026-11-17",
+      "breach_dates": [],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-633059",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-20"
     },
     {
       "key": "CA:2026-11-16:payrhealth:2026-08-18",
