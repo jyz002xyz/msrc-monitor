@@ -5,6 +5,62 @@
   },
   "filings": [
     {
+      "key": "CA:2026-11-20:opn-healthcare-inc:2026-06-03",
+      "jurisdiction": "CA",
+      "organization": "OPN Healthcare, Inc.",
+      "reported_date": "2026-11-20",
+      "breach_dates": [
+        "2026-06-03"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-633250",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-21"
+    },
+    {
+      "key": "CA:2026-11-20:hitachi-vantara-llc:2025-04-26",
+      "jurisdiction": "CA",
+      "organization": "Hitachi Vantara LLC",
+      "reported_date": "2026-11-20",
+      "breach_dates": [
+        "2025-04-26"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-633174",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-21"
+    },
+    {
+      "key": "CA:2026-11-20:bausch-health-companies-inc:2026-06-24",
+      "jurisdiction": "CA",
+      "organization": "Bausch Health Companies Inc.",
+      "reported_date": "2026-11-20",
+      "breach_dates": [
+        "2026-06-24"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-633182",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-21"
+    },
+    {
+      "key": "CA:2026-11-19:pmb-real-estate-services-and-pmb-llc:2025-12-27",
+      "jurisdiction": "CA",
+      "organization": "PMB Real Estate Services and PMB LLC",
+      "reported_date": "2026-11-19",
+      "breach_dates": [
+        "2025-12-27"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-633138",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-21"
+    },
+    {
       "key": "CA:2026-11-18:valley-family-health-care-inc:2026-03-07",
       "jurisdiction": "CA",
       "organization": "Valley Family Health Care, Inc.",
