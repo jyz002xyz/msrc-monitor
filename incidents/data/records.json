@@ -614,6 +614,20 @@
           "url": "https://corp.teamspirit.com/news/information/2026/11/2026_1106_01/"
         }
       ]
+    },
+    {
+      "id": "2026-11-12-jp-235c112ef1",
+      "organization": "株式会社電通デジタル",
+      "type": "unauthorized_access",
+      "recorded_by": "detector",
+      "statements": [
+        {
+          "date": "2026-11-12",
+          "kind": "organization",
+          "source": "株式会社電通デジタル の発表",
+          "url": "https://www.dentsudigital.co.jp/news/updates/services/2026-1112-001112"
+        }
+      ]
     }
   ]
 }
