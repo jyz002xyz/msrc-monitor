@@ -628,6 +628,20 @@
           "url": "https://www.dentsudigital.co.jp/news/updates/services/2026-1112-001112"
         }
       ]
+    },
+    {
+      "id": "2026-11-20-jp-09f5700044",
+      "organization": "大崎電気工業",
+      "type": "ransomware",
+      "recorded_by": "detector",
+      "statements": [
+        {
+          "date": "2026-11-20",
+          "kind": "organization",
+          "source": "大崎電気工業 の発表",
+          "url": "https://www.osaki.co.jp/ja/notice/20261120.html"
+        }
+      ]
     }
   ]
 }
