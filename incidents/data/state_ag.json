@@ -5,6 +5,34 @@
   },
   "filings": [
     {
+      "key": "CA:2026-11-24:teachers-on-reserve:2026-10-20",
+      "jurisdiction": "CA",
+      "organization": "Teachers On Reserve",
+      "reported_date": "2026-11-24",
+      "breach_dates": [
+        "2026-10-20"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-633348",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-25"
+    },
+    {
+      "key": "CA:2026-11-23:kern-county-behavioral-health-recovery-services:2026-01-19",
+      "jurisdiction": "CA",
+      "organization": "Kern County Behavioral Health & Recovery Services",
+      "reported_date": "2026-11-23",
+      "breach_dates": [
+        "2026-01-19"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-633318",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-25"
+    },
+    {
       "key": "CA:2026-11-20:opn-healthcare-inc:2026-06-03",
       "jurisdiction": "CA",
       "organization": "OPN Healthcare, Inc.",
