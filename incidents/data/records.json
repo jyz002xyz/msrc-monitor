@@ -642,6 +642,34 @@
           "url": "https://www.osaki.co.jp/ja/notice/20261120.html"
         }
       ]
+    },
+    {
+      "id": "2026-11-20-zozo",
+      "organization": "株式会社ZOZO",
+      "type": "unauthorized_access",
+      "recorded_by": "detector",
+      "statements": [
+        {
+          "date": "2026-11-20",
+          "kind": "organization",
+          "source": "株式会社ZOZO の発表",
+          "url": "https://corp.zozo.com/information/20261120-482917/"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-18-ntt",
+      "organization": "NTTソルマーレ株式会社",
+      "type": "unauthorized_access",
+      "recorded_by": "detector",
+      "statements": [
+        {
+          "date": "2026-11-18",
+          "kind": "organization",
+          "source": "NTTソルマーレ株式会社 の発表",
+          "url": "https://www.nttsolmare.com/press/2026/1118.html"
+        }
+      ]
     }
   ]
 }
