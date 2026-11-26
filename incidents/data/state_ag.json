@@ -5,6 +5,65 @@
   },
   "filings": [
     {
+      "key": "CA:2026-11-25:waldberg-inc-dba-the-refinery:2025-12-21|2026-10-20",
+      "jurisdiction": "CA",
+      "organization": "Waldberg, Inc. dba The Refinery",
+      "reported_date": "2026-11-25",
+      "breach_dates": [
+        "2025-12-21",
+        "2026-10-20"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-633422",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-26"
+    },
+    {
+      "key": "CA:2026-11-25:shook-hardy-bacon-l-l-p:2026-10-27",
+      "jurisdiction": "CA",
+      "organization": "Shook, Hardy & Bacon L.L.P.",
+      "reported_date": "2026-11-25",
+      "breach_dates": [
+        "2026-10-27"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-633428",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-26"
+    },
+    {
+      "key": "CA:2026-11-25:see-s-candies-inc:2026-04-11|2026-04-13",
+      "jurisdiction": "CA",
+      "organization": "See's Candies, Inc.",
+      "reported_date": "2026-11-25",
+      "breach_dates": [
+        "2026-04-11",
+        "2026-04-13"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-633435",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-26"
+    },
+    {
+      "key": "CA:2026-11-25:boston-scientific-corporation:2026-05-07|2026-05-12",
+      "jurisdiction": "CA",
+      "organization": "Boston Scientific Corporation",
+      "reported_date": "2026-11-25",
+      "breach_dates": [
+        "2026-05-07",
+        "2026-05-12"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-633449",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-26"
+    },
+    {
       "key": "CA:2026-11-24:teachers-on-reserve:2026-10-20",
       "jurisdiction": "CA",
       "organization": "Teachers On Reserve",
@@ -17,6 +76,33 @@
       "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-633348",
       "source_url": "https://oag.ca.gov/privacy/databreach/list",
       "first_seen": "2026-11-25"
+    },
+    {
+      "key": "CA:2026-11-24:gaytan-leevan-llp:",
+      "jurisdiction": "CA",
+      "organization": "Gaytan & Leevan, LLP",
+      "reported_date": "2026-11-24",
+      "breach_dates": [],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-633386",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-26"
+    },
+    {
+      "key": "CA:2026-11-24:barclays-bank-delaware:2025-11-05|2026-11-04",
+      "jurisdiction": "CA",
+      "organization": "Barclays Bank Delaware",
+      "reported_date": "2026-11-24",
+      "breach_dates": [
+        "2025-11-05",
+        "2026-11-04"
+      ],
+      "affected": null,
+      "data_types": null,
+      "notice_url": "https://oag.ca.gov/ecrime/databreach/reports/sb24-633397",
+      "source_url": "https://oag.ca.gov/privacy/databreach/list",
+      "first_seen": "2026-11-26"
     },
     {
       "key": "CA:2026-11-23:kern-county-behavioral-health-recovery-services:2026-01-19",
